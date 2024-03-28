@@ -1,44 +1,67 @@
 import { memo } from 'react'
 
-import { TextArea } from '@/shared/ui/TextArea'
+import { Button } from '@/shared/ui/Button'
+import { Spinner } from '@/shared/ui/Spinner'
 import { TextField } from '@/shared/ui/Textfield'
+import { Typography } from '@/shared/ui/Typography'
+import { ControlledTextAreaField } from '@/shared/ui/controlledInsta/ControlledTextArea/ControlledTextArea'
+import { ControlledTextField } from '@/shared/ui/controlledInsta/ControlledTextField/ControlledTextField'
 import { TextFieldsProps } from '@/widgets/profile/profileSettings/ui/generalInformation/ui/textFields/container'
 import { clsx } from 'clsx'
 
 import s from './TextFields.module.scss'
 
 export const TextFields = memo(
-  ({ cities, city, dropdownOpen, handleInputChange, handleOptionClick, t }: TextFieldsProps) => {
+  ({
+    cities,
+    cityValue,
+    control,
+    dropdownOpen,
+    errorAboutMe,
+    errorFirstName,
+    errorLastName,
+    errorUserName,
+    handleCityChange,
+    handleOptionClick,
+    isDisabled,
+    isLoading,
+    t,
+    updateProfileHandler,
+  }: TextFieldsProps) => {
     return (
-      <div className={s.smallContainer}>
+      <form className={s.container}>
         <div className={s.inputWrap}>
           <label className={s.label}>
             {t.profileSettings.tab.generalInformation.form.username}
             <span className={s.star}>*</span>
-            <TextField />
+            <ControlledTextField control={control} errorMessage={errorUserName} name={'userName'} />
           </label>
         </div>
         <div className={s.inputWrap}>
           <label className={s.label}>
             {t.profileSettings.tab.generalInformation.form.firstname}
             <span className={s.star}>*</span>
-            <TextField />
+            <ControlledTextField
+              control={control}
+              errorMessage={errorFirstName}
+              name={'firstName'}
+            />
           </label>
         </div>
         <div className={s.inputWrap}>
           <label className={s.label}>
             {t.profileSettings.tab.generalInformation.form.lastname}
             <span className={s.star}>*</span>
-            <TextField />
+            <ControlledTextField control={control} errorMessage={errorLastName} name={'lastName'} />
           </label>
         </div>
         <div className={s.inputWrap}>
           <label className={s.label}>
             {t.profileSettings.tab.generalInformation.form.city}
             <TextField
-              onChange={e => handleInputChange(e.target.value)}
+              onChange={e => handleCityChange(e.target.value)}
               placeholder={t.profileSettings.tab.generalInformation.form.enterName}
-              value={city}
+              value={cityValue}
             />
           </label>
           <ul className={clsx(cities.length > 0 ? s.citiesList : s.displayNone, 'target')}>
@@ -52,10 +75,19 @@ export const TextFields = memo(
         </div>
         <div className={s.inputWrap}>
           <label className={s.label}>
-            {t.profileSettings.tab.generalInformation.form.aboutMe} <TextArea rows={3} />
+            {t.profileSettings.tab.generalInformation.form.aboutMe}
+            <ControlledTextAreaField
+              control={control}
+              errorMessage={errorAboutMe}
+              name={'aboutMe'}
+              rows={3}
+            />
           </label>
         </div>
-      </div>
+        <Button className={s.button} disabled={isDisabled} onClick={updateProfileHandler}>
+          {isLoading ? <Spinner /> : <Typography>{t.button.saveChanges}</Typography>}
+        </Button>
+      </form>
     )
   }
 )

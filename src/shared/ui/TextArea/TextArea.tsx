@@ -1,4 +1,4 @@
-import React, { ComponentProps, FC, KeyboardEvent } from 'react'
+import React, { ComponentProps, FC, KeyboardEvent, forwardRef } from 'react'
 
 import { Typography } from '@/shared/ui/Typography'
 import * as Label from '@radix-ui/react-label'
@@ -25,48 +25,50 @@ export type TextAreaFieldProps = {
   value?: string
 } & ComponentProps<'textarea'>
 
-export const TextArea: FC<TextAreaFieldProps> = ({
-  // onClearValue,
-  className,
-  disabled,
-  errorMessage,
-  label,
-  maxLength = 501,
-  onKeyDown,
-  value,
-  ...rest
-}) => {
-  const showError = errorMessage && errorMessage.length > 0
+export const TextArea: FC<TextAreaFieldProps> = forwardRef(
+  ({
+    // onClearValue,
+    className,
+    disabled,
+    errorMessage,
+    label,
+    maxLength = 501,
+    onKeyDown,
+    value,
+    ...rest
+  }) => {
+    const showError = errorMessage && errorMessage.length > 0
 
-  const classNames = {
-    iconButton: clsx(s.iconButton, disabled && s.disabled),
-    iconStart: clsx(s.iconStart),
-    root: clsx(s.root, className),
-    textarea: clsx(s.textarea, showError && s.error),
+    const classNames = {
+      iconButton: clsx(s.iconButton, disabled && s.disabled),
+      iconStart: clsx(s.iconStart),
+      root: clsx(s.root, className),
+      textarea: clsx(s.textarea, showError && s.error),
+    }
+
+    return (
+      <div className={classNames.root}>
+        <Label.Root>
+          <Typography className={s.errorLabelText} color={'form'} variant={'regular14'}>
+            {label}
+          </Typography>
+          <div className={s.textAreaContainer}>
+            <textarea
+              className={classNames.textarea}
+              disabled={disabled}
+              maxLength={maxLength}
+              onKeyDown={onKeyDown}
+              value={value}
+              {...rest}
+            />
+          </div>
+        </Label.Root>
+        {showError && (
+          <Typography className={s.errorMessageText} color={'error'} variant={'error'}>
+            {errorMessage}
+          </Typography>
+        )}
+      </div>
+    )
   }
-
-  return (
-    <div className={classNames.root}>
-      <Label.Root>
-        <Typography className={s.errorLabelText} color={'form'} variant={'regular14'}>
-          {label}
-        </Typography>
-        <div className={s.textAreaContainer}>
-          <textarea
-            className={classNames.textarea}
-            disabled={disabled}
-            maxLength={maxLength}
-            onKeyDown={onKeyDown}
-            value={value}
-            {...rest}
-          />
-        </div>
-      </Label.Root>
-      {showError && (
-        <Typography className={s.errorMessageText} color={'error'} variant={'error'}>
-          {errorMessage}
-        </Typography>
-      )}
-    </div>
-  )
-}
+)

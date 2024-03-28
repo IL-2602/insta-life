@@ -1,4 +1,4 @@
-import { Ref } from 'react'
+import { Ref, forwardRef } from 'react'
 import { Control, FieldPath, FieldValues, useController } from 'react-hook-form'
 
 import { TextArea, TextAreaFieldProps } from '@/shared/ui/TextArea'

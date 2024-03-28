@@ -45,7 +45,7 @@
   }
 }
 
-.smallContainer {
+.container {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -68,4 +68,10 @@
 .label {
   font: var(--font-regular-14);
   color: var(--color-light-900);
+}
+
+.button {
+  align-self: flex-end;
+  width: 160px;
+  margin-top: 24px;
 }
