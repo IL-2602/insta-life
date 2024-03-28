@@ -1,14 +1,13 @@
 import { Ref } from 'react'
 import { Control, FieldPath, FieldValues, useController } from 'react-hook-form'
 
-import { TextField } from '@/shared/ui/Textfield'
-import { TextFieldProps } from '@/shared/ui/Textfield/TextField'
+import { TextArea, TextAreaFieldProps } from '@/shared/ui/TextArea'
 
 type Props<T extends FieldValues> = {
   control: Control<T>
   name: FieldPath<T>
-} & Omit<TextFieldProps, 'onChange' | 'value'>
-export const ControlledTextField = <T extends FieldValues>(
+} & Omit<TextAreaFieldProps, 'onChange' | 'value'>
+export const ControlledTextAreaField = <T extends FieldValues>(
   { control, name, ...rest }: Props<T>,
   ref: Ref<HTMLInputElement>
 ) => {
@@ -20,5 +19,5 @@ export const ControlledTextField = <T extends FieldValues>(
     name,
   })
 
-  return <TextField {...field} errorMessage={error?.message} {...rest} />
+  return <TextArea {...field} errorMessage={error?.message} {...rest} />
 }

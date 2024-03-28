@@ -7,7 +7,7 @@ import { useTranslation } from '@/shared/hooks/useTranslation'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-const userNameRegExp = RegExp(/^[0-9A-Za-z]+$/)
+export const userNameRegExp = RegExp(/^[0-9A-Za-z]+$/)
 const passwordRegExp = RegExp(/^[0-9A-Za-z!"#$%&'()*+,\-./:;<=>?@[\]^_`{|}~]+$/)
 
 const signUpSchema = z

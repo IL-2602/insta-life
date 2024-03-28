@@ -1,3 +1,7 @@
+import { useTranslation } from '@/shared/hooks/useTranslation'
+
 export const useContainer = () => {
-  return {}
+  const { t } = useTranslation()
+
+  return { t }
 }
