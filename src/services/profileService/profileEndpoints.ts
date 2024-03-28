@@ -1,5 +1,8 @@
 import { api } from '@/services/api'
+import { ErrorResponse } from '@/services/authService/lib/authEndpoints.types'
 import { Avatar, Profile } from '@/shared/types/profile'
+
+import { UpdateProfileParams } from './lib/profileEnpoints.types'
 
 const profileEndpoints = api.injectEndpoints({
   endpoints: builder => ({
@@ -33,6 +36,16 @@ const profileEndpoints = api.injectEndpoints({
     getProfile: builder.query<Profile, void>({
       providesTags: ['Profile'],
       query: _ => `users/profile`,
+    }),
+    updateProfile: builder.mutation<ErrorResponse, UpdateProfileParams>({
+      invalidatesTags: ['Profile'],
+      query: args => {
+        return {
+          body: args,
+          method: 'PUT',
+          url: 'users/profile',
+        }
+      },
     }),
     uploadAvatar: builder.mutation<Avatar[], { file: FormData }>({
       invalidatesTags: ['Profile'],
@@ -71,5 +84,9 @@ const profileEndpoints = api.injectEndpoints({
   }),
 })
 
-export const { useDeleteAvatarMutation, useGetProfileQuery, useUploadAvatarMutation } =
-  profileEndpoints
+export const {
+  useDeleteAvatarMutation,
+  useGetProfileQuery,
+  useUpdateProfileMutation,
+  useUploadAvatarMutation,
+} = profileEndpoints
