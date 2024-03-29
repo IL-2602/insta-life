@@ -1,5 +1,5 @@
 import { ProfileHeaderProps } from '@/widgets/profile/profileHeader/container'
-import { Avatar } from '@/widgets/profile/profileHeader/ui/Avatar/Avatar'
+import { Avatar } from '@/widgets/profile/profileHeader/ui/Avatar'
 import { ProfileInfo } from '@/widgets/profile/profileHeader/ui/ProfileInfo/ProfileInfo'
 
 import s from './ProfileHeader.module.scss'
