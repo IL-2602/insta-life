@@ -251,13 +251,18 @@ export const ru: Local = {
       },
       generalInformation: {
         error: {
+          aboutMeDescription:
+            'Графа обо мне должна содержать 0-9, A-Z, a-z, А-Я, а-я и специальные символы',
           aboutMeValueMax: 'Максимальное количество символов 200 знаков',
           descriptionValueMax: 'Максимальное количество символов 500 знаков',
+          firstNameDescription: 'Имя должно содержать A-Z, a-z, А-Я, а-я',
           firstNameMax: 'Имя пользователя не может быть больше 50 символов',
           firstNameMin: 'Введите имя',
           invalidUsername: 'Имя и фамилия должны содержать только буквы',
+          lastNameDescription: 'Фамилия должна содержать A-Z, a-z, А-Я, а-я',
           lastNameMax: 'Фамилия пользователя не может быть больше 50 символов',
           lastNameMin: 'Введите фамилию',
+          userNameDescription: 'Имя пользователя должно содержать a-z, A-Z, 0-9, _, -',
           userNameMax: 'Имя пользователя не может быть больше 30 символов',
           userNameMin: 'Имя пользователя не может быть меньше 6 символов',
         },
