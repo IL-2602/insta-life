@@ -1,9 +1,22 @@
 .wrapper {
   display: flex;
   gap: 28px;
-  justify-content: space-between;
 
   @media (width <= 720px) {
     flex-wrap: wrap;
   }
+}
+
+.avatarWrapper {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 192px;
+  height: 192px;
+
+  background: var(--color-dark-500);
+  border-radius: 50%;
 }

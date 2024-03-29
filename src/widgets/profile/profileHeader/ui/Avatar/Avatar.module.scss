@@ -1,4 +1,8 @@
 .avatar {
+  border-radius: 100%;
+}
+
+.avatarNoCover {
   display: flex;
   flex-shrink: 0;
   align-items: center;

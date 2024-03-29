@@ -10,7 +10,7 @@ export const ProfileInfo = ({ aboutMe, userName }: Props) => {
   const SettingsButton = 'Profile Settings'
 
   return (
-    <div>
+    <div className={s.profileInfo}>
       <div className={s.mainWrapper}>
         <div className={s.titleAndStat}>
           <Typography variant={'h1'}>{userName}</Typography>

@@ -1,7 +1,12 @@
+.profileInfo {
+  flex-grow: 1;
+}
+
 .mainWrapper {
   display: flex;
   flex: 1;
   flex-wrap: wrap;
+  gap: 20px;
   align-items: flex-start;
   justify-content: space-between;
 }
