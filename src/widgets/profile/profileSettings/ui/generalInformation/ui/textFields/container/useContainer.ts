@@ -1,43 +1,9 @@
 import { SetStateAction, useEffect, useState } from 'react'
-import { useForm } from 'react-hook-form'
 
 import { useUpdateProfileMutation } from '@/services/profileService/profileEndpoints'
 import { useTranslation } from '@/shared/hooks/useTranslation'
-import { zodResolver } from '@hookform/resolvers/zod'
+import { useProfileSettingsForm } from '@/widgets/profile/profileSettings/ui/generalInformation/ui/textFields/hooks/useProfileSettingsForm'
 import { useDebouncedCallback } from 'use-debounce'
-import { z } from 'zod'
-
-const userNameRegExp = RegExp(/^[0-9A-Za-z_-]+$/)
-const firstAndLastNameRegExp = RegExp(/^[A-Za-zА-Яа-я]*$/)
-const AboutMeRegExp = RegExp(/^[0-9A-Za-zА-Яа-я\W\s]*$/)
-
-const profileSchema = z.object({
-  aboutMe: z
-    .string()
-    .regex(AboutMeRegExp, 'About Me must contain 0-9, A-Z, a-z, А-Я, а-я and special characters')
-    .trim()
-    .max(200, 'Maximum number of characters 200'),
-  firstName: z
-    .string()
-    .regex(firstAndLastNameRegExp, 'First Name must contain A-Z, a-z, А-Я, а-я')
-    .trim()
-    .min(1, 'Minimum number of characters 1')
-    .max(50, 'Maximum number of characters 50'),
-  lastName: z
-    .string()
-    .regex(firstAndLastNameRegExp, 'Last Name must contain A-Z, a-z, А-Я, а-я')
-    .trim()
-    .min(1, 'Minimum number of characters 1')
-    .max(50, 'Maximum number of characters 50'),
-  userName: z
-    .string()
-    .regex(userNameRegExp, 'Username must contain a-z, A-Z, 0-9, _, -')
-    .trim()
-    .min(6, 'Minimum number of characters 6')
-    .max(30, 'Maximum number of characters 30'),
-})
-
-type profileFormSchema = z.infer<typeof profileSchema>
 
 export const useContainer = () => {
   const { t } = useTranslation()
@@ -47,22 +13,9 @@ export const useContainer = () => {
   const [selectedCity, setSelectedCity] = useState('')
   const [dropdownOpen, setDropdownOpen] = useState(false)
 
-  const {
-    control,
-    formState: { errors },
-    handleSubmit,
-    setError,
-    watch,
-  } = useForm<profileFormSchema>({
-    defaultValues: {
-      aboutMe: '',
-      firstName: '',
-      lastName: '',
-      userName: '',
-    },
-    mode: 'onTouched',
-    resolver: zodResolver(profileSchema),
-  })
+  const [updateProfile, { isLoading }] = useUpdateProfileMutation()
+
+  const { control, errors, handleSubmit, watch } = useProfileSettingsForm()
 
   const errorUserName = errors.userName?.message
   const errorFirstName = errors.firstName?.message
@@ -75,8 +28,6 @@ export const useContainer = () => {
   const aboutMe = watch('aboutMe')
 
   const isDisabled = !userName || !firstName || !lastName || !Object.keys(errors)
-
-  const [updateProfile, { isLoading }] = useUpdateProfileMutation()
 
   const debouncedSearch = useDebouncedCallback((query: string) => {
     fetch(
