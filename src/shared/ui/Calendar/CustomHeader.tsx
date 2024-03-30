@@ -9,7 +9,12 @@ export const CustomHeader = ({
   changeMonth,
   changeYear,
   date,
-}: Pick<ReactDatePickerCustomHeaderProps, 'changeMonth' | 'changeYear' | 'date'>) => {
+  decreaseMonth,
+  increaseMonth,
+}: Pick<
+  ReactDatePickerCustomHeaderProps,
+  'changeMonth' | 'changeYear' | 'date' | 'decreaseMonth' | 'increaseMonth'
+>) => {
   const months = [
     { title: 'January' },
     { title: 'February' },
@@ -64,10 +69,14 @@ export const CustomHeader = ({
       </div>
 
       <button>
-        <div className={s.arrowLeft}>{'<'}</div>
+        <div className={s.arrowLeft} onClick={decreaseMonth}>
+          {'<'}
+        </div>
       </button>
       <button>
-        <div className={s.arrowRight}>{'>'}</div>
+        <div className={s.arrowRight} onClick={increaseMonth}>
+          {'>'}
+        </div>
       </button>
     </div>
   )
