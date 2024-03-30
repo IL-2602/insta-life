@@ -7,6 +7,8 @@ import { enUS, ru } from 'date-fns/locale'
 
 import 'react-datepicker/dist/react-datepicker.css'
 
+import CalendarIcon from '../../assets/icons/Calendar/Calendar'
+
 // eslint-disable-next-line prettier/prettier
 
 import { CustomHeader } from '@/shared/ui/Calendar/CustomHeader'
@@ -25,6 +27,7 @@ export const Calendar = () => {
     <DatePicker
       customInput={
         <TextField
+          iconEnd={<CalendarIcon />}
           label={t.profileSettings.tab.generalInformation.form.dateOfBirthday}
           name={'calendar'}
         />
