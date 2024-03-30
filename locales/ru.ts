@@ -162,7 +162,7 @@ export const ru: Local = {
     publish: 'Опубликовать',
     removeUser: 'Удалить пользователя',
     save: 'Сохранить',
-    saveChanges: 'Сохранить изменения',
+    saveChanges: 'Сохранить',
     saveDraft: 'Сохранить черновик',
     selectFromComputer: 'Выбрать фаил',
     sendMessage: 'Отправить сообщение',

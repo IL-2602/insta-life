@@ -12,8 +12,9 @@ export const useContainer = () => {
   const [cityValue, setCityValue] = useState('')
   const [selectedCity, setSelectedCity] = useState('')
   const [dropdownOpen, setDropdownOpen] = useState(false)
+  const [isFetchSuccess, setIsFetchSuccess] = useState(false)
 
-  const [updateProfile, { isLoading }] = useUpdateProfileMutation()
+  const [updateProfile, { isLoading, isSuccess }] = useUpdateProfileMutation()
 
   const { control, errors, handleSubmit, watch } = useProfileSettingsForm()
 
@@ -22,12 +23,19 @@ export const useContainer = () => {
   const errorLastName = errors.lastName?.message
   const errorAboutMe = errors.aboutMe?.message
 
-  const userName = watch('userName')
-  const firstName = watch('firstName')
-  const lastName = watch('lastName')
-  const aboutMe = watch('aboutMe')
+  const inputFields = {
+    aboutMe: watch('aboutMe'),
+    firstName: watch('firstName'),
+    lastName: watch('lastName'),
+    userName: watch('userName'),
+  }
 
-  const isDisabled = !userName || !firstName || !lastName || !Object.keys(errors)
+  const isDisabled =
+    !inputFields.userName ||
+    !inputFields.firstName ||
+    !inputFields.lastName ||
+    !Object.keys(errors) ||
+    isFetchSuccess
 
   const debouncedSearch = useDebouncedCallback((query: string) => {
     fetch(
@@ -82,11 +90,11 @@ export const useContainer = () => {
 
   const updateProfileHandler = handleSubmit(() => {
     updateProfile({
-      aboutMe,
+      aboutMe: inputFields.aboutMe,
       city: selectedCity,
-      firstName,
-      lastName,
-      userName,
+      firstName: inputFields.firstName,
+      lastName: inputFields.lastName,
+      userName: inputFields.userName,
     })
       .unwrap()
       .then(res => console.log(res))
