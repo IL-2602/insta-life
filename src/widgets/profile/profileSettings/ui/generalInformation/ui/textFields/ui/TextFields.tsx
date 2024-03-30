@@ -1,6 +1,7 @@
 import { memo } from 'react'
 
 import { Button } from '@/shared/ui/Button'
+import { Calendar } from '@/shared/ui/Calendar/Calendar'
 import { Spinner } from '@/shared/ui/Spinner'
 import { TextField } from '@/shared/ui/Textfield'
 import { Typography } from '@/shared/ui/Typography'
@@ -53,6 +54,11 @@ export const TextFields = memo(
             {t.profileSettings.tab.generalInformation.form.lastname}
             <span className={s.star}>*</span>
             <ControlledTextField control={control} errorMessage={errorLastName} name={'lastName'} />
+          </label>
+        </div>
+        <div className={s.inputWrap}>
+          <label className={s.label}>
+            <Calendar />
           </label>
         </div>
         <div className={s.inputWrap}>
