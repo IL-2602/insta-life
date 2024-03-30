@@ -7,6 +7,8 @@ import { enUS, ru } from 'date-fns/locale'
 
 import 'react-datepicker/dist/react-datepicker.css'
 
+import CalendarIcon from '../../assets/icons/Calendar/Calendar'
+
 // eslint-disable-next-line prettier/prettier
 
 import { CustomHeader } from '@/shared/ui/Calendar/CustomHeader'
@@ -25,6 +27,7 @@ export const Calendar = () => {
     <DatePicker
       customInput={
         <TextField
+          iconEnd={<CalendarIcon />}
           label={t.profileSettings.tab.generalInformation.form.dateOfBirthday}
           name={'calendar'}
         />
@@ -33,8 +36,14 @@ export const Calendar = () => {
       formatWeekDay={date => date.substring(0, 3)}
       locale={locale === 'ru' ? ru : enUS}
       onChange={(date: any) => setStartDate(date)}
-      renderCustomHeader={({ changeMonth, changeYear, date }) => (
-        <CustomHeader changeMonth={changeMonth} changeYear={changeYear} date={date} />
+      renderCustomHeader={({ changeMonth, changeYear, date, decreaseMonth, increaseMonth }) => (
+        <CustomHeader
+          changeMonth={changeMonth}
+          changeYear={changeYear}
+          date={date}
+          decreaseMonth={decreaseMonth}
+          increaseMonth={increaseMonth}
+        />
       )}
       selected={startDate}
       showMonthDropdown
