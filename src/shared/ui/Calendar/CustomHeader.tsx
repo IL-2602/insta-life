@@ -68,16 +68,16 @@ export const CustomHeader = ({
         ></SelectComponent>
       </div>
 
-      <button>
+      <div>
         <div className={s.arrowLeft} onClick={decreaseMonth}>
           {'<'}
         </div>
-      </button>
-      <button>
+      </div>
+      <div>
         <div className={s.arrowRight} onClick={increaseMonth}>
           {'>'}
         </div>
-      </button>
+      </div>
     </div>
   )
 }
