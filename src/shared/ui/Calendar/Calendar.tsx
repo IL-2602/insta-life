@@ -2,34 +2,35 @@ import React, { useState } from 'react'
 import DatePicker from 'react-datepicker'
 
 import { useTranslation } from '@/shared/hooks/useTranslation'
-import { TextField } from '@/shared/ui/Textfield'
+import { CustomHeader } from '@/shared/ui/Calendar/CustomHeader'
+import { ControlledTextField } from '@/shared/ui/controlledInsta/ControlledTextField/ControlledTextField'
 import { enUS, ru } from 'date-fns/locale'
+import { useRouter } from 'next/router'
 
+import './Calendar.scss'
 import 'react-datepicker/dist/react-datepicker.css'
 
 import CalendarIcon from '../../assets/icons/Calendar/Calendar'
 
-// eslint-disable-next-line prettier/prettier
-
-import { CustomHeader } from '@/shared/ui/Calendar/CustomHeader'
-import { useRouter } from 'next/router'
-
-import './Calendar.scss'
-export const Calendar = () => {
+type Props = {
+  control: any
+  errorDateOfBirth: string | undefined
+  errorMessage: string | undefined
+}
+export const Calendar = ({ control, errorDateOfBirth, errorMessage }: Props) => {
   const [startDate, setStartDate] = useState(new Date())
   const { t } = useTranslation()
-
-  console.log(startDate)
 
   const { locale } = useRouter()
 
   return (
     <DatePicker
       customInput={
-        <TextField
+        <ControlledTextField
+          control={control}
+          errorMessage={errorDateOfBirth}
           iconEnd={<CalendarIcon />}
-          label={t.profileSettings.tab.generalInformation.form.dateOfBirthday}
-          name={'calendar'}
+          name={'dateOfBirth'}
         />
       }
       dateFormatCalendar={'YYYY'}

@@ -3,7 +3,10 @@ import { SetStateAction, useEffect, useState } from 'react'
 import { useUpdateProfileMutation } from '@/services/profileService/profileEndpoints'
 import { useTranslation } from '@/shared/hooks/useTranslation'
 import { useProfileSettingsForm } from '@/widgets/profile/profileSettings/ui/generalInformation/ui/textFields/hooks/useProfileSettingsForm'
+import { Simulate } from 'react-dom/test-utils'
 import { useDebouncedCallback } from 'use-debounce'
+
+import input = Simulate.input
 
 export const useContainer = () => {
   const { t } = useTranslation()
@@ -22,9 +25,11 @@ export const useContainer = () => {
   const errorFirstName = errors.firstName?.message
   const errorLastName = errors.lastName?.message
   const errorAboutMe = errors.aboutMe?.message
+  const errorDateOfBirth = errors.dateOfBirth?.message
 
   const inputFields = {
     aboutMe: watch('aboutMe'),
+    dateOfBirth: watch('dateOfBirth'),
     firstName: watch('firstName'),
     lastName: watch('lastName'),
     userName: watch('userName'),
@@ -92,6 +97,7 @@ export const useContainer = () => {
     updateProfile({
       aboutMe: inputFields.aboutMe,
       city: selectedCity,
+      dateOfBirth: inputFields.dateOfBirth,
       firstName: inputFields.firstName,
       lastName: inputFields.lastName,
       userName: inputFields.userName,
@@ -107,6 +113,7 @@ export const useContainer = () => {
     control,
     dropdownOpen,
     errorAboutMe,
+    errorDateOfBirth,
     errorFirstName,
     errorLastName,
     errorUserName,

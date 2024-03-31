@@ -19,6 +19,7 @@ export const TextFields = memo(
     control,
     dropdownOpen,
     errorAboutMe,
+    errorDateOfBirth,
     errorFirstName,
     errorLastName,
     errorUserName,
@@ -58,7 +59,11 @@ export const TextFields = memo(
         </div>
         <div className={s.inputWrap}>
           <label className={s.label}>
-            <Calendar />
+            <Calendar
+              control={control}
+              errorDateOfBirth={errorDateOfBirth}
+              errorMessage={errorDateOfBirth}
+            />
           </label>
         </div>
         <div className={s.inputWrap}>

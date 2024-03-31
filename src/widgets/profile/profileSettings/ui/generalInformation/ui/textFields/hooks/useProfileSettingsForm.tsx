@@ -18,6 +18,7 @@ export const useProfileSettingsForm = () => {
       .regex(AboutMeRegExp, t.profileSettings.tab.generalInformation.error.aboutMeDescription)
       .trim()
       .max(200, t.profileSettings.tab.generalInformation.error.aboutMeValueMax),
+    dateOfBirth: z.string().trim(),
     firstName: z
       .string()
       .regex(
@@ -57,6 +58,7 @@ export const useProfileSettingsForm = () => {
   } = useForm<profileFormSchema>({
     defaultValues: {
       aboutMe: profile ? profile.aboutMe : '',
+      dateOfBirth: profile ? profile.dateOfBirth : '',
       firstName: profile ? profile.firstName : '',
       lastName: profile ? profile.lastName : '',
       userName: profile ? profile.userName : '',
