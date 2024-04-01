@@ -80,7 +80,7 @@ export const useContainer = () => {
         calendar: profile?.dateOfBirth
           ? parse(profile.dateOfBirth, "yyyy-MM-dd'T'HH:mm:ss.SSSX", new Date())
           : null,
-        firstName: profile.userName,
+        firstName: profile.firstName,
         lastName: profile.lastName,
         userName: profile.userName,
       })
