@@ -16,13 +16,14 @@
     border-bottom: none;
   }
 
+  &__day:hover {
+    color: var(--color-dark-700);
+  }
+
   &__day-names {
     display: grid;
     grid-template: 1fr / repeat(7, 1fr);
     justify-content: space-between;
-
-    margin-bottom: 12px;
-
     background-color: transparent;
   }
 
@@ -67,8 +68,8 @@
   &__day-name {
     color: var(--color-light-900);
   }
-}
 
-.react-datepicker-wrapper {
-  width: 100%;
+  &-wrapper {
+    width: 100%;
+  }
 }

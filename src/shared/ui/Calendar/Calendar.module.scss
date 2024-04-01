@@ -26,10 +26,18 @@
     align-items: center;
     justify-content: center;
 
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
 
     background-color: var(--color-dark-100);
     border-radius: 50%;
+
+    &:hover {
+      opacity: 0.8;
+    }
   }
+}
+
+.arrowLeft {
+  margin-left: 10px;
 }
