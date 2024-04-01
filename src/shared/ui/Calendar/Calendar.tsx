@@ -24,47 +24,45 @@ export const Calendar = ({ control, errorMessage, name }: Props) => {
   const { locale } = useRouter()
 
   return (
-    <>
-      <Controller
-        control={control}
-        name={name}
-        render={({ field: { onBlur, onChange, ref, value } }) => {
-          return (
-            <DatePicker
-              className={`${moduleStyles}`}
-              customInput={
-                <TextField
-                  defaultValue={'00/00/0000'}
-                  errorMessage={errorMessage}
-                  iconEnd={<CalendarIcon />}
-                />
-              }
-              dateFormat={'dd/MM/yyyy'}
-              formatWeekDay={date => date.substring(0, 3)}
-              locale={locale === 'ru' ? ru : enUS}
-              onChange={onChange}
-              renderCustomHeader={({
-                changeMonth,
-                changeYear,
-                date,
-                decreaseMonth,
-                increaseMonth,
-              }) => (
-                <CustomHeader
-                  changeMonth={changeMonth}
-                  changeYear={changeYear}
-                  date={date}
-                  decreaseMonth={decreaseMonth}
-                  increaseMonth={increaseMonth}
-                />
-              )}
-              selected={value}
-              showMonthDropdown
-              showYearDropdown
-            />
-          )
-        }}
-      />
-    </>
+    <Controller
+      control={control}
+      name={name}
+      render={({ field: { onBlur, onChange, ref, value } }) => {
+        return (
+          <DatePicker
+            className={`${moduleStyles}`}
+            customInput={
+              <TextField
+                defaultValue={'00/00/0000'}
+                errorMessage={errorMessage}
+                iconEnd={<CalendarIcon />}
+              />
+            }
+            dateFormat={'dd/MM/yyyy'}
+            formatWeekDay={date => date.substring(0, 3)}
+            locale={locale === 'ru' ? ru : enUS}
+            onChange={onChange}
+            renderCustomHeader={({
+              changeMonth,
+              changeYear,
+              date,
+              decreaseMonth,
+              increaseMonth,
+            }) => (
+              <CustomHeader
+                changeMonth={changeMonth}
+                changeYear={changeYear}
+                date={date}
+                decreaseMonth={decreaseMonth}
+                increaseMonth={increaseMonth}
+              />
+            )}
+            selected={value}
+            showMonthDropdown
+            showYearDropdown
+          />
+        )
+      }}
+    />
   )
 }

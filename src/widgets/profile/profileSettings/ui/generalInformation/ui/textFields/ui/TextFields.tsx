@@ -64,6 +64,7 @@ export const TextFields = memo(
         </div>
         <div className={s.inputWrap}>
           <label className={s.label}>
+            {t.profileSettings.tab.generalInformation.form.dateOfBirthday}
             <Calendar control={control} errorMessage={errorDateOfBirth} name={'calendar'} />
           </label>
         </div>
