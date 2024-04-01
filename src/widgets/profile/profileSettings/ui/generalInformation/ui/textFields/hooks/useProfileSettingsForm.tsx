@@ -17,8 +17,9 @@ export const useProfileSettingsForm = () => {
       .string()
       .regex(AboutMeRegExp, t.profileSettings.tab.generalInformation.error.aboutMeDescription)
       .trim()
-      .max(200, t.profileSettings.tab.generalInformation.error.aboutMeValueMax),
-    dateOfBirth: z.string().trim(),
+      .max(200, t.profileSettings.tab.generalInformation.error.aboutMeValueMax)
+      .nullable(),
+    calendar: z.date().nullable(),
     firstName: z
       .string()
       .regex(
@@ -47,22 +48,18 @@ export const useProfileSettingsForm = () => {
 
   type profileFormSchema = z.infer<typeof profileSchema>
 
-  const { data: profile } = useGetProfileQuery()
+  const { data: profile, isLoading: isGetProfileLoading } = useGetProfileQuery()
 
   const {
     control,
     formState: { errors },
     handleSubmit,
+    register,
+    reset,
     setError,
+    setValue,
     watch,
   } = useForm<profileFormSchema>({
-    defaultValues: {
-      aboutMe: profile ? profile.aboutMe : '',
-      dateOfBirth: profile ? profile.dateOfBirth : '',
-      firstName: profile ? profile.firstName : '',
-      lastName: profile ? profile.lastName : '',
-      userName: profile ? profile.userName : '',
-    },
     mode: 'onTouched',
     resolver: zodResolver(profileSchema),
   })
@@ -71,6 +68,11 @@ export const useProfileSettingsForm = () => {
     control,
     errors,
     handleSubmit,
+    isGetProfileLoading,
+    profile,
+    register,
+    reset,
+    setValue,
     watch,
   }
 }

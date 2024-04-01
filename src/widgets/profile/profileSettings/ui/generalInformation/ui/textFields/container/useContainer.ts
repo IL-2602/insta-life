@@ -3,10 +3,8 @@ import { SetStateAction, useEffect, useState } from 'react'
 import { useUpdateProfileMutation } from '@/services/profileService/profileEndpoints'
 import { useTranslation } from '@/shared/hooks/useTranslation'
 import { useProfileSettingsForm } from '@/widgets/profile/profileSettings/ui/generalInformation/ui/textFields/hooks/useProfileSettingsForm'
-import { Simulate } from 'react-dom/test-utils'
+import { parse } from 'date-fns'
 import { useDebouncedCallback } from 'use-debounce'
-
-import input = Simulate.input
 
 export const useContainer = () => {
   const { t } = useTranslation()
@@ -15,32 +13,28 @@ export const useContainer = () => {
   const [cityValue, setCityValue] = useState('')
   const [selectedCity, setSelectedCity] = useState('')
   const [dropdownOpen, setDropdownOpen] = useState(false)
-  const [isFetchSuccess, setIsFetchSuccess] = useState(false)
 
-  const [updateProfile, { isLoading, isSuccess }] = useUpdateProfileMutation()
+  const [updateProfile, { isLoading }] = useUpdateProfileMutation()
 
-  const { control, errors, handleSubmit, watch } = useProfileSettingsForm()
+  const { control, errors, handleSubmit, isGetProfileLoading, profile, register, reset, watch } =
+    useProfileSettingsForm()
 
   const errorUserName = errors.userName?.message
   const errorFirstName = errors.firstName?.message
   const errorLastName = errors.lastName?.message
   const errorAboutMe = errors.aboutMe?.message
-  const errorDateOfBirth = errors.dateOfBirth?.message
+  const errorDateOfBirth = errors.calendar?.message
 
   const inputFields = {
     aboutMe: watch('aboutMe'),
-    dateOfBirth: watch('dateOfBirth'),
+    calendar: watch('calendar'),
     firstName: watch('firstName'),
     lastName: watch('lastName'),
     userName: watch('userName'),
   }
 
   const isDisabled =
-    !inputFields.userName ||
-    !inputFields.firstName ||
-    !inputFields.lastName ||
-    !Object.keys(errors) ||
-    isFetchSuccess
+    !inputFields.userName || !inputFields.firstName || !inputFields.lastName || !Object.keys(errors)
 
   const debouncedSearch = useDebouncedCallback((query: string) => {
     fetch(
@@ -80,6 +74,20 @@ export const useContainer = () => {
   }
 
   useEffect(() => {
+    if (profile) {
+      reset({
+        aboutMe: profile.aboutMe,
+        calendar: profile?.dateOfBirth
+          ? parse(profile.dateOfBirth, "yyyy-MM-dd'T'HH:mm:ss.SSSX", new Date())
+          : null,
+        firstName: profile.userName,
+        lastName: profile.lastName,
+        userName: profile.userName,
+      })
+    }
+  }, [profile, reset])
+
+  useEffect(() => {
     if (cities) {
       setDropdownOpen(true)
     }
@@ -97,7 +105,7 @@ export const useContainer = () => {
     updateProfile({
       aboutMe: inputFields.aboutMe,
       city: selectedCity,
-      dateOfBirth: inputFields.dateOfBirth,
+      dateOfBirth: inputFields?.calendar,
       firstName: inputFields.firstName,
       lastName: inputFields.lastName,
       userName: inputFields.userName,
@@ -120,7 +128,9 @@ export const useContainer = () => {
     handleCityChange,
     handleOptionClick,
     isDisabled,
+    isGetProfileLoading,
     isLoading,
+    register,
     t,
     updateProfileHandler,
   }

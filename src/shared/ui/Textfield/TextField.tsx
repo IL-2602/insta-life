@@ -1,6 +1,7 @@
 import React, {
   ComponentPropsWithoutRef,
   FC,
+  ForwardedRef,
   KeyboardEvent,
   ReactNode,
   forwardRef,
@@ -28,7 +29,7 @@ export type TextFieldProps = {
   value?: string
 } & ComponentPropsWithoutRef<'input'>
 
-export const TextField: FC<TextFieldProps> = forwardRef<HTMLInputElement, TextFieldProps>(
+export const TextField: FC<TextFieldProps> = forwardRef(
   (
     {
       className,
@@ -44,7 +45,7 @@ export const TextField: FC<TextFieldProps> = forwardRef<HTMLInputElement, TextFi
       value,
       ...rest
     },
-    ref
+    ref: ForwardedRef<HTMLInputElement>
   ) => {
     const [inputRef, setInputRef] = useState<HTMLInputElement | null>(null)
     const [showPassword, setShowPassword] = useState<boolean>(false)
@@ -94,7 +95,7 @@ export const TextField: FC<TextFieldProps> = forwardRef<HTMLInputElement, TextFi
               disabled={disabled}
               onDoubleClick={handleDoubleClick}
               onKeyDown={handleKeyDown}
-              ref={ref => setInputRef(ref)}
+              ref={ref}
               type={showPassword ? 'text' : type}
               value={value}
               {...rest}

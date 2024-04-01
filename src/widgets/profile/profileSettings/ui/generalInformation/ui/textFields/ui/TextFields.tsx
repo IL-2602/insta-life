@@ -26,10 +26,15 @@ export const TextFields = memo(
     handleCityChange,
     handleOptionClick,
     isDisabled,
+    isGetProfileLoading,
     isLoading,
     t,
     updateProfileHandler,
   }: TextFieldsProps) => {
+    if (isGetProfileLoading) {
+      return <Spinner />
+    }
+
     return (
       <form className={s.container}>
         <div className={s.inputWrap}>
@@ -59,11 +64,7 @@ export const TextFields = memo(
         </div>
         <div className={s.inputWrap}>
           <label className={s.label}>
-            <Calendar
-              control={control}
-              errorDateOfBirth={errorDateOfBirth}
-              errorMessage={errorDateOfBirth}
-            />
+            <Calendar control={control} errorMessage={errorDateOfBirth} name={'calendar'} />
           </label>
         </div>
         <div className={s.inputWrap}>
