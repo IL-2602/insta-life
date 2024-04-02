@@ -9,6 +9,7 @@ import { ControlledTextAreaField } from '@/shared/ui/controlledInsta/ControlledT
 import { ControlledTextField } from '@/shared/ui/controlledInsta/ControlledTextField/ControlledTextField'
 import { TextFieldsProps } from '@/widgets/profile/profileSettings/ui/generalInformation/ui/textFields/container'
 import { clsx } from 'clsx'
+import Link from 'next/link'
 
 import s from './TextFields.module.scss'
 
@@ -65,7 +66,16 @@ export const TextFields = memo(
         <div className={s.inputWrap}>
           <label className={s.label}>
             {t.profileSettings.tab.generalInformation.form.dateOfBirthday}
-            <Calendar control={control} errorMessage={errorDateOfBirth} name={'calendar'} />
+            <Calendar
+              control={control}
+              errorLink={
+                <Link className={s.errorLink} href={'/auth/privacy-policy'}>
+                  {t.auth.privacyPolicyPage.title}
+                </Link>
+              }
+              errorMessage={errorDateOfBirth}
+              name={'calendar'}
+            />
           </label>
         </div>
         <div className={s.inputWrap}>

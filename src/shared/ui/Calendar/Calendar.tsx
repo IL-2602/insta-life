@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 import DatePicker from 'react-datepicker'
 import { Controller } from 'react-hook-form'
 
@@ -17,30 +17,33 @@ import CalendarIcon from '../../assets/icons/Calendar/Calendar'
 
 type Props = {
   control: any
+  errorLink?: ReactNode | undefined
   errorMessage?: string | undefined
   name: string
 }
-export const Calendar = ({ control, errorMessage, name }: Props) => {
+export const Calendar = ({ control, errorLink, errorMessage, name }: Props) => {
   const { locale } = useRouter()
 
   return (
     <Controller
       control={control}
       name={name}
-      render={({ field: { onBlur, onChange, ref, value } }) => {
+      render={({ field: { onBlur, onChange, value } }) => {
         return (
           <DatePicker
             className={`${moduleStyles}`}
             customInput={
               <TextField
-                defaultValue={'00/00/0000'}
+                errorLink={errorLink}
                 errorMessage={errorMessage}
                 iconEnd={<CalendarIcon />}
+                value={value ? value : '00/00/0000'}
               />
             }
             dateFormat={'dd/MM/yyyy'}
             formatWeekDay={date => date.substring(0, 3)}
             locale={locale === 'ru' ? ru : enUS}
+            onBlur={onBlur}
             onChange={onChange}
             renderCustomHeader={({
               changeMonth,

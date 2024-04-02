@@ -95,3 +95,8 @@
   color: var(--color-dark-300);
   border: none;
 }
+
+.errorLink {
+  color: var(--color-danger-300);
+  border-bottom: 1px solid var(--color-danger-300);
+}
