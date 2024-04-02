@@ -28,13 +28,18 @@ export const useContainer = () => {
   const inputFields = {
     aboutMe: watch('aboutMe'),
     calendar: watch('calendar'),
+    city: watch('city'),
     firstName: watch('firstName'),
     lastName: watch('lastName'),
     userName: watch('userName'),
   }
 
   const isDisabled =
-    !inputFields.userName || !inputFields.firstName || !inputFields.lastName || !Object.keys(errors)
+    !inputFields.userName ||
+    !inputFields.firstName ||
+    !inputFields.lastName ||
+    !Object.keys(errors) ||
+    !!errorDateOfBirth
 
   const debouncedSearch = useDebouncedCallback((query: string) => {
     fetch(
@@ -79,7 +84,8 @@ export const useContainer = () => {
         aboutMe: profile.aboutMe,
         calendar: profile?.dateOfBirth
           ? parse(profile.dateOfBirth, "yyyy-MM-dd'T'HH:mm:ss.SSSX", new Date())
-          : null,
+          : new Date(),
+        city: selectedCity,
         firstName: profile.firstName,
         lastName: profile.lastName,
         userName: profile.userName,
