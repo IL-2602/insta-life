@@ -4,11 +4,9 @@ import { useForm } from 'react-hook-form'
 import { useSignUpMutation } from '@/services/authService/authEndpoints'
 import { FRONTEND_URL } from '@/shared/constants/frontendUrl'
 import { useTranslation } from '@/shared/hooks/useTranslation'
+import { passwordRegExp, userNameRegExp } from '@/shared/regexps'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-
-export const userNameRegExp = RegExp(/^[0-9A-Za-z]+$/)
-const passwordRegExp = RegExp(/^[0-9A-Za-z!"#$%&'()*+,\-./:;<=>?@[\]^_`{|}~]+$/)
 
 const signUpSchema = z
   .object({
