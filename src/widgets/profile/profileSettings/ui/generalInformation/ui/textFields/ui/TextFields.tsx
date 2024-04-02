@@ -1,4 +1,4 @@
-import { memo } from 'react'
+import { memo, useState } from 'react'
 
 import { Button } from '@/shared/ui/Button'
 import { Calendar } from '@/shared/ui/Calendar/Calendar'
@@ -16,7 +16,6 @@ import s from './TextFields.module.scss'
 export const TextFields = memo(
   ({
     cities,
-    cityValue,
     control,
     dropdownOpen,
     errorAboutMe,
@@ -24,7 +23,6 @@ export const TextFields = memo(
     errorFirstName,
     errorLastName,
     errorUserName,
-    handleCityChange,
     handleOptionClick,
     isDisabled,
     isGetProfileLoading,
@@ -81,10 +79,10 @@ export const TextFields = memo(
         <div className={s.inputWrap}>
           <label className={s.label}>
             {t.profileSettings.tab.generalInformation.form.city}
-            <TextField
-              onChange={e => handleCityChange(e.target.value)}
+            <ControlledTextField
+              control={control}
+              name={'city'}
               placeholder={t.profileSettings.tab.generalInformation.form.enterName}
-              value={cityValue}
             />
           </label>
           <ul className={clsx(cities.length > 0 ? s.citiesList : s.displayNone, 'target')}>
