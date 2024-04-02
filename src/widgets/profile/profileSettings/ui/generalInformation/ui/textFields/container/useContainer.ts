@@ -9,15 +9,24 @@ import { useDebouncedCallback } from 'use-debounce'
 export const useContainer = () => {
   const { t } = useTranslation()
 
+  const {
+    control,
+    errors,
+    handleSubmit,
+    isGetProfileLoading,
+    profile,
+    register,
+    reset,
+    setValue,
+    watch,
+  } = useProfileSettingsForm()
+
   const [cities, setCities] = useState([])
   const [cityValue, setCityValue] = useState('')
   const [selectedCity, setSelectedCity] = useState('')
   const [dropdownOpen, setDropdownOpen] = useState(false)
 
   const [updateProfile, { isLoading }] = useUpdateProfileMutation()
-
-  const { control, errors, handleSubmit, isGetProfileLoading, profile, register, reset, watch } =
-    useProfileSettingsForm()
 
   const errorUserName = errors.userName?.message
   const errorFirstName = errors.firstName?.message
@@ -85,7 +94,7 @@ export const useContainer = () => {
         calendar: profile?.dateOfBirth
           ? parse(profile.dateOfBirth, "yyyy-MM-dd'T'HH:mm:ss.SSSX", new Date())
           : new Date(),
-        city: selectedCity,
+        city: profile.city,
         firstName: profile.firstName,
         lastName: profile.lastName,
         userName: profile.userName,
@@ -110,7 +119,7 @@ export const useContainer = () => {
   const updateProfileHandler = handleSubmit(() => {
     updateProfile({
       aboutMe: inputFields.aboutMe ? inputFields.aboutMe : '',
-      city: selectedCity,
+      city: inputFields.city,
       dateOfBirth: inputFields?.calendar,
       firstName: inputFields.firstName,
       lastName: inputFields.lastName,
@@ -123,7 +132,6 @@ export const useContainer = () => {
 
   return {
     cities,
-    cityValue,
     control,
     dropdownOpen,
     errorAboutMe,
@@ -131,7 +139,6 @@ export const useContainer = () => {
     errorFirstName,
     errorLastName,
     errorUserName,
-    handleCityChange,
     handleOptionClick,
     isDisabled,
     isGetProfileLoading,

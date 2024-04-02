@@ -30,7 +30,7 @@ export const useProfileSettingsForm = () => {
 
         return calendar < currentDate
       }, t.profileSettings.tab.generalInformation.error.calender),
-    city: z.string().trim().nullish(),
+    city: z.string().trim(),
     firstName: z
       .string()
       .regex(
