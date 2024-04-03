@@ -32,8 +32,12 @@ export const TextFields = memo(
     t,
     updateProfileHandler,
   }: TextFieldsProps) => {
-    if (isGetProfileLoading) {
-      return <Spinner />
+    if (!isGetProfileLoading) {
+      return (
+        <div className={s.spinner}>
+          <Spinner />
+        </div>
+      )
     }
 
     return (
@@ -84,7 +88,7 @@ export const TextFields = memo(
             <TextField
               onChange={e => handleCityChange(e.target.value)}
               placeholder={t.profileSettings.tab.generalInformation.form.enterName}
-              value={cityValue}
+              value={cityValue || ''}
             />
           </label>
           <ul className={clsx(cities.length > 0 ? s.citiesList : s.displayNone, 'target')}>
