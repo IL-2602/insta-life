@@ -32,7 +32,7 @@ export const TextFields = memo(
     t,
     updateProfileHandler,
   }: TextFieldsProps) => {
-    if (!isGetProfileLoading) {
+    if (isGetProfileLoading) {
       return (
         <div className={s.spinner}>
           <Spinner />
