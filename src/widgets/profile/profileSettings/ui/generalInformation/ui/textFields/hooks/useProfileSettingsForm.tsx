@@ -1,23 +1,35 @@
 import { useForm } from 'react-hook-form'
 
 import { useGetProfileQuery } from '@/services/profileService/profileEndpoints'
+import { PERMITTED_PAGE } from '@/shared/constants/calender'
 import { useTranslation } from '@/shared/hooks/useTranslation'
+import { AboutMeRegExp, firstAndLastNameRegExp, userNameRegExp } from '@/shared/regexps'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
 export const useProfileSettingsForm = () => {
   const { t } = useTranslation()
 
-  const userNameRegExp = RegExp(/^[0-9A-Za-z_-]+$/)
-  const firstAndLastNameRegExp = RegExp(/^[A-Za-zА-Яа-я]*$/)
-  const AboutMeRegExp = RegExp(/^[0-9A-Za-zА-Яа-я\W\s]*$/)
-
   const profileSchema = z.object({
     aboutMe: z
       .string()
       .regex(AboutMeRegExp, t.profileSettings.tab.generalInformation.error.aboutMeDescription)
       .trim()
-      .max(200, t.profileSettings.tab.generalInformation.error.aboutMeValueMax),
+      .max(200, t.profileSettings.tab.generalInformation.error.aboutMeValueMax)
+      .nullable(),
+    calendar: z
+      .date()
+      .nullable()
+      .refine(calendar => {
+        if (!calendar) {
+          return true
+        }
+        const currentDate = new Date()
+
+        currentDate.setFullYear(currentDate.getFullYear() - PERMITTED_PAGE)
+
+        return calendar < currentDate
+      }, t.profileSettings.tab.generalInformation.error.calender),
     firstName: z
       .string()
       .regex(
@@ -26,7 +38,8 @@ export const useProfileSettingsForm = () => {
       )
       .trim()
       .min(1, t.profileSettings.tab.generalInformation.error.firstNameMin)
-      .max(50, t.profileSettings.tab.generalInformation.error.firstNameMax),
+      .max(50, t.profileSettings.tab.generalInformation.error.firstNameMax)
+      .nullable(),
     lastName: z
       .string()
       .regex(
@@ -46,21 +59,17 @@ export const useProfileSettingsForm = () => {
 
   type profileFormSchema = z.infer<typeof profileSchema>
 
-  const { data: profile } = useGetProfileQuery()
+  const { data: profile, isLoading: isGetProfileLoading } = useGetProfileQuery()
 
   const {
     control,
     formState: { errors },
     handleSubmit,
+    register,
+    reset,
     setError,
     watch,
   } = useForm<profileFormSchema>({
-    defaultValues: {
-      aboutMe: profile ? profile.aboutMe : '',
-      firstName: profile ? profile.firstName : '',
-      lastName: profile ? profile.lastName : '',
-      userName: profile ? profile.userName : '',
-    },
     mode: 'onTouched',
     resolver: zodResolver(profileSchema),
   })
@@ -69,6 +78,11 @@ export const useProfileSettingsForm = () => {
     control,
     errors,
     handleSubmit,
+    isGetProfileLoading,
+    profile,
+    register,
+    reset,
+    setError,
     watch,
   }
 }

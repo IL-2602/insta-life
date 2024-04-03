@@ -1,8 +1,8 @@
 export type UpdateProfileParams = {
-  aboutMe?: string
-  city?: string
-  dateOfBirth?: {}
-  firstName?: string
-  lastName?: string
+  aboutMe?: null | string
+  city?: null | string
+  dateOfBirth?: any
+  firstName?: null | string
+  lastName?: null | string
   userName: string
 }

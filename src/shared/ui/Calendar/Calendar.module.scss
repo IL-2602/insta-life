@@ -1,0 +1,43 @@
+.customHeader {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 10px;
+
+  .mountWrapper {
+    min-width: 100px;
+
+    .select {
+      background-color: var(--color-dark-500);
+    }
+  }
+
+  .yearsWrapper {
+    min-width: 70px;
+
+    .select {
+      background-color: var(--color-dark-500);
+    }
+  }
+
+  .arrowLeft,
+  .arrowRight {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 30px;
+    height: 30px;
+
+    background-color: var(--color-dark-100);
+    border-radius: 50%;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}
+
+.arrowLeft {
+  margin-left: 10px;
+}

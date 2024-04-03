@@ -1,6 +1,7 @@
 import React, {
   ComponentPropsWithoutRef,
   FC,
+  ForwardedRef,
   KeyboardEvent,
   ReactNode,
   forwardRef,
@@ -19,6 +20,7 @@ import s from './TextField.module.scss'
 
 export type TextFieldProps = {
   className?: string
+  errorLink?: ReactNode
   errorMessage?: string
   iconEnd?: ReactNode
   iconStart?: ReactNode
@@ -33,6 +35,7 @@ export const TextField: FC<TextFieldProps> = forwardRef<HTMLInputElement, TextFi
     {
       className,
       disabled,
+      errorLink,
       errorMessage,
       iconEnd,
       iconStart,
@@ -48,6 +51,7 @@ export const TextField: FC<TextFieldProps> = forwardRef<HTMLInputElement, TextFi
   ) => {
     const [inputRef, setInputRef] = useState<HTMLInputElement | null>(null)
     const [showPassword, setShowPassword] = useState<boolean>(false)
+
     const showError = errorMessage && errorMessage.length > 0
 
     if (type === 'search') {
@@ -94,7 +98,6 @@ export const TextField: FC<TextFieldProps> = forwardRef<HTMLInputElement, TextFi
               disabled={disabled}
               onDoubleClick={handleDoubleClick}
               onKeyDown={handleKeyDown}
-              ref={ref => setInputRef(ref)}
               type={showPassword ? 'text' : type}
               value={value}
               {...rest}
@@ -122,7 +125,7 @@ export const TextField: FC<TextFieldProps> = forwardRef<HTMLInputElement, TextFi
         </Label.Root>
         {showError && (
           <Typography color={'error'} variant={'error'}>
-            {errorMessage}
+            {errorMessage} {errorLink ? errorLink : ''}
           </Typography>
         )}
       </div>

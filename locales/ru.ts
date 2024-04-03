@@ -162,7 +162,7 @@ export const ru: Local = {
     publish: 'Опубликовать',
     removeUser: 'Удалить пользователя',
     save: 'Сохранить',
-    saveChanges: 'Сохранить изменения',
+    saveChanges: 'Сохранить',
     saveDraft: 'Сохранить черновик',
     selectFromComputer: 'Выбрать фаил',
     sendMessage: 'Отправить сообщение',
@@ -254,6 +254,7 @@ export const ru: Local = {
           aboutMeDescription:
             'Графа обо мне должна содержать 0-9, A-Z, a-z, А-Я, а-я и специальные символы',
           aboutMeValueMax: 'Максимальное количество символов 200 знаков',
+          calender: 'Пользователь младше 13 лет не может создать профиль',
           descriptionValueMax: 'Максимальное количество символов 500 знаков',
           firstNameDescription: 'Имя должно содержать A-Z, a-z, А-Я, а-я',
           firstNameMax: 'Имя пользователя не может быть больше 50 символов',

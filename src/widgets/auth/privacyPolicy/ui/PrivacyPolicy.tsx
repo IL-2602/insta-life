@@ -1,4 +1,3 @@
-import { ROUTES } from '@/shared/constants/routes'
 import { GoBack } from '@/shared/ui/GoBack'
 import { Typography } from '@/shared/ui/Typography'
 import { PrivacyPolicyProps } from '@/widgets/auth/privacyPolicy/container'
@@ -8,7 +7,7 @@ import s from './PrivacyPolicy.module.scss'
 export const PrivacyPolicy = ({ t }: PrivacyPolicyProps) => {
   return (
     <div>
-      <GoBack className={s.link} title={t.auth.button.backToSignUp} to={ROUTES.REGISTER}></GoBack>
+      <GoBack className={s.link} title={t.auth.button.backToSignUp}></GoBack>
 
       <Typography className={s.title} variant={'h1'}>
         {t.auth.privacyPolicyPage.title}
