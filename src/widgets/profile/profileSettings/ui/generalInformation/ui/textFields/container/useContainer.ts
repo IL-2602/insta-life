@@ -92,7 +92,7 @@ export const useContainer = () => {
 
       setCityValue(profile.city)
     }
-  }, [profile, reset])
+  }, [profile, reset, setCityValue])
 
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside)

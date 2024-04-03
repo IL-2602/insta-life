@@ -70,6 +70,11 @@ export const useProfileSettingsForm = () => {
     setError,
     watch,
   } = useForm<profileFormSchema>({
+    defaultValues: {
+      firstName: '',
+      lastName: '',
+      userName: '',
+    },
     mode: 'onTouched',
     resolver: zodResolver(profileSchema),
   })
