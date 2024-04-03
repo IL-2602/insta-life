@@ -105,7 +105,7 @@ export const useContainer = () => {
   const updateProfileHandler = handleSubmit(() => {
     updateProfile({
       aboutMe: inputFields.aboutMe ? inputFields.aboutMe : '',
-      city: selectedCity,
+      city: selectedCity || cityValue,
       dateOfBirth: inputFields?.calendar,
       firstName: inputFields.firstName,
       lastName: inputFields.lastName,
