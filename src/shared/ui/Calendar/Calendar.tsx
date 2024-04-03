@@ -37,7 +37,8 @@ export const Calendar = ({ control, errorLink, errorMessage, name }: Props) => {
                 errorLink={errorLink}
                 errorMessage={errorMessage}
                 iconEnd={<CalendarIcon />}
-                value={value ? value : '00/00/0000'}
+                placeholder={'00/00/0000'}
+                value={value}
               />
             }
             dateFormat={'dd/MM/yyyy'}

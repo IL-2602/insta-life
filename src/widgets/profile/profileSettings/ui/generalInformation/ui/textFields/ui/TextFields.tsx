@@ -3,6 +3,7 @@ import { memo } from 'react'
 import { Button } from '@/shared/ui/Button'
 import { Calendar } from '@/shared/ui/Calendar/Calendar'
 import { Spinner } from '@/shared/ui/Spinner'
+import { TextField } from '@/shared/ui/Textfield'
 import { Typography } from '@/shared/ui/Typography'
 import { ControlledTextAreaField } from '@/shared/ui/controlledInsta/ControlledTextArea/ControlledTextArea'
 import { ControlledTextField } from '@/shared/ui/controlledInsta/ControlledTextField/ControlledTextField'
@@ -15,6 +16,7 @@ import s from './TextFields.module.scss'
 export const TextFields = memo(
   ({
     cities,
+    cityValue,
     control,
     dropdownOpen,
     errorAboutMe,
@@ -22,6 +24,7 @@ export const TextFields = memo(
     errorFirstName,
     errorLastName,
     errorUserName,
+    handleCityChange,
     handleOptionClick,
     isDisabled,
     isGetProfileLoading,
@@ -78,10 +81,10 @@ export const TextFields = memo(
         <div className={s.inputWrap}>
           <label className={s.label}>
             {t.profileSettings.tab.generalInformation.form.city}
-            <ControlledTextField
-              control={control}
-              name={'city'}
+            <TextField
+              onChange={e => handleCityChange(e.target.value)}
               placeholder={t.profileSettings.tab.generalInformation.form.enterName}
+              value={cityValue}
             />
           </label>
           <ul className={clsx(cities.length > 0 ? s.citiesList : s.displayNone, 'target')}>

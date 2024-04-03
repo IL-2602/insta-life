@@ -1,5 +1,12 @@
-import React, { ComponentProps, FC, KeyboardEvent, forwardRef } from 'react'
+import React, {
+  ComponentProps,
+  ComponentPropsWithoutRef,
+  FC,
+  KeyboardEvent,
+  forwardRef,
+} from 'react'
 
+import { TextFieldProps } from '@/shared/ui/Textfield/TextField'
 import { Typography } from '@/shared/ui/Typography'
 import * as Label from '@radix-ui/react-label'
 import clsx from 'clsx'
@@ -23,20 +30,13 @@ export type TextAreaFieldProps = {
   required?: boolean
   rows?: number
   value?: string
-} & ComponentProps<'textarea'>
+} & ComponentPropsWithoutRef<'textarea'>
 
-export const TextArea: FC<TextAreaFieldProps> = forwardRef(
-  ({
-    // onClearValue,
-    className,
-    disabled,
-    errorMessage,
-    label,
-    maxLength = 501,
-    onKeyDown,
-    value,
-    ...rest
-  }) => {
+export const TextArea: FC<TextAreaFieldProps> = forwardRef<HTMLInputElement, TextAreaFieldProps>(
+  (
+    { className, disabled, errorMessage, label, maxLength = 501, onKeyDown, value, ...rest },
+    ref
+  ) => {
     const showError = errorMessage && errorMessage.length > 0
 
     const classNames = {

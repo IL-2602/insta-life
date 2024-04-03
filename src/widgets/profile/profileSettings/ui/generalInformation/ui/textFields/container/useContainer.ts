@@ -8,19 +8,11 @@ import { useDebouncedCallback } from 'use-debounce'
 
 export const useContainer = () => {
   const { t } = useTranslation()
-  const {
-    control,
-    errors,
-    handleSubmit,
-    isGetProfileLoading,
-    profile,
-    register,
-    reset,
-    setValue,
-    watch,
-  } = useProfileSettingsForm()
+  const { control, errors, handleSubmit, isGetProfileLoading, profile, register, reset, watch } =
+    useProfileSettingsForm()
 
   const [cities, setCities] = useState([])
+  const [cityValue, setCityValue] = useState('')
   const [selectedCity, setSelectedCity] = useState('')
   const [dropdownOpen, setDropdownOpen] = useState(false)
 
@@ -35,7 +27,6 @@ export const useContainer = () => {
   const inputFields = {
     aboutMe: watch('aboutMe'),
     calendar: watch('calendar'),
-    city: watch('city'),
     firstName: watch('firstName'),
     lastName: watch('lastName'),
     userName: watch('userName'),
@@ -61,27 +52,20 @@ export const useContainer = () => {
           setCities(uniqueCities as SetStateAction<never[]>)
         }
       })
+      .then(() => setDropdownOpen(true))
       .catch(err => console.log(err))
   }, 300)
 
-  // console.log('cities: ', cities)
-  // console.log('getValues: ', getValues('city'))
-  // console.log('inputFields.city: ', inputFields.city)
-
-  useEffect(() => {
-    debouncedSearch(inputFields.city)
-  }, [debouncedSearch, inputFields.city])
-
-  useEffect(() => {
-    if (cities.length === 1) {
-      setCities([])
-    }
-  }, [cities])
+  const handleCityChange = (text: string) => {
+    debouncedSearch(text)
+    setCityValue(text)
+  }
 
   const handleOptionClick = (option: string) => {
-    setCities([])
+    setSelectedCity(option)
+    setCityValue(option)
     setDropdownOpen(false)
-    setValue('city', option)
+    setCities([])
   }
 
   const handleClickOutside = (event: MouseEvent) => {
@@ -94,23 +78,18 @@ export const useContainer = () => {
   }
 
   useEffect(() => {
-    if (cities) {
-      setDropdownOpen(true)
-    }
-  }, [setDropdownOpen, cities])
-
-  useEffect(() => {
     if (profile) {
       reset({
-        aboutMe: profile.aboutMe,
+        aboutMe: profile.aboutMe || '',
         calendar: profile?.dateOfBirth
           ? parse(profile.dateOfBirth, "yyyy-MM-dd'T'HH:mm:ss.SSSX", new Date())
           : new Date(),
-        city: profile.city,
-        firstName: profile.firstName,
-        lastName: profile.lastName,
-        userName: profile.userName,
+        firstName: profile.firstName || '',
+        lastName: profile.lastName || '',
+        userName: profile.userName || '',
       })
+
+      setCityValue(profile.city)
     }
   }, [profile, reset])
 
@@ -125,7 +104,7 @@ export const useContainer = () => {
   const updateProfileHandler = handleSubmit(() => {
     updateProfile({
       aboutMe: inputFields.aboutMe ? inputFields.aboutMe : '',
-      city: inputFields.city,
+      city: selectedCity,
       dateOfBirth: inputFields?.calendar,
       firstName: inputFields.firstName,
       lastName: inputFields.lastName,
@@ -138,6 +117,7 @@ export const useContainer = () => {
 
   return {
     cities,
+    cityValue,
     control,
     dropdownOpen,
     errorAboutMe,
@@ -145,10 +125,12 @@ export const useContainer = () => {
     errorFirstName,
     errorLastName,
     errorUserName,
+    handleCityChange,
     handleOptionClick,
     isDisabled,
     isGetProfileLoading,
     isLoading,
+    profile,
     register,
     t,
     updateProfileHandler,

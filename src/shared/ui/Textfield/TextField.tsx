@@ -30,7 +30,7 @@ export type TextFieldProps = {
   value?: string
 } & ComponentPropsWithoutRef<'input'>
 
-export const TextField: FC<TextFieldProps> = forwardRef(
+export const TextField: FC<TextFieldProps> = forwardRef<HTMLInputElement, TextFieldProps>(
   (
     {
       className,
@@ -47,7 +47,7 @@ export const TextField: FC<TextFieldProps> = forwardRef(
       value,
       ...rest
     },
-    ref: ForwardedRef<HTMLInputElement>
+    ref
   ) => {
     const [inputRef, setInputRef] = useState<HTMLInputElement | null>(null)
     const [showPassword, setShowPassword] = useState<boolean>(false)
@@ -98,7 +98,6 @@ export const TextField: FC<TextFieldProps> = forwardRef(
               disabled={disabled}
               onDoubleClick={handleDoubleClick}
               onKeyDown={handleKeyDown}
-              ref={ref}
               type={showPassword ? 'text' : type}
               value={value}
               {...rest}

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { SVGProps, forwardRef, memo } from 'react'
+import { SVGProps, memo } from 'react'
 const SvgComponent = (props: SVGProps<SVGSVGElement>) => (
   <svg fill={'none'} height={48} width={48} xmlns={'http://www.w3.org/2000/svg'} {...props}>
     <path
@@ -12,4 +12,4 @@ const SvgComponent = (props: SVGProps<SVGSVGElement>) => (
   </svg>
 )
 
-export const NoCover = memo(forwardRef(SvgComponent))
+export const NoCover = memo(SvgComponent)

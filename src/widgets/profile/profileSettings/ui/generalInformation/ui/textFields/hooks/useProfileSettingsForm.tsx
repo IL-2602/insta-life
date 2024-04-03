@@ -30,7 +30,6 @@ export const useProfileSettingsForm = () => {
 
         return calendar < currentDate
       }, t.profileSettings.tab.generalInformation.error.calender),
-    city: z.string().trim(),
     firstName: z
       .string()
       .regex(
@@ -69,7 +68,6 @@ export const useProfileSettingsForm = () => {
     register,
     reset,
     setError,
-    setValue,
     watch,
   } = useForm<profileFormSchema>({
     mode: 'onTouched',
@@ -85,7 +83,6 @@ export const useProfileSettingsForm = () => {
     register,
     reset,
     setError,
-    setValue,
     watch,
   }
 }
