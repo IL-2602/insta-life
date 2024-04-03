@@ -1,4 +1,5 @@
 import { SetStateAction, useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 
 import { useUpdateProfileMutation } from '@/services/profileService/profileEndpoints'
 import { useTranslation } from '@/shared/hooks/useTranslation'
@@ -111,8 +112,28 @@ export const useContainer = () => {
       userName: inputFields.userName,
     })
       .unwrap()
-      .then(res => console.log(res))
-      .catch(err => console.log(err))
+      .then(() =>
+        toast.success(t.toast.profileSaveChanges, {
+          pauseOnHover: false,
+          style: {
+            background: '#0A6638',
+            border: '1px solid #14CC70',
+            color: 'white',
+            fontSize: '14px',
+          },
+        })
+      )
+      .catch(() =>
+        toast.error(t.toast.profileError, {
+          pauseOnHover: false,
+          style: {
+            background: '#660A1D',
+            border: '1px solid #CC1439',
+            color: 'white',
+            fontSize: '14px',
+          },
+        })
+      )
   })
 
   return {
