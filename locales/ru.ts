@@ -303,5 +303,8 @@ export const ru: Local = {
     statistics: 'Статистика',
     usersList: 'Пользователи',
   },
-  statistic: {},
+  toast: {
+    profileError: 'Ошибка! Сервер недоступен',
+    profileSaveChanges: 'Ваши настройки сохранены!',
+  },
 }

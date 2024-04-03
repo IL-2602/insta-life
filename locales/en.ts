@@ -296,7 +296,10 @@ export const en = {
     statistics: 'Statistics',
     usersList: 'Users list',
   },
-  statistic: {},
+  toast: {
+    profileError: 'Error! Server is not available!',
+    profileSaveChanges: 'Your settings are saved!',
+  },
 }
 
 export type Local = typeof en
