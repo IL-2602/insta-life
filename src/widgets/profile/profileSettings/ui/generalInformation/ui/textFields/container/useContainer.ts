@@ -8,7 +8,6 @@ import { useDebouncedCallback } from 'use-debounce'
 
 export const useContainer = () => {
   const { t } = useTranslation()
-
   const {
     control,
     errors,
@@ -22,7 +21,6 @@ export const useContainer = () => {
   } = useProfileSettingsForm()
 
   const [cities, setCities] = useState([])
-  const [cityValue, setCityValue] = useState('')
   const [selectedCity, setSelectedCity] = useState('')
   const [dropdownOpen, setDropdownOpen] = useState(false)
 
@@ -64,28 +62,42 @@ export const useContainer = () => {
         }
       })
       .catch(err => console.log(err))
-  }, 250)
+  }, 300)
 
-  const handleCityChange = (text: string) => {
-    debouncedSearch(text)
-    setCityValue(text)
-  }
+  // console.log('cities: ', cities)
+  // console.log('getValues: ', getValues('city'))
+  // console.log('inputFields.city: ', inputFields.city)
+
+  useEffect(() => {
+    debouncedSearch(inputFields.city)
+  }, [debouncedSearch, inputFields.city])
+
+  useEffect(() => {
+    if (cities.length === 1) {
+      setCities([])
+    }
+  }, [cities])
 
   const handleOptionClick = (option: string) => {
-    setSelectedCity(option)
-    setCityValue(option)
-    setDropdownOpen(false)
     setCities([])
+    setDropdownOpen(false)
+    setValue('city', option)
   }
 
   const handleClickOutside = (event: MouseEvent) => {
     const target = event.target as HTMLElement
 
     if (dropdownOpen && !target.closest('.target')) {
-      setDropdownOpen(false)
       setCities([])
+      setDropdownOpen(false)
     }
   }
+
+  useEffect(() => {
+    if (cities) {
+      setDropdownOpen(true)
+    }
+  }, [setDropdownOpen, cities])
 
   useEffect(() => {
     if (profile) {
@@ -101,12 +113,6 @@ export const useContainer = () => {
       })
     }
   }, [profile, reset])
-
-  useEffect(() => {
-    if (cities) {
-      setDropdownOpen(true)
-    }
-  }, [setDropdownOpen, cities])
 
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside)
