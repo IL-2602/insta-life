@@ -71,6 +71,8 @@ export const useProfileSettingsForm = () => {
     watch,
   } = useForm<profileFormSchema>({
     defaultValues: {
+      aboutMe: '',
+      calendar: null,
       firstName: '',
       lastName: '',
       userName: '',
