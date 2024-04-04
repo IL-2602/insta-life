@@ -1,11 +1,11 @@
-import { SetStateAction, useEffect, useState } from 'react'
+import { SetStateAction, useEffect, useMemo, useState } from 'react'
 import { toast } from 'react-toastify'
 
 import { useUpdateProfileMutation } from '@/services/profileService/profileEndpoints'
 import { useTranslation } from '@/shared/hooks/useTranslation'
 import { useProfileSettingsForm } from '@/widgets/profile/profileSettings/ui/generalInformation/ui/textFields/hooks/useProfileSettingsForm'
 import { parse } from 'date-fns'
-import { useDebouncedCallback } from 'use-debounce'
+import debounce from 'debounce'
 
 export const useContainer = () => {
   const { t } = useTranslation()
@@ -40,22 +40,26 @@ export const useContainer = () => {
     !Object.keys(errors) ||
     !!errorDateOfBirth
 
-  const debouncedSearch = useDebouncedCallback((query: string) => {
-    fetch(
-      `https://api.geoapify.com/v1/geocode/autocomplete?text=${query}&apiKey=${process.env.NEXT_PUBLIC_GEO_API_KEY}`
-    )
-      .then(res => res.json())
-      .then(({ features }) => {
-        if (features) {
-          const cities = features.map((city: any) => city.properties.city)
-          const uniqueCities: string[] = Array.from(new Set(cities))
+  const debouncedSearch = useMemo(
+    () =>
+      debounce((query: string) => {
+        fetch(
+          `https://api.geoapify.com/v1/geocode/autocomplete?text=${query}&apiKey=${process.env.NEXT_PUBLIC_GEO_API_KEY}`
+        )
+          .then(res => res.json())
+          .then(({ features }) => {
+            if (features) {
+              const cities = features.map((city: any) => city.properties.city)
+              const uniqueCities: string[] = Array.from(new Set(cities))
 
-          setCities(uniqueCities as SetStateAction<never[]>)
-        }
-      })
-      .then(() => setDropdownOpen(true))
-      .catch(err => console.log(err))
-  }, 300)
+              setCities(uniqueCities as SetStateAction<never[]>)
+            }
+          })
+          .then(() => setDropdownOpen(true))
+          .catch(err => console.log(err))
+      }, 300),
+    []
+  )
 
   const handleCityChange = (text: string) => {
     debouncedSearch(text)
