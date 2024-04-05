@@ -1,3 +1,5 @@
+import { PostCropping } from '@/layouts/local/ui/CreatePost/PostCropping/PostCropping'
+import { AddFileDropMenu } from '@/layouts/local/ui/CreatePost/PostCropping/ui/AddFileDropMenu/AddFileDropMenu'
 import { SideBarProps } from '@/layouts/local/ui/SideBar/container'
 import { BookMark } from '@/shared/assets/icons/asideIcons/bookmarkIcon/BookmarkIcon'
 import { CreateIcon } from '@/shared/assets/icons/asideIcons/createIcon/CreateIcon'
@@ -91,6 +93,7 @@ export const SideBar = ({
           </Typography>
         </Modal>
       )}
+      <PostCropping isOpen />
     </aside>
   )
 }
