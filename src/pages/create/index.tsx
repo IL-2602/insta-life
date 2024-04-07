@@ -1,7 +1,12 @@
+import { PostCropping } from '@/layouts/local/ui/CreatePost/PostCropping'
 import { getBaseLayout } from '@/layouts/publ/BaseLayout/BaseLayout'
 
 const CreatePage = () => {
-  return <div>Create</div>
+  return (
+    <div>
+      <PostCropping.widget />
+    </div>
+  )
 }
 
 CreatePage.getLayout = getBaseLayout

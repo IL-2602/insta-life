@@ -1,0 +1,14 @@
+.container {
+  padding: 1px;
+
+  & > *:first-child img {
+      margin: -3px;
+  }
+
+  & > * {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 128px;
+  }
+}

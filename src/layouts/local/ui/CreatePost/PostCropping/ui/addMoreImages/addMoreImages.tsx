@@ -1,12 +1,10 @@
-import { useState } from 'react'
-
 import { Button } from '@/shared/ui/Button'
 import { DropMenu } from '@/shared/ui/DropMenu'
 import Image from 'next/image'
 
 import image from '../../../../../../../../public/assets/image-outline.svg'
 
-export const AddFileDropMenu = () => {
+export const AddMoreImages = () => {
   return (
     <DropMenu.Menu
       align={'end'}
