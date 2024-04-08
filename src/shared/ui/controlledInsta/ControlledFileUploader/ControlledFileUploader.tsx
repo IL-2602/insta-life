@@ -43,9 +43,9 @@ export const ControlledFileUploader = <T extends FieldValues>({
 }
 
 type Props<T extends FieldValues> = {
+  children: ReactNode
+  className?: string
   control: Control<T>
   extraActions?: (inputName: string) => void
   name: FieldPath<T>
-  children: ReactNode
-  className?: string
 } & CustomProps
