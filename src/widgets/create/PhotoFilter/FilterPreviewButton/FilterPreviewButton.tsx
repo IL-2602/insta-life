@@ -1,6 +1,7 @@
 import React from 'react'
 
 import { Typography } from '@/shared/ui/Typography'
+import { PhotoFilterTitle } from '@/widgets/create/PhotoFilter/FilterPreviewButton/FilterPreviewButtonData'
 
 import s from './FilterPreviewButton.module.scss'
 
@@ -37,7 +38,7 @@ export const FilterPreviewButton = ({ applyFilter, filter, imageUrl, label }: Pr
 
   return (
     <div
-      onClick={() => applyFilter(styles[filter]?.filter || '')}
+      onClick={() => applyFilter((styles[filter]?.filter as PhotoFilterTitle) || 'normal')}
       style={{ cursor: 'pointer', display: 'inline-block', margin: '5px' }}
     >
       <img
@@ -56,8 +57,8 @@ export const FilterPreviewButton = ({ applyFilter, filter, imageUrl, label }: Pr
 }
 
 type Props = {
-  applyFilter: (filter: string) => void
-  filter: string
+  applyFilter: (filter: PhotoFilterTitle) => void
+  filter: PhotoFilterTitle
   imageUrl: string
   label: string
 }

@@ -1,4 +1,4 @@
-type PhotoFilterTitle =
+export type PhotoFilterTitle =
   | 'clarendon'
   | 'gingham'
   | 'grayscale'

@@ -1,6 +1,5 @@
-import { mockPhotoData } from '@/widgets/create/PhotoFilter/mockPhotoData'
-import { PhotoFilter } from '@/widgets/create/PhotoFilter/ui/PhotoFilter'
+import { Container } from '@/widgets/create/PhotoFilter/container'
 
-export const PhotoFilterContainer = () => {
-  return <PhotoFilter images={mockPhotoData} />
+export const PhotoFilter = {
+  widget: Container,
 }
