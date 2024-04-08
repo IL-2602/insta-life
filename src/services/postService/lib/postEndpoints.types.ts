@@ -1,3 +1,7 @@
+export type ModalSteps = 'cropping' | 'filters' | 'publication' | 'upload' | undefined
+
 export type PostSliceInitialState = {
-  modalSteps: string[]
+  isCreatePostModal: boolean
+  modalSteps: ModalSteps
+  postPhoto: string
 }
