@@ -14,7 +14,7 @@ export type CustomProps<T extends ElementType = 'button'> = {
   variant?: 'link' | 'outlined' | 'primary' | 'secondary'
 }
 
-type Props<T extends ElementType> = PolymorphComponentPropsWithRef<T, CustomProps>
+export type Props<T extends ElementType> = PolymorphComponentPropsWithRef<T, CustomProps>
 
 type ButtonComponent = <T extends ElementType = 'button'>(props: Props<T>) => ReactNode
 export const Button: ButtonComponent = forwardRef(

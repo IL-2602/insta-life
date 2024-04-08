@@ -3,7 +3,6 @@ import { Button } from '@/shared/ui/Button'
 import { DropMenu } from '@/shared/ui/DropMenu'
 
 import s from './addMoreImages.module.scss'
-
 export const AddMoreImages = () => {
   return (
     <DropMenu.Menu
@@ -17,7 +16,9 @@ export const AddMoreImages = () => {
         </Button>
       }
     >
-      <DropMenu.Item>Hallo</DropMenu.Item>
+      <DropMenu.Item>
+        <Button>+</Button>
+      </DropMenu.Item>
     </DropMenu.Menu>
   )
 }
