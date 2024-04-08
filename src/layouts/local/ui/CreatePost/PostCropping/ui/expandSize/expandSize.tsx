@@ -1,3 +1,4 @@
+import { Expand } from '@/shared/assets/icons/Expand'
 import { Button } from '@/shared/ui/Button'
 import { DropMenu } from '@/shared/ui/DropMenu'
 import { Typography } from '@/shared/ui/Typography'
@@ -5,7 +6,6 @@ import Image from 'next/image'
 
 import s from './expandSize.module.scss'
 
-import expand from '../../../../../../../../public/assets/expand-outline.svg'
 import one from '../../../../../../../../public/assets/postCropping/1x1.svg'
 import four from '../../../../../../../../public/assets/postCropping/4x5.svg'
 import sixteen from '../../../../../../../../public/assets/postCropping/16x9.svg'
@@ -19,8 +19,8 @@ export const ExpandSize = () => {
       side={'top'}
       sideOffset={2}
       trigger={
-        <Button variant={'link'}>
-          <Image alt={'Image expand'} height={24} src={expand} width={24} />
+        <Button className={s.button} variant={'link'}>
+          <Expand />
         </Button>
       }
     >

@@ -12,3 +12,25 @@
     width: 128px;
   }
 }
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 36px;
+  height: 36px;
+  padding: 0;
+
+  color: var(--color-light-100);
+
+  background: var(--color-dark-500);
+
+  &:focus {
+    outline: none;
+  }
+
+  &[data-state='open'] {
+    color: var(--color-primary-500);
+  }
+}
