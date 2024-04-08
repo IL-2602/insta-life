@@ -1,23 +1,28 @@
+import { useState } from 'react'
+
+import { Maximize } from '@/shared/assets/icons/Maximize'
 import { Button } from '@/shared/ui/Button'
 import { DropMenu } from '@/shared/ui/DropMenu'
-import Image from 'next/image'
+import { Slider } from '@/shared/ui/Slider/Slider'
 
-import maximize from '../../../../../../../../public/assets/maximize-outline.svg'
+import s from './changeZoom.module.scss'
 
 export const ChangeZoom = () => {
+  const [state, setState] = useState<[number]>([1])
+
   return (
     <DropMenu.Menu
       align={'start'}
       side={'top'}
       sideOffset={2}
       trigger={
-        <Button variant={'link'}>
-          <Image alt={'Image zoom'} height={24} src={maximize} width={24} />
+        <Button className={s.button} variant={'link'}>
+          <Maximize />
         </Button>
       }
     >
       <DropMenu.Item>
-        <input type={'range'} />
+        <Slider onValueChange={setState} slidersValue={state} />
       </DropMenu.Item>
     </DropMenu.Menu>
   )
