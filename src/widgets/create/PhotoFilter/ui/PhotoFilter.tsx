@@ -1,22 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react'
 
+import { FilterPreviewButton } from '@/widgets/create/PhotoFilter/FilterPreviewButton/FilterPreviewButton'
+import { photoFilters } from '@/widgets/create/PhotoFilter/FilterPreviewButton/FilterPreviewButtonData'
 import { Photo } from '@/widgets/create/PhotoFilter/mockPhotoData'
-
-const FilterPreviewButton = ({ applyFilter, filter, imageUrl, label }: FilterButtonProps) => (
-  <div
-    onClick={() => applyFilter(filter)}
-    style={{ cursor: 'pointer', display: 'inline-block', margin: '5px' }}
-  >
-    <img
-      alt={label}
-      src={imageUrl}
-      style={{ filter, height: '100px', objectFit: 'cover', width: '100px' }}
-      title={label} // Используем label как заголовок для удобства
-    />
-    <div style={{ textAlign: 'center' }}>{label}</div>{' '}
-    {/* Отображаем название фильтра под миниатюрой */}
-  </div>
-)
+import { capitalizeFirstLetter } from '@/widgets/create/PhotoFilter/utils/capitalizeFirstLetter'
 
 export const PhotoFilter = ({ images }: Props) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
@@ -62,46 +49,18 @@ export const PhotoFilter = ({ images }: Props) => {
 
   return (
     <>
-      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <div style={{ alignItems: 'flex-start', display: 'flex', justifyContent: 'space-between' }}>
         <canvas ref={canvasRef} />
         <div>
-          <FilterPreviewButton
-            applyFilter={applyFilter}
-            filter={'grayscale(100%)'}
-            imageUrl={currentImage.url}
-            label={'Grayscale'}
-          />
-          <FilterPreviewButton
-            applyFilter={applyFilter}
-            filter={'sepia(100%)'}
-            imageUrl={currentImage.url}
-            label={'Sepia'}
-          />
-          <FilterPreviewButton
-            applyFilter={applyFilter}
-            filter={'invert(100%)'}
-            imageUrl={currentImage.url}
-            label={'Invert'}
-          />
-          {/* Имитация инстаграмных фильтров */}
-          <FilterPreviewButton
-            applyFilter={applyFilter}
-            filter={'contrast(110%) brightness(120%)'}
-            imageUrl={currentImage.url}
-            label={'Clarendon'}
-          />
-          <FilterPreviewButton
-            applyFilter={applyFilter}
-            filter={'grayscale(100%) contrast(105%) brightness(110%)'}
-            imageUrl={currentImage.url}
-            label={'Moon'}
-          />
-          <FilterPreviewButton
-            applyFilter={applyFilter}
-            filter={''}
-            imageUrl={currentImage.url}
-            label={'Original'}
-          />
+          {photoFilters.map(filter => (
+            <FilterPreviewButton
+              applyFilter={applyFilter}
+              filter={filter}
+              imageUrl={currentImage.url}
+              key={filter}
+              label={capitalizeFirstLetter(filter)}
+            />
+          ))}
         </div>
         <button onClick={saveImage} style={{ border: '2px solid var(--color-primary-100)' }}>
           Сохранить
@@ -117,11 +76,4 @@ export const PhotoFilter = ({ images }: Props) => {
 
 type Props = {
   images: Photo[]
-}
-
-type FilterButtonProps = {
-  applyFilter: (filter: string) => void
-  filter: string
-  imageUrl: string
-  label: string
 }
