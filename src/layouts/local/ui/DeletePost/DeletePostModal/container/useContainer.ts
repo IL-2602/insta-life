@@ -9,7 +9,7 @@ import { useTranslation } from '@/shared/hooks/useTranslation'
 export const useContainer = () => {
   const { t } = useTranslation()
   const { isDeletePostModal } = useAppSelector(state => state.postReducer)
-  const [deletePost] = useDeletePostMutation()
+  const [deletePost, { isLoading }] = useDeletePostMutation()
 
   const removePostHandler = async (postId: number) => {
     deletePost(postId)
@@ -52,6 +52,7 @@ export const useContainer = () => {
   return {
     handleCloseModal,
     isDeletePostModal,
+    isLoading,
     openDeletePostModal,
     removePostHandler,
     t,

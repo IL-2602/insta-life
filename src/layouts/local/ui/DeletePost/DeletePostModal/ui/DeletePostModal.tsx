@@ -8,13 +8,20 @@ import { Typography } from '@/shared/ui/Typography'
 import s from './DeletePostModal.module.scss'
 
 export const DeletePostModal = memo(
-  ({ handleCloseModal, isDeletePostModal, removePostHandler, t }: DeletePostModalProps) => {
+  ({
+    handleCloseModal,
+    isDeletePostModal,
+    isLoading,
+    removePostHandler,
+    t,
+  }: DeletePostModalProps) => {
     return (
       <Modal
         className={s.modal}
         customButtonsBlock={
           <div className={s.buttonsBlock}>
             <Button
+              disabled={isLoading}
               onClick={() => {
                 removePostHandler(123) // необходимо пробросить id
               }}
@@ -22,7 +29,12 @@ export const DeletePostModal = memo(
             >
               <Typography variant={'h3'}>{t.button.yes}</Typography>
             </Button>
-            <Button className={s.button} onClick={handleCloseModal} variant={'primary'}>
+            <Button
+              className={s.button}
+              disabled={isLoading}
+              onClick={handleCloseModal}
+              variant={'primary'}
+            >
               <Typography variant={'h3'}>{t.button.no}</Typography>
             </Button>
           </div>
