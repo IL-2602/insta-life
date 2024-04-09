@@ -3,6 +3,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 const initialState: PostSliceInitialState = {
   isCreatePostModal: false,
+  isDeletePostModal: false,
   modalSteps: undefined,
   postPhoto: '',
 }
@@ -13,6 +14,9 @@ export const postSlice = createSlice({
   reducers: {
     setIsCreatePostModal: (state, action: PayloadAction<boolean>) => {
       state.isCreatePostModal = action.payload
+    },
+    setIsDeletePostModal: (state, action: PayloadAction<boolean>) => {
+      state.isDeletePostModal = action.payload
     },
     setModalSteps: (state, action: PayloadAction<ModalSteps>) => {
       state.modalSteps = action.payload
