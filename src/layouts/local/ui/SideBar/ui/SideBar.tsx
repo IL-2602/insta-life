@@ -17,6 +17,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 import s from './SideBar.module.scss'
+import { PostCropping } from '@/layouts/local/ui/CreatePost/PostCropping'
 
 export const SideBar = ({
   email,
@@ -120,7 +121,8 @@ export const SideBar = ({
           </Typography>
         </Modal>
       )}
-      <CreatePostModal.widget />
+      {/*<CreatePostModal.widget />*/}
+      <PostCropping.widget />
     </aside>
   )
 }

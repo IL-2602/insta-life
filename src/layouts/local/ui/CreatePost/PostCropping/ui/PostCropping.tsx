@@ -11,7 +11,7 @@ import Image from 'next/image'
 
 import s from './PostCropping.module.scss'
 
-export const PostCropping = memo(({}: Props) => {
+export const PostCropping = memo(({ control }: Props) => {
   return (
     <Modal
       className={s.container}
@@ -39,7 +39,7 @@ export const PostCropping = memo(({}: Props) => {
           <ExpandSize />
           <ChangeZoom />
           <div>
-            <AddMoreImages />
+            <AddMoreImages control={control} />
           </div>
         </div>
       </div>
