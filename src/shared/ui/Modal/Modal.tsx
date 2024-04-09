@@ -89,7 +89,7 @@ export const Modal = ({
               style={{
                 display: 'flex',
                 flexDirection: 'row',
-                justifyContent: 'space-between',
+                justifyContent: 'flex-end',
                 marginTop: 'auto',
               }}
             >
