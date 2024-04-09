@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+
 import {
   createPostModalFormSchema,
   createPostModalSchema,
@@ -17,5 +18,6 @@ export const useContainer = () => {
   } = useForm<createPostModalFormSchema>({
     resolver: zodResolver(createPostModalSchema),
   })
-  return { setZoom, control }
+
+  return { control, setZoom }
 }

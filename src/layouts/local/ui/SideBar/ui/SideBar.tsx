@@ -1,4 +1,5 @@
 import { CreatePostModal } from '@/layouts/local/ui/CreatePost/CreatePostModal'
+import { PostCropping } from '@/layouts/local/ui/CreatePost/PostCropping'
 import { SideBarProps } from '@/layouts/local/ui/SideBar/container'
 import { BookMark } from '@/shared/assets/icons/asideIcons/bookmarkIcon/BookmarkIcon'
 import { CreateIcon } from '@/shared/assets/icons/asideIcons/createIcon/CreateIcon'
@@ -17,7 +18,6 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 import s from './SideBar.module.scss'
-import { PostCropping } from '@/layouts/local/ui/CreatePost/PostCropping'
 
 export const SideBar = ({
   email,
