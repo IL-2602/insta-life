@@ -30,7 +30,7 @@
 }
 
 .postPhoto {
-  width: calc(50% - ((100% - 972px) / 2));
+  width: 100%;
   object-fit: cover;
 }
 
@@ -43,10 +43,6 @@
     flex-direction: column;
     font: var(--font-regular-14);
     color: var(--color-light-900);
-
-    textarea {
-      height: 120px;
-    }
   }
 
   span {
