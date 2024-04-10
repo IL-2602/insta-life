@@ -2,8 +2,10 @@ import { memo } from 'react'
 
 import { PostPublicationProps } from '@/layouts/local/ui/CreatePost/PostPublication/container'
 import { ArrowIosBack } from '@/shared/assets/icons/ArrowIosBack/ArrowIosBack'
+import { PostPhotos } from '@/shared/components/PostPhotos/PostPhotos'
 import { Button } from '@/shared/ui/Button'
 import { Modal } from '@/shared/ui/Modal'
+import { Spinner } from '@/shared/ui/Spinner'
 import { Typography } from '@/shared/ui/Typography'
 import { ControlledTextAreaField } from '@/shared/ui/controlledInsta/ControlledTextArea/ControlledTextArea'
 import Image from 'next/image'
@@ -26,6 +28,10 @@ export const PostPublication = memo(
     postPhotos,
     t,
   }: PostPublicationProps) => {
+    if (isGetUserLoading) {
+      return <Spinner />
+    }
+
     return (
       <Modal
         className={s.modal}
@@ -47,13 +53,7 @@ export const PostPublication = memo(
       >
         <div className={s.container}>
           <div className={s.postPhotoWrapper}>
-            <Image
-              alt={'postPhoto'}
-              className={s.postPhoto}
-              height={500}
-              src={postPhotos[0]}
-              width={1}
-            />
+            <PostPhotos className={s.postPhoto} height={500} photos={postPhotos} width={1} />
           </div>
           {!isGetUserLoading && (
             <form className={s.descriptionWrapper} onSubmit={handleSubmit(() => {})}>
@@ -74,7 +74,7 @@ export const PostPublication = memo(
               </div>
               <label>
                 {t.auth.form.addPublicationDescription}
-                <ControlledTextAreaField control={control} name={'postDescription'} />
+                <ControlledTextAreaField control={control} name={'postDescription'} rows={4} />
                 <span className={s.charCount}>{postDescription?.length}/500</span>
               </label>
               <hr className={s.line}></hr>
