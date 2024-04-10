@@ -3,7 +3,8 @@ import { PixelCrop } from 'react-image-crop'
 export async function canvasPreview(
   image: HTMLImageElement | null,
   canvas: HTMLCanvasElement | null,
-  crop: PixelCrop
+  crop: PixelCrop,
+  scale = 1
 ) {
   if (!image || !canvas) {
     throw new Error('Image element is null')
@@ -34,7 +35,8 @@ export async function canvasPreview(
 
   const cropX = crop.x * scaleX
   const cropY = crop.y * scaleY
-
+  // 2) Scale the image
+  ctx.scale(scale, scale)
   // 5) Move the crop origin to the canvas origin (0,0)
   ctx.translate(-cropX, -cropY)
   ctx.drawImage(

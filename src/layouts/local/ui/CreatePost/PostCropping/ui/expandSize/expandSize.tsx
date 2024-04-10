@@ -10,8 +10,9 @@ import one from '../../../../../../../../public/assets/postCropping/1x1.svg'
 import four from '../../../../../../../../public/assets/postCropping/4x5.svg'
 import sixteen from '../../../../../../../../public/assets/postCropping/16x9.svg'
 import original from '../../../../../../../../public/assets/postCropping/original.svg'
+import { Dispatch, SetStateAction } from 'react'
 
-export const ExpandSize = () => {
+export const ExpandSize = ({ aspect, setAspect }: Props) => {
   return (
     <DropMenu.Menu
       align={'start'}
@@ -28,18 +29,23 @@ export const ExpandSize = () => {
         <Typography variant={'h3'}>Original</Typography>
         <Image alt={'Original size'} height={24} src={original} width={24} />
       </DropMenu.Item>
-      <DropMenu.Item>
+      <DropMenu.Item onClick={() => setAspect(1)}>
         <Typography variant={'regular14'}>1:1</Typography>
         <Image alt={'1:1 size'} height={18} src={one} width={18} />
       </DropMenu.Item>
-      <DropMenu.Item>
+      <DropMenu.Item onClick={() => setAspect(4 / 5)}>
         <Typography variant={'regular14'}>4:5</Typography>
         <Image alt={'4:5 size'} height={26} src={four} width={18} />
       </DropMenu.Item>
-      <DropMenu.Item>
+      <DropMenu.Item onClick={() => setAspect(16 / 9)}>
         <Typography variant={'regular14'}>16:9</Typography>
         <Image alt={'16:9 size'} height={18} src={sixteen} width={26} />
       </DropMenu.Item>
     </DropMenu.Menu>
   )
+}
+
+type Props = {
+  aspect?: number
+  setAspect: Dispatch<SetStateAction<number | undefined>>
 }

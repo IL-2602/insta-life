@@ -4,9 +4,9 @@ import { ImageIcon } from '@/shared/assets/icons/Image'
 import { Button } from '@/shared/ui/Button'
 import { DropMenu } from '@/shared/ui/DropMenu'
 import { ControlledFileUploader } from '@/shared/ui/controlledInsta/ControlledFileUploader/ControlledFileUploader'
+import Image from 'next/image'
 
 import s from './addMoreImages.module.scss'
-import Image from 'next/image'
 
 export const AddMoreImages = ({ control, photo }: Props) => {
   return (
@@ -23,7 +23,7 @@ export const AddMoreImages = ({ control, photo }: Props) => {
     >
       <DropMenu.Item onSelect={(e: Event) => e.preventDefault()}>
         <div className={s.container}>
-          {photo && <Image src={photo} alt={'Photo Preview'} height={80} width={80} />}
+          {photo && <Image alt={'Photo Preview'} height={80} src={photo} width={80} />}
           <ControlledFileUploader
             className={s.fileBtn}
             control={control}

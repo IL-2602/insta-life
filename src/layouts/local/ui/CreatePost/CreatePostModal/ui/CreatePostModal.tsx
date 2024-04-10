@@ -1,6 +1,7 @@
 import { memo } from 'react'
 
 import { CreatePostModalProps } from '@/layouts/local/ui/CreatePost/CreatePostModal/container'
+import { PostCropping } from '@/layouts/local/ui/CreatePost/PostCropping'
 import { NoCover } from '@/shared/assets/icons/noCover/NoCover'
 import { Button } from '@/shared/ui/Button'
 import { Modal } from '@/shared/ui/Modal'
@@ -8,7 +9,6 @@ import { Typography } from '@/shared/ui/Typography'
 import { ControlledFileUploader } from '@/shared/ui/controlledInsta/ControlledFileUploader/ControlledFileUploader'
 
 import s from './CreatePostModal.module.scss'
-import { PostCropping } from '@/layouts/local/ui/CreatePost/PostCropping'
 
 export const CreatePostModal = memo(
   ({
@@ -17,8 +17,8 @@ export const CreatePostModal = memo(
     handleCloseModal,
     handleSubmit,
     isCreatePostModal,
-    postPhotoError,
     modalSteps,
+    postPhotoError,
     t,
   }: CreatePostModalProps) => {
     return (

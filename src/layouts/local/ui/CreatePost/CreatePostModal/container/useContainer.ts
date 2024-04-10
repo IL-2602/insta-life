@@ -53,8 +53,8 @@ export const useContainer = () => {
     handleCloseModal,
     handleSubmit,
     isCreatePostModal,
-    postPhotoError,
     modalSteps,
+    postPhotoError,
     t,
   }
 }
