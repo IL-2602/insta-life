@@ -8,14 +8,15 @@ import { useTranslation } from '@/shared/hooks/useTranslation'
 import { useRouter } from 'next/router'
 
 export const useContainer = () => {
-  const router = useRouter()
-  const [isOpen, setIsOpen] = useState(false)
-  const email = useAppSelector(state => state.authReducer.email)
   const { t } = useTranslation()
+  const dispatch = useAppDispatch()
+  const router = useRouter()
   const { pathname } = router
 
-  const { isCreatePostModal } = useAppSelector(state => state.postReducer)
-  const dispatch = useAppDispatch()
+  const [isOpen, setIsOpen] = useState(false)
+
+  const email = useAppSelector(state => state.authReducer.email)
+  const isCreatePostModal = useAppSelector(state => state.postReducer.isCreatePostModal)
 
   const [logOut, { isLoading }] = useLogOutMutation()
 

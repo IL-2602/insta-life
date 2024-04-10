@@ -196,6 +196,8 @@ export const ru: Local = {
     followingModalTitle: 'Подписчик',
     followingModalUnfollowDescription:
       'Вы действительно хотите отписаться от этого пользователя “URLProfiele”?',
+    postDescriptionValueMax: 'Максимальное количество символов 500 знаков',
+    publicationTitle: 'Публикация',
     reasonForBan: 'Причина блокировки',
     search: 'Поиск',
     successTransactionModalDescription: 'Оплата прошла успешно!',
