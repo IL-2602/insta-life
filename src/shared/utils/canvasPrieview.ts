@@ -35,6 +35,7 @@ export async function canvasPreview(
 
   const cropX = crop.x * scaleX
   const cropY = crop.y * scaleY
+
   // 2) Scale the image
   ctx.scale(scale, scale)
   // 5) Move the crop origin to the canvas origin (0,0)

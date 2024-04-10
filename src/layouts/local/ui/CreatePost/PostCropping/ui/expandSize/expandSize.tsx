@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from 'react'
+
 import { Expand } from '@/shared/assets/icons/Expand'
 import { Button } from '@/shared/ui/Button'
 import { DropMenu } from '@/shared/ui/DropMenu'
@@ -10,7 +12,6 @@ import one from '../../../../../../../../public/assets/postCropping/1x1.svg'
 import four from '../../../../../../../../public/assets/postCropping/4x5.svg'
 import sixteen from '../../../../../../../../public/assets/postCropping/16x9.svg'
 import original from '../../../../../../../../public/assets/postCropping/original.svg'
-import { Dispatch, SetStateAction } from 'react'
 
 export const ExpandSize = ({ aspect, setAspect }: Props) => {
   return (

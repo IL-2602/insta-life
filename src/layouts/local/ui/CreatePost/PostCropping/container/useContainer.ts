@@ -1,14 +1,14 @@
 import { SyntheticEvent, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { Crop, PixelCrop, centerCrop, convertToPixelCrop, makeAspectCrop } from 'react-image-crop'
 
 import { useAppSelector } from '@/app/store/hooks/useAppSelector'
 import {
   createPostModalFormSchema,
   createPostModalSchema,
 } from '@/layouts/local/ui/CreatePost/CreatePostModal/schema/createPostModalSchema'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { centerCrop, convertToPixelCrop, Crop, makeAspectCrop, PixelCrop } from 'react-image-crop'
 import { canvasPreview } from '@/shared/utils/canvasPrieview'
+import { zodResolver } from '@hookform/resolvers/zod'
 function centerAspectCrop(mediaWidth: number, mediaHeight: number, aspect: number) {
   return centerCrop(
     makeAspectCrop(
@@ -38,12 +38,14 @@ export const useContainer = () => {
 
   const [crop, setCrop] = useState<Crop>()
   const [completedCrop, setCompletedCrop] = useState<PixelCrop>()
+
   console.log(completedCrop)
   const imgRef = useRef<HTMLImageElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const onImageLoaded = (e: SyntheticEvent<HTMLImageElement, Event>) => {
     if (aspect) {
       const { height, width } = e.currentTarget
+
       setCrop(centerAspectCrop(width, height, aspect))
     }
   }
@@ -52,6 +54,7 @@ export const useContainer = () => {
     if (completedCrop?.width && completedCrop?.height && imgRef.current && canvasRef.current) {
       // We use canvasPreview as it's much faster than imgPreview.
       const { height, width } = imgRef.current
+
       setCrop(centerAspectCrop(width, height, 4 / 5))
       canvasPreview(imgRef.current, canvasRef.current, completedCrop)
     }
@@ -59,9 +62,11 @@ export const useContainer = () => {
 
   const blobUrlRef = useRef('')
   const hiddenAnchorRef = useRef<HTMLAnchorElement>(null)
+
   async function onDownloadCropClick() {
     const image = imgRef.current
     const previewCanvas = canvasRef.current
+
     if (!image || !previewCanvas || !completedCrop) {
       throw new Error('Crop canvas does not exist')
     }
@@ -77,6 +82,7 @@ export const useContainer = () => {
       completedCrop.height * scaleY
     )
     const ctx = offscreen.getContext('2d')
+
     if (!ctx) {
       throw new Error('No 2d context')
     }
@@ -110,19 +116,19 @@ export const useContainer = () => {
   }
 
   return {
-    control,
-    modalStep,
-    postPhoto,
-    setZoom,
     aspect,
-    setAspect,
-    onImageLoaded,
-    imgRef,
     canvasRef,
-    crop,
-    setCompletedCrop,
-    hiddenAnchorRef,
-    onDownloadCropClick,
     completedCrop,
+    control,
+    crop,
+    hiddenAnchorRef,
+    imgRef,
+    modalStep,
+    onDownloadCropClick,
+    onImageLoaded,
+    postPhoto,
+    setAspect,
+    setCompletedCrop,
+    setZoom,
   }
 }

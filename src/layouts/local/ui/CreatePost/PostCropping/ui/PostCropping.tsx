@@ -1,4 +1,5 @@
 import { memo } from 'react'
+import { ReactCrop } from 'react-image-crop'
 
 import { Props } from '@/layouts/local/ui/CreatePost/PostCropping/container'
 import { AddMoreImages } from '@/layouts/local/ui/CreatePost/PostCropping/ui/addMoreImages/addMoreImages'
@@ -8,26 +9,27 @@ import { Button } from '@/shared/ui/Button'
 import { Modal } from '@/shared/ui/Modal'
 import { Typography } from '@/shared/ui/Typography'
 import Image from 'next/image'
+
 import 'react-image-crop/src/ReactCrop.scss'
+
 import s from './PostCropping.module.scss'
-import { ReactCrop } from 'react-image-crop'
 
 export const PostCropping = memo(
   ({
     aspect,
+    canvasRef,
+    completedCrop,
     control,
+    crop,
+    hiddenAnchorRef,
+    imgRef,
     modalStep,
+    onDownloadCropClick,
+    onImageLoaded,
     postPhoto,
     setAspect,
-    imgRef,
-    canvasRef,
-    setZoom,
-    hiddenAnchorRef,
-    onImageLoaded,
-    crop,
     setCompletedCrop,
-    onDownloadCropClick,
-    completedCrop,
+    setZoom,
   }: Props) => {
     return (
       <Modal
@@ -55,16 +57,16 @@ export const PostCropping = memo(
             <div className={s.imgWrapper}>
               <ReactCrop
                 aspect={aspect}
-                crop={crop}
-                onChange={c => setCompletedCrop(c)}
                 className={s.test}
+                crop={crop}
                 minHeight={500}
+                onChange={c => setCompletedCrop(c)}
               >
                 <img
                   alt={`image Cropping`}
-                  src={postPhoto}
-                  ref={imgRef}
                   onLoad={onImageLoaded}
+                  ref={imgRef}
+                  src={postPhoto}
                   style={{ objectFit: 'contain' }}
                 />
               </ReactCrop>
@@ -73,9 +75,9 @@ export const PostCropping = memo(
                   ref={canvasRef}
                   style={{
                     border: '1px solid black',
+                    height: completedCrop.height,
                     objectFit: 'contain',
                     width: completedCrop.width,
-                    height: completedCrop.height,
                   }}
                 />
               )}
@@ -90,9 +92,9 @@ export const PostCropping = memo(
             </div>
           </div>
           <a
-            href="#hidden"
-            ref={hiddenAnchorRef}
             download
+            href={'#hidden'}
+            ref={hiddenAnchorRef}
             style={{
               position: 'absolute',
               top: '-200vh',
