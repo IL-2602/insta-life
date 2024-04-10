@@ -2,7 +2,7 @@ import { ChangeEvent, ReactNode, useRef } from 'react'
 import { Control, FieldPath, FieldValues, useController } from 'react-hook-form'
 
 import { Button } from '@/shared/ui/Button'
-import { CustomProps } from '@/shared/ui/Button/Button'
+import { ButtonProps } from '@/shared/ui/Button/Button'
 
 export const ControlledFileUploader = <T extends FieldValues>({
   children,
@@ -48,4 +48,4 @@ type Props<T extends FieldValues> = {
   control: Control<T>
   extraActions?: (inputName: string) => void
   name: FieldPath<T>
-} & CustomProps
+} & ButtonProps
