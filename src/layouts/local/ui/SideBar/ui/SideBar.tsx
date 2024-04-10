@@ -121,8 +121,8 @@ export const SideBar = ({
           </Typography>
         </Modal>
       )}
-      {/*<CreatePostModal.widget />*/}
-      <PostCropping.widget />
+      <CreatePostModal.widget />
+      {/*<PostCropping.widget />*/}
     </aside>
   )
 }

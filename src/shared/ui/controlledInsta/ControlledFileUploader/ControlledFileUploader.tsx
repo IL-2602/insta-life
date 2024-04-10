@@ -27,9 +27,6 @@ export const ControlledFileUploader = <T extends FieldValues>({
 
   return (
     <>
-      <Button className={className} onClick={() => inputRef?.current?.click()} variant={variant}>
-        {children}
-      </Button>
       <input
         accept={'image/png, image/jpeg, image/jpg'}
         name={name}
@@ -38,6 +35,9 @@ export const ControlledFileUploader = <T extends FieldValues>({
         style={{ display: 'none' }}
         type={'file'}
       />
+      <Button className={className} onClick={() => inputRef?.current?.click()} variant={variant}>
+        {children}
+      </Button>
     </>
   )
 }

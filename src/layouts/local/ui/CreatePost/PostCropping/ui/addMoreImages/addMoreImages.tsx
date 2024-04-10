@@ -6,7 +6,9 @@ import { DropMenu } from '@/shared/ui/DropMenu'
 import { ControlledFileUploader } from '@/shared/ui/controlledInsta/ControlledFileUploader/ControlledFileUploader'
 
 import s from './addMoreImages.module.scss'
-export const AddMoreImages = ({ control }: Props) => {
+import Image from 'next/image'
+
+export const AddMoreImages = ({ control, photo }: Props) => {
   return (
     <DropMenu.Menu
       align={'end'}
@@ -20,14 +22,17 @@ export const AddMoreImages = ({ control }: Props) => {
       }
     >
       <DropMenu.Item onSelect={(e: Event) => e.preventDefault()}>
-        <ControlledFileUploader
-          className={s.fileBtn}
-          control={control}
-          name={'postPhoto'}
-          variant={'outlined'}
-        >
-          +
-        </ControlledFileUploader>
+        <div className={s.container}>
+          {photo && <Image src={photo} alt={'Photo Preview'} height={80} width={80} />}
+          <ControlledFileUploader
+            className={s.fileBtn}
+            control={control}
+            name={'postPhoto'}
+            variant={'outlined'}
+          >
+            +
+          </ControlledFileUploader>
+        </div>
       </DropMenu.Item>
     </DropMenu.Menu>
   )
@@ -35,4 +40,5 @@ export const AddMoreImages = ({ control }: Props) => {
 
 type Props = {
   control: Control<{ postPhoto?: File | undefined }, any>
+  photo?: string
 }

@@ -1,3 +1,11 @@
+.container {
+  display: flex;
+
+  & > *:not(:last-child) {
+    margin-right: 12px;
+  }
+}
+
 .button {
   display: flex;
   align-items: center;

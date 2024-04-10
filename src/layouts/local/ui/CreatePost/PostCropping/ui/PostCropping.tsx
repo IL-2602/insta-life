@@ -11,11 +11,12 @@ import Image from 'next/image'
 
 import s from './PostCropping.module.scss'
 
-export const PostCropping = memo(({ control }: Props) => {
+export const PostCropping = memo(({ control, postPhoto, modalStep }: Props) => {
   return (
     <Modal
       className={s.container}
       customButtonsBlock={<></>}
+      open={!!postPhoto && modalStep === 'cropping'}
       nextStepBtn={
         <Button variant={'secondary'}>
           <Typography color={'primary'} variant={'h3'}>
@@ -23,7 +24,6 @@ export const PostCropping = memo(({ control }: Props) => {
           </Typography>
         </Button>
       }
-      open
       previousStepBtn={
         <Button variant={'secondary'}>
           <Typography color={'light'} variant={'h3'}>
@@ -34,12 +34,20 @@ export const PostCropping = memo(({ control }: Props) => {
       title={'Cropping'}
     >
       <div className={s.croppingWrapper}>
-        <Image alt={`image Cropping`} className={s.img} height={500} src={''} width={490} />
+        {postPhoto && (
+          <Image
+            alt={`image Cropping`}
+            className={s.img}
+            height={500}
+            src={postPhoto}
+            width={490}
+          />
+        )}
         <div className={s.btnGroup}>
           <ExpandSize />
           <ChangeZoom />
           <div>
-            <AddMoreImages control={control} />
+            <AddMoreImages control={control} photo={postPhoto} />
           </div>
         </div>
       </div>

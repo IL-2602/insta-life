@@ -4,7 +4,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 const initialState: PostSliceInitialState = {
   isCreatePostModal: false,
   modalSteps: undefined,
-  postPhoto: '',
+  postPhoto: undefined,
 }
 
 export const postSlice = createSlice({

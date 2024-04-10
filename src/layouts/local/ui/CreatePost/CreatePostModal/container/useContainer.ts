@@ -12,7 +12,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 
 export const useContainer = () => {
   const { t } = useTranslation()
-  const { isCreatePostModal } = useAppSelector(state => state.postReducer)
+  const { isCreatePostModal, modalSteps } = useAppSelector(state => state.postReducer)
 
   const dispatch = useAppDispatch()
 
@@ -54,6 +54,7 @@ export const useContainer = () => {
     handleSubmit,
     isCreatePostModal,
     postPhotoError,
+    modalSteps,
     t,
   }
 }
