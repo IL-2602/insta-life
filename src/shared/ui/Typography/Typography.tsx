@@ -26,6 +26,7 @@ export type TypographyProps<T extends ElementType = 'p'> = {
     | 'large'
     | 'link-small'
     | 'medium14'
+    | 'medium16'
     | 'regular-link'
     | 'regular14'
     | 'regular16'

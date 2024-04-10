@@ -12,7 +12,7 @@ export type ButtonProps<T extends ElementType = 'button'> = {
   className?: string
   fullWidth?: boolean
   isLoading?: boolean
-  variant?: 'link' | 'outlined' | 'primary' | 'secondary'
+  variant?: 'link' | 'noStyle' | 'outlined' | 'primary' | 'secondary'
 } & ComponentPropsWithoutRef<T>
 
 // С помощью Omit мы убираем из пропсов переданного компонента все пропсы,

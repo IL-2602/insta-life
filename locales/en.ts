@@ -189,6 +189,8 @@ export const en = {
     followingModalTitle: 'Following',
     followingModalUnfollowDescription:
       'Do you really want to Unfollow from this user “URLProfile”?',
+    postDescriptionValueMax: 'Limit of the symbols is 500',
+    publicationTitle: 'Publication',
     reasonForBan: 'Reason for ban',
     search: 'Search',
     successTransactionModalDescription: 'Payment was successful!',

@@ -16,6 +16,7 @@ export const CreatePostModal = memo(
     handleCloseModal,
     handleSubmit,
     isCreatePostModal,
+    modalSteps,
     postPhotoError,
     t,
   }: CreatePostModalProps) => {
@@ -24,7 +25,7 @@ export const CreatePostModal = memo(
         className={s.modal}
         customButtonsBlock={<></>}
         modalHandler={handleCloseModal}
-        open={isCreatePostModal}
+        open={isCreatePostModal && modalSteps === 'upload'}
         title={t.modal.addPhotoModalTitle}
       >
         <div className={s.content}>
