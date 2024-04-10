@@ -1,4 +1,5 @@
 import { CreatePostModal } from '@/layouts/local/ui/CreatePost/CreatePostModal'
+import { PostPublication } from '@/layouts/local/ui/CreatePost/PostPublication'
 import { SideBarProps } from '@/layouts/local/ui/SideBar/container'
 import { BookMark } from '@/shared/assets/icons/asideIcons/bookmarkIcon/BookmarkIcon'
 import { CreateIcon } from '@/shared/assets/icons/asideIcons/createIcon/CreateIcon'
@@ -14,7 +15,6 @@ import { Spinner } from '@/shared/ui/Spinner'
 import { Typography } from '@/shared/ui/Typography'
 import { clsx } from 'clsx'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 
 import s from './SideBar.module.scss'
 
@@ -25,15 +25,10 @@ export const SideBar = ({
   isCreatePostModal,
   isLoading,
   isOpen,
-  pathname,
   setIsOpen,
   t,
   uploadPostPhoto,
 }: SideBarProps) => {
-  const router = useRouter()
-
-  const { basePath } = router
-
   return (
     <aside className={s.aside}>
       <Link className={handleActiveLink(ROUTES.HOME) ? s.activeLink : ''} href={ROUTES.HOME}>
@@ -121,6 +116,7 @@ export const SideBar = ({
         </Modal>
       )}
       <CreatePostModal.widget />
+      <PostPublication.widget />
     </aside>
   )
 }
