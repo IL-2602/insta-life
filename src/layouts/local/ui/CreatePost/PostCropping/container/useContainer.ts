@@ -62,6 +62,7 @@ export const useContainer = () => {
   useEffect(() => {
     if (completedCrop?.width && completedCrop?.height && imgRef.current && canvasRef.current) {
       const { height, width } = imgRef.current
+
       // Проверяем, что aspect определен и не равен нулю
       if (aspect && aspect !== 0) {
         setCrop(centerAspectCrop(width, height, aspect))
