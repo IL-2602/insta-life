@@ -14,73 +14,105 @@ import noPhoto from '../../../../../../../public/assets/noPhoto.svg'
 
 export const EditPostModal = memo(
   ({
+    closeModalWithRefresh,
     control,
     editPostDescription,
     errorDescription,
     getProfile,
     handleCloseModal,
+    handleClosePostModal,
     handleSubmit,
     isEditPostModal,
     isGetUserLoading,
     isLoadingEditPost,
+    isOpenClosePostModal,
     postPhotos,
     t,
     updatePost,
   }: EditPostModalProps) => {
     return (
-      <Modal
-        className={s.modal}
-        customButtonsBlock={<></>}
-        modalHandler={handleCloseModal}
-        open={isEditPostModal}
-        title={t.modal.editPost}
-      >
-        <div className={s.container}>
-          <div className={s.postPhotoWrapper}>
-            <PostPhotos className={s.postPhoto} height={503} photos={postPhotos} width={490} />
-          </div>
-          {!isGetUserLoading && (
-            <form className={s.descriptionWrapper} onSubmit={handleSubmit(() => {})}>
-              <div>
-                <div className={s.userPhotoWrapper}>
-                  <div className={s.photo}>
-                    {getProfile?.avatars[0] === undefined ? (
-                      <Image alt={'noUserPhoto'} height={22} src={noPhoto} width={22} />
-                    ) : (
-                      <Image
-                        alt={'userPhoto'}
-                        height={36}
-                        src={getProfile?.avatars[0].url}
-                        width={36}
-                      />
-                    )}
+      <>
+        <Modal
+          className={s.modal}
+          customButtonsBlock={<></>}
+          modalHandler={handleCloseModal}
+          open={isEditPostModal}
+          title={t.modal.editPost}
+        >
+          <div className={s.container}>
+            <div className={s.postPhotoWrapper}>
+              <PostPhotos className={s.postPhoto} height={503} photos={postPhotos} width={490} />
+            </div>
+            {!isGetUserLoading && (
+              <form className={s.descriptionWrapper} onSubmit={handleSubmit(() => {})}>
+                <div>
+                  <div className={s.userPhotoWrapper}>
+                    <div className={s.photo}>
+                      {getProfile?.avatars[0] === undefined ? (
+                        <Image alt={'noUserPhoto'} height={22} src={noPhoto} width={22} />
+                      ) : (
+                        <Image
+                          alt={'userPhoto'}
+                          height={36}
+                          src={getProfile?.avatars[0].url}
+                          width={36}
+                        />
+                      )}
+                    </div>
+                    <Typography variant={'medium16'}>{getProfile?.userName}</Typography>
                   </div>
-                  <Typography variant={'medium16'}>{getProfile?.userName}</Typography>
+                  <label>
+                    {t.auth.form.addPublicationDescription}
+                    <ControlledTextAreaField
+                      control={control}
+                      name={'editPostDescription'}
+                      rows={4}
+                    />
+                    <span className={s.charCount}>{editPostDescription?.length}/500</span>
+                  </label>
                 </div>
-                <label>
-                  {t.auth.form.addPublicationDescription}
-                  <ControlledTextAreaField
-                    control={control}
-                    name={'editPostDescription'}
-                    rows={4}
-                  />
-                  <span className={s.charCount}>{editPostDescription?.length}/500</span>
-                </label>
-              </div>
 
-              <div className={s.saveChangesBtnBlock}>
+                <div className={s.saveChangesBtnBlock}>
+                  <Button
+                    disabled={!!errorDescription || isLoadingEditPost}
+                    onClick={updatePost}
+                    variant={'primary'}
+                  >
+                    <Typography variant={'h3'}>{t.button.saveChanges}</Typography>
+                  </Button>
+                </div>
+              </form>
+            )}
+          </div>
+        </Modal>
+        {isOpenClosePostModal && (
+          <Modal
+            className={s.closePostModal}
+            customButtonsBlock={
+              <div className={s.buttonsBlock}>
+                <Button disabled={false} onClick={closeModalWithRefresh} variant={'outlined'}>
+                  <Typography variant={'h3'}>{t.button.yes}</Typography>
+                </Button>
                 <Button
-                  disabled={!!errorDescription || isLoadingEditPost}
-                  onClick={updatePost}
+                  className={s.button}
+                  disabled={false}
+                  onClick={handleClosePostModal}
                   variant={'primary'}
                 >
-                  <Typography variant={'h3'}>{t.button.saveChanges}</Typography>
+                  <Typography variant={'h3'}>{t.button.no}</Typography>
                 </Button>
               </div>
-            </form>
-          )}
-        </div>
-      </Modal>
+            }
+            modalHandler={handleClosePostModal}
+            open={isOpenClosePostModal}
+            title={t.modal.closeModalTitle}
+          >
+            <div className={s.closeOpenModalContent}>
+              <Typography variant={'regular16'}>{t.modal.closeModalText}</Typography>
+            </div>
+          </Modal>
+        )}
+      </>
     )
   }
 )

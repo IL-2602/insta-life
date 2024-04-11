@@ -2,7 +2,6 @@ import { ModalSteps, PostSliceInitialState } from '@/services/postService/lib/po
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 const initialState: PostSliceInitialState = {
-  isClosePostModal: false,
   isCreatePostModal: false,
   isDeletePostModal: false,
   isEditPostModal: false,
@@ -14,9 +13,6 @@ export const postSlice = createSlice({
   initialState,
   name: 'postReducer',
   reducers: {
-    setIsClosePostModal: (state, action: PayloadAction<boolean>) => {
-      state.isClosePostModal = action.payload
-    },
     setIsCreatePostModal: (state, action: PayloadAction<boolean>) => {
       state.isCreatePostModal = action.payload
     },

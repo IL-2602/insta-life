@@ -19,7 +19,7 @@ export const useContainer = () => {
   const { isEditPostModal } = useAppSelector(state => state.postReducer)
   const { data: getProfile, isLoading: isGetUserLoading } = useGetProfileQuery()
   const [editPost, { isLoading: isLoadingEditPost }] = useEditPostMutation()
-  const [newDescription, setNewDescription] = useState('')
+  const [isOpenClosePostModal, setIsOpenClosePostModal] = useState(false)
 
   const { editPostSchema } = useEditPostSchema()
 
@@ -85,19 +85,30 @@ export const useContainer = () => {
   }
 
   const handleCloseModal = () => {
+    setIsOpenClosePostModal(true)
+  }
+  const closeModalWithRefresh = () => {
     dispatch(postActions.setIsEditPostModal(false))
+    setIsOpenClosePostModal(false)
+    reset({ editPostDescription: '' })
+  }
+  const handleClosePostModal = () => {
+    setIsOpenClosePostModal(false)
   }
 
   return {
+    closeModalWithRefresh,
     control,
     editPostDescription,
     errorDescription,
     getProfile,
     handleCloseModal,
+    handleClosePostModal,
     handleSubmit,
     isEditPostModal,
     isGetUserLoading,
     isLoadingEditPost,
+    isOpenClosePostModal,
     openEditPostModal,
     postPhotos,
     t,
