@@ -12,6 +12,7 @@ import { Typography } from '@/shared/ui/Typography'
 import 'react-image-crop/src/ReactCrop.scss'
 
 import s from './PostCropping.module.scss'
+import { ArrowIosBack } from '@/shared/assets/icons/ArrowIosBack/ArrowIosBack'
 
 export const PostCropping = memo(
   ({
@@ -25,35 +26,36 @@ export const PostCropping = memo(
     modalStep,
     onDownloadCropClick,
     onImageLoaded,
-    postPhoto,
+    postPhotos,
     setAspect,
     setCompletedCrop,
     setZoom,
     zoom,
+    onNext,
   }: Props) => {
     return (
       <Modal
         className={s.container}
         customButtonsBlock={<></>}
         nextStepBtn={
-          <Button variant={'secondary'}>
+          <Button variant={'secondary'} onClick={onNext}>
             <Typography color={'primary'} variant={'h3'}>
               Next
             </Typography>
           </Button>
         }
-        open={!!postPhoto && modalStep === 'cropping'}
+        open={modalStep === 'cropping'}
         previousStepBtn={
-          <Button variant={'secondary'}>
+          <Button variant={'link'}>
             <Typography color={'light'} variant={'h3'}>
-              {'<'}
+              <ArrowIosBack />
             </Typography>
           </Button>
         }
         title={'Cropping'}
       >
         <div className={s.croppingWrapper}>
-          {postPhoto && (
+          {postPhotos[0] && (
             <div className={s.imgWrapper}>
               <ReactCrop
                 aspect={aspect}
@@ -67,7 +69,7 @@ export const PostCropping = memo(
                   alt={`image Cropping`}
                   onLoad={onImageLoaded}
                   ref={imgRef}
-                  src={postPhoto}
+                  src={postPhotos[0]}
                   style={{ objectFit: 'contain', visibility: 'hidden' }}
                 />
               </ReactCrop>
@@ -88,7 +90,7 @@ export const PostCropping = memo(
             <ChangeZoom setZoom={setZoom} zoom={zoom} />
             <Button onClick={onDownloadCropClick}>++</Button>
             <div>
-              <AddMoreImages control={control} photo={postPhoto} />
+              <AddMoreImages control={control} photo={postPhotos[0]} />
             </div>
           </div>
           <a

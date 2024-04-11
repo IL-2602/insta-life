@@ -9,6 +9,8 @@ import {
 } from '@/layouts/local/ui/CreatePost/CreatePostModal/schema/createPostModalSchema'
 import { canvasPreview } from '@/shared/utils/canvasPrieview'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useAppDispatch } from '@/app/store/hooks/useAppDispatch'
+import { postActions, postSlice } from '@/services/postService/store/slice/postEndpoints.slice'
 function centerAspectCrop(mediaWidth: number, mediaHeight: number, aspect: number) {
   return centerCrop(
     makeAspectCrop(
@@ -33,14 +35,15 @@ export const useContainer = () => {
   } = useForm<createPostModalFormSchema>({
     resolver: zodResolver(createPostModalSchema),
   })
-  const postPhoto = useAppSelector(state => state.postReducer.postPhoto)
+  const postPhotos = useAppSelector(state => state.postReducer?.postPhotos)
   const modalStep = useAppSelector(state => state.postReducer?.modalSteps)
-
+  const dispatch = useAppDispatch()
   const [crop, setCrop] = useState<Crop>()
   const [completedCrop, setCompletedCrop] = useState<PixelCrop>()
 
   const imgRef = useRef<HTMLImageElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
+
   const onImageLoaded = () => {
     if (!aspect) {
       const crop: Crop = {
@@ -54,6 +57,7 @@ export const useContainer = () => {
       setCrop(crop)
     }
   }
+  const onNext = () => dispatch(postActions.setModalSteps('publication'))
 
   useEffect(() => {
     if (completedCrop?.width && completedCrop?.height && imgRef.current && canvasRef.current) {
@@ -137,10 +141,11 @@ export const useContainer = () => {
     modalStep,
     onDownloadCropClick,
     onImageLoaded,
-    postPhoto,
+    postPhotos,
     setAspect,
     setCompletedCrop,
     setZoom,
     zoom,
+    onNext,
   }
 }
