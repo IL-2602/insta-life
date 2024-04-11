@@ -186,6 +186,7 @@ export const ru: Local = {
     deleteUser: 'Удалить пользователя',
     deleteUserAvatar: 'Удалить фотографию',
     deleteUserAvatarText: 'Вы действительно хотите удалить фотографию?',
+    editPost: 'Редактировать пост',
     errorTransactionModalDescription:
       'Транзакция завершилась неудачей, пожалуйста, повторите попытку',
     errorTransactionModalTitle: 'Ошибка',
