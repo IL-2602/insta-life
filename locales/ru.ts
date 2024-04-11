@@ -163,7 +163,7 @@ export const ru: Local = {
     removeUser: 'Удалить пользователя',
     save: 'Сохранить',
     saveChanges: 'Сохранить',
-    saveDraft: 'Сохранить черновик',
+    saveDraft: 'Сохранить',
     selectFromComputer: 'Выбрать фаил',
     sendMessage: 'Отправить сообщение',
     terminateAllOtherSession: 'Завершите все остальные сеансы',
