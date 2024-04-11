@@ -13,7 +13,7 @@ export const Header = () => {
       <Container className={s.container}>
         <Link href={ROUTES.HOME}>
           <Typography color={'light'} variant={'h1'}>
-            InstaLife
+            Insta LifeT
           </Typography>
         </Link>
         <div className={s.wrapper}>
