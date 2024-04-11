@@ -8,7 +8,6 @@ import { ExpandSize } from '@/layouts/local/ui/CreatePost/PostCropping/ui/expand
 import { Button } from '@/shared/ui/Button'
 import { Modal } from '@/shared/ui/Modal'
 import { Typography } from '@/shared/ui/Typography'
-import Image from 'next/image'
 
 import 'react-image-crop/src/ReactCrop.scss'
 
@@ -59,25 +58,25 @@ export const PostCropping = memo(
                 aspect={aspect}
                 className={s.test}
                 crop={crop}
-                minHeight={500}
-                onChange={c => setCompletedCrop(c)}
+                onChange={c => console.log(c)}
+                onComplete={c => setCompletedCrop(c)}
+                style={{ visibility: 'hidden' }}
               >
                 <img
                   alt={`image Cropping`}
                   onLoad={onImageLoaded}
                   ref={imgRef}
                   src={postPhoto}
-                  style={{ objectFit: 'contain' }}
+                  style={{ objectFit: 'contain', visibility: 'hidden' }}
                 />
               </ReactCrop>
               {!!completedCrop && (
                 <canvas
                   ref={canvasRef}
                   style={{
-                    border: '1px solid black',
-                    height: completedCrop.height,
+                    height: '100%',
                     objectFit: 'contain',
-                    width: completedCrop.width,
+                    width: '100%',
                   }}
                 />
               )}

@@ -50,15 +50,28 @@ export const useContainer = () => {
     }
   }
 
+  // useEffect(() => {
+  //   if (completedCrop?.width && completedCrop?.height && imgRef.current && canvasRef.current) {
+  //     // We use canvasPreview as it's much faster than imgPreview.
+  //     const { height, width } = imgRef.current
+  //     setCrop(centerAspectCrop(width, height, aspect || 1))
+  //     canvasPreview(imgRef.current, canvasRef.current, completedCrop)
+  //   }
+  // }, [completedCrop?.width, completedCrop?.height, imgRef.current, canvasRef.current, aspect])
+
   useEffect(() => {
     if (completedCrop?.width && completedCrop?.height && imgRef.current && canvasRef.current) {
-      // We use canvasPreview as it's much faster than imgPreview.
       const { height, width } = imgRef.current
-
-      setCrop(centerAspectCrop(width, height, 4 / 5))
-      canvasPreview(imgRef.current, canvasRef.current, completedCrop)
+      // Проверяем, что aspect определен и не равен нулю
+      if (aspect && aspect !== 0) {
+        setCrop(centerAspectCrop(width, height, aspect))
+      }
+      if (crop) {
+        setCompletedCrop(convertToPixelCrop(crop, width, height))
+        canvasPreview(imgRef.current, canvasRef.current, completedCrop)
+      }
     }
-  }, [completedCrop?.width, completedCrop?.height, imgRef.current, canvasRef.current])
+  }, [completedCrop, crop, imgRef.current, canvasRef.current, aspect])
 
   const blobUrlRef = useRef('')
   const hiddenAnchorRef = useRef<HTMLAnchorElement>(null)
