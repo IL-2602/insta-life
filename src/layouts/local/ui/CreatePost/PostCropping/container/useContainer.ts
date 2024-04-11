@@ -8,7 +8,7 @@ import {
   createPostModalFormSchema,
   createPostModalSchema,
 } from '@/layouts/local/ui/CreatePost/CreatePostModal/schema/createPostModalSchema'
-import { postActions, postSlice } from '@/services/postService/store/slice/postEndpoints.slice'
+import { postActions } from '@/services/postService/store/slice/postEndpoints.slice'
 import { canvasPreview } from '@/shared/utils/canvasPrieview'
 import { zodResolver } from '@hookform/resolvers/zod'
 function centerAspectCrop(mediaWidth: number, mediaHeight: number, aspect: number) {
@@ -29,8 +29,11 @@ function centerAspectCrop(mediaWidth: number, mediaHeight: number, aspect: numbe
 export const useContainer = () => {
   const [zoom, setZoom] = useState(1)
   const [aspect, setAspect] = useState<number>(0)
+  const [currPhoto, setCurrPhoto] = useState<number | undefined>(undefined)
   const {
     control,
+    watch,
+    trigger,
     formState: { errors },
   } = useForm<createPostModalFormSchema>({
     resolver: zodResolver(createPostModalSchema),
@@ -43,6 +46,20 @@ export const useContainer = () => {
 
   const imgRef = useRef<HTMLImageElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
+
+  const extraActionsPostPhoto = async () => {
+    const success = await trigger('postPhoto')
+    const file = watch('postPhoto')
+
+    if (file) {
+      const badCase = ''
+      const img = success ? URL.createObjectURL(file) : badCase
+
+      if (!errors.postPhoto) {
+        dispatch(postActions.setPostPhotos(img))
+      }
+    }
+  }
 
   const onImageLoaded = () => {
     if (!aspect) {
@@ -58,7 +75,7 @@ export const useContainer = () => {
     }
   }
   const onNext = () => dispatch(postActions.setModalSteps('publication'))
-
+  const onChangeCurrPhoto = (currPhoto: number) => setCurrPhoto(currPhoto)
   useEffect(() => {
     if (completedCrop?.width && completedCrop?.height && imgRef.current && canvasRef.current) {
       const { height, width } = imgRef.current
@@ -147,5 +164,8 @@ export const useContainer = () => {
     setCompletedCrop,
     setZoom,
     zoom,
+    extraActionsPostPhoto,
+    currPhoto,
+    onChangeCurrPhoto,
   }
 }

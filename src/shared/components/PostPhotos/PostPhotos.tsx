@@ -1,10 +1,9 @@
-import { useState } from 'react'
+import { Children, ReactNode, useState } from 'react'
 
 import { NextPhotoArrow } from '@/shared/assets/icons/NextPhotoArrow/NextPhotoArrow'
 import { PrevPhotoArrow } from '@/shared/assets/icons/PrevPhotoArrow/PrevPhotoArrow'
 import { Button } from '@/shared/ui/Button'
 import { clsx } from 'clsx'
-import Image from 'next/image'
 
 import s from './PostPhotos.module.scss'
 
@@ -12,13 +11,14 @@ type Props = {
   className?: string
   cropping?: boolean
   height: number
-  photos: Array<string>
   width: number
+  currentPhoto?: number
+  children?: ReactNode
 }
 
-export const PostPhotos = ({ cropping, height, photos, width, ...rest }: Props) => {
-  const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0)
-
+export const PostPhotos = ({ cropping, height, width, children, currentPhoto = 0 }: Props) => {
+  const [currentPhotoIndex, setCurrentPhotoIndex] = useState(currentPhoto)
+  const arrChildren = Children.toArray(children)
   const goToNextPhoto = () => {
     setCurrentPhotoIndex(prevIndex => prevIndex + 1)
   }
@@ -28,18 +28,12 @@ export const PostPhotos = ({ cropping, height, photos, width, ...rest }: Props) 
   }
 
   const isFirstPhoto = currentPhotoIndex === 0
-  const isLastPhoto = photos[photos.length - 1] === photos[currentPhotoIndex]
+  const isLastPhoto = arrChildren[arrChildren.length - 1] === arrChildren[currentPhotoIndex]
 
   return (
-    <div className={s.photosWrapper}>
-      <Image
-        alt={'postPhoto'}
-        height={height}
-        src={photos[currentPhotoIndex]}
-        width={width}
-        {...rest}
-      />
-      {photos.length > 1 && (
+    <div className={s.photosWrapper} style={{ height, width }}>
+      {arrChildren[currentPhotoIndex]}
+      {arrChildren.length > 1 && (
         <>
           <Button
             className={clsx(s.btn, s.prevBtn, cropping ? s.dark : '')}
@@ -58,7 +52,7 @@ export const PostPhotos = ({ cropping, height, photos, width, ...rest }: Props) 
             <NextPhotoArrow className={s.nextArrow} />
           </Button>
           <div className={clsx(s.photoScale, cropping ? s.transparent : '')}>
-            {photos.map((photo, index) => (
+            {arrChildren.map((_, index) => (
               <span
                 className={clsx(s.circle, currentPhotoIndex === index ? s.circlePrimary : '')}
                 key={index}

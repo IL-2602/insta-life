@@ -13,6 +13,7 @@ import { Typography } from '@/shared/ui/Typography'
 import 'react-image-crop/src/ReactCrop.scss'
 
 import s from './PostCropping.module.scss'
+import { PostPhotos } from '@/shared/components/PostPhotos/PostPhotos'
 
 export const PostCropping = memo(
   ({
@@ -32,6 +33,9 @@ export const PostCropping = memo(
     setCompletedCrop,
     setZoom,
     zoom,
+    extraActionsPostPhoto,
+    currPhoto,
+    onChangeCurrPhoto,
   }: Props) => {
     return (
       <Modal
@@ -55,56 +59,64 @@ export const PostCropping = memo(
         title={'Cropping'}
       >
         <div className={s.croppingWrapper}>
-          {postPhotos[0] && (
-            <div className={s.imgWrapper}>
-              <ReactCrop
-                aspect={aspect}
-                className={s.test}
-                crop={crop}
-                onChange={c => console.log(c)}
-                onComplete={c => setCompletedCrop(c)}
-                style={{ visibility: 'hidden' }}
-              >
-                <img
-                  alt={`image Cropping`}
-                  onLoad={onImageLoaded}
-                  ref={imgRef}
-                  src={postPhotos[0]}
-                  style={{ objectFit: 'contain', visibility: 'hidden' }}
-                />
-              </ReactCrop>
-              {!!completedCrop && (
-                <canvas
-                  ref={canvasRef}
-                  style={{
-                    height: '100%',
-                    objectFit: 'contain',
-                    width: '100%',
-                  }}
-                />
-              )}
-            </div>
-          )}
+          <PostPhotos height={490} width={490} cropping currentPhoto={currPhoto}>
+            {postPhotos &&
+              postPhotos.map((photo, idx) => (
+                <div className={s.imgWrapper} key={idx}>
+                  <ReactCrop
+                    aspect={aspect}
+                    className={s.test}
+                    crop={crop}
+                    onChange={c => console.log(c)}
+                    onComplete={c => setCompletedCrop(c)}
+                    style={{ visibility: 'hidden' }}
+                  >
+                    <img
+                      alt={`image Cropping`}
+                      onLoad={onImageLoaded}
+                      ref={imgRef}
+                      src={photo}
+                      style={{ objectFit: 'contain', visibility: 'hidden' }}
+                    />
+                  </ReactCrop>
+                  {!!completedCrop && (
+                    <canvas
+                      ref={canvasRef}
+                      style={{
+                        height: '100%',
+                        objectFit: 'contain',
+                        width: '100%',
+                      }}
+                    />
+                  )}
+                </div>
+              ))}
+          </PostPhotos>
+
           <div className={s.btnGroup}>
             <ExpandSize aspect={aspect} setAspect={setAspect} />
             <ChangeZoom setZoom={setZoom} zoom={zoom} />
-            <Button onClick={onDownloadCropClick}>++</Button>
             <div>
-              <AddMoreImages control={control} photo={postPhotos[0]} />
+              <AddMoreImages
+                extraAction={extraActionsPostPhoto}
+                control={control}
+                photos={postPhotos}
+                onChangeCurrPhoto={onChangeCurrPhoto}
+              />
             </div>
           </div>
-          <a
-            download
-            href={'#hidden'}
-            ref={hiddenAnchorRef}
-            style={{
-              position: 'absolute',
-              top: '-200vh',
-              visibility: 'hidden',
-            }}
-          >
-            Hidden download
-          </a>
+          {/*<a*/}
+          {/*  download*/}
+          {/*  href={'#hidden'}*/}
+          {/*  ref={hiddenAnchorRef}*/}
+          {/*  style={{*/}
+          {/*    position: 'absolute',*/}
+          {/*    top: '-200vh',*/}
+          {/*    visibility: 'hidden',*/}
+          {/*  }}*/}
+          {/*>*/}
+          {/*  Hidden download*/}
+          {/*</a>*/}
         </div>
       </Modal>
     )
