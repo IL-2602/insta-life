@@ -20,13 +20,7 @@ export const DeletePostModal = memo(
         className={s.modal}
         customButtonsBlock={
           <div className={s.buttonsBlock}>
-            <Button
-              disabled={isLoading}
-              onClick={() => {
-                removePostHandler(123) // необходимо пробросить id
-              }}
-              variant={'outlined'}
-            >
+            <Button disabled={isLoading} onClick={removePostHandler} variant={'outlined'}>
               <Typography variant={'h3'}>{t.button.yes}</Typography>
             </Button>
             <Button

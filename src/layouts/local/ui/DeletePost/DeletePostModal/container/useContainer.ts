@@ -2,17 +2,20 @@ import { toast } from 'react-toastify'
 
 import { useAppDispatch } from '@/app/store/hooks/useAppDispatch'
 import { useAppSelector } from '@/app/store/hooks/useAppSelector'
+import { useDeletePostMutation } from '@/services/postService/postEndpoints'
 import { postActions } from '@/services/postService/store/slice/postEndpoints.slice'
-import { useDeletePostMutation } from '@/services/profileService/postsEndpoints.slice'
 import { useTranslation } from '@/shared/hooks/useTranslation'
+import { useParams } from 'next/navigation'
 
 export const useContainer = () => {
   const { t } = useTranslation()
   const { isDeletePostModal } = useAppSelector(state => state.postReducer)
   const [deletePost, { isLoading }] = useDeletePostMutation()
 
-  const removePostHandler = async (postId: number) => {
-    deletePost(postId)
+  //const { postId } = useParams()
+  const postId = '1'
+  const removePostHandler = async () => {
+    deletePost(Number(postId))
       .unwrap()
       .then((res: any) => {
         dispatch(postActions.setIsDeletePostModal(false))
