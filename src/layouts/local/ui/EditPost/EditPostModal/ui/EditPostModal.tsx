@@ -16,6 +16,7 @@ export const EditPostModal = memo(
   ({
     control,
     editPostDescription,
+    errorDescription,
     getProfile,
     handleCloseModal,
     handleSubmit,
@@ -68,7 +69,11 @@ export const EditPostModal = memo(
               </div>
 
               <div className={s.saveChangesBtnBlock}>
-                <Button disabled={isLoadingEditPost} onClick={updatePost} variant={'primary'}>
+                <Button
+                  disabled={errorDescription || isLoadingEditPost}
+                  onClick={updatePost}
+                  variant={'primary'}
+                >
                   <Typography variant={'h3'}>{t.button.saveChanges}</Typography>
                 </Button>
               </div>

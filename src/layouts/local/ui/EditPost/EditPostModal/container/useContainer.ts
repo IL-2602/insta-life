@@ -29,6 +29,7 @@ export const useContainer = () => {
     control,
     formState: { errors },
     handleSubmit,
+    reset,
     watch,
   } = useForm<editPostFormSchema>({
     defaultValues: {
@@ -50,34 +51,37 @@ export const useContainer = () => {
   const postId = '1'
 
   // const { postId } = useParams()
-  const updatePost = /*{async}*/ () => {
+  const updatePost = () => {
     console.log('UPDATE DESCRIPTION : ', editPostDescription, 'POST ID : ', Number(postId))
 
-    // editPost(Number({description, postId}))
-    //   .unwrap()
-    //   .then((res: any) => {
-    //     dispatch(postActions.setIsEditPostModal(false))
-    //     toast.success('The post has been edit', {
-    //       pauseOnHover: false,
-    //       style: {
-    //         background: '#0A6638',
-    //         border: '1px solid #14CC70',
-    //         color: 'white',
-    //         fontSize: '14px',
-    //       },
-    //     })
-    //   })
-    //   .catch((err: any) => {
-    //     toast.error('Error: The post has not been edit ', {
-    //       pauseOnHover: false,
-    //       style: {
-    //         background: '#660A1D',
-    //         border: '1px solid #CC1439',
-    //         color: 'white',
-    //         fontSize: '14px',
-    //       },
-    //     })
-    //   })
+    if (editPostDescription) {
+      editPost({ description: editPostDescription, postId: Number(postId) })
+        .unwrap()
+        .then((res: any) => {
+          dispatch(postActions.setIsEditPostModal(false))
+          reset({ editPostDescription: '' })
+          toast.success('The post has been edit', {
+            pauseOnHover: false,
+            style: {
+              background: '#0A6638',
+              border: '1px solid #14CC70',
+              color: 'white',
+              fontSize: '14px',
+            },
+          })
+        })
+        .catch((err: any) => {
+          toast.error('Error: The post has not been edit ', {
+            pauseOnHover: false,
+            style: {
+              background: '#660A1D',
+              border: '1px solid #CC1439',
+              color: 'white',
+              fontSize: '14px',
+            },
+          })
+        })
+    }
   }
 
   const handleCloseModal = () => {
@@ -87,6 +91,7 @@ export const useContainer = () => {
   return {
     control,
     editPostDescription,
+    errorDescription,
     getProfile,
     handleCloseModal,
     handleSubmit,
