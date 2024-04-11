@@ -1,7 +1,7 @@
 .container {
   padding: 1px;
 
-  & > *:first-child img {
+  & > *:first-child svg {
     margin: -3px;
   }
 
@@ -9,7 +9,10 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     width: 128px;
+
+    color: var(--color-light-900)
   }
 }
 
@@ -33,4 +36,9 @@
   &[data-state='open'] {
     color: var(--color-primary-500);
   }
+}
+
+
+.active {
+  color: var(--color-light-100)
 }

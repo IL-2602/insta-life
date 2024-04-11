@@ -4,14 +4,14 @@ import { Expand } from '@/shared/assets/icons/Expand'
 import { Button } from '@/shared/ui/Button'
 import { DropMenu } from '@/shared/ui/DropMenu'
 import { Typography } from '@/shared/ui/Typography'
-import Image from 'next/image'
 
 import s from './expandSize.module.scss'
 
-import one from '../../../../../../../../public/assets/postCropping/1x1.svg'
-import four from '../../../../../../../../public/assets/postCropping/4x5.svg'
-import sixteen from '../../../../../../../../public/assets/postCropping/16x9.svg'
-import original from '../../../../../../../../public/assets/postCropping/original.svg'
+import { clsx } from 'clsx'
+import { ImageIcon } from '@/shared/assets/icons/Image'
+import { Square } from 'src/shared/assets/icons/Square'
+import { RectangleVertical } from '@/shared/assets/icons/RectangleVertical'
+import { RectangleHorizontal } from '@/shared/assets/icons/RectangleHorizontal'
 
 export const ExpandSize = ({ aspect, setAspect }: Props) => {
   return (
@@ -26,21 +26,27 @@ export const ExpandSize = ({ aspect, setAspect }: Props) => {
         </Button>
       }
     >
-      <DropMenu.Item>
-        <Typography variant={'h3'}>Original</Typography>
-        <Image alt={'Original size'} height={24} src={original} width={24} />
+      <DropMenu.Item className={clsx(aspect === 0 && s.active)} onClick={() => setAspect(0)}>
+        <Typography variant={aspect === 0 ? 'h3' : 'regular14'}>Original</Typography>
+        <ImageIcon />
       </DropMenu.Item>
-      <DropMenu.Item onClick={() => setAspect(1)}>
-        <Typography variant={'regular14'}>1:1</Typography>
-        <Image alt={'1:1 size'} height={18} src={one} width={18} />
+      <DropMenu.Item className={clsx(aspect === 1 && s.active)} onClick={() => setAspect(1)}>
+        <Typography variant={aspect === 1 ? 'h3' : 'regular14'}>1:1</Typography>
+        <Square />
       </DropMenu.Item>
-      <DropMenu.Item onClick={() => setAspect(4 / 5)}>
-        <Typography variant={'regular14'}>4:5</Typography>
-        <Image alt={'4:5 size'} height={26} src={four} width={18} />
+      <DropMenu.Item
+        className={clsx(aspect === 4 / 5 && s.active)}
+        onClick={() => setAspect(4 / 5)}
+      >
+        <Typography variant={aspect === 4 / 5 ? 'h3' : 'regular14'}>4:5</Typography>
+        <RectangleVertical />
       </DropMenu.Item>
-      <DropMenu.Item onClick={() => setAspect(16 / 9)}>
-        <Typography variant={'regular14'}>16:9</Typography>
-        <Image alt={'16:9 size'} height={18} src={sixteen} width={26} />
+      <DropMenu.Item
+        className={clsx(aspect === 16 / 9 && s.active)}
+        onClick={() => setAspect(16 / 9)}
+      >
+        <Typography variant={aspect === 16 / 9 ? 'h3' : 'regular14'}>16:9</Typography>
+        <RectangleHorizontal />
       </DropMenu.Item>
     </DropMenu.Menu>
   )
@@ -48,5 +54,5 @@ export const ExpandSize = ({ aspect, setAspect }: Props) => {
 
 type Props = {
   aspect?: number
-  setAspect: Dispatch<SetStateAction<number | undefined>>
+  setAspect: Dispatch<SetStateAction<number>>
 }

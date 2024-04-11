@@ -26,7 +26,7 @@ function centerAspectCrop(mediaWidth: number, mediaHeight: number, aspect: numbe
 }
 export const useContainer = () => {
   const [zoom, setZoom] = useState(1)
-  const [aspect, setAspect] = useState<number | undefined>(16 / 9)
+  const [aspect, setAspect] = useState<number>(0)
   const {
     control,
     formState: { errors },
@@ -39,33 +39,29 @@ export const useContainer = () => {
   const [crop, setCrop] = useState<Crop>()
   const [completedCrop, setCompletedCrop] = useState<PixelCrop>()
 
-  console.log(completedCrop)
   const imgRef = useRef<HTMLImageElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const onImageLoaded = (e: SyntheticEvent<HTMLImageElement, Event>) => {
-    if (aspect) {
-      const { height, width } = e.currentTarget
-
-      setCrop(centerAspectCrop(width, height, aspect))
+  const onImageLoaded = () => {
+    if (!aspect) {
+      const crop: Crop = {
+        unit: '%',
+        width: 100,
+        height: 100,
+        x: 0,
+        y: 0,
+      }
+      setCrop(crop)
     }
   }
-
-  // useEffect(() => {
-  //   if (completedCrop?.width && completedCrop?.height && imgRef.current && canvasRef.current) {
-  //     // We use canvasPreview as it's much faster than imgPreview.
-  //     const { height, width } = imgRef.current
-  //     setCrop(centerAspectCrop(width, height, aspect || 1))
-  //     canvasPreview(imgRef.current, canvasRef.current, completedCrop)
-  //   }
-  // }, [completedCrop?.width, completedCrop?.height, imgRef.current, canvasRef.current, aspect])
 
   useEffect(() => {
     if (completedCrop?.width && completedCrop?.height && imgRef.current && canvasRef.current) {
       const { height, width } = imgRef.current
 
-      // Проверяем, что aspect определен и не равен нулю
-      if (aspect && aspect !== 0) {
+      if (aspect !== 0) {
         setCrop(centerAspectCrop(width, height, aspect))
+      } else {
+        onImageLoaded()
       }
       if (crop) {
         setCompletedCrop(convertToPixelCrop(crop, width, height))
