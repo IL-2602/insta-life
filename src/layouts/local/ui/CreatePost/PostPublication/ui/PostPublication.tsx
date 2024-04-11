@@ -20,12 +20,18 @@ export const PostPublication = memo(
     control,
     errorDescription,
     getProfile,
+    handlePublishPhotos,
     handleSubmit,
     isCreatePostModal,
     isGetUserLoading,
+    isOpenModal,
     modalSteps,
+    onDiscard,
+    onSaveDraft,
     postDescription,
     postPhotos,
+    setIsOpenModal,
+    showModalSaveDraft,
     t,
   }: PostPublicationProps) => {
     if (isGetUserLoading) {
@@ -33,55 +39,86 @@ export const PostPublication = memo(
     }
 
     return (
-      <Modal
-        className={s.modal}
-        customButtonsBlock={<></>}
-        modalHandler={() => {}}
-        nextStepBtn={
-          <Button className={s.nextBtn} disabled={!!errorDescription} variant={'link'}>
-            {t.button.publish}
-          </Button>
-        }
-        open={isCreatePostModal && modalSteps === 'publication'}
-        // open
-        previousStepBtn={
-          <Button className={s.prevBtn} onClick={backToFilter} variant={'link'}>
-            <ArrowIosBack />
-          </Button>
-        }
-        title={t.modal.publicationTitle}
-      >
-        <div className={s.container}>
-          <div className={s.postPhotoWrapper}>
-            <PostPhotos className={s.postPhoto} height={500} photos={postPhotos} width={1} />
-          </div>
-          {!isGetUserLoading && (
-            <form className={s.descriptionWrapper} onSubmit={handleSubmit(() => {})}>
-              <div className={s.userPhotoWrapper}>
-                <div className={s.photo}>
-                  {getProfile?.avatars[0] === undefined ? (
-                    <Image alt={'noUserPhoto'} height={22} src={noPhoto} width={22} />
-                  ) : (
-                    <Image
-                      alt={'userPhoto'}
-                      height={36}
-                      src={getProfile?.avatars[0].url}
-                      width={36}
-                    />
-                  )}
+      <>
+        <Modal
+          className={s.modal}
+          customButtonsBlock={<></>}
+          modalHandler={showModalSaveDraft}
+          nextStepBtn={
+            <Button
+              className={s.nextBtn}
+              disabled={!!errorDescription}
+              onClick={handlePublishPhotos}
+              variant={'link'}
+            >
+              {t.button.publish}
+            </Button>
+          }
+          open={isCreatePostModal && modalSteps === 'publication'}
+          previousStepBtn={
+            <Button className={s.prevBtn} onClick={backToFilter} variant={'link'}>
+              <ArrowIosBack />
+            </Button>
+          }
+          title={t.modal.publicationTitle}
+        >
+          <div className={s.container}>
+            <div className={s.postPhotoWrapper}>
+              <PostPhotos className={s.postPhoto} height={500} photos={postPhotos} width={1} />
+            </div>
+            {!isGetUserLoading && (
+              <form className={s.descriptionWrapper} onSubmit={handleSubmit(() => {})}>
+                <div className={s.userPhotoWrapper}>
+                  <div className={s.photo}>
+                    {getProfile?.avatars[0] === undefined ? (
+                      <Image alt={'noUserPhoto'} height={22} src={noPhoto} width={22} />
+                    ) : (
+                      <Image
+                        alt={'userPhoto'}
+                        height={36}
+                        src={getProfile?.avatars[0].url}
+                        width={36}
+                      />
+                    )}
+                  </div>
+                  <Typography variant={'medium16'}>{getProfile?.userName}</Typography>
                 </div>
-                <Typography variant={'medium16'}>{getProfile?.userName}</Typography>
-              </div>
-              <label>
-                {t.auth.form.addPublicationDescription}
-                <ControlledTextAreaField control={control} name={'postDescription'} rows={4} />
-                <span className={s.charCount}>{postDescription?.length}/500</span>
-              </label>
-              <hr className={s.line}></hr>
-            </form>
-          )}
-        </div>
-      </Modal>
+                <label>
+                  {t.auth.form.addPublicationDescription}
+                  <ControlledTextAreaField control={control} name={'postDescription'} rows={4} />
+                  <span className={s.charCount}>{postDescription?.length}/500</span>
+                </label>
+                <hr className={s.line}></hr>
+              </form>
+            )}
+          </div>
+        </Modal>
+        <Modal
+          className={s.closeModal}
+          customButtonsBlock={
+            <div className={s.buttonsBlock}>
+              <Button disabled={false} onClick={onDiscard} variant={'outlined'}>
+                <Typography variant={'h3'}>{t.button.discard}</Typography>
+              </Button>
+              <Button
+                className={s.button}
+                disabled={false}
+                onClick={onSaveDraft}
+                variant={'primary'}
+              >
+                <Typography variant={'h3'}>{t.button.saveDraft}</Typography>
+              </Button>
+            </div>
+          }
+          modalHandler={() => setIsOpenModal(false)}
+          open={isOpenModal}
+          title={t.modal.closeModalTitle}
+        >
+          <div className={s.content}>
+            <Typography variant={'regular16'}>{t.modal.closeModalText}</Typography>
+          </div>
+        </Modal>
+      </>
     )
   }
 )
