@@ -2,15 +2,15 @@ import { SyntheticEvent, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Crop, PixelCrop, centerCrop, convertToPixelCrop, makeAspectCrop } from 'react-image-crop'
 
+import { useAppDispatch } from '@/app/store/hooks/useAppDispatch'
 import { useAppSelector } from '@/app/store/hooks/useAppSelector'
 import {
   createPostModalFormSchema,
   createPostModalSchema,
 } from '@/layouts/local/ui/CreatePost/CreatePostModal/schema/createPostModalSchema'
+import { postActions, postSlice } from '@/services/postService/store/slice/postEndpoints.slice'
 import { canvasPreview } from '@/shared/utils/canvasPrieview'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useAppDispatch } from '@/app/store/hooks/useAppDispatch'
-import { postActions, postSlice } from '@/services/postService/store/slice/postEndpoints.slice'
 function centerAspectCrop(mediaWidth: number, mediaHeight: number, aspect: number) {
   return centerCrop(
     makeAspectCrop(
@@ -141,11 +141,11 @@ export const useContainer = () => {
     modalStep,
     onDownloadCropClick,
     onImageLoaded,
+    onNext,
     postPhotos,
     setAspect,
     setCompletedCrop,
     setZoom,
     zoom,
-    onNext,
   }
 }

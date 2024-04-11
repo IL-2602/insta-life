@@ -5,6 +5,7 @@ import { Props } from '@/layouts/local/ui/CreatePost/PostCropping/container'
 import { AddMoreImages } from '@/layouts/local/ui/CreatePost/PostCropping/ui/addMoreImages/addMoreImages'
 import { ChangeZoom } from '@/layouts/local/ui/CreatePost/PostCropping/ui/changeZoom/changeZoom'
 import { ExpandSize } from '@/layouts/local/ui/CreatePost/PostCropping/ui/expandSize/expandSize'
+import { ArrowIosBack } from '@/shared/assets/icons/ArrowIosBack/ArrowIosBack'
 import { Button } from '@/shared/ui/Button'
 import { Modal } from '@/shared/ui/Modal'
 import { Typography } from '@/shared/ui/Typography'
@@ -12,7 +13,6 @@ import { Typography } from '@/shared/ui/Typography'
 import 'react-image-crop/src/ReactCrop.scss'
 
 import s from './PostCropping.module.scss'
-import { ArrowIosBack } from '@/shared/assets/icons/ArrowIosBack/ArrowIosBack'
 
 export const PostCropping = memo(
   ({
@@ -26,19 +26,19 @@ export const PostCropping = memo(
     modalStep,
     onDownloadCropClick,
     onImageLoaded,
+    onNext,
     postPhotos,
     setAspect,
     setCompletedCrop,
     setZoom,
     zoom,
-    onNext,
   }: Props) => {
     return (
       <Modal
         className={s.container}
         customButtonsBlock={<></>}
         nextStepBtn={
-          <Button variant={'secondary'} onClick={onNext}>
+          <Button onClick={onNext} variant={'link'}>
             <Typography color={'primary'} variant={'h3'}>
               Next
             </Typography>

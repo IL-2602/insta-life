@@ -3,7 +3,6 @@ import * as RadixSlider from '@radix-ui/react-slider'
 import s from './Slider.module.scss'
 
 export const Slider = ({
-  label,
   max,
   min = 0,
   minStepsBetweenThumbs = 1,
