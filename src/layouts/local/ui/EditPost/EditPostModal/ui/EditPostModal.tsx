@@ -70,7 +70,7 @@ export const EditPostModal = memo(
 
               <div className={s.saveChangesBtnBlock}>
                 <Button
-                  disabled={errorDescription || isLoadingEditPost}
+                  disabled={!!errorDescription || isLoadingEditPost}
                   onClick={updatePost}
                   variant={'primary'}
                 >
