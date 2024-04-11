@@ -8,3 +8,15 @@ export type PostSliceInitialState = {
   modalSteps: ModalSteps
   postPhotos: string[]
 }
+
+export type PublishPostParams = {
+  file: string[]
+}
+
+export type PublishPhotoResponse = {
+  fileSize: number
+  height: number
+  uploadId: string
+  url: string
+  width: number
+}

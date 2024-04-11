@@ -14,6 +14,9 @@ export const postSlice = createSlice({
   initialState,
   name: 'postReducer',
   reducers: {
+    setClearPostPhotos: state => {
+      state.postPhotos = []
+    },
     setIsClosePostModal: (state, action: PayloadAction<boolean>) => {
       state.isClosePostModal = action.payload
     },
@@ -30,7 +33,7 @@ export const postSlice = createSlice({
       state.modalSteps = action.payload
     },
     setPostPhotos: (state, action: PayloadAction<string>) => {
-      state.postPhotos = [...state.postPhotos, action.payload]
+      state.postPhotos.push(action.payload)
     },
   },
 })
