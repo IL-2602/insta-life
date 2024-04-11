@@ -29,6 +29,7 @@ export const PostCropping = memo(
     setAspect,
     setCompletedCrop,
     setZoom,
+    zoom,
   }: Props) => {
     return (
       <Modal
@@ -84,7 +85,7 @@ export const PostCropping = memo(
           )}
           <div className={s.btnGroup}>
             <ExpandSize aspect={aspect} setAspect={setAspect} />
-            <ChangeZoom />
+            <ChangeZoom zoom={zoom} setZoom={setZoom} />
             <Button onClick={onDownloadCropClick}>++</Button>
             <div>
               <AddMoreImages control={control} photo={postPhoto} />

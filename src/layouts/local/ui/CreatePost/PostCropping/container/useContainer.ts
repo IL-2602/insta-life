@@ -66,10 +66,10 @@ export const useContainer = () => {
       }
       if (crop) {
         setCompletedCrop(convertToPixelCrop(crop, width, height))
-        canvasPreview(imgRef.current, canvasRef.current, completedCrop)
+        canvasPreview(imgRef.current, canvasRef.current, completedCrop, zoom)
       }
     }
-  }, [completedCrop, crop, imgRef.current, canvasRef.current, aspect])
+  }, [completedCrop, crop, imgRef.current, canvasRef.current, aspect, zoom])
 
   const blobUrlRef = useRef('')
   const hiddenAnchorRef = useRef<HTMLAnchorElement>(null)
@@ -141,5 +141,6 @@ export const useContainer = () => {
     setAspect,
     setCompletedCrop,
     setZoom,
+    zoom,
   }
 }

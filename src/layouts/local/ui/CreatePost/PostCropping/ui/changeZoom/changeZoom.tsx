@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { Dispatch, SetStateAction, useState } from 'react'
 
 import { Maximize } from '@/shared/assets/icons/Maximize'
 import { Button } from '@/shared/ui/Button'
@@ -7,9 +7,7 @@ import { Slider } from '@/shared/ui/Slider/Slider'
 
 import s from './changeZoom.module.scss'
 
-export const ChangeZoom = () => {
-  const [state, setState] = useState<[number]>([1])
-
+export const ChangeZoom = ({ setZoom, zoom }: Props) => {
   return (
     <DropMenu.Menu
       align={'start'}
@@ -21,9 +19,20 @@ export const ChangeZoom = () => {
         </Button>
       }
     >
-      <DropMenu.Item>
-        <Slider onValueChange={setState} slidersValue={state} />
+      <DropMenu.Item onSelect={e => e.preventDefault()}>
+        <Slider
+          onValueChange={val => setZoom(val[0])}
+          slidersValue={[zoom]}
+          step={1}
+          min={1}
+          max={5}
+        />
       </DropMenu.Item>
     </DropMenu.Menu>
   )
+}
+
+type Props = {
+  zoom: number
+  setZoom: Dispatch<SetStateAction<number>>
 }
