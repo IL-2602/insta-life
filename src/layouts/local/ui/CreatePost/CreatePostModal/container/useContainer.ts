@@ -12,9 +12,11 @@ import { zodResolver } from '@hookform/resolvers/zod'
 
 export const useContainer = () => {
   const { t } = useTranslation()
-  const { isCreatePostModal, modalSteps } = useAppSelector(state => state.postReducer)
 
   const dispatch = useAppDispatch()
+
+  const isCreatePostModal = useAppSelector(state => state.postReducer.isCreatePostModal)
+  const modalSteps = useAppSelector(state => state.postReducer.modalSteps)
 
   const {
     control,
@@ -37,7 +39,7 @@ export const useContainer = () => {
       const img = success ? URL.createObjectURL(file) : badCase
 
       if (!errors.postPhoto) {
-        dispatch(postActions.setPostPhoto(img))
+        dispatch(postActions.setPostPhotos(img))
         dispatch(postActions.setModalSteps('cropping'))
       }
     }

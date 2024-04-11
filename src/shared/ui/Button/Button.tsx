@@ -19,7 +19,7 @@ export type ButtonProps<T extends ElementType = 'button'> = {
   className?: string
   fullWidth?: boolean
   isLoading?: boolean
-  variant?: 'link' | 'outlined' | 'primary' | 'secondary'
+  variant?: 'link' | 'noStyle' | 'outlined' | 'primary' | 'secondary'
 } & ComponentPropsWithoutRef<T>
 
 const ButtonPolymorph = <T extends ElementType = 'button'>(props: ButtonProps<T>, ref: any) => {

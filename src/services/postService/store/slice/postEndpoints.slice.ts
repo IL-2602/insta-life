@@ -3,8 +3,9 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 const initialState: PostSliceInitialState = {
   isCreatePostModal: false,
+  isDeletePostModal: false,
   modalSteps: undefined,
-  postPhoto: undefined,
+  postPhotos: [],
 }
 
 export const postSlice = createSlice({
@@ -14,11 +15,14 @@ export const postSlice = createSlice({
     setIsCreatePostModal: (state, action: PayloadAction<boolean>) => {
       state.isCreatePostModal = action.payload
     },
+    setIsDeletePostModal: (state, action: PayloadAction<boolean>) => {
+      state.isDeletePostModal = action.payload
+    },
     setModalSteps: (state, action: PayloadAction<ModalSteps>) => {
       state.modalSteps = action.payload
     },
-    setPostPhoto: (state, action: PayloadAction<string>) => {
-      state.postPhoto = action.payload
+    setPostPhotos: (state, action: PayloadAction<string>) => {
+      state.postPhotos = [...state.postPhotos, action.payload]
     },
   },
 })
