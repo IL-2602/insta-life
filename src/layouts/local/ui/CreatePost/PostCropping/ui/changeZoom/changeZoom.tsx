@@ -21,11 +21,11 @@ export const ChangeZoom = ({ setZoom, zoom }: Props) => {
     >
       <DropMenu.Item onSelect={e => e.preventDefault()}>
         <Slider
+          max={5}
+          min={1}
           onValueChange={val => setZoom(val[0])}
           slidersValue={[zoom]}
           step={1}
-          min={1}
-          max={5}
         />
       </DropMenu.Item>
     </DropMenu.Menu>
@@ -33,6 +33,6 @@ export const ChangeZoom = ({ setZoom, zoom }: Props) => {
 }
 
 type Props = {
-  zoom: number
   setZoom: Dispatch<SetStateAction<number>>
+  zoom: number
 }

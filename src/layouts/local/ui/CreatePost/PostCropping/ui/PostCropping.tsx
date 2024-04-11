@@ -85,7 +85,7 @@ export const PostCropping = memo(
           )}
           <div className={s.btnGroup}>
             <ExpandSize aspect={aspect} setAspect={setAspect} />
-            <ChangeZoom zoom={zoom} setZoom={setZoom} />
+            <ChangeZoom setZoom={setZoom} zoom={zoom} />
             <Button onClick={onDownloadCropClick}>++</Button>
             <div>
               <AddMoreImages control={control} photo={postPhoto} />
