@@ -8,6 +8,8 @@ import Image from 'next/image'
 
 import s from './PostPhotos.module.scss'
 
+import noPhoto from '../../../../public/assets/noPhoto.svg'
+
 type Props = {
   className?: string
   cropping?: boolean
@@ -35,7 +37,7 @@ export const PostPhotos = ({ cropping, height, photos, width, ...rest }: Props) 
       <Image
         alt={'postPhoto'}
         height={height}
-        src={photos[currentPhotoIndex]}
+        src={photos[currentPhotoIndex] || noPhoto}
         width={width}
         {...rest}
       />
