@@ -8,15 +8,15 @@ import { clsx } from 'clsx'
 import s from './PostPhotos.module.scss'
 
 type Props = {
+  children?: ReactNode
   className?: string
   cropping?: boolean
+  currentPhoto?: number
   height: number
   width: number
-  currentPhoto?: number
-  children?: ReactNode
 }
 
-export const PostPhotos = ({ cropping, height, width, children, currentPhoto = 0 }: Props) => {
+export const PostPhotos = ({ children, cropping, currentPhoto = 0, height, width }: Props) => {
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(currentPhoto)
   const arrChildren = Children.toArray(children)
   const goToNextPhoto = () => {

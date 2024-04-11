@@ -32,9 +32,9 @@ export const useContainer = () => {
   const [currPhoto, setCurrPhoto] = useState<number | undefined>(undefined)
   const {
     control,
-    watch,
-    trigger,
     formState: { errors },
+    trigger,
+    watch,
   } = useForm<createPostModalFormSchema>({
     resolver: zodResolver(createPostModalSchema),
   })
@@ -76,6 +76,7 @@ export const useContainer = () => {
   }
   const onNext = () => dispatch(postActions.setModalSteps('publication'))
   const onChangeCurrPhoto = (currPhoto: number) => setCurrPhoto(currPhoto)
+
   useEffect(() => {
     if (completedCrop?.width && completedCrop?.height && imgRef.current && canvasRef.current) {
       const { height, width } = imgRef.current
@@ -153,9 +154,12 @@ export const useContainer = () => {
     completedCrop,
     control,
     crop,
+    currPhoto,
+    extraActionsPostPhoto,
     hiddenAnchorRef,
     imgRef,
     modalStep,
+    onChangeCurrPhoto,
     onDownloadCropClick,
     onImageLoaded,
     onNext,
@@ -164,8 +168,5 @@ export const useContainer = () => {
     setCompletedCrop,
     setZoom,
     zoom,
-    extraActionsPostPhoto,
-    currPhoto,
-    onChangeCurrPhoto,
   }
 }

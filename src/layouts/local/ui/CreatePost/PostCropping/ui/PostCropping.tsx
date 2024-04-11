@@ -6,6 +6,7 @@ import { AddMoreImages } from '@/layouts/local/ui/CreatePost/PostCropping/ui/add
 import { ChangeZoom } from '@/layouts/local/ui/CreatePost/PostCropping/ui/changeZoom/changeZoom'
 import { ExpandSize } from '@/layouts/local/ui/CreatePost/PostCropping/ui/expandSize/expandSize'
 import { ArrowIosBack } from '@/shared/assets/icons/ArrowIosBack/ArrowIosBack'
+import { PostPhotos } from '@/shared/components/PostPhotos/PostPhotos'
 import { Button } from '@/shared/ui/Button'
 import { Modal } from '@/shared/ui/Modal'
 import { Typography } from '@/shared/ui/Typography'
@@ -13,7 +14,6 @@ import { Typography } from '@/shared/ui/Typography'
 import 'react-image-crop/src/ReactCrop.scss'
 
 import s from './PostCropping.module.scss'
-import { PostPhotos } from '@/shared/components/PostPhotos/PostPhotos'
 
 export const PostCropping = memo(
   ({
@@ -22,9 +22,12 @@ export const PostCropping = memo(
     completedCrop,
     control,
     crop,
+    currPhoto,
+    extraActionsPostPhoto,
     hiddenAnchorRef,
     imgRef,
     modalStep,
+    onChangeCurrPhoto,
     onDownloadCropClick,
     onImageLoaded,
     onNext,
@@ -33,9 +36,6 @@ export const PostCropping = memo(
     setCompletedCrop,
     setZoom,
     zoom,
-    extraActionsPostPhoto,
-    currPhoto,
-    onChangeCurrPhoto,
   }: Props) => {
     return (
       <Modal
@@ -59,7 +59,7 @@ export const PostCropping = memo(
         title={'Cropping'}
       >
         <div className={s.croppingWrapper}>
-          <PostPhotos height={490} width={490} cropping currentPhoto={currPhoto}>
+          <PostPhotos cropping currentPhoto={currPhoto} height={490} width={490}>
             {postPhotos &&
               postPhotos.map((photo, idx) => (
                 <div className={s.imgWrapper} key={idx}>
@@ -98,10 +98,10 @@ export const PostCropping = memo(
             <ChangeZoom setZoom={setZoom} zoom={zoom} />
             <div>
               <AddMoreImages
-                extraAction={extraActionsPostPhoto}
                 control={control}
-                photos={postPhotos}
+                extraAction={extraActionsPostPhoto}
                 onChangeCurrPhoto={onChangeCurrPhoto}
+                photos={postPhotos}
               />
             </div>
           </div>

@@ -8,7 +8,7 @@ import Image from 'next/image'
 
 import s from './addMoreImages.module.scss'
 
-export const AddMoreImages = ({ control, photos, extraAction, onChangeCurrPhoto }: Props) => {
+export const AddMoreImages = ({ control, extraAction, onChangeCurrPhoto, photos }: Props) => {
   return (
     <DropMenu.Menu
       align={'end'}
@@ -25,20 +25,20 @@ export const AddMoreImages = ({ control, photos, extraAction, onChangeCurrPhoto 
         <div className={s.container}>
           {photos?.map((photo, idx) => (
             <Image
-              key={idx}
               alt={'Photo Preview'}
               height={80}
+              key={idx}
+              onClick={() => onChangeCurrPhoto(idx)}
               src={photo}
               width={80}
-              onClick={() => onChangeCurrPhoto(idx)}
             />
           ))}
           <ControlledFileUploader
             className={s.fileBtn}
             control={control}
+            extraActions={extraAction}
             name={'postPhoto'}
             variant={'outlined'}
-            extraActions={extraAction}
           >
             +
           </ControlledFileUploader>
@@ -50,7 +50,7 @@ export const AddMoreImages = ({ control, photos, extraAction, onChangeCurrPhoto 
 
 type Props = {
   control: Control<{ postPhoto?: File | undefined }, any>
-  photos?: string[]
   extraAction: () => void
   onChangeCurrPhoto: (currPhoto: number) => void
+  photos?: string[]
 }
