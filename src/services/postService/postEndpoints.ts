@@ -1,10 +1,6 @@
 import { api } from '@/services/api'
+import { PublishPostParams } from '@/services/postService/lib/postEndpoints.types'
 import { EditPostParams } from '@/services/profileService/lib/profileEnpoints.types'
-
-type RequestEditPostParams = {
-  description: string
-  postId: number
-}
 
 const postEndpoints = api.injectEndpoints({
   endpoints: builder => ({
@@ -31,7 +27,17 @@ const postEndpoints = api.injectEndpoints({
         }
       },
     }),
+    publishPost: builder.mutation<any, PublishPostParams>({
+      invalidatesTags: [],
+      query: ({ file }) => {
+        return {
+          body: file,
+          method: 'POST',
+          url: `posts/image`,
+        }
+      },
+    }),
   }),
 })
 
-export const { useDeletePostMutation, useEditPostMutation } = postEndpoints
+export const { useDeletePostMutation, useEditPostMutation, usePublishPostMutation } = postEndpoints
