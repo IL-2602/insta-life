@@ -180,6 +180,7 @@ export const en = {
     deleteUser: 'Delete user',
     deleteUserAvatar: 'Delete Photo',
     deleteUserAvatarText: 'Are you sure you want to delete the photo?',
+    editPost: 'Edit Post',
     errorTransactionModalDescription: 'Transaction failed, please try again',
     errorTransactionModalTitle: 'Error',
     followersModalTitle: 'Followers',
