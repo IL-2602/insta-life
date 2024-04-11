@@ -44,12 +44,13 @@ export const useContainer = () => {
   const onImageLoaded = () => {
     if (!aspect) {
       const crop: Crop = {
+        height: 100,
         unit: '%',
         width: 100,
-        height: 100,
         x: 0,
         y: 0,
       }
+
       setCrop(crop)
     }
   }

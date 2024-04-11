@@ -1,17 +1,16 @@
 import { Dispatch, SetStateAction } from 'react'
 
 import { Expand } from '@/shared/assets/icons/Expand'
+import { ImageIcon } from '@/shared/assets/icons/Image'
+import { RectangleHorizontal } from '@/shared/assets/icons/RectangleHorizontal'
+import { RectangleVertical } from '@/shared/assets/icons/RectangleVertical'
 import { Button } from '@/shared/ui/Button'
 import { DropMenu } from '@/shared/ui/DropMenu'
 import { Typography } from '@/shared/ui/Typography'
+import { clsx } from 'clsx'
+import { Square } from 'src/shared/assets/icons/Square'
 
 import s from './expandSize.module.scss'
-
-import { clsx } from 'clsx'
-import { ImageIcon } from '@/shared/assets/icons/Image'
-import { Square } from 'src/shared/assets/icons/Square'
-import { RectangleVertical } from '@/shared/assets/icons/RectangleVertical'
-import { RectangleHorizontal } from '@/shared/assets/icons/RectangleHorizontal'
 
 export const ExpandSize = ({ aspect, setAspect }: Props) => {
   return (
