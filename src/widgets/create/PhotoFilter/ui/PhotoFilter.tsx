@@ -90,30 +90,31 @@ export const PhotoFilter = () => {
   return (
     <>
       <Button onClick={openModalHandle}>Open</Button>
-
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          width: '1200px',
-        }}
-      >
-        <div style={{ width: '50%' }}>
-          <canvas ref={canvasRef} />
+      <Modal modalHandler={() => setModalIsOpen(false)} open={modalIsOpen}>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            width: '1200px',
+          }}
+        >
+          <div style={{ width: '50%' }}>
+            <canvas ref={canvasRef} />
+          </div>
+          <div>
+            {photoFilters.map(filter => (
+              <FilterPreviewButton
+                applyFilter={applyFilter}
+                filter={filter}
+                imageUrl={currentImage.url}
+                key={filter}
+                label={capitalizeFirstLetter(filter)}
+              />
+            ))}
+          </div>
         </div>
-        <div>
-          {photoFilters.map(filter => (
-            <FilterPreviewButton
-              applyFilter={applyFilter}
-              filter={filter}
-              imageUrl={currentImage.url}
-              key={filter}
-              label={capitalizeFirstLetter(filter)}
-            />
-          ))}
-        </div>
-      </div>
+      </Modal>
     </>
   )
 }
