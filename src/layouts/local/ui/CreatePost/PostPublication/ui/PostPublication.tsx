@@ -3,12 +3,14 @@ import { memo } from 'react'
 import { PostPublicationProps } from '@/layouts/local/ui/CreatePost/PostPublication/container'
 import { ArrowIosBack } from '@/shared/assets/icons/ArrowIosBack/ArrowIosBack'
 import { PostPhotos } from '@/shared/components/PostPhotos/PostPhotos'
+import { useTranslation } from '@/shared/hooks/useTranslation'
 import { Button } from '@/shared/ui/Button'
 import { Modal } from '@/shared/ui/Modal'
 import { Spinner } from '@/shared/ui/Spinner'
 import { Typography } from '@/shared/ui/Typography'
 import { ControlledTextAreaField } from '@/shared/ui/controlledInsta/ControlledTextArea/ControlledTextArea'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 
 import s from './PostPublication.module.scss'
 
@@ -25,12 +27,12 @@ export const PostPublication = memo(
     isCreatePostModal,
     isGetUserLoading,
     isOpenModal,
+    locale,
     modalSteps,
     onDiscard,
     onSaveDraft,
     postDescription,
     postPhotos,
-    setIsOpenModal,
     showModalSaveDraft,
     t,
   }: PostPublicationProps) => {
@@ -94,8 +96,15 @@ export const PostPublication = memo(
           </div>
         </Modal>
         <Modal
-          className={s.closeModal}
-          customButtonsBlock={
+          className={locale === 'ru' ? s.closeModalRu : s.closeModalEn}
+          customButtonsBlock={<></>}
+          modalHandler={onDiscard}
+          open={isOpenModal}
+          title={t.modal.closeModalTitle}
+        >
+          <div className={s.content}>
+            <Typography variant={'regular16'}>{t.modal.closeModalTextOne}</Typography>
+            <Typography variant={'regular16'}>{t.modal.closeModalTextTwo}</Typography>
             <div className={s.buttonsBlock}>
               <Button disabled={false} onClick={onDiscard} variant={'outlined'}>
                 <Typography variant={'h3'}>{t.button.discard}</Typography>
@@ -109,13 +118,6 @@ export const PostPublication = memo(
                 <Typography variant={'h3'}>{t.button.saveDraft}</Typography>
               </Button>
             </div>
-          }
-          modalHandler={() => setIsOpenModal(false)}
-          open={isOpenModal}
-          title={t.modal.closeModalTitle}
-        >
-          <div className={s.content}>
-            <Typography variant={'regular16'}>{t.modal.closeModalText}</Typography>
           </div>
         </Modal>
       </>

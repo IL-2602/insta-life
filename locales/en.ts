@@ -172,8 +172,8 @@ export const en = {
     areYouSureToDelete: 'Are you sure to delete user ?',
     badBehavior: 'Bad behavior',
     banUser: 'Ban user',
-    closeModalText:
-      'Do you really want to close the creation of a publication? If you close everything will be deleted',
+    closeModalTextOne: 'Do you really want to close the creation of a publication? ',
+    closeModalTextTwo: 'If you close everything will be deleted',
     closeModalTitle: 'Close',
     deletePostText: 'Are you sure you want to delete this post?',
     deletePostTitle: 'Delete Post',

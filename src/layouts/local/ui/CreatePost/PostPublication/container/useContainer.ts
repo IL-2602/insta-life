@@ -9,10 +9,12 @@ import { postActions } from '@/services/postService/store/slice/postEndpoints.sl
 import { useGetProfileQuery } from '@/services/profileService/profileEndpoints'
 import { useTranslation } from '@/shared/hooks/useTranslation'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useRouter } from 'next/router'
 import { z } from 'zod'
 
 export const useContainer = () => {
   const { t } = useTranslation()
+  const { locale } = useRouter()
 
   const dispatch = useAppDispatch()
 
@@ -87,12 +89,12 @@ export const useContainer = () => {
     isCreatePostModal,
     isGetUserLoading,
     isOpenModal,
+    locale,
     modalSteps,
     onDiscard,
     onSaveDraft,
     postDescription,
     postPhotos,
-    setIsOpenModal,
     showModalSaveDraft,
     t,
   }
