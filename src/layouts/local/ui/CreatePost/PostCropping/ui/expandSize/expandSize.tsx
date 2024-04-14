@@ -53,5 +53,5 @@ export const ExpandSize = ({ aspect, setAspect }: Props) => {
 
 type Props = {
   aspect?: number
-  setAspect: Dispatch<SetStateAction<number>>
+  setAspect: (aspect: number) => void
 }

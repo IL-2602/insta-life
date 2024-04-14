@@ -1,4 +1,4 @@
-import { SyntheticEvent, useEffect, useRef, useState } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Crop, PixelCrop, centerCrop, convertToPixelCrop, makeAspectCrop } from 'react-image-crop'
 
@@ -28,8 +28,9 @@ function centerAspectCrop(mediaWidth: number, mediaHeight: number, aspect: numbe
 }
 export const useContainer = () => {
   const [zoom, setZoom] = useState(1)
-  const [aspect, setAspect] = useState<number>(0)
-  const [currPhoto, setCurrPhoto] = useState<number | undefined>(undefined)
+  const [currPhoto, setCurrPhoto] = useState<number | undefined>(0)
+  const [crop, setCrop] = useState<Crop>()
+  const [completedCrop, setCompletedCrop] = useState<PixelCrop>()
   const {
     control,
     formState: { errors },
@@ -40,12 +41,16 @@ export const useContainer = () => {
   })
   const postPhotos = useAppSelector(state => state.postReducer?.postPhotos)
   const modalStep = useAppSelector(state => state.postReducer?.modalSteps)
+  const postPhoto = postPhotos.find((_, idx) => idx === currPhoto)
   const dispatch = useAppDispatch()
-  const [crop, setCrop] = useState<Crop>()
-  const [completedCrop, setCompletedCrop] = useState<PixelCrop>()
 
   const imgRef = useRef<HTMLImageElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
+
+  const setCurrentPhotoAspect = (aspect: number) => {
+    dispatch(postActions.setPostPhotosAspect({ aspect, img: postPhoto?.img }))
+    onDownloadCropClick()
+  }
 
   const extraActionsPostPhoto = async () => {
     const success = await trigger('postPhoto')
@@ -57,12 +62,13 @@ export const useContainer = () => {
 
       if (!errors.postPhoto) {
         dispatch(postActions.setPostPhotos(img))
+        setCurrPhoto(p => p && p + 1)
       }
     }
   }
 
   const onImageLoaded = () => {
-    if (!aspect) {
+    if (!postPhoto?.aspect) {
       const crop: Crop = {
         height: 100,
         unit: '%',
@@ -72,29 +78,51 @@ export const useContainer = () => {
       }
 
       setCrop(crop)
+      if (imgRef.current) {
+        const { height, width } = imgRef.current
+
+        setCompletedCrop(convertToPixelCrop(crop, width, height))
+      }
     }
   }
   const onNext = () => dispatch(postActions.setModalSteps('publication'))
   const onChangeCurrPhoto = (currPhoto: number) => setCurrPhoto(currPhoto)
 
-  useEffect(() => {
+  useLayoutEffect(() => {
+    console.log('useEffect Crop')
     if (completedCrop?.width && completedCrop?.height && imgRef.current && canvasRef.current) {
+      canvasPreview(imgRef.current, canvasRef.current, completedCrop, zoom)
+    }
+  }, [crop])
+
+  useLayoutEffect(() => {
+    console.log('Effect aspect')
+    if (imgRef.current) {
       const { height, width } = imgRef.current
 
-      if (aspect !== 0) {
-        setCrop(centerAspectCrop(width, height, aspect))
+      if (postPhoto?.aspect !== 0) {
+        const newCrop = centerAspectCrop(width, height, postPhoto?.aspect || 0)
+
+        setCrop(newCrop)
+        setCompletedCrop(convertToPixelCrop(newCrop, width, height))
       } else {
-        onImageLoaded()
-      }
-      if (crop) {
-        setCompletedCrop(convertToPixelCrop(crop, width, height))
-        canvasPreview(imgRef.current, canvasRef.current, completedCrop, zoom)
+        const crop: Crop = {
+          height: 100,
+          unit: '%',
+          width: 100,
+          x: 0,
+          y: 0,
+        }
+
+        setCrop(crop)
+        if (imgRef.current) {
+          const { height, width } = imgRef.current
+
+          setCompletedCrop(convertToPixelCrop(crop, width, height))
+        }
       }
     }
-  }, [completedCrop, crop, imgRef.current, canvasRef.current, aspect, zoom])
-
-  const blobUrlRef = useRef('')
-  const hiddenAnchorRef = useRef<HTMLAnchorElement>(null)
+  }, [postPhoto?.aspect, zoom, currPhoto])
 
   async function onDownloadCropClick() {
     const image = imgRef.current
@@ -137,35 +165,27 @@ export const useContainer = () => {
       type: 'image/png',
     })
 
-    if (blobUrlRef.current) {
-      URL.revokeObjectURL(blobUrlRef.current)
-    }
-    blobUrlRef.current = URL.createObjectURL(blob)
+    const file = URL.createObjectURL(blob)
 
-    if (hiddenAnchorRef.current) {
-      hiddenAnchorRef.current.href = blobUrlRef.current
-      hiddenAnchorRef.current.click()
-    }
+    dispatch(postActions.setCropPostPhotos({ cropImg: file, id: currPhoto }))
   }
 
   return {
-    aspect,
     canvasRef,
     completedCrop,
     control,
     crop,
     currPhoto,
     extraActionsPostPhoto,
-    hiddenAnchorRef,
     imgRef,
     modalStep,
     onChangeCurrPhoto,
-    onDownloadCropClick,
     onImageLoaded,
     onNext,
+    postPhoto,
     postPhotos,
-    setAspect,
     setCompletedCrop,
+    setCurrentPhotoAspect,
     setZoom,
     zoom,
   }

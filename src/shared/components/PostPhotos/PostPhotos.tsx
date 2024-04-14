@@ -1,4 +1,4 @@
-import { Children, ReactNode, useState } from 'react'
+import { Children, ReactNode, useEffect, useLayoutEffect, useState } from 'react'
 
 import { NextPhotoArrow } from '@/shared/assets/icons/NextPhotoArrow/NextPhotoArrow'
 import { PrevPhotoArrow } from '@/shared/assets/icons/PrevPhotoArrow/PrevPhotoArrow'
@@ -13,10 +13,18 @@ type Props = {
   cropping?: boolean
   currentPhoto?: number
   height: number
+  onChangeCurrentPhoto?: (currPhoto: number) => void
   width: number
 }
 
-export const PostPhotos = ({ children, cropping, currentPhoto = 0, height, width }: Props) => {
+export const PostPhotos = ({
+  children,
+  cropping,
+  currentPhoto = 0,
+  height,
+  onChangeCurrentPhoto,
+  width,
+}: Props) => {
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(currentPhoto)
   const arrChildren = Children.toArray(children)
   const goToNextPhoto = () => {
@@ -29,6 +37,16 @@ export const PostPhotos = ({ children, cropping, currentPhoto = 0, height, width
 
   const isFirstPhoto = currentPhotoIndex === 0
   const isLastPhoto = arrChildren[arrChildren.length - 1] === arrChildren[currentPhotoIndex]
+
+  useLayoutEffect(() => {
+    setCurrentPhotoIndex(currentPhoto)
+  }, [currentPhoto])
+
+  useEffect(() => {
+    onChangeCurrentPhoto?.(currentPhotoIndex)
+  }, [currentPhotoIndex])
+
+  console.log('currentPhotoIndex', currentPhotoIndex, currentPhoto)
 
   return (
     <div className={s.photosWrapper} style={{ height, width }}>

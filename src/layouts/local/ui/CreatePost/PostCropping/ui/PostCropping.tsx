@@ -17,23 +17,21 @@ import s from './PostCropping.module.scss'
 
 export const PostCropping = memo(
   ({
-    aspect,
     canvasRef,
     completedCrop,
     control,
     crop,
     currPhoto,
     extraActionsPostPhoto,
-    hiddenAnchorRef,
     imgRef,
     modalStep,
     onChangeCurrPhoto,
-    onDownloadCropClick,
     onImageLoaded,
     onNext,
+    postPhoto,
     postPhotos,
-    setAspect,
     setCompletedCrop,
+    setCurrentPhotoAspect,
     setZoom,
     zoom,
   }: Props) => {
@@ -59,12 +57,18 @@ export const PostCropping = memo(
         title={'Cropping'}
       >
         <div className={s.croppingWrapper}>
-          <PostPhotos cropping currentPhoto={currPhoto} height={490} width={490}>
+          <PostPhotos
+            cropping
+            currentPhoto={currPhoto}
+            height={490}
+            onChangeCurrentPhoto={onChangeCurrPhoto}
+            width={490}
+          >
             {postPhotos &&
               postPhotos.map((photo, idx) => (
                 <div className={s.imgWrapper} key={idx}>
                   <ReactCrop
-                    aspect={aspect}
+                    aspect={postPhoto?.aspect}
                     className={s.test}
                     crop={crop}
                     onChange={c => console.log(c)}
@@ -75,7 +79,7 @@ export const PostCropping = memo(
                       alt={`image Cropping`}
                       onLoad={onImageLoaded}
                       ref={imgRef}
-                      src={photo}
+                      src={photo.img}
                       style={{ objectFit: 'contain', visibility: 'hidden' }}
                     />
                   </ReactCrop>
@@ -94,7 +98,7 @@ export const PostCropping = memo(
           </PostPhotos>
 
           <div className={s.btnGroup}>
-            <ExpandSize aspect={aspect} setAspect={setAspect} />
+            <ExpandSize aspect={postPhoto?.aspect} setAspect={setCurrentPhotoAspect} />
             <ChangeZoom setZoom={setZoom} zoom={zoom} />
             <div>
               <AddMoreImages
@@ -105,18 +109,6 @@ export const PostCropping = memo(
               />
             </div>
           </div>
-          {/*<a*/}
-          {/*  download*/}
-          {/*  href={'#hidden'}*/}
-          {/*  ref={hiddenAnchorRef}*/}
-          {/*  style={{*/}
-          {/*    position: 'absolute',*/}
-          {/*    top: '-200vh',*/}
-          {/*    visibility: 'hidden',*/}
-          {/*  }}*/}
-          {/*>*/}
-          {/*  Hidden download*/}
-          {/*</a>*/}
         </div>
       </Modal>
     )

@@ -1,5 +1,8 @@
 import { Control } from 'react-hook-form'
 
+import { PostPhoto } from '@/services/postService/lib/postEndpoints.types'
+import { Close } from '@/shared/assets/icons/Close'
+import { Cross } from '@/shared/assets/icons/Cross'
 import { ImageIcon } from '@/shared/assets/icons/Image'
 import { Button } from '@/shared/ui/Button'
 import { DropMenu } from '@/shared/ui/DropMenu'
@@ -24,14 +27,18 @@ export const AddMoreImages = ({ control, extraAction, onChangeCurrPhoto, photos 
       <DropMenu.Item onSelect={(e: Event) => e.preventDefault()}>
         <div className={s.container}>
           {photos?.map((photo, idx) => (
-            <Image
-              alt={'Photo Preview'}
-              height={80}
-              key={idx}
-              onClick={() => onChangeCurrPhoto(idx)}
-              src={photo}
-              width={80}
-            />
+            <div className={s.imgWrapper} key={idx}>
+              <Image
+                alt={'Photo Preview'}
+                height={80}
+                onClick={() => onChangeCurrPhoto(idx)}
+                src={photo.img}
+                width={80}
+              />
+              <Button className={s.delbtn} variant={'secondary'}>
+                <Close />
+              </Button>
+            </div>
           ))}
           <ControlledFileUploader
             className={s.fileBtn}
@@ -52,5 +59,5 @@ type Props = {
   control: Control<{ postPhoto?: File | undefined }, any>
   extraAction: () => void
   onChangeCurrPhoto: (currPhoto: number) => void
-  photos?: string[]
+  photos?: PostPhoto[]
 }

@@ -4,5 +4,11 @@ export type PostSliceInitialState = {
   isCreatePostModal: boolean
   isDeletePostModal: boolean
   modalSteps: ModalSteps
-  postPhotos: string[]
+  postPhotos: PostPhoto[]
+}
+export type PostPhoto = {
+  aspect: number
+  cropImg: string
+  img: string
+  zoom: number
 }
