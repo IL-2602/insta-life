@@ -31,6 +31,7 @@ export const useContainer = () => {
   const [currPhoto, setCurrPhoto] = useState<number | undefined>(0)
   const [crop, setCrop] = useState<Crop>()
   const [completedCrop, setCompletedCrop] = useState<PixelCrop>()
+
   console.log('currPhoto', currPhoto)
   const {
     control,
