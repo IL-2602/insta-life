@@ -251,6 +251,7 @@ export const en = {
             'About Me must contain 0-9, A-Z, a-z, А-Я, а-я and special characters',
           aboutMeValueMax: 'Limit of the symbols is 200',
           calender: 'A user under 13 cannot create a profile.',
+          calenderMin: 'Date of Birthday is required',
           descriptionValueMax: 'Limit of the symbols is 500',
           firstNameDescription: 'First Name must contain A-Z, a-z, А-Я, а-я',
           firstNameMax: 'Username can not be longer than 50 characters',
