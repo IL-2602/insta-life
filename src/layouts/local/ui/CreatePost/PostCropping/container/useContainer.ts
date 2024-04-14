@@ -31,6 +31,7 @@ export const useContainer = () => {
   const [currPhoto, setCurrPhoto] = useState<number | undefined>(0)
   const [crop, setCrop] = useState<Crop>()
   const [completedCrop, setCompletedCrop] = useState<PixelCrop>()
+  console.log('currPhoto', currPhoto)
   const {
     control,
     formState: { errors },
@@ -62,7 +63,7 @@ export const useContainer = () => {
 
       if (!errors.postPhoto) {
         dispatch(postActions.setPostPhotos(img))
-        setCurrPhoto(p => p && p + 1)
+        setCurrPhoto(p => (p || 0) + 1)
       }
     }
   }
