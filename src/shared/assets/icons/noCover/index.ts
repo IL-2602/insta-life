@@ -1,0 +1,1 @@
+export { NoCover } from './NoCover'

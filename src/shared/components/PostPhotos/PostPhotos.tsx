@@ -1,47 +1,56 @@
-import { useState } from 'react'
+import { Children, ReactNode, useEffect, useLayoutEffect, useState } from 'react'
 
 import { NextPhotoArrow } from '@/shared/assets/icons/NextPhotoArrow/NextPhotoArrow'
 import { PrevPhotoArrow } from '@/shared/assets/icons/PrevPhotoArrow/PrevPhotoArrow'
 import { Button } from '@/shared/ui/Button'
 import { clsx } from 'clsx'
-import Image from 'next/image'
 
 import s from './PostPhotos.module.scss'
 
 import noPhoto from '../../../../public/assets/noPhoto.svg'
 
 type Props = {
+  children?: ReactNode
   className?: string
   cropping?: boolean
+  currentPhoto?: number
   height: number
-  photos: Array<string>
+  onChangeCurrentPhoto?: (currPhoto: number) => void
   width: number
 }
 
-export const PostPhotos = ({ cropping, height, photos, width, ...rest }: Props) => {
+export const PostPhotos = ({
+  children,
+  cropping,
+  currentPhoto = 0,
+  height,
+  onChangeCurrentPhoto,
+  width,
+}: Props) => {
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0)
+  const arrChildren = Children.toArray(children)
 
+  if (currentPhoto != currentPhotoIndex) {
+    setCurrentPhotoIndex(currentPhoto)
+  }
   const goToNextPhoto = () => {
     setCurrentPhotoIndex(prevIndex => prevIndex + 1)
+    onChangeCurrentPhoto?.(currentPhoto + 1)
   }
 
   const goToPrevPhoto = () => {
     setCurrentPhotoIndex(prevIndex => prevIndex - 1)
+    onChangeCurrentPhoto?.(currentPhoto - 1)
   }
 
-  const isFirstPhoto = currentPhotoIndex === 0
-  const isLastPhoto = photos[photos.length - 1] === photos[currentPhotoIndex]
+  const isFirstPhoto = (currentPhoto || currentPhotoIndex) === 0
+  const isLastPhoto =
+    arrChildren[arrChildren.length - 1] === arrChildren[currentPhoto || currentPhotoIndex]
 
   return (
-    <div className={s.photosWrapper}>
-      <Image
-        alt={'postPhoto'}
-        height={height}
-        src={photos[currentPhotoIndex] || noPhoto}
-        width={width}
-        {...rest}
-      />
-      {photos.length > 1 && (
+    <div className={s.photosWrapper} style={{ height, width }}>
+      {arrChildren[currentPhoto]}
+      {arrChildren.length > 1 && (
         <>
           <Button
             className={clsx(s.btn, s.prevBtn, cropping ? s.dark : '')}
@@ -60,9 +69,12 @@ export const PostPhotos = ({ cropping, height, photos, width, ...rest }: Props) 
             <NextPhotoArrow className={s.nextArrow} />
           </Button>
           <div className={clsx(s.photoScale, cropping ? s.transparent : '')}>
-            {photos.map((photo, index) => (
+            {arrChildren.map((_, index) => (
               <span
-                className={clsx(s.circle, currentPhotoIndex === index ? s.circlePrimary : '')}
+                className={clsx(
+                  s.circle,
+                  (currentPhoto || currentPhotoIndex) === index ? s.circlePrimary : ''
+                )}
                 key={index}
               ></span>
             ))}
