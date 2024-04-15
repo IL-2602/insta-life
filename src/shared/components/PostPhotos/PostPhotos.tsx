@@ -7,6 +7,8 @@ import { clsx } from 'clsx'
 
 import s from './PostPhotos.module.scss'
 
+import noPhoto from '../../../../public/assets/noPhoto.svg'
+
 type Props = {
   children?: ReactNode
   className?: string

@@ -6,3 +6,8 @@ export type UpdateProfileParams = {
   lastName?: null | string
   userName: string
 }
+
+export type EditPostParams = {
+  description: string
+  postId: number
+}

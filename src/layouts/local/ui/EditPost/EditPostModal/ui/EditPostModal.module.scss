@@ -3,20 +3,6 @@
   max-width: 972px;
 }
 
-.nextBtn {
-  align-self: center;
-  font: var(--font-h3);
-}
-
-.prevBtn {
-  align-self: center;
-  padding: 0;
-
-  &:hover {
-    opacity: 0.8;
-  }
-}
-
 .container {
   position: relative;
   display: flex;
@@ -27,6 +13,11 @@
 .postPhotoWrapper {
   overflow: hidden;
   flex: 1;
+
+  width: 490px;
+  height: 503px;
+
+  background-color: #0a6638;
 }
 
 .postPhoto {
@@ -35,6 +26,10 @@
 }
 
 .descriptionWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
   width: 50%;
   margin: 24px;
 
@@ -83,12 +78,34 @@
   background-color: var(--color-dark-100);
 }
 
-.closeModal {
-  width: 378px;
+.saveChangesBtnBlock {
+  display: flex;
+  justify-content: end;
+}
+
+.closeOpenModalontainer {
+  display: flex;
+}
+
+.closePostModal {
+  width: 486px;
+}
+
+.modalBody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 60px 111px 36px;
 }
 
 .buttonsBlock {
   display: flex;
-  gap: 64px;
-  margin: 18px auto 36px;
+  justify-content: flex-end;
+  margin: 30px 24px 36px 0;
+}
+
+.button {
+  margin-left: 24px;
 }

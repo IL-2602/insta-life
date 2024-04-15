@@ -163,7 +163,7 @@ export const ru: Local = {
     removeUser: 'Удалить пользователя',
     save: 'Сохранить',
     saveChanges: 'Сохранить',
-    saveDraft: 'Сохранить черновик',
+    saveDraft: 'Сохранить',
     selectFromComputer: 'Выбрать фаил',
     sendMessage: 'Отправить сообщение',
     terminateAllOtherSession: 'Завершите все остальные сеансы',
@@ -186,6 +186,7 @@ export const ru: Local = {
     deleteUser: 'Удалить пользователя',
     deleteUserAvatar: 'Удалить фотографию',
     deleteUserAvatarText: 'Вы действительно хотите удалить фотографию?',
+    editPost: 'Редактировать пост',
     errorTransactionModalDescription:
       'Транзакция завершилась неудачей, пожалуйста, повторите попытку',
     errorTransactionModalTitle: 'Ошибка',
