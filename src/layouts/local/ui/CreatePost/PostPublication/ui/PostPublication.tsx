@@ -1,16 +1,15 @@
-import { memo } from 'react'
+import { memo, useState } from 'react'
 
 import { PostPublicationProps } from '@/layouts/local/ui/CreatePost/PostPublication/container'
 import { ArrowIosBack } from '@/shared/assets/icons/ArrowIosBack/ArrowIosBack'
+import { ClosePostModal } from '@/shared/components/ClosePostModal/ClosePostModal'
 import { PostPhotos } from '@/shared/components/PostPhotos/PostPhotos'
-import { useTranslation } from '@/shared/hooks/useTranslation'
 import { Button } from '@/shared/ui/Button'
 import { Modal } from '@/shared/ui/Modal'
 import { Spinner } from '@/shared/ui/Spinner'
 import { Typography } from '@/shared/ui/Typography'
 import { ControlledTextAreaField } from '@/shared/ui/controlledInsta/ControlledTextArea/ControlledTextArea'
 import Image from 'next/image'
-import { useRouter } from 'next/router'
 
 import s from './PostPublication.module.scss'
 
@@ -22,23 +21,22 @@ export const PostPublication = memo(
     control,
     errorDescription,
     getProfile,
-    handlePublishPhotos,
     handleSubmit,
     isCreatePostModal,
     isGetUserLoading,
-    isOpenModal,
-    locale,
     modalSteps,
-    onDiscard,
-    onSaveDraft,
     postDescription,
     postPhotos,
     showModalSaveDraft,
     t,
   }: PostPublicationProps) => {
+    const [currPhotoIndex, setCurrPhotoIndex] = useState(0)
+
     if (isGetUserLoading) {
       return <Spinner />
     }
+
+    const onChangeCurrPhoto = (currPhoto: number) => setCurrPhotoIndex(currPhoto)
 
     return (
       <>
@@ -50,7 +48,7 @@ export const PostPublication = memo(
             <Button
               className={s.nextBtn}
               disabled={!!errorDescription}
-              onClick={handlePublishPhotos}
+              // onClick={handlePublishPhotos}
               variant={'link'}
             >
               {t.button.publish}
@@ -66,7 +64,16 @@ export const PostPublication = memo(
         >
           <div className={s.container}>
             <div className={s.postPhotoWrapper}>
-              <PostPhotos className={s.postPhoto} height={500} photos={postPhotos} width={1} />
+              <PostPhotos currentPhoto={currPhotoIndex} onChangeCurrentPhoto={onChangeCurrPhoto}>
+                {postPhotos &&
+                  postPhotos.map((photo, i) => {
+                    return (
+                      <div key={i}>
+                        <img alt={'photo'} className={s.postPhoto} src={photo.cropImg} />
+                      </div>
+                    )
+                  })}
+              </PostPhotos>
             </div>
             {!isGetUserLoading && (
               <form className={s.descriptionWrapper} onSubmit={handleSubmit(() => {})}>
@@ -95,31 +102,7 @@ export const PostPublication = memo(
             )}
           </div>
         </Modal>
-        <Modal
-          className={locale === 'ru' ? s.closeModalRu : s.closeModalEn}
-          customButtonsBlock={<></>}
-          modalHandler={onDiscard}
-          open={isOpenModal}
-          title={t.modal.closeModalTitle}
-        >
-          <div className={s.content}>
-            <Typography variant={'regular16'}>{t.modal.closeModalTextOne}</Typography>
-            <Typography variant={'regular16'}>{t.modal.closeModalTextTwo}</Typography>
-            <div className={s.buttonsBlock}>
-              <Button disabled={false} onClick={onDiscard} variant={'outlined'}>
-                <Typography variant={'h3'}>{t.button.discard}</Typography>
-              </Button>
-              <Button
-                className={s.button}
-                disabled={false}
-                onClick={onSaveDraft}
-                variant={'primary'}
-              >
-                <Typography variant={'h3'}>{t.button.saveDraft}</Typography>
-              </Button>
-            </div>
-          </div>
-        </Modal>
+        <ClosePostModal />
       </>
     )
   }

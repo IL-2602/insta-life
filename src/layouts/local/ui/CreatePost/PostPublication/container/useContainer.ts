@@ -9,12 +9,10 @@ import { postActions } from '@/services/postService/store/slice/postEndpoints.sl
 import { useGetProfileQuery } from '@/services/profileService/profileEndpoints'
 import { useTranslation } from '@/shared/hooks/useTranslation'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useRouter } from 'next/router'
 import { z } from 'zod'
 
 export const useContainer = () => {
   const { t } = useTranslation()
-  const { locale } = useRouter()
 
   const dispatch = useAppDispatch()
 
@@ -48,31 +46,21 @@ export const useContainer = () => {
   const postDescription = watch('postDescription')
   const { postDescription: errorDescription } = errors
 
-  const handlePublishPhotos = () => {
-    if (postPhotos.length > 0) {
-      publishPhotos({ file: postPhotos })
-        .unwrap()
-        .then(() => {
-          dispatch(postActions.setIsCreatePostModal(false))
-        })
-        .catch(err => {
-          console.log(err)
-        })
-    }
-  }
+  // const handlePublishPhotos = () => {
+  //   if (postPhotos.length > 0) {
+  //     publishPhotos({ file: postPhotos })
+  //       .unwrap()
+  //       .then(() => {
+  //         dispatch(postActions.setIsCreatePostModal(false))
+  //       })
+  //       .catch(err => {
+  //         console.log(err)
+  //       })
+  //   }
+  // }
 
   const showModalSaveDraft = () => {
-    setIsOpenModal(true)
-  }
-
-  const onDiscard = () => {
-    setIsOpenModal(false)
-  }
-
-  const onSaveDraft = () => {
-    setIsOpenModal(false)
-    dispatch(postActions.setIsCreatePostModal(false))
-    dispatch(postActions.setClearPostPhotos())
+    dispatch(postActions.setIsClosePostModal(true))
   }
 
   const backToFilter = () => {
@@ -84,15 +72,12 @@ export const useContainer = () => {
     control,
     errorDescription,
     getProfile,
-    handlePublishPhotos,
+    // handlePublishPhotos,
     handleSubmit,
     isCreatePostModal,
     isGetUserLoading,
     isOpenModal,
-    locale,
     modalSteps,
-    onDiscard,
-    onSaveDraft,
     postDescription,
     postPhotos,
     showModalSaveDraft,
