@@ -28,13 +28,9 @@ export const AddMoreImages = ({ control, extraAction, onChangeCurrPhoto, photos 
         <div className={s.container}>
           {photos?.map((photo, idx) => (
             <div className={s.imgWrapper} key={idx}>
-              <Image
-                alt={'Photo Preview'}
-                height={80}
-                onClick={() => onChangeCurrPhoto(idx)}
-                src={photo.img}
-                width={80}
-              />
+              <div onClick={() => onChangeCurrPhoto(idx)}>
+                <Image alt={'Photo Preview'} height={80} src={photo.img} width={80} />
+              </div>
               <Button className={s.delbtn} variant={'secondary'}>
                 <Close />
               </Button>

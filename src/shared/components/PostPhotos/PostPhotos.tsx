@@ -27,32 +27,29 @@ export const PostPhotos = ({
   onChangeCurrentPhoto,
   width,
 }: Props) => {
-  const [currentPhotoIndex, setCurrentPhotoIndex] = useState(currentPhoto)
+  const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0)
   const arrChildren = Children.toArray(children)
+
+  if (currentPhoto != currentPhotoIndex) {
+    setCurrentPhotoIndex(currentPhoto)
+  }
   const goToNextPhoto = () => {
     setCurrentPhotoIndex(prevIndex => prevIndex + 1)
+    onChangeCurrentPhoto?.(currentPhoto + 1)
   }
 
   const goToPrevPhoto = () => {
     setCurrentPhotoIndex(prevIndex => prevIndex - 1)
+    onChangeCurrentPhoto?.(currentPhoto - 1)
   }
 
-  const isFirstPhoto = currentPhotoIndex === 0
-  const isLastPhoto = arrChildren[arrChildren.length - 1] === arrChildren[currentPhotoIndex]
-
-  useLayoutEffect(() => {
-    setCurrentPhotoIndex(currentPhoto)
-  }, [currentPhoto])
-
-  useEffect(() => {
-    onChangeCurrentPhoto?.(currentPhotoIndex)
-  }, [currentPhotoIndex])
-
-  console.log('currentPhotoIndex', currentPhotoIndex, currentPhoto)
+  const isFirstPhoto = (currentPhoto || currentPhotoIndex) === 0
+  const isLastPhoto =
+    arrChildren[arrChildren.length - 1] === arrChildren[currentPhoto || currentPhotoIndex]
 
   return (
     <div className={s.photosWrapper} style={{ height, width }}>
-      {arrChildren[currentPhotoIndex]}
+      {arrChildren[currentPhoto]}
       {arrChildren.length > 1 && (
         <>
           <Button
@@ -74,7 +71,10 @@ export const PostPhotos = ({
           <div className={clsx(s.photoScale, cropping ? s.transparent : '')}>
             {arrChildren.map((_, index) => (
               <span
-                className={clsx(s.circle, currentPhotoIndex === index ? s.circlePrimary : '')}
+                className={clsx(
+                  s.circle,
+                  (currentPhoto || currentPhotoIndex) === index ? s.circlePrimary : ''
+                )}
                 key={index}
               ></span>
             ))}

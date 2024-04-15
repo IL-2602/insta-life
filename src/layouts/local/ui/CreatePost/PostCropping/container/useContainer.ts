@@ -28,11 +28,9 @@ function centerAspectCrop(mediaWidth: number, mediaHeight: number, aspect: numbe
 }
 export const useContainer = () => {
   const [zoom, setZoom] = useState(1)
-  const [currPhoto, setCurrPhoto] = useState<number | undefined>(0)
+  const [currPhotoIndex, setCurrPhotoIndex] = useState<number | undefined>(0)
   const [crop, setCrop] = useState<Crop>()
   const [completedCrop, setCompletedCrop] = useState<PixelCrop>()
-
-  console.log('currPhoto', currPhoto)
   const {
     control,
     formState: { errors },
@@ -43,17 +41,17 @@ export const useContainer = () => {
   })
   const postPhotos = useAppSelector(state => state.postReducer?.postPhotos)
   const modalStep = useAppSelector(state => state.postReducer?.modalSteps)
-  const postPhoto = postPhotos.find((_, idx) => idx === currPhoto)
+  const postPhoto = postPhotos.find((_, idx) => idx === currPhotoIndex)
   const dispatch = useAppDispatch()
 
   const imgRef = useRef<HTMLImageElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   const setCurrentPhotoAspect = (aspect: number) => {
-    dispatch(postActions.setPostPhotosAspect({ aspect, img: postPhoto?.img }))
-    onDownloadCropClick()
+    if (postPhoto) {
+      onDownloadCropClick(aspect, postPhoto.img)
+    }
   }
-
   const extraActionsPostPhoto = async () => {
     const success = await trigger('postPhoto')
     const file = watch('postPhoto')
@@ -64,7 +62,7 @@ export const useContainer = () => {
 
       if (!errors.postPhoto) {
         dispatch(postActions.setPostPhotos(img))
-        setCurrPhoto(p => (p || 0) + 1)
+        setCurrPhotoIndex(p => (p || 0) + 1)
       }
     }
   }
@@ -88,10 +86,11 @@ export const useContainer = () => {
     }
   }
   const onNext = () => dispatch(postActions.setModalSteps('publication'))
-  const onChangeCurrPhoto = (currPhoto: number) => setCurrPhoto(currPhoto)
+  const onPrev = () => dispatch(postActions.setModalSteps('upload'))
+  const onChangeCurrPhoto = (currPhoto: number) => setCurrPhotoIndex(currPhoto)
 
   useLayoutEffect(() => {
-    console.log('useEffect Crop')
+    console.log('useEffect Crop: ')
     if (completedCrop?.width && completedCrop?.height && imgRef.current && canvasRef.current) {
       canvasPreview(imgRef.current, canvasRef.current, completedCrop, zoom)
     }
@@ -102,9 +101,9 @@ export const useContainer = () => {
     if (imgRef.current) {
       const { height, width } = imgRef.current
 
-      if (postPhoto?.aspect !== 0) {
-        const newCrop = centerAspectCrop(width, height, postPhoto?.aspect || 0)
-
+      if (postPhoto?.aspect && postPhoto?.aspect !== 0) {
+        const newCrop = centerAspectCrop(width, height, postPhoto.aspect)
+        console.log('newCrop', imgRef.current)
         setCrop(newCrop)
         setCompletedCrop(convertToPixelCrop(newCrop, width, height))
       } else {
@@ -124,9 +123,9 @@ export const useContainer = () => {
         }
       }
     }
-  }, [postPhoto?.aspect, zoom, currPhoto])
+  }, [postPhoto?.aspect, zoom, currPhotoIndex])
 
-  async function onDownloadCropClick() {
+  async function onDownloadCropClick(aspect: number, img: string) {
     const image = imgRef.current
     const previewCanvas = canvasRef.current
 
@@ -169,7 +168,7 @@ export const useContainer = () => {
 
     const file = URL.createObjectURL(blob)
 
-    dispatch(postActions.setCropPostPhotos({ cropImg: file, id: currPhoto }))
+    dispatch(postActions.setCropPostPhotos({ cropImg: file, aspect, img }))
   }
 
   return {
@@ -177,7 +176,7 @@ export const useContainer = () => {
     completedCrop,
     control,
     crop,
-    currPhoto,
+    currPhotoIndex,
     extraActionsPostPhoto,
     imgRef,
     modalStep,
@@ -190,5 +189,6 @@ export const useContainer = () => {
     setCurrentPhotoAspect,
     setZoom,
     zoom,
+    onPrev,
   }
 }

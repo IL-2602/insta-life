@@ -18,10 +18,11 @@ import s from './PostCropping.module.scss'
 export const PostCropping = memo(
   ({
     canvasRef,
+    onPrev,
     completedCrop,
     control,
     crop,
-    currPhoto,
+    currPhotoIndex,
     extraActionsPostPhoto,
     imgRef,
     modalStep,
@@ -48,7 +49,7 @@ export const PostCropping = memo(
         }
         open={modalStep === 'cropping'}
         previousStepBtn={
-          <Button variant={'link'}>
+          <Button variant={'link'} onClick={onPrev}>
             <Typography color={'light'} variant={'h3'}>
               <ArrowIosBack />
             </Typography>
@@ -59,7 +60,7 @@ export const PostCropping = memo(
         <div className={s.croppingWrapper}>
           <PostPhotos
             cropping
-            currentPhoto={currPhoto}
+            currentPhoto={currPhotoIndex}
             height={490}
             onChangeCurrentPhoto={onChangeCurrPhoto}
             width={490}
