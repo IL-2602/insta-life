@@ -27,10 +27,12 @@
 .postPhotoWrapper {
   overflow: hidden;
   flex: 1;
+  height: auto;
 }
 
 .postPhoto {
   width: 100%;
+  height: 490px;
   object-fit: cover;
 }
 
@@ -83,12 +85,6 @@
   background-color: var(--color-dark-100);
 }
 
-.closeModal {
-  width: 378px;
-}
-
-.buttonsBlock {
-  display: flex;
-  gap: 64px;
-  margin: 18px auto 36px;
+.image {
+  width: 500px;
 }

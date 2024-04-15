@@ -33,6 +33,14 @@ export const useContainer = () => {
     userName: watch('userName'),
   }
 
+  const customErrorMap = (errMessage: string) => {
+    if (errMessage === 'Expected date, received null') {
+      return t.profileSettings.tab.generalInformation.error.calenderMin
+    }
+
+    return errMessage
+  }
+
   const isDisabled =
     !inputFields.userName ||
     !inputFields.firstName ||
@@ -144,6 +152,7 @@ export const useContainer = () => {
     cities,
     cityValue,
     control,
+    customErrorMap,
     dropdownOpen,
     errorAboutMe,
     errorDateOfBirth,

@@ -14,9 +14,9 @@ type Props = {
   className?: string
   cropping?: boolean
   currentPhoto?: number
-  height: number
+  height?: number
   onChangeCurrentPhoto?: (currPhoto: number) => void
-  width: number
+  width?: number
 }
 
 export const PostPhotos = ({
