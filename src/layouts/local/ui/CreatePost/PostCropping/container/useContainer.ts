@@ -103,6 +103,7 @@ export const useContainer = () => {
 
       if (postPhoto?.aspect && postPhoto?.aspect !== 0) {
         const newCrop = centerAspectCrop(width, height, postPhoto.aspect)
+
         console.log('newCrop', imgRef.current)
         setCrop(newCrop)
         setCompletedCrop(convertToPixelCrop(newCrop, width, height))
@@ -168,7 +169,7 @@ export const useContainer = () => {
 
     const file = URL.createObjectURL(blob)
 
-    dispatch(postActions.setCropPostPhotos({ cropImg: file, aspect, img }))
+    dispatch(postActions.setCropPostPhotos({ aspect, cropImg: file, img }))
   }
 
   return {
@@ -183,12 +184,12 @@ export const useContainer = () => {
     onChangeCurrPhoto,
     onImageLoaded,
     onNext,
+    onPrev,
     postPhoto,
     postPhotos,
     setCompletedCrop,
     setCurrentPhotoAspect,
     setZoom,
     zoom,
-    onPrev,
   }
 }

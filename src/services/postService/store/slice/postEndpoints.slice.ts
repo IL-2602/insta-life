@@ -17,9 +17,12 @@ export const postSlice = createSlice({
   initialState,
   name: 'postReducer',
   reducers: {
+    setClearPostPhotos: state => {
+      state.postPhotos = []
+    },
     setCropPostPhotos: (
       state,
-      action: PayloadAction<Pick<PostPhoto, 'cropImg' | 'aspect' | 'img'>>
+      action: PayloadAction<Pick<PostPhoto, 'aspect' | 'cropImg' | 'img'>>
     ) => {
       const tempPhoto = state.postPhotos.find(p => p.img === action.payload.img)
 
@@ -27,9 +30,6 @@ export const postSlice = createSlice({
         tempPhoto.cropImg = action.payload.cropImg
         tempPhoto.aspect = action.payload.aspect
       }
-    },
-    setClearPostPhotos: state => {
-      state.postPhotos = []
     },
     setIsCreatePostModal: (state, action: PayloadAction<boolean>) => {
       state.isCreatePostModal = action.payload
