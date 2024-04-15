@@ -17,6 +17,9 @@ export const postSlice = createSlice({
   initialState,
   name: 'postReducer',
   reducers: {
+    delPostPhotos: (state, action: PayloadAction<Pick<PostPhoto, 'img'>>) => {
+      state.postPhotos = state.postPhotos.filter((p, idx) => p.img !== action.payload.img)
+    },
     setClearPostPhotos: state => {
       state.postPhotos = []
     },
@@ -52,9 +55,6 @@ export const postSlice = createSlice({
       }
 
       state.postPhotos.push(tempPhoto)
-    },
-    delPostPhotos: (state, action: PayloadAction<Pick<PostPhoto, 'img'>>) => {
-      state.postPhotos = state.postPhotos.filter((p, idx) => p.img !== action.payload.img)
     },
   },
 })

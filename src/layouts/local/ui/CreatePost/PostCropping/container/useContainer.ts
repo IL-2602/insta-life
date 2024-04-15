@@ -57,6 +57,7 @@ export const useContainer = () => {
   const extraActionsPostPhoto = async () => {
     const success = await trigger('postPhoto')
     const file = watch('postPhoto')
+
     if (file) {
       const badCase = ''
       const img = success ? URL.createObjectURL(file) : badCase
@@ -187,6 +188,7 @@ export const useContainer = () => {
     control,
     crop,
     currPhotoIndex,
+    delPostPhoto,
     extraActionsPostPhoto,
     imgRef,
     modalStep,
@@ -200,6 +202,5 @@ export const useContainer = () => {
     setCurrentPhotoAspect,
     setZoom,
     zoom,
-    delPostPhoto,
   }
 }

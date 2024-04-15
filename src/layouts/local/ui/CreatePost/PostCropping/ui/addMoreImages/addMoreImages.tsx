@@ -12,10 +12,10 @@ import s from './addMoreImages.module.scss'
 
 export const AddMoreImages = ({
   control,
+  delPostPhoto,
   extraAction,
   onChangeCurrPhoto,
   photos,
-  delPostPhoto,
 }: Props) => {
   return (
     <DropMenu.Menu
@@ -38,18 +38,18 @@ export const AddMoreImages = ({
               </div>
               <Button
                 className={s.delbtn}
-                variant={'secondary'}
                 onClick={() => delPostPhoto(photo.img)}
+                variant={'secondary'}
               >
                 <Close />
               </Button>
             </div>
           ))}
           <ControlledFileUploader
-            key={photos?.length}
             className={s.fileBtn}
             control={control}
             extraActions={extraAction}
+            key={photos?.length}
             name={'postPhoto'}
             variant={'outlined'}
           >
@@ -63,8 +63,8 @@ export const AddMoreImages = ({
 
 type Props = {
   control: Control<{ postPhoto?: File | undefined }, any>
-  extraAction: () => void
   delPostPhoto: (img: string) => void
+  extraAction: () => void
   onChangeCurrPhoto: (currPhoto: number) => void
   photos?: PostPhoto[]
 }
