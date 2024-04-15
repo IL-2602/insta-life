@@ -12,6 +12,7 @@ import { postActions } from '@/services/postService/store/slice/postEndpoints.sl
 import { canvasPreview } from '@/shared/utils/canvasPrieview'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { escapeXML } from 'ejs'
+import { PostPhoto } from '@/services/postService/lib/postEndpoints.types'
 function centerAspectCrop(mediaWidth: number, mediaHeight: number, aspect: number) {
   return centerCrop(
     makeAspectCrop(
@@ -49,9 +50,15 @@ export const useContainer = () => {
   const imgRef = useRef<HTMLImageElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
-  const setCurrentPhotoAspect = (aspect: number) => {
+  const setCurrentPhotoAspect = (aspect?: number) => {
     if (postPhoto) {
-      onDownloadCropClick(aspect, postPhoto.img)
+      test({ aspect, img: postPhoto.img })
+      // onDownloadCropClick(aspect, postPhoto.img)
+    }
+  }
+  const setCurrentPhotoZoom = (zoom: number) => {
+    if (postPhoto) {
+      test({ zoom, img: postPhoto.img })
     }
   }
   const extraActionsPostPhoto = async () => {
@@ -102,7 +109,7 @@ export const useContainer = () => {
   useLayoutEffect(() => {
     console.log('useEffect Crop: ')
     if (completedCrop?.width && completedCrop?.height && imgRef.current && canvasRef.current) {
-      canvasPreview(imgRef.current, canvasRef.current, completedCrop, zoom)
+      canvasPreview(imgRef.current, canvasRef.current, completedCrop, postPhoto?.zoom)
     }
   }, [crop])
 
@@ -134,9 +141,9 @@ export const useContainer = () => {
         }
       }
     }
-  }, [postPhoto?.aspect, zoom, currPhotoIndex])
+  }, [postPhoto?.aspect, postPhoto?.zoom, currPhotoIndex])
 
-  async function onDownloadCropClick(aspect: number, img: string) {
+  async function onDownloadCropClick(aspect: number, img: string, scale = 0) {
     const image = imgRef.current
     const previewCanvas = canvasRef.current
 
@@ -159,7 +166,7 @@ export const useContainer = () => {
     if (!ctx) {
       throw new Error('No 2d context')
     }
-
+    ctx.scale(scale, scale)
     ctx.drawImage(
       previewCanvas,
       0,
@@ -179,9 +186,29 @@ export const useContainer = () => {
 
     const file = URL.createObjectURL(blob)
 
-    dispatch(postActions.setCropPostPhotos({ aspect, cropImg: file, img }))
+    dispatch(
+      postActions.setCropPostPhotos({
+        aspect: aspect,
+        cropImg: file,
+        img,
+      })
+    )
   }
-
+  const test = ({ aspect, img, zoom }: Partial<Pick<PostPhoto, 'img' | 'aspect' | 'zoom'>>) => {
+    canvasRef?.current?.toBlob(blob => {
+      if (blob) {
+        const file = URL.createObjectURL(blob)
+        dispatch(
+          postActions.setCropPostPhotos({
+            aspect,
+            cropImg: file,
+            img,
+            zoom,
+          })
+        )
+      }
+    }, 'image/jpeg')
+  }
   return {
     canvasRef,
     completedCrop,
@@ -200,6 +227,7 @@ export const useContainer = () => {
     postPhotos,
     setCompletedCrop,
     setCurrentPhotoAspect,
+    setCurrentPhotoZoom,
     setZoom,
     zoom,
   }
