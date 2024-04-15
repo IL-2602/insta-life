@@ -2,7 +2,6 @@ import { Control } from 'react-hook-form'
 
 import { PostPhoto } from '@/services/postService/lib/postEndpoints.types'
 import { Close } from '@/shared/assets/icons/Close'
-import { Cross } from '@/shared/assets/icons/Cross'
 import { ImageIcon } from '@/shared/assets/icons/Image'
 import { Button } from '@/shared/ui/Button'
 import { DropMenu } from '@/shared/ui/DropMenu'
@@ -11,7 +10,13 @@ import Image from 'next/image'
 
 import s from './addMoreImages.module.scss'
 
-export const AddMoreImages = ({ control, extraAction, onChangeCurrPhoto, photos }: Props) => {
+export const AddMoreImages = ({
+  control,
+  extraAction,
+  onChangeCurrPhoto,
+  photos,
+  delPostPhoto,
+}: Props) => {
   return (
     <DropMenu.Menu
       align={'end'}
@@ -31,12 +36,17 @@ export const AddMoreImages = ({ control, extraAction, onChangeCurrPhoto, photos 
               <div onClick={() => onChangeCurrPhoto(idx)}>
                 <Image alt={'Photo Preview'} height={80} src={photo.img} width={80} />
               </div>
-              <Button className={s.delbtn} variant={'secondary'}>
+              <Button
+                className={s.delbtn}
+                variant={'secondary'}
+                onClick={() => delPostPhoto(photo.img)}
+              >
                 <Close />
               </Button>
             </div>
           ))}
           <ControlledFileUploader
+            key={photos?.length}
             className={s.fileBtn}
             control={control}
             extraActions={extraAction}
@@ -54,6 +64,7 @@ export const AddMoreImages = ({ control, extraAction, onChangeCurrPhoto, photos 
 type Props = {
   control: Control<{ postPhoto?: File | undefined }, any>
   extraAction: () => void
+  delPostPhoto: (img: string) => void
   onChangeCurrPhoto: (currPhoto: number) => void
   photos?: PostPhoto[]
 }

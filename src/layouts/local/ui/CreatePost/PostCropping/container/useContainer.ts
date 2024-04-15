@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Crop, PixelCrop, centerCrop, convertToPixelCrop, makeAspectCrop } from 'react-image-crop'
 
@@ -11,6 +11,7 @@ import {
 import { postActions } from '@/services/postService/store/slice/postEndpoints.slice'
 import { canvasPreview } from '@/shared/utils/canvasPrieview'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { escapeXML } from 'ejs'
 function centerAspectCrop(mediaWidth: number, mediaHeight: number, aspect: number) {
   return centerCrop(
     makeAspectCrop(
@@ -34,6 +35,7 @@ export const useContainer = () => {
   const {
     control,
     formState: { errors },
+    reset,
     trigger,
     watch,
   } = useForm<createPostModalFormSchema>({
@@ -55,7 +57,6 @@ export const useContainer = () => {
   const extraActionsPostPhoto = async () => {
     const success = await trigger('postPhoto')
     const file = watch('postPhoto')
-
     if (file) {
       const badCase = ''
       const img = success ? URL.createObjectURL(file) : badCase
@@ -67,6 +68,14 @@ export const useContainer = () => {
     }
   }
 
+  const delPostPhoto = (img: string) => {
+    dispatch(postActions.delPostPhotos({ img }))
+    if (currPhotoIndex && currPhotoIndex - 1 > 0) {
+      setCurrPhotoIndex(currPhotoIndex - 1)
+    } else {
+      setCurrPhotoIndex(undefined)
+    }
+  }
   const onImageLoaded = () => {
     if (!postPhoto?.aspect) {
       const crop: Crop = {
@@ -191,5 +200,6 @@ export const useContainer = () => {
     setCurrentPhotoAspect,
     setZoom,
     zoom,
+    delPostPhoto,
   }
 }

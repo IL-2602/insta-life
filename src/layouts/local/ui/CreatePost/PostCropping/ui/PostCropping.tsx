@@ -34,6 +34,7 @@ export const PostCropping = memo(
     setCompletedCrop,
     setCurrentPhotoAspect,
     setZoom,
+    delPostPhoto,
     zoom,
   }: Props) => {
     return (
@@ -107,6 +108,7 @@ export const PostCropping = memo(
                 extraAction={extraActionsPostPhoto}
                 onChangeCurrPhoto={onChangeCurrPhoto}
                 photos={postPhotos}
+                delPostPhoto={delPostPhoto}
               />
             </div>
           </div>

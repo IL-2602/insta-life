@@ -53,14 +53,8 @@ export const postSlice = createSlice({
 
       state.postPhotos.push(tempPhoto)
     },
-    setPostPhotosAspect: (state, action: PayloadAction<{ aspect: number; img?: string }>) => {
-      if (typeof action.payload.img === 'string') {
-        const photo = state.postPhotos.find(p => p.img === action.payload.img)
-
-        if (photo) {
-          photo.aspect = action.payload.aspect
-        }
-      }
+    delPostPhotos: (state, action: PayloadAction<Pick<PostPhoto, 'img'>>) => {
+      state.postPhotos = state.postPhotos.filter((p, idx) => p.img !== action.payload.img)
     },
   },
 })
