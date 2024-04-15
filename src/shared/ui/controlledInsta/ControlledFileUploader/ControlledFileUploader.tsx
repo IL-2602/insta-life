@@ -1,4 +1,4 @@
-import { ChangeEvent, useRef } from 'react'
+import { ChangeEvent, ReactNode, useRef } from 'react'
 import { Control, FieldPath, FieldValues, useController } from 'react-hook-form'
 
 import { Button } from '@/shared/ui/Button'
@@ -10,7 +10,7 @@ export const ControlledFileUploader = <T extends FieldValues>({
   control,
   extraActions,
   name,
-  ...restProps
+  variant = 'primary',
 }: Props<T>) => {
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -27,14 +27,6 @@ export const ControlledFileUploader = <T extends FieldValues>({
 
   return (
     <>
-      <Button
-        className={className}
-        onClick={() => inputRef?.current?.click()}
-        variant={'primary'}
-        {...restProps}
-      >
-        {children}
-      </Button>
       <input
         accept={'image/png, image/jpeg, image/jpg'}
         name={name}
@@ -43,12 +35,17 @@ export const ControlledFileUploader = <T extends FieldValues>({
         style={{ display: 'none' }}
         type={'file'}
       />
+      <Button className={className} onClick={() => inputRef?.current?.click()} variant={variant}>
+        {children}
+      </Button>
     </>
   )
 }
 
 type Props<T extends FieldValues> = {
+  children: ReactNode
+  className?: string
   control: Control<T>
   extraActions?: (inputName: string) => void
   name: FieldPath<T>
-} & Omit<ButtonProps, 'onClick' | 'type'>
+} & ButtonProps

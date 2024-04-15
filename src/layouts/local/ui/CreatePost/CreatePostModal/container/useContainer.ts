@@ -40,7 +40,7 @@ export const useContainer = () => {
 
       if (!errors.postPhoto) {
         dispatch(postActions.setPostPhotos(img))
-        dispatch(postActions.setModalSteps('publication'))
+        dispatch(postActions.setModalSteps('cropping'))
       }
     }
   }

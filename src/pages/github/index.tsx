@@ -25,7 +25,7 @@ const GitHubPage = () => {
     } else {
       void push(ROUTES.LOGIN)
     }
-  }, [query.accessToken, push, dispatch])
+  }, [query.accessToken, push, dispatch, isReady])
 
   return (
     <div>

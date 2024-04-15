@@ -1,0 +1,43 @@
+.container {
+  padding: 1px;
+
+  & > *:first-child svg {
+    margin: -3px;
+  }
+
+  & > * {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 128px;
+
+    color: var(--color-light-900);
+  }
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 36px;
+  height: 36px;
+  padding: 0;
+
+  color: var(--color-light-100);
+
+  background: var(--color-dark-500);
+
+  &:focus {
+    outline: none;
+  }
+
+  &[data-state='open'] {
+    color: var(--color-primary-500);
+  }
+}
+
+.active {
+  color: var(--color-light-100);
+}
