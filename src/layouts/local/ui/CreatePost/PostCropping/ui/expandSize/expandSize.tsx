@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from 'react'
 
+import { PostPhoto } from '@/services/postService/lib/postEndpoints.types'
 import { Expand } from '@/shared/assets/icons/Expand'
 import { ImageIcon } from '@/shared/assets/icons/Image'
 import { RectangleHorizontal } from '@/shared/assets/icons/RectangleHorizontal'

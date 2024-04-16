@@ -1,5 +1,4 @@
-import { Dispatch, SetStateAction, useState } from 'react'
-
+import { PostPhoto } from '@/services/postService/lib/postEndpoints.types'
 import { Maximize } from '@/shared/assets/icons/Maximize'
 import { Button } from '@/shared/ui/Button'
 import { DropMenu } from '@/shared/ui/DropMenu'
@@ -7,7 +6,7 @@ import { Slider } from '@/shared/ui/Slider/Slider'
 
 import s from './changeZoom.module.scss'
 
-export const ChangeZoom = ({ setZoom, zoom }: Props) => {
+export const ChangeZoom = ({ setZoom, zoom = 1 }: Props) => {
   return (
     <DropMenu.Menu
       align={'start'}
@@ -33,6 +32,6 @@ export const ChangeZoom = ({ setZoom, zoom }: Props) => {
 }
 
 type Props = {
-  setZoom: Dispatch<SetStateAction<number>>
-  zoom: number
+  setZoom: (zoom: number) => void
+  zoom?: number
 }

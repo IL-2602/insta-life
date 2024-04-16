@@ -8,9 +8,11 @@ import {
   createPostModalFormSchema,
   createPostModalSchema,
 } from '@/layouts/local/ui/CreatePost/CreatePostModal/schema/createPostModalSchema'
+import { PostPhoto } from '@/services/postService/lib/postEndpoints.types'
 import { postActions } from '@/services/postService/store/slice/postEndpoints.slice'
 import { canvasPreview } from '@/shared/utils/canvasPrieview'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { action } from '@storybook/addon-actions'
 import { escapeXML } from 'ejs'
 function centerAspectCrop(mediaWidth: number, mediaHeight: number, aspect: number) {
   return centerCrop(
@@ -35,7 +37,6 @@ export const useContainer = () => {
   const {
     control,
     formState: { errors },
-    reset,
     trigger,
     watch,
   } = useForm<createPostModalFormSchema>({
@@ -49,9 +50,14 @@ export const useContainer = () => {
   const imgRef = useRef<HTMLImageElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
+  const setCurrentPhotoZoom = (zoom: string) => {
+    if (postPhoto) {
+      dispatch(postActions.updatePostPhoto({ img: postPhoto.img, zoom }))
+    }
+  }
   const setCurrentPhotoAspect = (aspect: number) => {
     if (postPhoto) {
-      onDownloadCropClick(aspect, postPhoto.img)
+      dispatch(postActions.updatePostPhoto({ aspect: aspect, img: postPhoto.img }))
     }
   }
   const extraActionsPostPhoto = async () => {
@@ -100,14 +106,13 @@ export const useContainer = () => {
   const onChangeCurrPhoto = (currPhoto: number) => setCurrPhotoIndex(currPhoto)
 
   useLayoutEffect(() => {
-    console.log('useEffect Crop: ')
     if (completedCrop?.width && completedCrop?.height && imgRef.current && canvasRef.current) {
-      canvasPreview(imgRef.current, canvasRef.current, completedCrop, zoom)
+      canvasPreview(imgRef.current, canvasRef.current, completedCrop, postPhoto?.zoom)
+      saveCropImg({ img: postPhoto?.img })
     }
   }, [crop])
 
   useLayoutEffect(() => {
-    console.log('Effect aspect')
     if (imgRef.current) {
       const { height, width } = imgRef.current
 
@@ -134,52 +139,21 @@ export const useContainer = () => {
         }
       }
     }
-  }, [postPhoto?.aspect, zoom, currPhotoIndex])
+  }, [postPhoto?.aspect, postPhoto?.zoom, currPhotoIndex])
 
-  async function onDownloadCropClick(aspect: number, img: string) {
-    const image = imgRef.current
-    const previewCanvas = canvasRef.current
+  const saveCropImg = ({ img }: Partial<Pick<PostPhoto, 'aspect' | 'img' | 'zoom'>>) => {
+    canvasRef?.current?.toBlob(blob => {
+      if (blob) {
+        const file = URL.createObjectURL(blob)
 
-    if (!image || !previewCanvas || !completedCrop) {
-      throw new Error('Crop canvas does not exist')
-    }
-
-    // This will size relative to the uploaded image
-    // size. If you want to size according to what they
-    // are looking at on screen, remove scaleX + scaleY
-    const scaleX = image.naturalWidth / image.width
-    const scaleY = image.naturalHeight / image.height
-
-    const offscreen = new OffscreenCanvas(
-      completedCrop.width * scaleX,
-      completedCrop.height * scaleY
-    )
-    const ctx = offscreen.getContext('2d')
-
-    if (!ctx) {
-      throw new Error('No 2d context')
-    }
-
-    ctx.drawImage(
-      previewCanvas,
-      0,
-      0,
-      previewCanvas.width,
-      previewCanvas.height,
-      0,
-      0,
-      offscreen.width,
-      offscreen.height
-    )
-    // You might want { type: "image/jpeg", quality: <0 to 1> } to
-    // reduce image size
-    const blob = await offscreen.convertToBlob({
-      type: 'image/png',
-    })
-
-    const file = URL.createObjectURL(blob)
-
-    dispatch(postActions.setCropPostPhotos({ aspect, cropImg: file, img }))
+        dispatch(
+          postActions.setCropPostPhotos({
+            cropImg: file,
+            img,
+          })
+        )
+      }
+    }, 'image/jpeg')
   }
 
   return {
@@ -200,6 +174,7 @@ export const useContainer = () => {
     postPhotos,
     setCompletedCrop,
     setCurrentPhotoAspect,
+    setCurrentPhotoZoom,
     setZoom,
     zoom,
   }
