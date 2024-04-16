@@ -13,6 +13,7 @@ import { canvasPreview } from '@/shared/utils/canvasPrieview'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { escapeXML } from 'ejs'
 import { PostPhoto } from '@/services/postService/lib/postEndpoints.types'
+import { action } from '@storybook/addon-actions'
 function centerAspectCrop(mediaWidth: number, mediaHeight: number, aspect: number) {
   return centerCrop(
     makeAspectCrop(
@@ -36,7 +37,6 @@ export const useContainer = () => {
   const {
     control,
     formState: { errors },
-    reset,
     trigger,
     watch,
   } = useForm<createPostModalFormSchema>({
@@ -50,15 +50,14 @@ export const useContainer = () => {
   const imgRef = useRef<HTMLImageElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
-  const setCurrentPhotoAspect = (aspect?: number) => {
+  const updatePostPhoto = ({ aspect, zoom }: Partial<Pick<PostPhoto, 'aspect' | 'zoom'>>) => {
     if (postPhoto) {
-      test({ aspect, img: postPhoto.img })
-      // onDownloadCropClick(aspect, postPhoto.img)
+      dispatch(postActions.updatePostPhoto({ img: postPhoto.img, aspect, zoom }))
     }
   }
   const setCurrentPhotoZoom = (zoom: number) => {
     if (postPhoto) {
-      test({ zoom, img: postPhoto.img })
+      saveCropImg({ zoom, img: postPhoto.img })
     }
   }
   const extraActionsPostPhoto = async () => {
@@ -107,14 +106,13 @@ export const useContainer = () => {
   const onChangeCurrPhoto = (currPhoto: number) => setCurrPhotoIndex(currPhoto)
 
   useLayoutEffect(() => {
-    console.log('useEffect Crop: ')
     if (completedCrop?.width && completedCrop?.height && imgRef.current && canvasRef.current) {
       canvasPreview(imgRef.current, canvasRef.current, completedCrop, postPhoto?.zoom)
+      saveCropImg({ img: postPhoto?.img })
     }
   }, [crop])
 
   useLayoutEffect(() => {
-    console.log('Effect aspect')
     if (imgRef.current) {
       const { height, width } = imgRef.current
 
@@ -143,67 +141,14 @@ export const useContainer = () => {
     }
   }, [postPhoto?.aspect, postPhoto?.zoom, currPhotoIndex])
 
-  async function onDownloadCropClick(aspect: number, img: string, scale = 0) {
-    const image = imgRef.current
-    const previewCanvas = canvasRef.current
-
-    if (!image || !previewCanvas || !completedCrop) {
-      throw new Error('Crop canvas does not exist')
-    }
-
-    // This will size relative to the uploaded image
-    // size. If you want to size according to what they
-    // are looking at on screen, remove scaleX + scaleY
-    const scaleX = image.naturalWidth / image.width
-    const scaleY = image.naturalHeight / image.height
-
-    const offscreen = new OffscreenCanvas(
-      completedCrop.width * scaleX,
-      completedCrop.height * scaleY
-    )
-    const ctx = offscreen.getContext('2d')
-
-    if (!ctx) {
-      throw new Error('No 2d context')
-    }
-    ctx.scale(scale, scale)
-    ctx.drawImage(
-      previewCanvas,
-      0,
-      0,
-      previewCanvas.width,
-      previewCanvas.height,
-      0,
-      0,
-      offscreen.width,
-      offscreen.height
-    )
-    // You might want { type: "image/jpeg", quality: <0 to 1> } to
-    // reduce image size
-    const blob = await offscreen.convertToBlob({
-      type: 'image/png',
-    })
-
-    const file = URL.createObjectURL(blob)
-
-    dispatch(
-      postActions.setCropPostPhotos({
-        aspect: aspect,
-        cropImg: file,
-        img,
-      })
-    )
-  }
-  const test = ({ aspect, img, zoom }: Partial<Pick<PostPhoto, 'img' | 'aspect' | 'zoom'>>) => {
+  const saveCropImg = ({ img }: Partial<Pick<PostPhoto, 'img' | 'aspect' | 'zoom'>>) => {
     canvasRef?.current?.toBlob(blob => {
       if (blob) {
         const file = URL.createObjectURL(blob)
         dispatch(
           postActions.setCropPostPhotos({
-            aspect,
             cropImg: file,
             img,
-            zoom,
           })
         )
       }
@@ -226,7 +171,7 @@ export const useContainer = () => {
     postPhoto,
     postPhotos,
     setCompletedCrop,
-    setCurrentPhotoAspect,
+    updatePostPhoto,
     setCurrentPhotoZoom,
     setZoom,
     zoom,

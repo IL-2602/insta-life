@@ -21,6 +21,20 @@ export const postSlice = createSlice({
     delPostPhotos: (state, action: PayloadAction<Pick<PostPhoto, 'img'>>) => {
       state.postPhotos = state.postPhotos.filter((p, idx) => p.img !== action.payload.img)
     },
+    updatePostPhoto: (
+      state,
+      action: PayloadAction<Partial<Pick<PostPhoto, 'img' | 'aspect' | 'zoom'>>>
+    ) => {
+      const tempPhoto = state.postPhotos.find((p, idx) => p.img === action.payload.img)
+      if (tempPhoto) {
+        if (action.payload.aspect) {
+          tempPhoto.aspect = action.payload.aspect
+        }
+        if (action.payload.zoom) {
+          tempPhoto.zoom = action.payload.zoom
+        }
+      }
+    },
     setClearPostPhotos: state => {
       state.postPhotos = []
     },

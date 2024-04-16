@@ -11,6 +11,7 @@ import { clsx } from 'clsx'
 import { Square } from 'src/shared/assets/icons/Square'
 
 import s from './expandSize.module.scss'
+import { PostPhoto } from '@/services/postService/lib/postEndpoints.types'
 
 export const ExpandSize = ({ aspect, setAspect }: Props) => {
   return (
@@ -25,24 +26,30 @@ export const ExpandSize = ({ aspect, setAspect }: Props) => {
         </Button>
       }
     >
-      <DropMenu.Item className={clsx(aspect === 0 && s.active)} onClick={() => setAspect(0)}>
+      <DropMenu.Item
+        className={clsx(aspect === 0 && s.active)}
+        onClick={() => setAspect({ aspect: 0 })}
+      >
         <Typography variant={aspect === 0 ? 'h3' : 'regular14'}>Original</Typography>
         <ImageIcon />
       </DropMenu.Item>
-      <DropMenu.Item className={clsx(aspect === 1 && s.active)} onClick={() => setAspect(1)}>
+      <DropMenu.Item
+        className={clsx(aspect === 1 && s.active)}
+        onClick={() => setAspect({ aspect: 1 })}
+      >
         <Typography variant={aspect === 1 ? 'h3' : 'regular14'}>1:1</Typography>
         <Square />
       </DropMenu.Item>
       <DropMenu.Item
         className={clsx(aspect === 4 / 5 && s.active)}
-        onClick={() => setAspect(4 / 5)}
+        onClick={() => setAspect({ aspect: 4 / 5 })}
       >
         <Typography variant={aspect === 4 / 5 ? 'h3' : 'regular14'}>4:5</Typography>
         <RectangleVertical />
       </DropMenu.Item>
       <DropMenu.Item
         className={clsx(aspect === 16 / 9 && s.active)}
-        onClick={() => setAspect(16 / 9)}
+        onClick={() => setAspect({ aspect: 16 / 9 })}
       >
         <Typography variant={aspect === 16 / 9 ? 'h3' : 'regular14'}>16:9</Typography>
         <RectangleHorizontal />
@@ -53,5 +60,5 @@ export const ExpandSize = ({ aspect, setAspect }: Props) => {
 
 type Props = {
   aspect?: number
-  setAspect: (aspect: number) => void
+  setAspect: ({ aspect }: Pick<PostPhoto, 'aspect'>) => void
 }
