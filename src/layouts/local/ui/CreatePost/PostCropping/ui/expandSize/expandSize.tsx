@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from 'react'
 
+import { PostPhoto } from '@/services/postService/lib/postEndpoints.types'
 import { Expand } from '@/shared/assets/icons/Expand'
 import { ImageIcon } from '@/shared/assets/icons/Image'
 import { RectangleHorizontal } from '@/shared/assets/icons/RectangleHorizontal'
@@ -11,7 +12,6 @@ import { clsx } from 'clsx'
 import { Square } from 'src/shared/assets/icons/Square'
 
 import s from './expandSize.module.scss'
-import { PostPhoto } from '@/services/postService/lib/postEndpoints.types'
 
 export const ExpandSize = ({ aspect, setAspect }: Props) => {
   return (

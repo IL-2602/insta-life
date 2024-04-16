@@ -8,12 +8,12 @@ import {
   createPostModalFormSchema,
   createPostModalSchema,
 } from '@/layouts/local/ui/CreatePost/CreatePostModal/schema/createPostModalSchema'
+import { PostPhoto } from '@/services/postService/lib/postEndpoints.types'
 import { postActions } from '@/services/postService/store/slice/postEndpoints.slice'
 import { canvasPreview } from '@/shared/utils/canvasPrieview'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { escapeXML } from 'ejs'
-import { PostPhoto } from '@/services/postService/lib/postEndpoints.types'
 import { action } from '@storybook/addon-actions'
+import { escapeXML } from 'ejs'
 function centerAspectCrop(mediaWidth: number, mediaHeight: number, aspect: number) {
   return centerCrop(
     makeAspectCrop(
@@ -51,13 +51,15 @@ export const useContainer = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   const updatePostPhoto = ({ aspect, zoom }: Partial<Pick<PostPhoto, 'aspect' | 'zoom'>>) => {
+    console.log('aspect ', aspect)
     if (postPhoto) {
-      dispatch(postActions.updatePostPhoto({ img: postPhoto.img, aspect, zoom }))
+      console.log('call Dispatch')
+      dispatch(postActions.updatePostPhoto({ aspect: aspect, img: postPhoto.img, zoom }))
     }
   }
   const setCurrentPhotoZoom = (zoom: number) => {
     if (postPhoto) {
-      saveCropImg({ zoom, img: postPhoto.img })
+      saveCropImg({ img: postPhoto.img, zoom })
     }
   }
   const extraActionsPostPhoto = async () => {
@@ -141,10 +143,11 @@ export const useContainer = () => {
     }
   }, [postPhoto?.aspect, postPhoto?.zoom, currPhotoIndex])
 
-  const saveCropImg = ({ img }: Partial<Pick<PostPhoto, 'img' | 'aspect' | 'zoom'>>) => {
+  const saveCropImg = ({ img }: Partial<Pick<PostPhoto, 'aspect' | 'img' | 'zoom'>>) => {
     canvasRef?.current?.toBlob(blob => {
       if (blob) {
         const file = URL.createObjectURL(blob)
+
         dispatch(
           postActions.setCropPostPhotos({
             cropImg: file,
@@ -154,6 +157,7 @@ export const useContainer = () => {
       }
     }, 'image/jpeg')
   }
+
   return {
     canvasRef,
     completedCrop,
@@ -171,9 +175,9 @@ export const useContainer = () => {
     postPhoto,
     postPhotos,
     setCompletedCrop,
-    updatePostPhoto,
     setCurrentPhotoZoom,
     setZoom,
+    updatePostPhoto,
     zoom,
   }
 }

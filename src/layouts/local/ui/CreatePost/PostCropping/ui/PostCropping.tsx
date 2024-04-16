@@ -33,11 +33,12 @@ export const PostCropping = memo(
     postPhoto,
     postPhotos,
     setCompletedCrop,
-    updatePostPhoto,
     setCurrentPhotoZoom,
     setZoom,
+    updatePostPhoto,
     zoom,
   }: Props) => {
+    console.log(postPhoto)
     return (
       <Modal
         className={s.container}
