@@ -29,6 +29,7 @@ export const postSlice = createSlice({
       action: PayloadAction<Partial<Pick<PostPhoto, 'aspect' | 'cropImg' | 'img' | 'zoom'>>>
     ) => {
       const tempPhoto = state.postPhotos.find(p => p.img === action.payload.img)
+
       if (tempPhoto) {
         if (action.payload.cropImg) {
           tempPhoto.cropImg = action.payload.cropImg

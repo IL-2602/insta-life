@@ -174,8 +174,8 @@ export const useContainer = () => {
     postPhotos,
     setCompletedCrop,
     setCurrentPhotoAspect,
-    setZoom,
     setCurrentPhotoZoom,
+    setZoom,
     zoom,
   }
 }
