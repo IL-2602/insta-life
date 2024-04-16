@@ -29,6 +29,8 @@ export const useContainer = () => {
   } = useForm<createPostModalFormSchema>({
     resolver: zodResolver(createPostModalSchema),
   })
+
+  const isCreatePostModal = useAppSelector(state => state.postReducer?.isCreatePostModal)
   const postPhotos = useAppSelector(state => state.postReducer?.postPhotos)
   const modalStep = useAppSelector(state => state.postReducer?.modalSteps)
   const postPhoto = postPhotos.find((_, idx) => idx === currPhotoIndex)
@@ -120,6 +122,7 @@ export const useContainer = () => {
       }
     }, 'image/jpeg')
   }
+  const showSaveDraft = () => dispatch(postActions.setIsClosePostModal(true))
 
   useLayoutEffect(() => {
     if (completedCrop?.width && completedCrop?.height && imgRef.current && canvasRef.current) {
@@ -177,5 +180,7 @@ export const useContainer = () => {
     setCurrentPhotoAspect,
     setCurrentPhotoZoom,
     t,
+    showSaveDraft,
+    isCreatePostModal,
   }
 }
