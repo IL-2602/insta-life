@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Crop, PixelCrop, centerCrop, convertToPixelCrop, makeAspectCrop } from 'react-image-crop'
 
@@ -12,28 +12,15 @@ import { PostPhoto } from '@/services/postService/lib/postEndpoints.types'
 import { postActions } from '@/services/postService/store/slice/postEndpoints.slice'
 import { canvasPreview } from '@/shared/utils/canvasPrieview'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { action } from '@storybook/addon-actions'
-import { escapeXML } from 'ejs'
-function centerAspectCrop(mediaWidth: number, mediaHeight: number, aspect: number) {
-  return centerCrop(
-    makeAspectCrop(
-      {
-        unit: '%',
-        width: 90,
-      },
-      aspect,
-      mediaWidth,
-      mediaHeight
-    ),
-    mediaWidth,
-    mediaHeight
-  )
-}
+import { useTranslation } from '@/shared/hooks/useTranslation'
+
 export const useContainer = () => {
-  const [zoom, setZoom] = useState(1)
+  const { t } = useTranslation()
+
   const [currPhotoIndex, setCurrPhotoIndex] = useState<number | undefined>(0)
   const [crop, setCrop] = useState<Crop>()
   const [completedCrop, setCompletedCrop] = useState<PixelCrop>()
+
   const {
     control,
     formState: { errors },
@@ -45,12 +32,28 @@ export const useContainer = () => {
   const postPhotos = useAppSelector(state => state.postReducer?.postPhotos)
   const modalStep = useAppSelector(state => state.postReducer?.modalSteps)
   const postPhoto = postPhotos.find((_, idx) => idx === currPhotoIndex)
+
   const dispatch = useAppDispatch()
 
   const imgRef = useRef<HTMLImageElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
-  const setCurrentPhotoZoom = (zoom: string) => {
+  function centerAspectCrop(mediaWidth: number, mediaHeight: number, aspect: number) {
+    return centerCrop(
+      makeAspectCrop(
+        {
+          unit: '%',
+          width: 90,
+        },
+        aspect,
+        mediaWidth,
+        mediaHeight
+      ),
+      mediaWidth,
+      mediaHeight
+    )
+  }
+  const setCurrentPhotoZoom = (zoom: number) => {
     if (postPhoto) {
       dispatch(postActions.updatePostPhoto({ img: postPhoto.img, zoom }))
     }
@@ -74,7 +77,6 @@ export const useContainer = () => {
       }
     }
   }
-
   const delPostPhoto = (img: string) => {
     dispatch(postActions.delPostPhotos({ img }))
     if (currPhotoIndex && currPhotoIndex - 1 > 0) {
@@ -104,6 +106,20 @@ export const useContainer = () => {
   const onNext = () => dispatch(postActions.setModalSteps('publication'))
   const onPrev = () => dispatch(postActions.setModalSteps('upload'))
   const onChangeCurrPhoto = (currPhoto: number) => setCurrPhotoIndex(currPhoto)
+  const saveCropImg = ({ img }: Partial<Pick<PostPhoto, 'aspect' | 'img' | 'zoom'>>) => {
+    canvasRef?.current?.toBlob(blob => {
+      if (blob) {
+        const file = URL.createObjectURL(blob)
+
+        dispatch(
+          postActions.setCropPostPhotos({
+            cropImg: file,
+            img,
+          })
+        )
+      }
+    }, 'image/jpeg')
+  }
 
   useLayoutEffect(() => {
     if (completedCrop?.width && completedCrop?.height && imgRef.current && canvasRef.current) {
@@ -141,21 +157,6 @@ export const useContainer = () => {
     }
   }, [postPhoto?.aspect, postPhoto?.zoom, currPhotoIndex])
 
-  const saveCropImg = ({ img }: Partial<Pick<PostPhoto, 'aspect' | 'img' | 'zoom'>>) => {
-    canvasRef?.current?.toBlob(blob => {
-      if (blob) {
-        const file = URL.createObjectURL(blob)
-
-        dispatch(
-          postActions.setCropPostPhotos({
-            cropImg: file,
-            img,
-          })
-        )
-      }
-    }, 'image/jpeg')
-  }
-
   return {
     canvasRef,
     completedCrop,
@@ -175,7 +176,6 @@ export const useContainer = () => {
     setCompletedCrop,
     setCurrentPhotoAspect,
     setCurrentPhotoZoom,
-    setZoom,
-    zoom,
+    t,
   }
 }

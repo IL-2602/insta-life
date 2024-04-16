@@ -1,6 +1,3 @@
-import { Dispatch, SetStateAction } from 'react'
-
-import { PostPhoto } from '@/services/postService/lib/postEndpoints.types'
 import { Expand } from '@/shared/assets/icons/Expand'
 import { ImageIcon } from '@/shared/assets/icons/Image'
 import { RectangleHorizontal } from '@/shared/assets/icons/RectangleHorizontal'
@@ -12,8 +9,9 @@ import { clsx } from 'clsx'
 import { Square } from 'src/shared/assets/icons/Square'
 
 import s from './expandSize.module.scss'
+import { Local } from '../../../../../../../../locales/en'
 
-export const ExpandSize = ({ aspect, setAspect }: Props) => {
+export const ExpandSize = ({ aspect, setAspect, t }: Props) => {
   return (
     <DropMenu.Menu
       align={'start'}
@@ -27,7 +25,7 @@ export const ExpandSize = ({ aspect, setAspect }: Props) => {
       }
     >
       <DropMenu.Item className={clsx(aspect === 0 && s.active)} onClick={() => setAspect(0)}>
-        <Typography variant={aspect === 0 ? 'h3' : 'regular14'}>Original</Typography>
+        <Typography variant={aspect === 0 ? 'h3' : 'regular14'}>{t.button.original}</Typography>
         <ImageIcon />
       </DropMenu.Item>
       <DropMenu.Item className={clsx(aspect === 1 && s.active)} onClick={() => setAspect(1)}>
@@ -55,4 +53,5 @@ export const ExpandSize = ({ aspect, setAspect }: Props) => {
 type Props = {
   aspect?: number
   setAspect: (aspect: number) => void
+  t: Local
 }
