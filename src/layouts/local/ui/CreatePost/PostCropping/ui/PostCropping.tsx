@@ -25,6 +25,7 @@ export const PostCropping = memo(
     delPostPhoto,
     extraActionsPostPhoto,
     imgRef,
+    isCreatePostModal,
     modalStep,
     onChangeCurrPhoto,
     onImageLoaded,
@@ -36,13 +37,13 @@ export const PostCropping = memo(
     setCurrentPhotoAspect,
     setCurrentPhotoZoom,
     showSaveDraft,
-    isCreatePostModal,
     t,
   }: Props) => {
     return (
       <Modal
         className={s.container}
         customButtonsBlock={<></>}
+        modalHandler={showSaveDraft}
         nextStepBtn={
           <Button onClick={onNext} variant={'link'}>
             <Typography color={'primary'} variant={'h3'}>
@@ -51,7 +52,6 @@ export const PostCropping = memo(
           </Button>
         }
         open={isCreatePostModal && modalStep === 'cropping'}
-        modalHandler={showSaveDraft}
         previousStepBtn={
           <Button className={s.prevBtn} onClick={onPrev} variant={'link'}>
             <ArrowIosBack />

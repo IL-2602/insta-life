@@ -169,6 +169,7 @@ export const useContainer = () => {
     delPostPhoto,
     extraActionsPostPhoto,
     imgRef,
+    isCreatePostModal,
     modalStep,
     onChangeCurrPhoto,
     onImageLoaded,
@@ -179,8 +180,7 @@ export const useContainer = () => {
     setCompletedCrop,
     setCurrentPhotoAspect,
     setCurrentPhotoZoom,
-    t,
     showSaveDraft,
-    isCreatePostModal,
+    t,
   }
 }
