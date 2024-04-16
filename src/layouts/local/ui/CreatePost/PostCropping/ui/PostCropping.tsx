@@ -25,6 +25,7 @@ export const PostCropping = memo(
     delPostPhoto,
     extraActionsPostPhoto,
     imgRef,
+    isCreatePostModal,
     modalStep,
     onChangeCurrPhoto,
     onImageLoaded,
@@ -35,29 +36,28 @@ export const PostCropping = memo(
     setCompletedCrop,
     setCurrentPhotoAspect,
     setCurrentPhotoZoom,
+    showSaveDraft,
+    t,
   }: Props) => {
-    console.log(postPhoto)
-
     return (
       <Modal
         className={s.container}
         customButtonsBlock={<></>}
+        modalHandler={showSaveDraft}
         nextStepBtn={
           <Button onClick={onNext} variant={'link'}>
             <Typography color={'primary'} variant={'h3'}>
-              Next
+              {t.button.next}
             </Typography>
           </Button>
         }
-        open={modalStep === 'cropping'}
+        open={isCreatePostModal && modalStep === 'cropping'}
         previousStepBtn={
-          <Button onClick={onPrev} variant={'link'}>
-            <Typography color={'light'} variant={'h3'}>
-              <ArrowIosBack />
-            </Typography>
+          <Button className={s.prevBtn} onClick={onPrev} variant={'link'}>
+            <ArrowIosBack />
           </Button>
         }
-        title={'Cropping'}
+        title={t.post.cropping}
       >
         <div className={s.croppingWrapper}>
           <PostPhotos
@@ -101,7 +101,7 @@ export const PostCropping = memo(
           </PostPhotos>
 
           <div className={s.btnGroup}>
-            <ExpandSize aspect={postPhoto?.aspect} setAspect={setCurrentPhotoAspect} />
+            <ExpandSize aspect={postPhoto?.aspect} setAspect={setCurrentPhotoAspect} t={t} />
             <ChangeZoom setZoom={setCurrentPhotoZoom} zoom={postPhoto?.zoom} />
             <div>
               <AddMoreImages
