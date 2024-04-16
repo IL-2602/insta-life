@@ -17,19 +17,16 @@ export const useProfileSettingsForm = () => {
       .trim()
       .max(200, t.profileSettings.tab.generalInformation.error.aboutMeValueMax)
       .nullable(),
-    calendar: z
-      .date()
-      .nullable()
-      .refine(calendar => {
-        if (!calendar) {
-          return true
-        }
-        const currentDate = new Date()
+    calendar: z.date().refine(calendar => {
+      if (!calendar) {
+        return true
+      }
+      const currentDate = new Date()
 
-        currentDate.setFullYear(currentDate.getFullYear() - PERMITTED_PAGE)
+      currentDate.setFullYear(currentDate.getFullYear() - PERMITTED_PAGE)
 
-        return calendar < currentDate
-      }, t.profileSettings.tab.generalInformation.error.calender),
+      return calendar < currentDate
+    }, t.profileSettings.tab.generalInformation.error.calender),
     firstName: z
       .string()
       .regex(
@@ -72,7 +69,7 @@ export const useProfileSettingsForm = () => {
   } = useForm<profileFormSchema>({
     defaultValues: {
       aboutMe: '',
-      calendar: null,
+      calendar: new Date(),
       firstName: '',
       lastName: '',
       userName: '',

@@ -6,6 +6,7 @@ import {
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 const initialState: PostSliceInitialState = {
+  isClosePostModal: false,
   isCreatePostModal: false,
   isDeletePostModal: false,
   isEditPostModal: false,
@@ -40,6 +41,9 @@ export const postSlice = createSlice({
           tempPhoto.zoom = action.payload.zoom
         }
       }
+    },
+    setIsClosePostModal: (state, action: PayloadAction<boolean>) => {
+      state.isClosePostModal = action.payload
     },
     setIsCreatePostModal: (state, action: PayloadAction<boolean>) => {
       state.isCreatePostModal = action.payload

@@ -46,31 +46,21 @@ export const useContainer = () => {
   const postDescription = watch('postDescription')
   const { postDescription: errorDescription } = errors
 
-  const handlePublishPhotos = () => {
-    if (postPhotos.length > 0) {
-      publishPhotos({ file: postPhotos })
-        .unwrap()
-        .then(() => {
-          dispatch(postActions.setIsCreatePostModal(false))
-        })
-        .catch(err => {
-          console.log(err)
-        })
-    }
-  }
+  // const handlePublishPhotos = () => {
+  //   if (postPhotos.length > 0) {
+  //     publishPhotos({ file: postPhotos })
+  //       .unwrap()
+  //       .then(() => {
+  //         dispatch(postActions.setIsCreatePostModal(false))
+  //       })
+  //       .catch(err => {
+  //         console.log(err)
+  //       })
+  //   }
+  // }
 
   const showModalSaveDraft = () => {
-    setIsOpenModal(true)
-  }
-
-  const onDiscard = () => {
-    setIsOpenModal(false)
-  }
-
-  const onSaveDraft = () => {
-    setIsOpenModal(false)
-    dispatch(postActions.setIsCreatePostModal(false))
-    dispatch(postActions.setClearPostPhotos())
+    dispatch(postActions.setIsClosePostModal(true))
   }
 
   const backToFilter = () => {
@@ -82,17 +72,14 @@ export const useContainer = () => {
     control,
     errorDescription,
     getProfile,
-    handlePublishPhotos,
+    // handlePublishPhotos,
     handleSubmit,
     isCreatePostModal,
     isGetUserLoading,
     isOpenModal,
     modalSteps,
-    onDiscard,
-    onSaveDraft,
     postDescription,
     postPhotos,
-    setIsOpenModal,
     showModalSaveDraft,
     t,
   }
