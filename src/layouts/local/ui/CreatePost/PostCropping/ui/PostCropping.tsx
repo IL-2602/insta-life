@@ -50,7 +50,7 @@ export const PostCropping = memo(
         }
         open={modalStep === 'cropping'}
         previousStepBtn={
-          <Button onClick={onPrev} className={s.prevBtn} variant={'link'}>
+          <Button className={s.prevBtn} onClick={onPrev} variant={'link'}>
             <ArrowIosBack />
           </Button>
         }
@@ -98,7 +98,7 @@ export const PostCropping = memo(
           </PostPhotos>
 
           <div className={s.btnGroup}>
-            <ExpandSize aspect={postPhoto?.aspect} t={t} setAspect={setCurrentPhotoAspect} />
+            <ExpandSize aspect={postPhoto?.aspect} setAspect={setCurrentPhotoAspect} t={t} />
             <ChangeZoom setZoom={setCurrentPhotoZoom} zoom={postPhoto?.zoom} />
             <div>
               <AddMoreImages

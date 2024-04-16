@@ -9,6 +9,7 @@ import { clsx } from 'clsx'
 import { Square } from 'src/shared/assets/icons/Square'
 
 import s from './expandSize.module.scss'
+
 import { Local } from '../../../../../../../../locales/en'
 
 export const ExpandSize = ({ aspect, setAspect, t }: Props) => {

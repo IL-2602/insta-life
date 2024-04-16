@@ -10,9 +10,9 @@ import {
 } from '@/layouts/local/ui/CreatePost/CreatePostModal/schema/createPostModalSchema'
 import { PostPhoto } from '@/services/postService/lib/postEndpoints.types'
 import { postActions } from '@/services/postService/store/slice/postEndpoints.slice'
+import { useTranslation } from '@/shared/hooks/useTranslation'
 import { canvasPreview } from '@/shared/utils/canvasPrieview'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useTranslation } from '@/shared/hooks/useTranslation'
 
 export const useContainer = () => {
   const { t } = useTranslation()
