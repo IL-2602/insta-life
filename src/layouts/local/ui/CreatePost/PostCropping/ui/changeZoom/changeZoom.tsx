@@ -22,7 +22,7 @@ export const ChangeZoom = ({ setZoom, zoom = 1 }: Props) => {
         <Slider
           max={5}
           min={1}
-          onValueChange={val => setZoom({ zoom: val[0] })}
+          onValueChange={val => setZoom(val[0])}
           slidersValue={[zoom]}
           step={1}
         />
@@ -32,6 +32,6 @@ export const ChangeZoom = ({ setZoom, zoom = 1 }: Props) => {
 }
 
 type Props = {
-  setZoom: ({ zoom }: Pick<PostPhoto, 'zoom'>) => void
+  setZoom: (zoom: number) => void
   zoom?: number
 }

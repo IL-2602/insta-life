@@ -50,16 +50,14 @@ export const useContainer = () => {
   const imgRef = useRef<HTMLImageElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
-  const updatePostPhoto = ({ aspect, zoom }: Partial<Pick<PostPhoto, 'aspect' | 'zoom'>>) => {
-    console.log('aspect ', aspect)
+  const setCurrentPhotoZoom = (zoom: string) => {
     if (postPhoto) {
-      console.log('call Dispatch')
-      dispatch(postActions.updatePostPhoto({ aspect: aspect, img: postPhoto.img, zoom }))
+      dispatch(postActions.updatePostPhoto({ img: postPhoto.img, zoom }))
     }
   }
-  const setCurrentPhotoZoom = (zoom: number) => {
+  const setCurrentPhotoAspect = (aspect: number) => {
     if (postPhoto) {
-      saveCropImg({ img: postPhoto.img, zoom })
+      dispatch(postActions.updatePostPhoto({ aspect: aspect, img: postPhoto.img }))
     }
   }
   const extraActionsPostPhoto = async () => {
@@ -175,9 +173,9 @@ export const useContainer = () => {
     postPhoto,
     postPhotos,
     setCompletedCrop,
-    setCurrentPhotoZoom,
+    setCurrentPhotoAspect,
     setZoom,
-    updatePostPhoto,
+    setCurrentPhotoZoom,
     zoom,
   }
 }
