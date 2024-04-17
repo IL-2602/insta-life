@@ -9,7 +9,7 @@ export const ProfilePhotos = memo(({ postPhotos }: ProfilePhotosProps) => {
   return (
     <div className={s.container}>
       {postPhotos.length > 0 && (
-        <Image alt={'postPhotos'} height={228} src={postPhotos[0]} width={234} />
+        <Image alt={'postPhotos'} height={228} src={postPhotos[0].cropImg} width={234} /> // for example
       )}
     </div>
   )
