@@ -10,11 +10,11 @@ import { PostPhotos } from '@/shared/components/PostPhotos/PostPhotos'
 import { Button } from '@/shared/ui/Button'
 import { Modal } from '@/shared/ui/Modal'
 import { Typography } from '@/shared/ui/Typography'
+import Image from 'next/image'
 
 import 'react-image-crop/src/ReactCrop.scss'
 
 import s from './PostCropping.module.scss'
-import Image from 'next/image'
 
 export const PostCropping = memo(
   ({
@@ -88,11 +88,11 @@ export const PostCropping = memo(
                     />
                   </ReactCrop>
                   <Image
-                    className={s.croppingImage}
-                    src={photo.cropImg}
                     alt={'Cropped Img'}
-                    width={490}
+                    className={s.croppingImage}
                     height={490}
+                    src={photo.cropImg}
+                    width={490}
                   />
                 </div>
               ))}
@@ -116,10 +116,10 @@ export const PostCropping = memo(
             <canvas
               ref={canvasRef}
               style={{
+                display: 'none',
                 height: '100%',
                 objectFit: 'contain',
                 width: '100%',
-                display: 'none',
               }}
             />
           )}
