@@ -19,7 +19,7 @@ export async function canvasPreview2(
   // Устанавливаем новый размер холста с учетом aspect ratio и scale
   let width = image.naturalWidth
   let height = image.naturalHeight
-  let aspectRatioImage = width / height
+  const aspectRatioImage = width / height
 
   if (aspectRatioImage > aspect) {
     height = width / aspect
@@ -33,8 +33,8 @@ export async function canvasPreview2(
   canvas.height = height * scale
 
   // Центрируем изображение
-  var offsetX = (canvas.width - width * scale) / 2
-  var offsetY = (canvas.height - height * scale) / 2
+  const offsetX = (canvas.width - width * scale) / 2
+  const offsetY = (canvas.height - height * scale) / 2
 
   // Рисуем изображение на холсте
   ctx.drawImage(image, offsetX, offsetY, width * scale, height * scale)
