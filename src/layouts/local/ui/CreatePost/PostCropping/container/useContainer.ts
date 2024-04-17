@@ -11,7 +11,7 @@ import {
 import { PostPhoto } from '@/services/postService/lib/postEndpoints.types'
 import { postActions } from '@/services/postService/store/slice/postEndpoints.slice'
 import { useTranslation } from '@/shared/hooks/useTranslation'
-import { canvasPreview } from '@/shared/utils/canvasPrieview'
+import { canvasPreview, canvasPreview2 } from '@/shared/utils/canvasPrieview'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 export const useContainer = () => {
@@ -125,40 +125,40 @@ export const useContainer = () => {
   const showSaveDraft = () => dispatch(postActions.setIsClosePostModal(true))
 
   useLayoutEffect(() => {
-    if (completedCrop?.width && completedCrop?.height && imgRef.current && canvasRef.current) {
-      canvasPreview(imgRef.current, canvasRef.current, completedCrop, postPhoto?.zoom)
+    if (postPhoto?.aspect && imgRef.current && canvasRef.current) {
+      canvasPreview2(imgRef.current, canvasRef.current, postPhoto?.aspect)
       saveCropImg({ img: postPhoto?.img })
     }
-  }, [crop])
+  }, [postPhoto?.aspect])
 
-  useLayoutEffect(() => {
-    if (imgRef.current) {
-      const { height, width } = imgRef.current
-
-      if (postPhoto?.aspect && postPhoto?.aspect !== 0) {
-        const newCrop = centerAspectCrop(width, height, postPhoto.aspect)
-
-        console.log('newCrop', imgRef.current)
-        setCrop(newCrop)
-        setCompletedCrop(convertToPixelCrop(newCrop, width, height))
-      } else {
-        const crop: Crop = {
-          height: 100,
-          unit: '%',
-          width: 100,
-          x: 0,
-          y: 0,
-        }
-
-        setCrop(crop)
-        if (imgRef.current) {
-          const { height, width } = imgRef.current
-
-          setCompletedCrop(convertToPixelCrop(crop, width, height))
-        }
-      }
-    }
-  }, [postPhoto?.aspect, postPhoto?.zoom, currPhotoIndex])
+  // useLayoutEffect(() => {
+  //   if (imgRef.current) {
+  //     const { height, width } = imgRef.current
+  //
+  //     if (postPhoto?.aspect && postPhoto?.aspect !== 0) {
+  //       const newCrop = centerAspectCrop(width, height, postPhoto.aspect)
+  //
+  //       console.log('newCrop', imgRef.current)
+  //       setCrop(newCrop)
+  //       setCompletedCrop(convertToPixelCrop(newCrop, width, height))
+  //     } else {
+  //       const crop: Crop = {
+  //         height: 100,
+  //         unit: '%',
+  //         width: 100,
+  //         x: 0,
+  //         y: 0,
+  //       }
+  //
+  //       setCrop(crop)
+  //       if (imgRef.current) {
+  //         const { height, width } = imgRef.current
+  //
+  //         setCompletedCrop(convertToPixelCrop(crop, width, height))
+  //       }
+  //     }
+  //   }
+  // }, [postPhoto?.aspect, postPhoto?.zoom, currPhotoIndex])
 
   return {
     canvasRef,

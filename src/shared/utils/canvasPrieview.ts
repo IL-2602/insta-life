@@ -1,4 +1,47 @@
 import { PixelCrop } from 'react-image-crop'
+
+export async function canvasPreview2(
+  image: HTMLImageElement | null,
+  canvas: HTMLCanvasElement | null,
+  aspect: number,
+  scale = 1
+) {
+  if (!image || !canvas) {
+    throw new Error('Image element is null')
+  }
+
+  const ctx = canvas.getContext('2d')
+
+  if (!ctx) {
+    throw new Error('No 2d context')
+  }
+
+  // Устанавливаем новый размер холста с учетом aspect ratio и scale
+  let width = image.naturalWidth
+  let height = image.naturalHeight
+  let aspectRatioImage = width / height
+
+  if (aspectRatioImage > aspect) {
+    height = width / aspect
+  } else {
+    width = height * aspect
+  }
+
+  //
+
+  canvas.width = width * scale
+  canvas.height = height * scale
+
+  // Центрируем изображение
+  var offsetX = (canvas.width - width * scale) / 2
+  var offsetY = (canvas.height - height * scale) / 2
+
+  // Рисуем изображение на холсте
+  ctx.drawImage(image, offsetX, offsetY, width * scale, height * scale)
+
+  ctx.restore()
+}
+
 export async function canvasPreview(
   image: HTMLImageElement | null,
   canvas: HTMLCanvasElement | null,
