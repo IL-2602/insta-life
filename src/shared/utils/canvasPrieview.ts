@@ -16,28 +16,38 @@ export async function canvasPreview2(
     throw new Error('No 2d context')
   }
 
-  // Устанавливаем новый размер холста с учетом aspect ratio и scale
-  let width = image.naturalWidth
-  let height = image.naturalHeight
-  const aspectRatioImage = width / height
+  const { naturalWidth, naturalHeight } = image
 
-  if (aspectRatioImage > aspect) {
-    height = width / aspect
+  let newWidth = naturalWidth
+  let newHeight = naturalHeight
+
+  // Проверяем желаемое соотношение сторон
+  if (naturalWidth / aspect > naturalHeight) {
+    newWidth = naturalHeight * aspect
   } else {
-    width = height * aspect
+    newHeight = naturalWidth / aspect
   }
 
-  //
+  // Проверяем масштаб
+  if (newWidth < naturalWidth * scale && newHeight < naturalHeight * scale) {
+    newWidth = Math.min(naturalWidth * scale, newWidth)
+    newHeight = Math.min(naturalHeight * scale, newHeight)
+  }
 
-  canvas.width = width * scale
-  canvas.height = height * scale
-
-  // Центрируем изображение
-  const offsetX = (canvas.width - width * scale) / 2
-  const offsetY = (canvas.height - height * scale) / 2
-
-  // Рисуем изображение на холсте
-  ctx.drawImage(image, offsetX, offsetY, width * scale, height * scale)
+  // Создаем новое изображение и центрируем его
+  canvas.width = newWidth
+  canvas.height = newHeight
+  ctx.drawImage(
+    image,
+    (naturalWidth - newWidth) / 2,
+    (naturalHeight - newHeight) / 2,
+    newWidth,
+    newHeight,
+    0,
+    0,
+    newWidth,
+    newHeight
+  )
 
   ctx.restore()
 }
