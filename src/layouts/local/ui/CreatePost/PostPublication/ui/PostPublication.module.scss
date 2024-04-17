@@ -24,6 +24,10 @@
   margin: 0;
 }
 
+.opacity {
+  opacity: 0.75;
+}
+
 .postPhotoWrapper {
   overflow: hidden;
   flex: 1;
@@ -87,4 +91,13 @@
 
 .image {
   width: 500px;
+  object-fit: contain;
+}
+
+.spinner {
+  position: fixed;
+  z-index: 100;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

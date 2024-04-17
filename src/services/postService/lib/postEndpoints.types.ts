@@ -1,3 +1,5 @@
+import { ErrorResponse } from '@/services/authService/lib/authEndpoints.types'
+
 export type ModalSteps = 'cropping' | 'filters' | 'publication' | 'upload' | undefined
 
 export type PostSliceInitialState = {
@@ -15,14 +17,42 @@ export type PostPhoto = {
   zoom: number
 }
 
-export type PublishPostParams = {
-  file: string[]
+type Metadata = {
+  uploadId: string | undefined
 }
 
-export type PublishPhotoResponse = {
+export type PublishPostParams = {
+  childrenMetadata: Metadata[]
+  description: string
+}
+
+export type EditPostParams = {
+  description: string
+  postId: number
+}
+
+export type PostImageResponse = {
+  createdAt: string
   fileSize: number
   height: number
   uploadId: string
   url: string
   width: number
 }
+
+export type PublishPostImageResponse = {
+  images: PostImageResponse[]
+} & Partial<ErrorResponse>
+
+export type PublishPostResponse = {
+  avatarOwner: string
+  createdAt: string
+  description: string
+  id: number
+  images: PostImageResponse[]
+  location: null | string
+  owner: { firstName: string; lastName: string }
+  ownerId: number
+  updatedAt: string
+  userName: string
+} & Partial<ErrorResponse>

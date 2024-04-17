@@ -1,6 +1,10 @@
 import { api } from '@/services/api'
-import { PublishPostParams } from '@/services/postService/lib/postEndpoints.types'
-import { EditPostParams } from '@/services/profileService/lib/profileEnpoints.types'
+import {
+  EditPostParams,
+  PublishPostImageResponse,
+  PublishPostParams,
+  PublishPostResponse,
+} from '@/services/postService/lib/postEndpoints.types'
 
 const postEndpoints = api.injectEndpoints({
   endpoints: builder => ({
@@ -20,16 +24,26 @@ const postEndpoints = api.injectEndpoints({
       invalidatesTags: [],
       query: ({ description, postId }) => {
         return {
-          body: { description }, // TODO ???
+          body: { description },
           method: 'PUT',
-          params: { postId }, // TODO ???
+          params: { postId },
           url: `posts/${postId}`,
         }
       },
     }),
-    publishPost: builder.mutation<any, PublishPostParams>({
+    publishPost: builder.mutation<PublishPostResponse, PublishPostParams>({
       invalidatesTags: [],
-      query: ({ file }) => {
+      query: body => {
+        return {
+          body: body,
+          method: 'POST',
+          url: `posts`,
+        }
+      },
+    }),
+    publishPostImage: builder.mutation<PublishPostImageResponse, FormData>({
+      invalidatesTags: [],
+      query: file => {
         return {
           body: file,
           method: 'POST',
@@ -40,4 +54,9 @@ const postEndpoints = api.injectEndpoints({
   }),
 })
 
-export const { useDeletePostMutation, useEditPostMutation, usePublishPostMutation } = postEndpoints
+export const {
+  useDeletePostMutation,
+  useEditPostMutation,
+  usePublishPostImageMutation,
+  usePublishPostMutation,
+} = postEndpoints

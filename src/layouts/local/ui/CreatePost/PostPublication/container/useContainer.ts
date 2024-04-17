@@ -4,7 +4,11 @@ import { useForm } from 'react-hook-form'
 import { useAppDispatch } from '@/app/store/hooks/useAppDispatch'
 import { useAppSelector } from '@/app/store/hooks/useAppSelector'
 import { usePostPublicationSchema } from '@/layouts/local/ui/CreatePost/PostPublication/schema/postPublicationSchema'
-import { usePublishPostMutation } from '@/services/postService/postEndpoints'
+import { PostImageResponse } from '@/services/postService/lib/postEndpoints.types'
+import {
+  usePublishPostImageMutation,
+  usePublishPostMutation,
+} from '@/services/postService/postEndpoints'
 import { postActions } from '@/services/postService/store/slice/postEndpoints.slice'
 import { useGetProfileQuery } from '@/services/profileService/profileEndpoints'
 import { useTranslation } from '@/shared/hooks/useTranslation'
@@ -20,9 +24,10 @@ export const useContainer = () => {
   const modalSteps = useAppSelector(state => state.postReducer.modalSteps)
   const postPhotos = useAppSelector(state => state.postReducer.postPhotos)
 
-  const [isOpenModal, setIsOpenModal] = useState(false)
+  const [currPhotoIndex, setCurrPhotoIndex] = useState(0)
 
-  const [publishPhotos, { isLoading: isLoadingPublication }] = usePublishPostMutation()
+  const [publishPostImage, { isLoading: isLoadingPostImage }] = usePublishPostImageMutation()
+  const [publishPost, { isLoading: isLoadingPost }] = usePublishPostMutation()
 
   const { postPublicationSchema } = usePostPublicationSchema()
 
@@ -46,18 +51,56 @@ export const useContainer = () => {
   const postDescription = watch('postDescription')
   const { postDescription: errorDescription } = errors
 
-  // const handlePublishPhotos = () => {
-  //   if (postPhotos.length > 0) {
-  //     publishPhotos({ file: postPhotos })
-  //       .unwrap()
-  //       .then(() => {
-  //         dispatch(postActions.setIsCreatePostModal(false))
-  //       })
-  //       .catch(err => {
-  //         console.log(err)
-  //       })
-  //   }
-  // }
+  const cropImages = postPhotos.map(({ cropImg }) => cropImg)
+
+  const isLoading = isLoadingPostImage || isLoadingPost
+
+  const handleCropImages = async (urlFiles: string[]) => {
+    for (const url of urlFiles) {
+      const response = await fetch(url)
+
+      const blob = await response.blob()
+      const file = new File([blob], 'postPhoto', { type: 'image/jpeg' })
+
+      const formData = new FormData()
+
+      formData.append('file', file)
+
+      return formData
+    }
+  }
+
+  const handleReceivingUploadId = async () => {
+    const responseCropImages = await handleCropImages(cropImages)
+
+    if (!responseCropImages) {
+      return null
+    }
+
+    const { images } = await publishPostImage(responseCropImages).unwrap()
+
+    return images.map((image: PostImageResponse) => image.uploadId)
+  }
+
+  const handlePublishPhotos = async () => {
+    try {
+      const uploadIds = await handleReceivingUploadId()
+
+      const postBody = {
+        childrenMetadata: [{ uploadId: uploadIds?.join(',') }],
+        description: postDescription as string,
+      }
+
+      dispatch(postActions.setIsCreatePostModal(false))
+      dispatch(postActions.setClearPostPhotos())
+
+      return await publishPost(postBody).unwrap()
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const onChangeCurrPhoto = (currPhoto: number) => setCurrPhotoIndex(currPhoto)
 
   const showModalSaveDraft = () => {
     dispatch(postActions.setIsClosePostModal(true))
@@ -70,14 +113,17 @@ export const useContainer = () => {
   return {
     backToFilter,
     control,
+    currPhotoIndex,
     errorDescription,
     getProfile,
-    // handlePublishPhotos,
+    handlePublishPhotos,
     handleSubmit,
     isCreatePostModal,
     isGetUserLoading,
-    isOpenModal,
+    isLoading,
+    isLoadingPostImage,
     modalSteps,
+    onChangeCurrPhoto,
     postDescription,
     postPhotos,
     showModalSaveDraft,
