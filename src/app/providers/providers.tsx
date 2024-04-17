@@ -1,6 +1,5 @@
 import { ReactNode } from 'react'
 
-import { AuthProvider } from '@/app/providers/authProvider'
 import { StoreProvider } from '@/app/providers/storeProvider'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 

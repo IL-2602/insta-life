@@ -1,0 +1,57 @@
+.container {
+  width: 490px;
+
+  .croppingWrapper {
+    position: relative;
+    height: 490px;
+    margin: 0;
+  }
+
+  .imgWrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 490px;
+    height: 490px;
+
+    .croppingImage {
+      position: absolute;
+      left: 50%;
+      transform: translate(-50%, 0);
+
+      margin-right: auto;
+      margin-left: auto;
+
+      object-fit: contain;
+    }
+  }
+
+  .btnGroup {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+
+    display: flex;
+    align-items: flex-end;
+
+    width: 100%;
+    height: 38px;
+    padding: 10px;
+
+    & > *:first-child {
+      margin-right: 24px;
+    }
+
+    & > *:last-child {
+      display: flex;
+      justify-content: flex-end;
+      width: 100%;
+    }
+  }
+}
+
+.prevBtn {
+  align-self: center;
+  padding: 0;
+}

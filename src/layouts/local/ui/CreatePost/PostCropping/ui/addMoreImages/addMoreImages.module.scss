@@ -1,0 +1,55 @@
+.container {
+  display: flex;
+
+  .imgWrapper {
+    position: relative;
+    margin-right: 12px;
+
+    .delbtn {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      width: 12px;
+      height: 12px;
+      padding: 0;
+    }
+  }
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 36px;
+  height: 36px;
+  padding: 0;
+
+  color: var(--color-light-100);
+
+  background: var(--color-dark-500);
+
+  &:focus {
+    outline: none;
+  }
+
+  &[data-state='open'] {
+    color: var(--color-primary-500);
+  }
+}
+
+.fileBtn {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+
+  color: var(--color-light-100);
+
+  border-color: var(--color-light-100);
+  border-radius: 50%;
+}

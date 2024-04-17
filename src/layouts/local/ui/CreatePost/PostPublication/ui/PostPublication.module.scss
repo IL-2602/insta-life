@@ -1,0 +1,103 @@
+.modal {
+  width: 100%;
+  max-width: 972px;
+}
+
+.nextBtn {
+  align-self: center;
+  font: var(--font-h3);
+}
+
+.prevBtn {
+  align-self: center;
+  padding: 0;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.container {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+}
+
+.opacity {
+  opacity: 0.75;
+}
+
+.postPhotoWrapper {
+  overflow: hidden;
+  flex: 1;
+  height: auto;
+}
+
+.postPhoto {
+  width: 100%;
+  height: 490px;
+  object-fit: cover;
+}
+
+.descriptionWrapper {
+  width: 50%;
+  margin: 24px;
+
+  label {
+    display: flex;
+    flex-direction: column;
+    font: var(--font-regular-14);
+    color: var(--color-light-900);
+  }
+
+  span {
+    align-self: end;
+    font: var(--font-small);
+  }
+}
+
+.userPhotoWrapper {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 24px;
+
+  .photo {
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+
+    width: 36px;
+    height: 36px;
+
+    object-fit: cover;
+    background-color: var(--color-dark-700);
+    border-radius: 50%;
+  }
+}
+
+.line {
+  position: absolute;
+  top: 258px;
+  right: 0;
+
+  width: 54.9%;
+  height: 1px;
+  margin: 10px 0;
+
+  background-color: var(--color-dark-100);
+}
+
+.image {
+  width: 500px;
+  object-fit: contain;
+}
+
+.spinner {
+  position: fixed;
+  z-index: 100;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

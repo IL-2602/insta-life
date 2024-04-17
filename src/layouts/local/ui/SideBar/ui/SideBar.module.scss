@@ -23,6 +23,14 @@
     fill: var(--color-primary-100) !important;
   }
 
+  & > button:hover .navIcon path {
+    fill: var(--color-primary-100) !important;
+  }
+
+  & > button:hover .navLink {
+    color: var(--color-primary-100);
+  }
+
   & > a:nth-child(6) {
     margin-top: 60px;
   }
@@ -46,4 +54,29 @@
 
 .activeLink .navIcon path {
   fill: var(--color-primary-500) !important;
+}
+
+.btnCreate {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: flex-start;
+
+  padding: 0;
+
+  background-color: transparent;
+  border: none;
+
+  &:hover {
+    background-color: transparent;
+    border: none;
+  }
+
+  &:active {
+    border: none;
+  }
+
+  &:focus {
+    background-color: transparent;
+  }
 }

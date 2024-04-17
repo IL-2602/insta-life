@@ -22,6 +22,7 @@ export const TextFields = memo(
     cities,
     cityValue,
     control,
+    customErrorMap,
     dropdownOpen,
     errorAboutMe,
     errorDateOfBirth,
@@ -82,14 +83,17 @@ export const TextFields = memo(
         <div className={s.inputWrap}>
           <label className={s.label}>
             {t.profileSettings.tab.generalInformation.form.dateOfBirthday}
+            <span className={s.star}>*</span>
             <Calendar
               control={control}
               errorLink={
-                <Link className={s.errorLink} href={'/auth/privacy-policy'}>
-                  {t.auth.privacyPolicyPage.title}
-                </Link>
+                !customErrorMap(errorDateOfBirth!) && (
+                  <Link className={s.errorLink} href={'/auth/privacy-policy'}>
+                    {t.auth.privacyPolicyPage.title}
+                  </Link>
+                )
               }
-              errorMessage={errorDateOfBirth}
+              errorMessage={customErrorMap(errorDateOfBirth!)}
               name={'calendar'}
             />
           </label>

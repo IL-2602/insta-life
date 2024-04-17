@@ -88,11 +88,14 @@
   }
 
   &:focus {
-    border: 2px solid var(--color-primary-500);
     outline: 2px solid var(--color-primary-500);
   }
 
   &:disabled {
     color: var(--color-primary-900);
   }
+}
+
+.noStyle {
+  all: unset;
 }

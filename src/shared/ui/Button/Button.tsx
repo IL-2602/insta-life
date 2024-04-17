@@ -1,4 +1,11 @@
-import React, { ComponentPropsWithoutRef, ElementType, ReactNode } from 'react'
+import React, {
+  ComponentPropsWithoutRef,
+  ElementRef,
+  ElementType,
+  ForwardedRef,
+  ReactNode,
+  forwardRef,
+} from 'react'
 
 import Link from 'next/link'
 
@@ -12,20 +19,17 @@ export type ButtonProps<T extends ElementType = 'button'> = {
   className?: string
   fullWidth?: boolean
   isLoading?: boolean
-  variant?: 'link' | 'outlined' | 'primary' | 'secondary'
+  variant?: 'link' | 'noStyle' | 'outlined' | 'primary' | 'secondary'
 } & ComponentPropsWithoutRef<T>
 
-// С помощью Omit мы убираем из пропсов переданного компонента все пропсы,
-// которые уже есть в наших кастомных пропсах, тем самым избегая коллизий.
-export const Button = <T extends ElementType = 'button'>(
-  props: ButtonProps<T> & Omit<ComponentPropsWithoutRef<T>, keyof ButtonProps<T>>
-) => {
+const ButtonPolymorph = <T extends ElementType = 'button'>(props: ButtonProps<T>, ref: any) => {
   const {
     as: Component = 'button',
     children,
     className,
     fullWidth,
     isLoading,
+    rounded,
     variant = 'primary',
     ...rest
   } = props
@@ -44,9 +48,20 @@ export const Button = <T extends ElementType = 'button'>(
   }
 
   return (
-    <Component className={`${s[variant]} ${fullWidth ? s.fullWidth : ''} ${className}`} {...rest}>
+    <Component
+      className={`${s[variant]} ${fullWidth ? s.fullWidth : ''} ${className}`}
+      {...rest}
+      ref={ref}
+    >
       {children}
       {isLoading && <Spinner />}
     </Component>
   )
 }
+
+export const Button = forwardRef(ButtonPolymorph) as <T extends ElementType = 'button'>(
+  props: ButtonProps<T> &
+    Omit<ComponentPropsWithoutRef<T>, keyof ButtonProps<T>> & {
+      ref?: ForwardedRef<ElementRef<T>>
+    }
+) => ReturnType<typeof ButtonPolymorph>
