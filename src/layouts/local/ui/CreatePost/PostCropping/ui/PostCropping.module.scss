@@ -15,13 +15,15 @@
     width: 490px;
     height: 490px;
 
-    canvas {
+    .croppingImage {
       position: absolute;
       left: 50%;
       transform: translate(-50%, 0);
 
       margin-right: auto;
       margin-left: auto;
+
+      object-fit: contain;
     }
   }
 
@@ -53,3 +55,4 @@
   align-self: center;
   padding: 0;
 }
+

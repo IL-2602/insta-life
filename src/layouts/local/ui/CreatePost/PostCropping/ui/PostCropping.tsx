@@ -14,6 +14,7 @@ import { Typography } from '@/shared/ui/Typography'
 import 'react-image-crop/src/ReactCrop.scss'
 
 import s from './PostCropping.module.scss'
+import Image from 'next/image'
 
 export const PostCropping = memo(
   ({
@@ -86,16 +87,13 @@ export const PostCropping = memo(
                       style={{ objectFit: 'contain', visibility: 'hidden' }}
                     />
                   </ReactCrop>
-                  {!!completedCrop && (
-                    <canvas
-                      ref={canvasRef}
-                      style={{
-                        height: '100%',
-                        objectFit: 'contain',
-                        width: '100%',
-                      }}
-                    />
-                  )}
+                  <Image
+                    className={s.croppingImage}
+                    src={photo.cropImg}
+                    alt={'Cropped Img'}
+                    width={490}
+                    height={490}
+                  />
                 </div>
               ))}
           </PostPhotos>
@@ -113,6 +111,18 @@ export const PostCropping = memo(
               />
             </div>
           </div>
+
+          {!!completedCrop && (
+            <canvas
+              ref={canvasRef}
+              style={{
+                height: '100%',
+                objectFit: 'contain',
+                width: '100%',
+                display: 'none',
+              }}
+            />
+          )}
         </div>
       </Modal>
     )
