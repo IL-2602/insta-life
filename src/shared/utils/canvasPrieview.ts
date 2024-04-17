@@ -16,7 +16,7 @@ export async function canvasPreview2(
     throw new Error('No 2d context')
   }
 
-  const { naturalWidth, naturalHeight } = image
+  const { naturalHeight, naturalWidth } = image
 
   let newWidth = naturalWidth
   let newHeight = naturalHeight
