@@ -10,6 +10,7 @@ import { PostPhotos } from '@/shared/components/PostPhotos/PostPhotos'
 import { Button } from '@/shared/ui/Button'
 import { Modal } from '@/shared/ui/Modal'
 import { Typography } from '@/shared/ui/Typography'
+import Image from 'next/image'
 
 import 'react-image-crop/src/ReactCrop.scss'
 
@@ -86,16 +87,13 @@ export const PostCropping = memo(
                       style={{ objectFit: 'contain', visibility: 'hidden' }}
                     />
                   </ReactCrop>
-                  {!!completedCrop && (
-                    <canvas
-                      ref={canvasRef}
-                      style={{
-                        height: '100%',
-                        objectFit: 'contain',
-                        width: '100%',
-                      }}
-                    />
-                  )}
+                  <Image
+                    alt={'Cropped Img'}
+                    className={s.croppingImage}
+                    height={490}
+                    src={photo.cropImg}
+                    width={490}
+                  />
                 </div>
               ))}
           </PostPhotos>
@@ -113,6 +111,18 @@ export const PostCropping = memo(
               />
             </div>
           </div>
+
+          {!!completedCrop && (
+            <canvas
+              ref={canvasRef}
+              style={{
+                display: 'none',
+                height: '100%',
+                objectFit: 'contain',
+                width: '100%',
+              }}
+            />
+          )}
         </div>
       </Modal>
     )

@@ -1,5 +1,4 @@
 import { PixelCrop } from 'react-image-crop'
-
 export async function canvasPreview(
   image: HTMLImageElement | null,
   canvas: HTMLCanvasElement | null,
