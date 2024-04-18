@@ -6,7 +6,6 @@ import { useAppSelector } from '@/app/store/hooks/useAppSelector'
 import { usePostPublicationSchema } from '@/layouts/local/ui/CreatePost/PostPublication/schema/postPublicationSchema'
 import { PostImageResponse } from '@/services/postService/lib/postEndpoints.types'
 import {
-  useGetUserPostsQuery,
   usePublishPostImageMutation,
   usePublishPostMutation,
 } from '@/services/postService/postEndpoints'
