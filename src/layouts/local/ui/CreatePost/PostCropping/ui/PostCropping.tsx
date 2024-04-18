@@ -77,10 +77,8 @@ export const PostCropping = memo(
                     ref={imgRef}
                     src={photo.img}
                     style={{
-                      height: '100%',
                       objectFit: 'contain',
                       visibility: 'hidden',
-                      width: '100%',
                     }}
                   />
                   <Image alt={'Cropped Img'} className={s.croppingImage} fill src={photo.cropImg} />
