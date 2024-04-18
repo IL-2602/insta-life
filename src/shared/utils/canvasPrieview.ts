@@ -1,4 +1,64 @@
 import { PixelCrop } from 'react-image-crop'
+
+export async function canvasPreviewWithOutCrop(
+  image: HTMLImageElement | null,
+  canvas: HTMLCanvasElement | null,
+  aspect: number,
+  zoom: number = 5
+) {
+  if (!image || !canvas) {
+    throw new Error('Image element is null')
+  }
+  const scale = 1
+  const ctx = canvas.getContext('2d')
+
+  console.log('zoom canvas :', zoom)
+  if (!ctx) {
+    throw new Error('No 2d context')
+  }
+
+  const { naturalHeight, naturalWidth } = image
+
+  let newWidth = naturalWidth
+  let newHeight = naturalHeight
+  const scaledWidth = naturalWidth * scale * zoom
+  const scaledHeight = naturalHeight * scale * zoom
+
+  if (naturalWidth / aspect > naturalHeight) {
+    newWidth = naturalHeight * aspect
+  } else {
+    newHeight = naturalWidth / aspect
+  }
+
+  if (newWidth < scaledWidth && newHeight < scaledHeight) {
+    newWidth = Math.min(scaledWidth, newWidth)
+    newHeight = Math.min(scaledHeight, newHeight)
+  }
+
+  canvas.width = newWidth
+  canvas.height = newHeight
+  ctx.save()
+
+  ctx.translate(newWidth / 2, newHeight / 2) // переносим центр координат в центр canvas
+  ctx.scale(zoom, zoom) // применяем масштабирование
+  ctx.translate(-newWidth / 2, -newHeight / 2) // возращаем  координаты
+  ctx.save()
+
+  ctx.drawImage(
+    image,
+    (naturalWidth - newWidth) / 2,
+    (naturalHeight - newHeight) / 2,
+    newWidth,
+    newHeight,
+    0,
+    0,
+    newWidth,
+    newHeight
+  )
+
+  ctx.restore()
+}
+
 export async function canvasPreview(
   image: HTMLImageElement | null,
   canvas: HTMLCanvasElement | null,

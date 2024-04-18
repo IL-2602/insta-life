@@ -19,14 +19,14 @@ import s from './PostCropping.module.scss'
 export const PostCropping = memo(
   ({
     canvasRef,
-    completedCrop,
     control,
-    crop,
+
     currPhotoIndex,
     delPostPhoto,
     extraActionsPostPhoto,
     imgRef,
     isCreatePostModal,
+    isImageLoading,
     modalStep,
     onChangeCurrPhoto,
     onImageLoaded,
@@ -34,7 +34,6 @@ export const PostCropping = memo(
     onPrev,
     postPhoto,
     postPhotos,
-    setCompletedCrop,
     setCurrentPhotoAspect,
     setCurrentPhotoZoom,
     showSaveDraft,
@@ -71,29 +70,18 @@ export const PostCropping = memo(
             {postPhotos &&
               postPhotos.map((photo, idx) => (
                 <div className={s.imgWrapper} key={idx}>
-                  <ReactCrop
-                    aspect={postPhoto?.aspect}
-                    className={s.test}
-                    crop={crop}
-                    onChange={c => console.log(c)}
-                    onComplete={c => setCompletedCrop(c)}
-                    style={{ visibility: 'hidden' }}
-                  >
-                    <img
-                      alt={`image Cropping`}
-                      onLoad={onImageLoaded}
-                      ref={imgRef}
-                      src={photo.img}
-                      style={{ objectFit: 'contain', visibility: 'hidden' }}
-                    />
-                  </ReactCrop>
                   <Image
-                    alt={'Cropped Img'}
-                    className={s.croppingImage}
-                    height={490}
-                    src={photo.cropImg}
-                    width={490}
+                    alt={`Original Img`}
+                    fill
+                    onLoad={onImageLoaded}
+                    ref={imgRef}
+                    src={photo.img}
+                    style={{
+                      objectFit: 'contain',
+                      visibility: 'hidden',
+                    }}
                   />
+                  <Image alt={'Cropped Img'} className={s.croppingImage} fill src={photo.cropImg} />
                 </div>
               ))}
           </PostPhotos>
@@ -112,7 +100,7 @@ export const PostCropping = memo(
             </div>
           </div>
 
-          {!!completedCrop && (
+          {isImageLoading && (
             <canvas
               ref={canvasRef}
               style={{
