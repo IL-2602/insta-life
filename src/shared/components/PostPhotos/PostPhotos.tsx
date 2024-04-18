@@ -1,4 +1,4 @@
-import { Children, ReactNode, useEffect, useLayoutEffect, useState } from 'react'
+import { Children, ReactNode, useState } from 'react'
 
 import { NextPhotoArrow } from '@/shared/assets/icons/NextPhotoArrow/NextPhotoArrow'
 import { PrevPhotoArrow } from '@/shared/assets/icons/PrevPhotoArrow/PrevPhotoArrow'
@@ -6,8 +6,6 @@ import { Button } from '@/shared/ui/Button'
 import { clsx } from 'clsx'
 
 import s from './PostPhotos.module.scss'
-
-import noPhoto from '../../../../public/assets/noPhoto.svg'
 
 type Props = {
   children?: ReactNode
@@ -33,6 +31,7 @@ export const PostPhotos = ({
   if (currentPhoto != currentPhotoIndex) {
     setCurrentPhotoIndex(currentPhoto)
   }
+
   const goToNextPhoto = () => {
     setCurrentPhotoIndex(prevIndex => prevIndex + 1)
     onChangeCurrentPhoto?.(currentPhoto + 1)
