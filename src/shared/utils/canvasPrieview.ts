@@ -1,17 +1,17 @@
 import { PixelCrop } from 'react-image-crop'
 
-export async function canvasPreview2(
+export async function canvasPreviewWithOutCrop(
   image: HTMLImageElement | null,
   canvas: HTMLCanvasElement | null,
   aspect: number,
-  scale = 1
+  zoom: number = 5
 ) {
   if (!image || !canvas) {
     throw new Error('Image element is null')
   }
-
+  const scale = 1
   const ctx = canvas.getContext('2d')
-
+  console.log('zoom canvas :', zoom)
   if (!ctx) {
     throw new Error('No 2d context')
   }
@@ -20,23 +20,29 @@ export async function canvasPreview2(
 
   let newWidth = naturalWidth
   let newHeight = naturalHeight
+  const scaledWidth = naturalWidth * scale * zoom
+  const scaledHeight = naturalHeight * scale * zoom
 
-  // Проверяем желаемое соотношение сторон
   if (naturalWidth / aspect > naturalHeight) {
     newWidth = naturalHeight * aspect
   } else {
     newHeight = naturalWidth / aspect
   }
 
-  // Проверяем масштаб
-  if (newWidth < naturalWidth * scale && newHeight < naturalHeight * scale) {
-    newWidth = Math.min(naturalWidth * scale, newWidth)
-    newHeight = Math.min(naturalHeight * scale, newHeight)
+  if (newWidth < scaledWidth && newHeight < scaledHeight) {
+    newWidth = Math.min(scaledWidth, newWidth)
+    newHeight = Math.min(scaledHeight, newHeight)
   }
 
-  // Создаем новое изображение и центрируем его
   canvas.width = newWidth
   canvas.height = newHeight
+  ctx.save()
+
+  ctx.translate(newWidth / 2, newHeight / 2) // переносим центр координат в центр canvas
+  ctx.scale(zoom, zoom) // применяем масштабирование
+  ctx.translate(-newWidth / 2, -newHeight / 2) // возращаем  координаты
+  ctx.save()
+
   ctx.drawImage(
     image,
     (naturalWidth - newWidth) / 2,
