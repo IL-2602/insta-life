@@ -106,13 +106,13 @@ export const useContainer = () => {
 
   return {
     canvasRef,
-    isImageLoading,
     control,
     currPhotoIndex,
     delPostPhoto,
     extraActionsPostPhoto,
     imgRef,
     isCreatePostModal,
+    isImageLoading,
     modalStep,
     onChangeCurrPhoto,
     onImageLoaded,

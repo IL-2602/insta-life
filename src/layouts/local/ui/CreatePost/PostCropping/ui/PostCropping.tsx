@@ -26,6 +26,7 @@ export const PostCropping = memo(
     extraActionsPostPhoto,
     imgRef,
     isCreatePostModal,
+    isImageLoading,
     modalStep,
     onChangeCurrPhoto,
     onImageLoaded,
@@ -36,7 +37,6 @@ export const PostCropping = memo(
     setCurrentPhotoAspect,
     setCurrentPhotoZoom,
     showSaveDraft,
-    isImageLoading,
     t,
   }: Props) => {
     return (
@@ -72,15 +72,15 @@ export const PostCropping = memo(
                 <div className={s.imgWrapper} key={idx}>
                   <Image
                     alt={`Original Img`}
+                    fill
                     onLoad={onImageLoaded}
                     ref={imgRef}
                     src={photo.img}
-                    fill
                     style={{
-                      width: '100%',
                       height: '100%',
                       objectFit: 'contain',
                       visibility: 'hidden',
+                      width: '100%',
                     }}
                   />
                   <Image alt={'Cropped Img'} className={s.croppingImage} fill src={photo.cropImg} />

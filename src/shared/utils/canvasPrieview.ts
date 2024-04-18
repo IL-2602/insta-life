@@ -11,6 +11,7 @@ export async function canvasPreviewWithOutCrop(
   }
   const scale = 1
   const ctx = canvas.getContext('2d')
+
   console.log('zoom canvas :', zoom)
   if (!ctx) {
     throw new Error('No 2d context')
