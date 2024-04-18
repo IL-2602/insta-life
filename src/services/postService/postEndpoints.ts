@@ -4,6 +4,8 @@ import {
   PublishPostImageResponse,
   PublishPostParams,
   PublishPostResponse,
+  getUserPostsParams,
+  getUserPostsResponse,
 } from '@/services/postService/lib/postEndpoints.types'
 
 const postEndpoints = api.injectEndpoints({
@@ -31,8 +33,18 @@ const postEndpoints = api.injectEndpoints({
         }
       },
     }),
+    getUserPosts: builder.query<getUserPostsResponse, getUserPostsParams>({
+      providesTags: ['Post'],
+      query: ({ endCursorPostId, pageSize, userId }) => {
+        return {
+          method: 'GET',
+          params: { endCursorPostId, pageSize, userId },
+          url: `public-posts/user/${userId}/${endCursorPostId}`,
+        }
+      },
+    }),
     publishPost: builder.mutation<PublishPostResponse, PublishPostParams>({
-      invalidatesTags: [],
+      invalidatesTags: ['Post'],
       query: body => {
         return {
           body: body,
@@ -42,7 +54,7 @@ const postEndpoints = api.injectEndpoints({
       },
     }),
     publishPostImage: builder.mutation<PublishPostImageResponse, FormData>({
-      invalidatesTags: [],
+      invalidatesTags: ['Post'],
       query: file => {
         return {
           body: file,
@@ -57,6 +69,7 @@ const postEndpoints = api.injectEndpoints({
 export const {
   useDeletePostMutation,
   useEditPostMutation,
+  useGetUserPostsQuery,
   usePublishPostImageMutation,
   usePublishPostMutation,
 } = postEndpoints
