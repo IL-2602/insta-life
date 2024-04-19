@@ -1,18 +1,19 @@
 import React, { LegacyRef, forwardRef } from 'react'
 
+import { FilterPreviewButton } from '@/layouts/local/ui/CreatePost/PostFilter/FilterPreviewButton/FilterPreviewButton'
+import { photoFilters } from '@/layouts/local/ui/CreatePost/PostFilter/FilterPreviewButton/FilterPreviewButtonData'
+import { PostFilterProps } from '@/layouts/local/ui/CreatePost/PostFilter/container'
+import { capitalizeFirstLetter } from '@/layouts/local/ui/CreatePost/PostFilter/utils/capitalizeFirstLetter'
 import { ArrowIosBack } from '@/shared/assets/icons/ArrowIosBack/ArrowIosBack'
 import { PostPhotos } from '@/shared/components/PostPhotos/PostPhotos'
 import { Button } from '@/shared/ui/Button'
 import { Modal } from '@/shared/ui/Modal'
 import { Typography } from '@/shared/ui/Typography'
-import { FilterPreviewButton } from '@/widgets/create/PhotoFilter/FilterPreviewButton/FilterPreviewButton'
-import { photoFilters } from '@/widgets/create/PhotoFilter/FilterPreviewButton/FilterPreviewButtonData'
-import { PhotoFilterProps } from '@/widgets/create/PhotoFilter/container'
-import { capitalizeFirstLetter } from '@/widgets/create/PhotoFilter/utils/capitalizeFirstLetter'
 import Image from 'next/image'
 
-import s from './PhotoFilter.module.scss'
-export const PhotoFilter = forwardRef(
+import s from './PostFilter.module.scss'
+
+export const PostFilter = forwardRef(
   (
     {
       applyFilter,
@@ -24,7 +25,7 @@ export const PhotoFilter = forwardRef(
       onPrev,
       postPhotos,
       t,
-    }: PhotoFilterProps,
+    }: PostFilterProps,
     ref: LegacyRef<HTMLCanvasElement>
   ) => {
     if (modalIsOpen && currentImage) {

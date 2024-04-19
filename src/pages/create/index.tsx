@@ -1,8 +1,7 @@
 import { getBaseLayout } from '@/layouts/publ/BaseLayout/BaseLayout'
-import { PhotoFilter } from '@/widgets/create/PhotoFilter'
 
 const CreatePage = () => {
-  return <PhotoFilter.widget />
+  return <div>Create</div>
 }
 
 CreatePage.getLayout = getBaseLayout

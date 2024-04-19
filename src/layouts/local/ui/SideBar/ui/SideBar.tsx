@@ -1,5 +1,6 @@
 import { CreatePostModal } from '@/layouts/local/ui/CreatePost/CreatePostModal'
 import { PostCropping } from '@/layouts/local/ui/CreatePost/PostCropping'
+import { PostFilter } from '@/layouts/local/ui/CreatePost/PostFilter'
 import { PostPublication } from '@/layouts/local/ui/CreatePost/PostPublication'
 import { SideBarProps } from '@/layouts/local/ui/SideBar/container'
 import { BookMark } from '@/shared/assets/icons/asideIcons/bookmarkIcon/BookmarkIcon'
@@ -14,7 +15,6 @@ import { ROUTES } from '@/shared/constants/routes'
 import { Modal } from '@/shared/ui/Modal'
 import { Spinner } from '@/shared/ui/Spinner'
 import { Typography } from '@/shared/ui/Typography'
-import { PhotoFilter } from '@/widgets/create/PhotoFilter'
 import { clsx } from 'clsx'
 import Link from 'next/link'
 
@@ -120,7 +120,7 @@ export const SideBar = ({
       <CreatePostModal.widget />
       <PostPublication.widget />
       <PostCropping.widget />
-      <PhotoFilter.widget />
+      <PostFilter.widget />
     </aside>
   )
 }

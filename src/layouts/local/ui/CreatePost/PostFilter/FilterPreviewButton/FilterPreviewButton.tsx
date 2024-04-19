@@ -1,7 +1,7 @@
 import React from 'react'
 
+import { PhotoFilterTitle } from '@/layouts/local/ui/CreatePost/PostFilter/FilterPreviewButton/FilterPreviewButtonData'
 import { Typography } from '@/shared/ui/Typography'
-import { PhotoFilterTitle } from '@/widgets/create/PhotoFilter/FilterPreviewButton/FilterPreviewButtonData'
 
 import s from './FilterPreviewButton.module.scss'
 
