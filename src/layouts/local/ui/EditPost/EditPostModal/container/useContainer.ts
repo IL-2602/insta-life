@@ -20,10 +20,12 @@ export const useContainer = () => {
   const { data: getProfile, isLoading: isGetUserLoading } = useGetProfileQuery()
   const [editPost, { isLoading: isLoadingEditPost }] = useEditPostMutation()
   const [isOpenClosePostModal, setIsOpenClosePostModal] = useState(false)
+  const [currPhotoIndex, setCurrPhotoIndex] = useState(0)
 
   const { editPostSchema } = useEditPostSchema()
 
   type editPostFormSchema = z.infer<typeof editPostSchema>
+  const onChangeCurrPhoto = (currPhoto: number) => setCurrPhotoIndex(currPhoto)
 
   const {
     control,
@@ -99,6 +101,7 @@ export const useContainer = () => {
   return {
     closeModalWithRefresh,
     control,
+    currPhotoIndex,
     editPostDescription,
     errorDescription,
     getProfile,
@@ -109,6 +112,7 @@ export const useContainer = () => {
     isGetUserLoading,
     isLoadingEditPost,
     isOpenClosePostModal,
+    onChangeCurrPhoto,
     openEditPostModal,
     postPhotos,
     t,

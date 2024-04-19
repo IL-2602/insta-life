@@ -16,6 +16,7 @@ export const EditPostModal = memo(
   ({
     closeModalWithRefresh,
     control,
+    currPhotoIndex,
     editPostDescription,
     errorDescription,
     getProfile,
@@ -26,6 +27,7 @@ export const EditPostModal = memo(
     isGetUserLoading,
     isLoadingEditPost,
     isOpenClosePostModal,
+    onChangeCurrPhoto,
     postPhotos,
     t,
     updatePost,
@@ -42,6 +44,16 @@ export const EditPostModal = memo(
           <div className={s.container}>
             <div className={s.postPhotoWrapper}>
               {/*<PostPhotos className={s.postPhoto} height={503} photos={postPhotos} width={490} />*/}
+              <PostPhotos currentPhoto={currPhotoIndex} onChangeCurrentPhoto={onChangeCurrPhoto}>
+                {postPhotos &&
+                  postPhotos.map((photo, i) => {
+                    return (
+                      <div key={i}>
+                        <img alt={'photo'} className={s.postPhoto} src={photo.cropImg} />
+                      </div>
+                    )
+                  })}
+              </PostPhotos>
             </div>
             {!isGetUserLoading && (
               <form className={s.descriptionWrapper} onSubmit={handleSubmit(() => {})}>
@@ -108,7 +120,7 @@ export const EditPostModal = memo(
             title={t.modal.closeModalTitle}
           >
             <div className={s.closeOpenModalContent}>
-              {/*<Typography variant={'regular16'}>{t.modal.closeModalText}</Typography>*/}
+              <Typography variant={'regular16'}>{t.modal.closeModalTextTwo}</Typography>
             </div>
           </Modal>
         )}
