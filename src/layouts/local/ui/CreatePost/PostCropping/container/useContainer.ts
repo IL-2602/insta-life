@@ -26,7 +26,7 @@ export const useContainer = () => {
   } = useForm<createPostModalFormSchema>({
     resolver: zodResolver(createPostModalSchema),
   })
-
+  console.log(currPhotoIndex)
   const isCreatePostModal = useAppSelector(state => state.postReducer?.isCreatePostModal)
   const postPhotos = useAppSelector(state => state.postReducer?.postPhotos)
   const modalStep = useAppSelector(state => state.postReducer?.modalSteps)
@@ -59,7 +59,7 @@ export const useContainer = () => {
 
       if (!errors.postPhoto) {
         dispatch(postActions.setPostPhotos(img))
-        setCurrPhotoIndex(p => (p ? p + 1 : 0))
+        setCurrPhotoIndex(typeof currPhotoIndex === 'number' ? currPhotoIndex + 1 : 0)
       }
     }
   }

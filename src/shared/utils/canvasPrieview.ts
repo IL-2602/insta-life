@@ -15,7 +15,6 @@ export async function canvasPreviewWithOutCrop(
   if (!ctx) {
     throw new Error('No 2d context')
   }
-  console.log('canvasPreviewWithOutCrop ', zoom)
 
   const { naturalHeight, naturalWidth } = image
 
