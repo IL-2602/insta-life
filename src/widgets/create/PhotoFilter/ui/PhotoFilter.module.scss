@@ -1,0 +1,13 @@
+.container {
+  width: 972px;
+}
+
+.prevBtn {
+  align-self: center;
+  padding: 0;
+}
+
+.croppingImage {
+  position: absolute;
+  object-fit: contain;
+}
