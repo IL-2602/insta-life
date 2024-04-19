@@ -50,7 +50,7 @@ export const useContainer = () => {
   const postDescription = watch('postDescription')
   const { postDescription: errorDescription } = errors
 
-  const cropImages = postPhotos.map(({ cropImg }) => cropImg)
+  const cropImages = postPhotos.map(({ filterImg }) => filterImg)
 
   const isLoading = isLoadingPostImage || isLoadingPost
 
@@ -106,7 +106,7 @@ export const useContainer = () => {
   }
 
   const backToFilter = () => {
-    dispatch(postActions.setModalSteps('cropping'))
+    dispatch(postActions.setModalSteps('filters'))
   }
 
   return {
