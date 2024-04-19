@@ -14,6 +14,7 @@ import { ROUTES } from '@/shared/constants/routes'
 import { Modal } from '@/shared/ui/Modal'
 import { Spinner } from '@/shared/ui/Spinner'
 import { Typography } from '@/shared/ui/Typography'
+import { PhotoFilter } from '@/widgets/create/PhotoFilter'
 import { clsx } from 'clsx'
 import Link from 'next/link'
 
@@ -119,6 +120,7 @@ export const SideBar = ({
       <CreatePostModal.widget />
       <PostPublication.widget />
       <PostCropping.widget />
+      <PhotoFilter.widget />
     </aside>
   )
 }
