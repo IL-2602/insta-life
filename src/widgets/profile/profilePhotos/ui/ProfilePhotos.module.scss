@@ -2,13 +2,30 @@
   overflow: hidden;
   display: grid;
   grid-gap: 12px;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
 
   margin-top: 48px;
 
-  .profilePhoto {
+  img {
     width: 100%;
     height: 234px;
-    object-fit: contain;
+    object-fit: cover;
+  }
+}
+
+.fetchSpinner {
+  display: grid;
+  place-items: center;
+  height: 190px;
+}
+
+.work {
+  display: grid;
+  place-items: center;
+  height: 100px;
+  background-color: #0f9954;
+
+  h3 {
+    color: white;
   }
 }
