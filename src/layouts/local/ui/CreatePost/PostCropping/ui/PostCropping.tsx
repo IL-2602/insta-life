@@ -20,7 +20,6 @@ export const PostCropping = memo(
   ({
     canvasRef,
     control,
-
     currPhotoIndex,
     delPostPhoto,
     extraActionsPostPhoto,
