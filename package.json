@@ -68,6 +68,7 @@
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-storybook": "^0.8.0",
     "husky": "^9.0.11",
+    "react-intersection-observer": "^9.8.2",
     "sass": "^1.71.1",
     "storybook": "^7.6.17",
     "stylelint": "^16.1.0",
