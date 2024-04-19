@@ -54,7 +54,6 @@ const postEndpoints = api.injectEndpoints({
       },
     }),
     publishPostImage: builder.mutation<PublishPostImageResponse, FormData>({
-      invalidatesTags: ['Post'],
       query: file => {
         return {
           body: file,

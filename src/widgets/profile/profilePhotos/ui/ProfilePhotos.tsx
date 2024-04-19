@@ -7,16 +7,21 @@ import Image from 'next/image'
 import s from './ProfilePhotos.module.scss'
 
 export const ProfilePhotos = forwardRef<HTMLDivElement, ProfilePhotosProps>(
-  ({ isFetching, photos }, ref) => {
+  ({ isFetching, photos, test }, ref) => {
     return (
       <>
         <div className={s.container}>
-          {photos &&
-            photos.map((photo: any, i: number) => (
-              <div key={i}>
-                <Image alt={'postPhotos'} height={228} src={photo} width={234} />
-              </div>
-            ))}
+          {test.length === photos.length
+            ? test.map((photo: string, i: number) => (
+                <div className={s.imageContainer} key={i}>
+                  <Image alt={'postPhotos'} height={228} src={photo} width={234} />
+                </div>
+              ))
+            : photos.map((photo: string, i: number) => (
+                <div className={s.imageContainer} key={i}>
+                  <Image alt={'postPhotos'} height={228} src={photo} width={234} />
+                </div>
+              ))}
           <div ref={ref} />
         </div>
         {isFetching && (

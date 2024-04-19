@@ -16,21 +16,22 @@ export const useContainer = () => {
 
   const { data: me } = useGetMeQuery() as { data: UserType }
 
-  const { data: user, isFetching } = useGetUserPostsQuery({
+  const { data: posts, isFetching } = useGetUserPostsQuery({
     endCursorPostId: lastPostId,
     pageSize: !lastPostId ? 12 : 8,
     userId: me.userId,
   })
 
   useEffect(() => {
-    if (user) {
-      const ids = user.items.map(item => item.id)
-      const images = user.items.map(item => item.images[0].url)
+    if (posts) {
+      const ids = posts.items.map(item => item.id)
+      const images = posts.items.map(item => item.images[0].url)
 
-      setPhotos(prev => [...prev, ...images])
+      setPhotos(images)
+
       setPostIds(ids)
     }
-  }, [user])
+  }, [posts])
 
   useEffect(() => {
     if (inView && postIds.length > 0) {
