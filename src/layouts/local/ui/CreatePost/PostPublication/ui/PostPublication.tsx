@@ -76,7 +76,7 @@ export const PostPublication = memo(
                     postPhotos.map((photo, i) => {
                       return (
                         <div key={i}>
-                          <img alt={'photo'} className={s.postPhoto} src={photo.cropImg} />
+                          <img alt={'photo'} className={s.postPhoto} src={photo.filterImg} />
                         </div>
                       )
                     })}
