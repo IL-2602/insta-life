@@ -1,5 +1,6 @@
 import { CreatePostModal } from '@/layouts/local/ui/CreatePost/CreatePostModal'
 import { PostCropping } from '@/layouts/local/ui/CreatePost/PostCropping'
+import { PostFilter } from '@/layouts/local/ui/CreatePost/PostFilter'
 import { PostPublication } from '@/layouts/local/ui/CreatePost/PostPublication'
 import { SideBarProps } from '@/layouts/local/ui/SideBar/container'
 import { BookMark } from '@/shared/assets/icons/asideIcons/bookmarkIcon/BookmarkIcon'
@@ -119,6 +120,7 @@ export const SideBar = ({
       <CreatePostModal.widget />
       <PostPublication.widget />
       <PostCropping.widget />
+      <PostFilter.widget />
     </aside>
   )
 }

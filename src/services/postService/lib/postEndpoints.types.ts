@@ -13,6 +13,7 @@ export type PostSliceInitialState = {
 export type PostPhoto = {
   aspect: number
   cropImg: string
+  filterImg: string
   img: string
   zoom: number
 }

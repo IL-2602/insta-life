@@ -76,7 +76,7 @@ export const useContainer = () => {
   const onImageLoaded = () => {
     setIsImageLoading(true)
   }
-  const onNext = () => dispatch(postActions.setModalSteps('publication'))
+  const onNext = () => dispatch(postActions.setModalSteps('filters'))
   const onPrev = () => dispatch(postActions.setModalSteps('upload'))
   const onChangeCurrPhoto = (currPhoto: number) => setCurrPhotoIndex(currPhoto)
   const saveCropImg = ({ img }: Partial<Pick<PostPhoto, 'aspect' | 'img' | 'zoom'>>) => {
@@ -90,6 +90,9 @@ export const useContainer = () => {
             img,
           })
         )
+        if (img) {
+          dispatch(postActions.setFilterPostPhotos({ filterImg: file, img }))
+        }
       }
     }, 'image/jpeg')
   }

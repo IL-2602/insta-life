@@ -37,6 +37,13 @@ export const postSlice = createSlice({
         }
       }
     },
+    setFilterPostPhotos: (state, action: PayloadAction<{ filterImg: string; img: string }>) => {
+      const currentPhoto = state.postPhotos.find(p => p.img === action.payload.img)
+
+      if (currentPhoto) {
+        currentPhoto.filterImg = action.payload.filterImg
+      }
+    },
     setIsClosePostModal: (state, action: PayloadAction<boolean>) => {
       state.isClosePostModal = action.payload
     },
@@ -56,6 +63,7 @@ export const postSlice = createSlice({
       const tempPhoto: PostPhoto = {
         aspect: 0,
         cropImg: action.payload,
+        filterImg: action.payload,
         img: action.payload,
         zoom: 1,
       }
