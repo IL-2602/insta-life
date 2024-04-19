@@ -26,7 +26,7 @@ export const useContainer = () => {
   } = useForm<createPostModalFormSchema>({
     resolver: zodResolver(createPostModalSchema),
   })
-  console.log(currPhotoIndex)
+
   const isCreatePostModal = useAppSelector(state => state.postReducer?.isCreatePostModal)
   const postPhotos = useAppSelector(state => state.postReducer?.postPhotos)
   const modalStep = useAppSelector(state => state.postReducer?.modalSteps)
