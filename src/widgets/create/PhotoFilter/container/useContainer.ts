@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { useAppDispatch } from '@/app/store/hooks/useAppDispatch'
 import { useAppSelector } from '@/app/store/hooks/useAppSelector'
@@ -17,16 +17,14 @@ export const useContainer = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   const [currentFilter, setCurrentFilter] = useState<PhotoFilterTitle>('normal')
-  const [loadedImage, setLoadedImage] = useState<HTMLImageElement | null>(null) // Состояние для хранения загруженного изображения
-  const [savedImage, setSavedImage] = useState<string>('')
-  const [isLoadingImage, setIsLoadingImage] = useState<boolean>(false)
+  const [imageURL, setImageURL] = useState('')
   const modalIsOpen = isCreatePostModal && modalStep === 'filters'
   const dispatch = useAppDispatch()
   const onNext = () => dispatch(postActions.setModalSteps('publication'))
   const onPrev = () => dispatch(postActions.setModalSteps('cropping'))
   const onChangeCurrentImage = (currPhoto: number) => setCurrPhotoIndex(currPhoto)
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (!currentImage || !canvasRef.current || !modalIsOpen) {
       return
     }
@@ -43,6 +41,7 @@ export const useContainer = () => {
     const image = new Image()
 
     image.crossOrigin = 'anonymous'
+    image.src = currentImage.cropImg
     image.onload = () => {
       requestAnimationFrame(() => {
         canvas.width = image.width
@@ -50,45 +49,42 @@ export const useContainer = () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height)
         ctx.filter = currentFilter || 'none'
         ctx.drawImage(image, 0, 0, canvas.width, canvas.height)
+
+        // Сохранение изображения в стейт
+        canvas.toBlob(blob => {
+          if (blob) {
+            const url = URL.createObjectURL(blob)
+
+            setImageURL(url)
+          }
+          // Сохраняем URL в стейт
+        }, 'image/png')
       })
     }
-    image.src = currentImage.cropImg
-  }, [currentImage, currentFilter, modalIsOpen, dispatch])
-  const saveImage = () => {
-    if (currentImage && canvasRef.current) {
-      const editedImageUrl = canvasRef.current.toDataURL('image/png')
+  }, [currentFilter])
 
-      dispatch(
-        postActions.setFilterPostPhotos({ filterImg: editedImageUrl, img: currentImage.img })
-      )
+  useEffect(() => {
+    if (currentImage) {
+      dispatch(postActions.setFilterPostPhotos({ filterImg: imageURL, img: currentImage.img }))
     }
-  }
+  }, [imageURL])
 
   const applyFilter = (filter: PhotoFilterTitle) => {
     setCurrentFilter(filter)
   }
-
-  // const saveImage = () => {
-  //   if (canvasRef.current) {
-  //     const editedImageUrl = canvasRef.current.toDataURL('image/png')
-  //
-  //     setSavedImage(editedImageUrl)
-  //   }
-  // }
 
   return {
     applyFilter,
     currPhotoIndex,
     currentFilter,
     currentImage,
+    imageURL,
     modalIsOpen,
     onChangeCurrentImage,
     onNext,
     onPrev,
     postPhotos,
     ref: canvasRef,
-    saveImage,
-    savedImage,
     setCurrentFilter,
     t,
   }
