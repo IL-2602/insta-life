@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Crop, PixelCrop, centerCrop, convertToPixelCrop, makeAspectCrop } from 'react-image-crop'
 
@@ -8,50 +8,61 @@ import {
   createPostModalFormSchema,
   createPostModalSchema,
 } from '@/layouts/local/ui/CreatePost/CreatePostModal/schema/createPostModalSchema'
+import { PostPhoto } from '@/services/postService/lib/postEndpoints.types'
 import { postActions } from '@/services/postService/store/slice/postEndpoints.slice'
+import { useTranslation } from '@/shared/hooks/useTranslation'
 import { canvasPreview } from '@/shared/utils/canvasPrieview'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { escapeXML } from 'ejs'
-function centerAspectCrop(mediaWidth: number, mediaHeight: number, aspect: number) {
-  return centerCrop(
-    makeAspectCrop(
-      {
-        unit: '%',
-        width: 90,
-      },
-      aspect,
-      mediaWidth,
-      mediaHeight
-    ),
-    mediaWidth,
-    mediaHeight
-  )
-}
+
 export const useContainer = () => {
-  const [zoom, setZoom] = useState(1)
+  const { t } = useTranslation()
+
   const [currPhotoIndex, setCurrPhotoIndex] = useState<number | undefined>(0)
   const [crop, setCrop] = useState<Crop>()
   const [completedCrop, setCompletedCrop] = useState<PixelCrop>()
+
   const {
     control,
     formState: { errors },
-    reset,
     trigger,
     watch,
   } = useForm<createPostModalFormSchema>({
     resolver: zodResolver(createPostModalSchema),
   })
+
+  const isCreatePostModal = useAppSelector(state => state.postReducer?.isCreatePostModal)
   const postPhotos = useAppSelector(state => state.postReducer?.postPhotos)
   const modalStep = useAppSelector(state => state.postReducer?.modalSteps)
   const postPhoto = postPhotos.find((_, idx) => idx === currPhotoIndex)
+
   const dispatch = useAppDispatch()
 
   const imgRef = useRef<HTMLImageElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
+  function centerAspectCrop(mediaWidth: number, mediaHeight: number, aspect: number) {
+    return centerCrop(
+      makeAspectCrop(
+        {
+          unit: '%',
+          width: 90,
+        },
+        aspect,
+        mediaWidth,
+        mediaHeight
+      ),
+      mediaWidth,
+      mediaHeight
+    )
+  }
+  const setCurrentPhotoZoom = (zoom: number) => {
+    if (postPhoto) {
+      dispatch(postActions.updatePostPhoto({ img: postPhoto.img, zoom }))
+    }
+  }
   const setCurrentPhotoAspect = (aspect: number) => {
     if (postPhoto) {
-      onDownloadCropClick(aspect, postPhoto.img)
+      dispatch(postActions.updatePostPhoto({ aspect: aspect, img: postPhoto.img }))
     }
   }
   const extraActionsPostPhoto = async () => {
@@ -68,7 +79,6 @@ export const useContainer = () => {
       }
     }
   }
-
   const delPostPhoto = (img: string) => {
     dispatch(postActions.delPostPhotos({ img }))
     if (currPhotoIndex && currPhotoIndex - 1 > 0) {
@@ -98,16 +108,30 @@ export const useContainer = () => {
   const onNext = () => dispatch(postActions.setModalSteps('publication'))
   const onPrev = () => dispatch(postActions.setModalSteps('upload'))
   const onChangeCurrPhoto = (currPhoto: number) => setCurrPhotoIndex(currPhoto)
+  const saveCropImg = ({ img }: Partial<Pick<PostPhoto, 'aspect' | 'img' | 'zoom'>>) => {
+    canvasRef?.current?.toBlob(blob => {
+      if (blob) {
+        const file = URL.createObjectURL(blob)
+
+        dispatch(
+          postActions.setCropPostPhotos({
+            cropImg: file,
+            img,
+          })
+        )
+      }
+    }, 'image/jpeg')
+  }
+  const showSaveDraft = () => dispatch(postActions.setIsClosePostModal(true))
 
   useLayoutEffect(() => {
-    console.log('useEffect Crop: ')
     if (completedCrop?.width && completedCrop?.height && imgRef.current && canvasRef.current) {
-      canvasPreview(imgRef.current, canvasRef.current, completedCrop, zoom)
+      canvasPreview(imgRef.current, canvasRef.current, completedCrop, postPhoto?.zoom)
+      saveCropImg({ img: postPhoto?.img })
     }
   }, [crop])
 
   useLayoutEffect(() => {
-    console.log('Effect aspect')
     if (imgRef.current) {
       const { height, width } = imgRef.current
 
@@ -134,53 +158,7 @@ export const useContainer = () => {
         }
       }
     }
-  }, [postPhoto?.aspect, zoom, currPhotoIndex])
-
-  async function onDownloadCropClick(aspect: number, img: string) {
-    const image = imgRef.current
-    const previewCanvas = canvasRef.current
-
-    if (!image || !previewCanvas || !completedCrop) {
-      throw new Error('Crop canvas does not exist')
-    }
-
-    // This will size relative to the uploaded image
-    // size. If you want to size according to what they
-    // are looking at on screen, remove scaleX + scaleY
-    const scaleX = image.naturalWidth / image.width
-    const scaleY = image.naturalHeight / image.height
-
-    const offscreen = new OffscreenCanvas(
-      completedCrop.width * scaleX,
-      completedCrop.height * scaleY
-    )
-    const ctx = offscreen.getContext('2d')
-
-    if (!ctx) {
-      throw new Error('No 2d context')
-    }
-
-    ctx.drawImage(
-      previewCanvas,
-      0,
-      0,
-      previewCanvas.width,
-      previewCanvas.height,
-      0,
-      0,
-      offscreen.width,
-      offscreen.height
-    )
-    // You might want { type: "image/jpeg", quality: <0 to 1> } to
-    // reduce image size
-    const blob = await offscreen.convertToBlob({
-      type: 'image/png',
-    })
-
-    const file = URL.createObjectURL(blob)
-
-    dispatch(postActions.setCropPostPhotos({ aspect, cropImg: file, img }))
-  }
+  }, [postPhoto?.aspect, postPhoto?.zoom, currPhotoIndex])
 
   return {
     canvasRef,
@@ -191,6 +169,7 @@ export const useContainer = () => {
     delPostPhoto,
     extraActionsPostPhoto,
     imgRef,
+    isCreatePostModal,
     modalStep,
     onChangeCurrPhoto,
     onImageLoaded,
@@ -200,7 +179,8 @@ export const useContainer = () => {
     postPhotos,
     setCompletedCrop,
     setCurrentPhotoAspect,
-    setZoom,
-    zoom,
+    setCurrentPhotoZoom,
+    showSaveDraft,
+    t,
   }
 }

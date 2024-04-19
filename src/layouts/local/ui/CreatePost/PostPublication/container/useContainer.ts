@@ -28,10 +28,9 @@ export const useContainer = () => {
 
   const [publishPostImage, { isLoading: isLoadingPostImage }] = usePublishPostImageMutation()
   const [publishPost, { isLoading: isLoadingPost }] = usePublishPostMutation()
+  const { data: getProfile, isLoading: isGetUserLoading } = useGetProfileQuery()
 
   const { postPublicationSchema } = usePostPublicationSchema()
-
-  const { data: getProfile, isLoading: isGetUserLoading } = useGetProfileQuery()
 
   type postPublicationFormSchema = z.infer<typeof postPublicationSchema>
 
@@ -107,7 +106,7 @@ export const useContainer = () => {
   }
 
   const backToFilter = () => {
-    dispatch(postActions.setModalSteps('filters'))
+    dispatch(postActions.setModalSteps('cropping'))
   }
 
   return {

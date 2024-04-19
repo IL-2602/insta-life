@@ -10,6 +10,7 @@ import { PostPhotos } from '@/shared/components/PostPhotos/PostPhotos'
 import { Button } from '@/shared/ui/Button'
 import { Modal } from '@/shared/ui/Modal'
 import { Typography } from '@/shared/ui/Typography'
+import Image from 'next/image'
 
 import 'react-image-crop/src/ReactCrop.scss'
 
@@ -25,6 +26,7 @@ export const PostCropping = memo(
     delPostPhoto,
     extraActionsPostPhoto,
     imgRef,
+    isCreatePostModal,
     modalStep,
     onChangeCurrPhoto,
     onImageLoaded,
@@ -34,29 +36,29 @@ export const PostCropping = memo(
     postPhotos,
     setCompletedCrop,
     setCurrentPhotoAspect,
-    setZoom,
-    zoom,
+    setCurrentPhotoZoom,
+    showSaveDraft,
+    t,
   }: Props) => {
     return (
       <Modal
         className={s.container}
         customButtonsBlock={<></>}
+        modalHandler={showSaveDraft}
         nextStepBtn={
           <Button onClick={onNext} variant={'link'}>
             <Typography color={'primary'} variant={'h3'}>
-              Next
+              {t.button.next}
             </Typography>
           </Button>
         }
-        open={modalStep === 'cropping'}
+        open={isCreatePostModal && modalStep === 'cropping'}
         previousStepBtn={
-          <Button onClick={onPrev} variant={'link'}>
-            <Typography color={'light'} variant={'h3'}>
-              <ArrowIosBack />
-            </Typography>
+          <Button className={s.prevBtn} onClick={onPrev} variant={'link'}>
+            <ArrowIosBack />
           </Button>
         }
-        title={'Cropping'}
+        title={t.post.cropping}
       >
         <div className={s.croppingWrapper}>
           <PostPhotos
@@ -85,23 +87,20 @@ export const PostCropping = memo(
                       style={{ objectFit: 'contain', visibility: 'hidden' }}
                     />
                   </ReactCrop>
-                  {!!completedCrop && (
-                    <canvas
-                      ref={canvasRef}
-                      style={{
-                        height: '100%',
-                        objectFit: 'contain',
-                        width: '100%',
-                      }}
-                    />
-                  )}
+                  <Image
+                    alt={'Cropped Img'}
+                    className={s.croppingImage}
+                    height={490}
+                    src={photo.cropImg}
+                    width={490}
+                  />
                 </div>
               ))}
           </PostPhotos>
 
           <div className={s.btnGroup}>
-            <ExpandSize aspect={postPhoto?.aspect} setAspect={setCurrentPhotoAspect} />
-            <ChangeZoom setZoom={setZoom} zoom={zoom} />
+            <ExpandSize aspect={postPhoto?.aspect} setAspect={setCurrentPhotoAspect} t={t} />
+            <ChangeZoom setZoom={setCurrentPhotoZoom} zoom={postPhoto?.zoom} />
             <div>
               <AddMoreImages
                 control={control}
@@ -112,6 +111,18 @@ export const PostCropping = memo(
               />
             </div>
           </div>
+
+          {!!completedCrop && (
+            <canvas
+              ref={canvasRef}
+              style={{
+                display: 'none',
+                height: '100%',
+                objectFit: 'contain',
+                width: '100%',
+              }}
+            />
+          )}
         </div>
       </Modal>
     )

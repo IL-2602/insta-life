@@ -31,6 +31,13 @@ export type EditPostParams = {
   postId: number
 }
 
+export type getUserPostsParams = {
+  endCursorPostId?: number
+  pageSize?: number
+  sortDirection?: 'asc' | 'desc'
+  userId: number
+}
+
 export type PostImageResponse = {
   createdAt: string
   fileSize: number
@@ -56,3 +63,10 @@ export type PublishPostResponse = {
   updatedAt: string
   userName: string
 } & Partial<ErrorResponse>
+
+export type getUserPostsResponse = {
+  items: PublishPostResponse[]
+  pageSize: number
+  totalCount: number
+  totalUsers: number
+}

@@ -27,13 +27,14 @@ export const postSlice = createSlice({
     },
     setCropPostPhotos: (
       state,
-      action: PayloadAction<Pick<PostPhoto, 'aspect' | 'cropImg' | 'img'>>
+      action: PayloadAction<Partial<Pick<PostPhoto, 'aspect' | 'cropImg' | 'img' | 'zoom'>>>
     ) => {
       const tempPhoto = state.postPhotos.find(p => p.img === action.payload.img)
 
       if (tempPhoto) {
-        tempPhoto.cropImg = action.payload.cropImg
-        tempPhoto.aspect = action.payload.aspect
+        if (action.payload.cropImg) {
+          tempPhoto.cropImg = action.payload.cropImg
+        }
       }
     },
     setIsClosePostModal: (state, action: PayloadAction<boolean>) => {
@@ -56,10 +57,25 @@ export const postSlice = createSlice({
         aspect: 0,
         cropImg: action.payload,
         img: action.payload,
-        zoom: 0,
+        zoom: 1,
       }
 
       state.postPhotos.push(tempPhoto)
+    },
+    updatePostPhoto: (
+      state,
+      action: PayloadAction<Partial<Pick<PostPhoto, 'aspect' | 'img' | 'zoom'>>>
+    ) => {
+      const tempPhoto = state.postPhotos.find((p, idx) => p.img === action.payload.img)
+
+      if (tempPhoto) {
+        if (typeof action.payload.aspect === 'number') {
+          tempPhoto.aspect = action.payload.aspect
+        }
+        if (action.payload.zoom) {
+          tempPhoto.zoom = action.payload.zoom
+        }
+      }
     },
   },
 })

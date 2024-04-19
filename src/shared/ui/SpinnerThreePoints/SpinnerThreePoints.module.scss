@@ -1,0 +1,36 @@
+.loader {
+  aspect-ratio: 1;
+  width: 15px;
+  border-radius: 50%;
+  animation: l5 0.7s infinite linear alternate;
+}
+
+@keyframes l5 {
+  0% {
+    background: var(--color-primary-900);
+    box-shadow:
+      20px 0 var(--color-primary-900),
+      -20px 0 var(--color-primary-100);
+  }
+
+  33% {
+    background: var(--color-primary-100);
+    box-shadow:
+      20px 0 var(--color-primary-900),
+      -20px 0 var(--color-primary-100);
+  }
+
+  66% {
+    background: var(--color-primary-100);
+    box-shadow:
+      20px 0 var(--color-primary-100),
+      -20px 0 var(--color-primary-900);
+  }
+
+  100% {
+    background: var(--color-primary-900);
+    box-shadow:
+      20px 0 var(--color-primary-100),
+      -20px 0 var(--color-primary-900);
+  }
+}
