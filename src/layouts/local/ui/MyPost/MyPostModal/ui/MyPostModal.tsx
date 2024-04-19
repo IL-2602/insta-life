@@ -3,6 +3,7 @@ import { memo } from 'react'
 import { DeletePostModal } from '@/layouts/local/ui/DeletePost/DeletePostModal'
 import { EditPostModal } from '@/layouts/local/ui/EditPost/EditPostModal'
 import { MyPostModalProps } from '@/layouts/local/ui/MyPost/MyPostModal/container'
+import { TestComment } from '@/layouts/local/ui/MyPost/TESTcomment/Comment'
 import { HorizontalDots } from '@/shared/assets/icons/HorizontalDots/HorizontalDots'
 import { PostPhotos } from '@/shared/components/PostPhotos/PostPhotos'
 import { Button } from '@/shared/ui/Button'
@@ -79,7 +80,7 @@ export const MyPostModal = memo(
                           />
                         )}
                       </div>
-                      <Typography variant={'medium16'}>{getProfile?.userName}</Typography>
+                      <Typography variant={'h3'}>{getProfile?.userName}</Typography>
                     </div>
                   </div>
 
@@ -101,7 +102,11 @@ export const MyPostModal = memo(
                     />
                   </div>
                 </div>
-                <div className={s.commentsBlock}>COMMENTS</div>
+                <div className={s.commentsBlock}>
+                  <TestComment />
+                  <TestComment />
+                  <TestComment />
+                </div>
                 <div className={s.likesBlock}>Likes</div>
                 <div className={s.addCommentBlock}>
                   <input placeholder={'Add comment...'} type={'text'} />
