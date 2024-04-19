@@ -5,6 +5,7 @@ import { Close } from '@/shared/assets/icons/Close'
 import { ImageIcon } from '@/shared/assets/icons/Image'
 import { Button } from '@/shared/ui/Button'
 import { DropMenu } from '@/shared/ui/DropMenu'
+import { ScrollSelect } from '@/shared/ui/ScrollSelect/ScrollSelect'
 import { ControlledFileUploader } from '@/shared/ui/controlledInsta/ControlledFileUploader/ControlledFileUploader'
 import Image from 'next/image'
 
@@ -31,20 +32,26 @@ export const AddMoreImages = ({
     >
       <DropMenu.Item onSelect={(e: Event) => e.preventDefault()}>
         <div className={s.container}>
-          {photos?.map((photo, idx) => (
-            <div className={s.imgWrapper} key={idx}>
-              <div onClick={() => onChangeCurrPhoto(idx)}>
-                <Image alt={'Photo Preview'} height={80} src={photo.img} width={80} />
+          <div className={s.scrollwrapper}>
+            <ScrollSelect maxWidth={'360px'} type={'always'}>
+              <div className={s.scroll}>
+                {photos?.map((photo, idx) => (
+                  <div className={s.imgWrapper} key={idx}>
+                    <div onClick={() => onChangeCurrPhoto(idx)}>
+                      <Image alt={'Photo Preview'} height={80} src={photo.img} width={80} />
+                    </div>
+                    <Button
+                      className={s.delbtn}
+                      onClick={() => delPostPhoto(photo.img)}
+                      variant={'secondary'}
+                    >
+                      <Close />
+                    </Button>
+                  </div>
+                ))}
               </div>
-              <Button
-                className={s.delbtn}
-                onClick={() => delPostPhoto(photo.img)}
-                variant={'secondary'}
-              >
-                <Close />
-              </Button>
-            </div>
-          ))}
+            </ScrollSelect>
+          </div>
           <ControlledFileUploader
             className={s.fileBtn}
             control={control}

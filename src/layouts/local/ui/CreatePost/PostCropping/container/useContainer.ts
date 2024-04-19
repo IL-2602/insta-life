@@ -49,6 +49,9 @@ export const useContainer = () => {
     }
   }
   const extraActionsPostPhoto = async () => {
+    if (postPhotos?.length >= 10) {
+      return
+    }
     const success = await trigger('postPhoto')
     const file = watch('postPhoto')
 
