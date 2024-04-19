@@ -1,120 +1,102 @@
-import React, { forwardRef, useEffect, useRef, useState } from 'react'
+import React, { LegacyRef, forwardRef } from 'react'
 
+import { ArrowIosBack } from '@/shared/assets/icons/ArrowIosBack/ArrowIosBack'
+import { PostPhotos } from '@/shared/components/PostPhotos/PostPhotos'
 import { Button } from '@/shared/ui/Button'
 import { Modal } from '@/shared/ui/Modal'
+import { Typography } from '@/shared/ui/Typography'
 import { FilterPreviewButton } from '@/widgets/create/PhotoFilter/FilterPreviewButton/FilterPreviewButton'
-import {
-  PhotoFilterTitle,
-  photoFilters,
-} from '@/widgets/create/PhotoFilter/FilterPreviewButton/FilterPreviewButtonData'
+import { photoFilters } from '@/widgets/create/PhotoFilter/FilterPreviewButton/FilterPreviewButtonData'
 import { PhotoFilterProps } from '@/widgets/create/PhotoFilter/container'
-import { Photo, mockPhotoData } from '@/widgets/create/PhotoFilter/mockPhotoData'
 import { capitalizeFirstLetter } from '@/widgets/create/PhotoFilter/utils/capitalizeFirstLetter'
+import Image from 'next/image'
 
-export const PhotoFilter = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-  const [currentImage, setCurrentImage] = useState<Photo>(mockPhotoData[0])
-  const [currentFilter, setCurrentFilter] = useState<PhotoFilterTitle>('normal')
-  const [modalIsOpen, setModalIsOpen] = useState(false)
-
-  useEffect(() => {
-    const image = new Image()
-
-    image.crossOrigin = 'anonymous' // Для CORS
-    image.onload = () => {
-      if (canvasRef.current && modalIsOpen) {
-        const canvas = canvasRef.current
-        const ctx = canvas.getContext('2d')
-
-        if (!ctx) {
-          console.error('Не удалось получить контекст канваса')
-
-          return
-        }
-
-        // Предполагаем, что родительский элемент канваса имеет заданные CSS-размеры.
-        const canvasWidth = canvas.offsetWidth // Ширина родителя
-        const canvasHeight = canvas.offsetHeight // Высота родителя
-
-        // Применяем размеры канваса
-        canvas.width = canvasWidth
-        canvas.height = canvasHeight
-
-        // Рассчитываем новые пропорции для масштабирования изображения
-        const imgAspectRatio = image.width / image.height
-        const canvasAspectRatio = canvasWidth / canvasHeight
-        let drawWidth, drawHeight
-
-        if (imgAspectRatio > canvasAspectRatio) {
-          // Изображение шире канваса
-          drawHeight = canvasHeight
-          drawWidth = canvasHeight * imgAspectRatio
-        } else {
-          // Изображение выше канваса
-          drawWidth = canvasWidth
-          drawHeight = canvasWidth / imgAspectRatio
-        }
-
-        // Рассчитываем смещение для центрирования изображения
-        const xOffset = (canvasWidth - drawWidth) / 2
-        const yOffset = (canvasHeight - drawHeight) / 2
-
-        // Очищаем канвас
-        ctx.clearRect(0, 0, canvasWidth, canvasHeight)
-        ctx.filter = currentFilter || 'none'
-
-        // Отрисовываем изображение с учетом смещения
-        ctx.drawImage(image, xOffset, yOffset, drawWidth, drawHeight)
-      }
-    }
-    image.src = currentImage.url
-  }, [currentImage, currentFilter, modalIsOpen])
-
-  const applyFilter = (filter: PhotoFilterTitle) => {
-    setCurrentFilter(filter)
-  }
-
-  const saveImage = () => {
-    if (canvasRef.current) {
-      const editedImageUrl = canvasRef.current.toDataURL('image/png')
-
-      console.log('Сохраненное изображение URL:', editedImageUrl)
-    }
-  }
-
-  const openModalHandle = () => {
-    setModalIsOpen(true)
-    applyFilter('normal') // Это может быть необходимо переместить в useEffect, если 'normal' вызывает перерисовку
-  }
-
-  return (
-    <>
-      <Button onClick={openModalHandle}>Open</Button>
-      <Modal modalHandler={() => setModalIsOpen(false)} open={modalIsOpen}>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            width: '1200px',
-          }}
-        >
-          <div style={{ width: '50%' }}>
-            <canvas ref={canvasRef} />
-          </div>
-          <div>
-            {photoFilters.map(filter => (
-              <FilterPreviewButton
-                applyFilter={applyFilter}
-                filter={filter}
-                imageUrl={currentImage.url}
-                key={filter}
-                label={capitalizeFirstLetter(filter)}
+import s from './PhotoFilter.module.scss'
+export const PhotoFilter = forwardRef(
+  (
+    {
+      applyFilter,
+      currPhotoIndex,
+      currentImage,
+      modalIsOpen,
+      onChangeCurrentImage,
+      onNext,
+      onPrev,
+      postPhotos,
+      saveImage,
+      t,
+    }: PhotoFilterProps,
+    ref: LegacyRef<HTMLCanvasElement>
+  ) => {
+    console.log(currentImage)
+    if (modalIsOpen && currentImage) {
+      return (
+        <>
+          <Modal
+            className={s.container}
+            customButtonsBlock={<></>}
+            nextStepBtn={
+              <Button onClick={onNext} variant={'link'}>
+                <Typography color={'primary'} variant={'h3'}>
+                  {t.button.next}
+                </Typography>
+              </Button>
+            }
+            open={modalIsOpen}
+            previousStepBtn={
+              <Button className={s.prevBtn} onClick={onPrev} variant={'link'}>
+                <ArrowIosBack />
+              </Button>
+            }
+          >
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                width: '100%',
+              }}
+            >
+              <PostPhotos currentPhoto={currPhotoIndex} onChangeCurrentPhoto={onChangeCurrentImage}>
+                {postPhotos.map((_, i) => (
+                  <div key={i} style={{ alignItems: 'center', display: 'flex', flexShrink: '1' }}>
+                    <img
+                      alt={'current image'}
+                      height={'500px'}
+                      src={currentImage.filterImg}
+                      width={'500px'}
+                    />
+                  </div>
+                ))}
+              </PostPhotos>
+              <canvas
+                ref={ref}
+                style={{
+                  display: 'none',
+                  height: '100%',
+                  objectFit: 'contain',
+                  width: '100%',
+                }}
               />
-            ))}
-          </div>
-        </div>
-      </Modal>
-    </>
-  )
-}
+
+              <div>
+                {photoFilters.map(filter => (
+                  <FilterPreviewButton
+                    applyFilter={applyFilter}
+                    filter={filter}
+                    imageUrl={currentImage.cropImg}
+                    key={filter}
+                    label={capitalizeFirstLetter(filter)}
+                  />
+                ))}
+              </div>
+              <button onClick={saveImage}>SAVE</button>
+            </div>
+          </Modal>
+        </>
+      )
+    }
+
+    return null
+  }
+)

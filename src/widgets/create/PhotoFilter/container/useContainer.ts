@@ -1,64 +1,95 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 
+import { useAppDispatch } from '@/app/store/hooks/useAppDispatch'
+import { useAppSelector } from '@/app/store/hooks/useAppSelector'
+import { postActions } from '@/services/postService/store/slice/postEndpoints.slice'
+import { useTranslation } from '@/shared/hooks/useTranslation'
 import { PhotoFilterTitle } from '@/widgets/create/PhotoFilter/FilterPreviewButton/FilterPreviewButtonData'
-import { Photo, mockPhotoData } from '@/widgets/create/PhotoFilter/mockPhotoData'
 
 export const useContainer = () => {
+  const { t } = useTranslation()
+  const [currPhotoIndex, setCurrPhotoIndex] = useState<number | undefined>(0)
+  const isCreatePostModal = useAppSelector(state => state.postReducer?.isCreatePostModal)
+  const postPhotos = useAppSelector(state => state.postReducer?.postPhotos)
+  const modalStep = useAppSelector(state => state.postReducer?.modalSteps)
+  const currentImage = postPhotos.find((_, idx) => idx === currPhotoIndex)
+
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const [currentImage, setCurrentImage] = useState<Photo>(mockPhotoData[0])
+
   const [currentFilter, setCurrentFilter] = useState<PhotoFilterTitle>('normal')
   const [loadedImage, setLoadedImage] = useState<HTMLImageElement | null>(null) // Состояние для хранения загруженного изображения
   const [savedImage, setSavedImage] = useState<string>('')
-  const [modalIsOpen, setModalIsOpen] = useState(false)
+  const [isLoadingImage, setIsLoadingImage] = useState<boolean>(false)
+  const modalIsOpen = isCreatePostModal && modalStep === 'filters'
+  const dispatch = useAppDispatch()
+  const onNext = () => dispatch(postActions.setModalSteps('publication'))
+  const onPrev = () => dispatch(postActions.setModalSteps('cropping'))
+  const onChangeCurrentImage = (currPhoto: number) => setCurrPhotoIndex(currPhoto)
 
-  // Загрузка изображения
-  useEffect(() => {
+  useLayoutEffect(() => {
+    if (!currentImage || !canvasRef.current || !modalIsOpen) {
+      return
+    }
+
+    const canvas = canvasRef.current
+    const ctx = canvas.getContext('2d')
+
+    if (!ctx) {
+      console.error('Не удалось получить контекст канваса')
+
+      return
+    }
+
     const image = new Image()
 
-    image.crossOrigin = 'anonymous' // Для CORS
-    image.onload = () => setLoadedImage(image) // Устанавливаем загруженное изображение в состояние
-    image.src = currentImage.url
-  }, [currentImage])
-
-  // Отрисовка на канвасе после загрузки изображения и при изменении фильтра/открытия модалки
-  useEffect(() => {
-    if (canvasRef.current && loadedImage && modalIsOpen) {
-      const ctx = canvasRef.current.getContext('2d')!
-      const fixedWidth = 500
-      const aspectRatio = loadedImage.height / loadedImage.width
-      const fixedHeight = fixedWidth * aspectRatio
-
-      canvasRef.current.width = fixedWidth
-      canvasRef.current.height = fixedHeight
-      ctx.clearRect(0, 0, fixedWidth, fixedHeight)
-      ctx.filter = currentFilter || 'none'
-      ctx.drawImage(loadedImage, 0, 0, fixedWidth, fixedHeight)
+    image.crossOrigin = 'anonymous'
+    image.onload = () => {
+      requestAnimationFrame(() => {
+        canvas.width = image.width
+        canvas.height = image.height
+        ctx.clearRect(0, 0, canvas.width, canvas.height)
+        ctx.filter = currentFilter || 'none'
+        ctx.drawImage(image, 0, 0, canvas.width, canvas.height)
+      })
     }
-  }, [loadedImage, currentFilter, modalIsOpen])
+    image.src = currentImage.cropImg
+  }, [currentImage, currentFilter, modalIsOpen, dispatch])
+  const saveImage = () => {
+    if (currentImage && canvasRef.current) {
+      const editedImageUrl = canvasRef.current.toDataURL('image/png')
+
+      dispatch(
+        postActions.setFilterPostPhotos({ filterImg: editedImageUrl, img: currentImage.img })
+      )
+    }
+  }
 
   const applyFilter = (filter: PhotoFilterTitle) => {
     setCurrentFilter(filter)
   }
 
-  const saveImage = () => {
-    if (canvasRef.current) {
-      const editedImageUrl = canvasRef.current.toDataURL('image/png')
-
-      setSavedImage(editedImageUrl)
-      console.log('Сохраненное изображение URL:', editedImageUrl)
-    }
-  }
+  // const saveImage = () => {
+  //   if (canvasRef.current) {
+  //     const editedImageUrl = canvasRef.current.toDataURL('image/png')
+  //
+  //     setSavedImage(editedImageUrl)
+  //   }
+  // }
 
   return {
     applyFilter,
+    currPhotoIndex,
     currentFilter,
     currentImage,
     modalIsOpen,
+    onChangeCurrentImage,
+    onNext,
+    onPrev,
+    postPhotos,
     ref: canvasRef,
     saveImage,
     savedImage,
     setCurrentFilter,
-    setCurrentImage,
-    setModalIsOpen,
+    t,
   }
 }
