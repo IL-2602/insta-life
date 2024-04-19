@@ -11,6 +11,7 @@ export async function canvasPreviewWithOutCrop(
   }
   const scale = 1
   const ctx = canvas.getContext('2d')
+
   if (!ctx) {
     throw new Error('No 2d context')
   }
@@ -22,6 +23,7 @@ export async function canvasPreviewWithOutCrop(
   let newHeight = naturalHeight
   const scaledWidth = naturalWidth * scale * zoom
   const scaledHeight = naturalHeight * scale * zoom
+
   if (aspect > 0) {
     if (naturalWidth / aspect > naturalHeight) {
       newWidth = naturalHeight * aspect
