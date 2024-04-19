@@ -90,6 +90,9 @@ export const useContainer = () => {
             img,
           })
         )
+        if (img) {
+          dispatch(postActions.setFilterPostPhotos({ filterImg: file, img }))
+        }
       }
     }, 'image/jpeg')
   }
