@@ -23,12 +23,10 @@ export const PhotoFilter = forwardRef(
       onNext,
       onPrev,
       postPhotos,
-      saveImage,
       t,
     }: PhotoFilterProps,
     ref: LegacyRef<HTMLCanvasElement>
   ) => {
-    console.log(currentImage)
     if (modalIsOpen && currentImage) {
       return (
         <>
@@ -53,18 +51,23 @@ export const PhotoFilter = forwardRef(
               style={{
                 display: 'flex',
                 flexDirection: 'row',
+                gap: '50px',
                 justifyContent: 'space-between',
                 width: '100%',
               }}
             >
               <PostPhotos currentPhoto={currPhotoIndex} onChangeCurrentPhoto={onChangeCurrentImage}>
                 {postPhotos.map((_, i) => (
-                  <div key={i} style={{ alignItems: 'center', display: 'flex', flexShrink: '1' }}>
-                    <img
+                  <div
+                    className={s.imgWrapper}
+                    key={i}
+                    style={{ alignItems: 'center', display: 'flex', flexShrink: '1' }}
+                  >
+                    <Image
                       alt={'current image'}
-                      height={'500px'}
+                      className={s.croppingImage}
+                      fill
                       src={currentImage.filterImg}
-                      width={'500px'}
                     />
                   </div>
                 ))}
@@ -79,7 +82,7 @@ export const PhotoFilter = forwardRef(
                 }}
               />
 
-              <div>
+              <div className={s.filterPrevBtnContainer}>
                 {photoFilters.map(filter => (
                   <FilterPreviewButton
                     applyFilter={applyFilter}
@@ -90,7 +93,6 @@ export const PhotoFilter = forwardRef(
                   />
                 ))}
               </div>
-              <button onClick={saveImage}>SAVE</button>
             </div>
           </Modal>
         </>
