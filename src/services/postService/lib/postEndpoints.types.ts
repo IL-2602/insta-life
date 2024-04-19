@@ -7,6 +7,7 @@ export type PostSliceInitialState = {
   isCreatePostModal: boolean
   isDeletePostModal: boolean
   isEditPostModal: boolean
+  isMyPostModal: boolean
   modalSteps: ModalSteps
   postPhotos: PostPhoto[]
 }

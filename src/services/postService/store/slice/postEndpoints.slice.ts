@@ -4,13 +4,13 @@ import {
   PostSliceInitialState,
 } from '@/services/postService/lib/postEndpoints.types'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { action } from '@storybook/addon-actions'
 
 const initialState: PostSliceInitialState = {
   isClosePostModal: false,
   isCreatePostModal: false,
   isDeletePostModal: false,
   isEditPostModal: false,
+  isMyPostModal: true,
   modalSteps: undefined,
   postPhotos: [],
 }
@@ -55,6 +55,9 @@ export const postSlice = createSlice({
     },
     setIsEditPostModal: (state, action: PayloadAction<boolean>) => {
       state.isEditPostModal = action.payload
+    },
+    setIsMyPostModal: (state, action: PayloadAction<boolean>) => {
+      state.isClosePostModal = action.payload
     },
     setModalSteps: (state, action: PayloadAction<ModalSteps>) => {
       state.modalSteps = action.payload
