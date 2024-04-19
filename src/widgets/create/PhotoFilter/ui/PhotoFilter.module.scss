@@ -7,7 +7,19 @@
   padding: 0;
 }
 
-.croppingImage {
-  position: absolute;
-  object-fit: contain;
+.imgWrapper {
+  display: flex;
+  flex-shrink: 1;
+  align-items: center;
+
+  width: 500px;
+  height: 500px;
+
+  .croppingImage {
+    object-fit: contain;
+  }
+}
+
+.filterPrevBtnContainer {
+  margin: auto 0;
 }
