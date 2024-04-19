@@ -18,7 +18,6 @@ export const useContainer = () => {
 
   const [currPhotoIndex, setCurrPhotoIndex] = useState<number | undefined>(0)
   const [isImageLoading, setIsImageLoading] = useState(false)
-
   const {
     control,
     formState: { errors },
@@ -32,7 +31,6 @@ export const useContainer = () => {
   const postPhotos = useAppSelector(state => state.postReducer?.postPhotos)
   const modalStep = useAppSelector(state => state.postReducer?.modalSteps)
   const postPhoto = postPhotos.find((_, idx) => idx === currPhotoIndex)
-
   const dispatch = useAppDispatch()
 
   const imgRef = useRef<HTMLImageElement>(null)
@@ -61,7 +59,7 @@ export const useContainer = () => {
 
       if (!errors.postPhoto) {
         dispatch(postActions.setPostPhotos(img))
-        setCurrPhotoIndex(p => (p || 0) + 1)
+        setCurrPhotoIndex(typeof currPhotoIndex === 'number' ? currPhotoIndex + 1 : 0)
       }
     }
   }
