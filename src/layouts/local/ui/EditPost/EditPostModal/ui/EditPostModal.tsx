@@ -41,7 +41,7 @@ export const EditPostModal = memo(
         >
           <div className={s.container}>
             <div className={s.postPhotoWrapper}>
-              <PostPhotos className={s.postPhoto} height={503} photos={postPhotos} width={490} />
+              {/*<PostPhotos className={s.postPhoto} height={503} photos={postPhotos} width={490} />*/}
             </div>
             {!isGetUserLoading && (
               <form className={s.descriptionWrapper} onSubmit={handleSubmit(() => {})}>
@@ -108,7 +108,7 @@ export const EditPostModal = memo(
             title={t.modal.closeModalTitle}
           >
             <div className={s.closeOpenModalContent}>
-              <Typography variant={'regular16'}>{t.modal.closeModalText}</Typography>
+              {/*<Typography variant={'regular16'}>{t.modal.closeModalText}</Typography>*/}
             </div>
           </Modal>
         )}
