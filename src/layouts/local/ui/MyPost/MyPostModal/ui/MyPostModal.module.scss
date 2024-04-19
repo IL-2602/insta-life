@@ -1,0 +1,148 @@
+.modal {
+  width: 100%;
+  max-width: 972px;
+}
+
+.container {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+}
+
+.postPhotoWrapper {
+  overflow: hidden;
+  flex: 1;
+
+  width: 490px;
+  height: 503px;
+
+  background-color: #0a6638;
+}
+
+.postPhoto {
+  width: 100%;
+  object-fit: cover;
+}
+
+.descriptionWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 50%;
+
+  label {
+    display: flex;
+    flex-direction: column;
+    font: var(--font-regular-14);
+    color: var(--color-light-900);
+  }
+
+  span {
+    align-self: end;
+    font: var(--font-small);
+  }
+}
+
+.userWrapper {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--color-dark-100);
+}
+
+.userContainer {
+  margin: 24px;
+}
+
+.userBlockWithPilot {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 24px;
+}
+
+.userPhotoWrapper {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+
+  .photo {
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+
+    width: 36px;
+    height: 36px;
+
+    object-fit: cover;
+    background-color: var(--color-dark-700);
+    border-radius: 50%;
+  }
+}
+
+.commentsBlock {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid var(--color-dark-100);
+}
+
+.likesBlock {
+  height: 107px;
+  border-bottom: 1px solid var(--color-dark-100);
+}
+
+.addCommentBlock {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 24px;
+}
+
+.postOptions {
+  margin: 24px;
+  cursor: pointer;
+}
+
+.line {
+  position: absolute;
+  top: 258px;
+  right: 0;
+
+  width: 54.9%;
+  height: 1px;
+  margin: 10px 0;
+
+  background-color: var(--color-dark-100);
+}
+
+.saveChangesBtnBlock {
+  display: flex;
+  justify-content: end;
+}
+
+.closeOpenModalontainer {
+  display: flex;
+}
+
+.closePostModal {
+  width: 486px;
+}
+
+.modalBody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 60px 111px 36px;
+}
+
+.buttonsBlock {
+  display: flex;
+  justify-content: flex-end;
+  margin: 30px 24px 36px 0;
+}
+
+.button {
+  margin-left: 24px;
+}
