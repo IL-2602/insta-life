@@ -4,18 +4,17 @@ export async function canvasPreviewWithOutCrop(
   image: HTMLImageElement | null,
   canvas: HTMLCanvasElement | null,
   aspect: number,
-  zoom: number = 5
+  zoom: number = 1
 ) {
   if (!image || !canvas) {
     throw new Error('Image element is null')
   }
   const scale = 1
   const ctx = canvas.getContext('2d')
-
-  console.log('zoom canvas :', zoom)
   if (!ctx) {
     throw new Error('No 2d context')
   }
+  console.log('canvasPreviewWithOutCrop ', zoom)
 
   const { naturalHeight, naturalWidth } = image
 
@@ -23,11 +22,12 @@ export async function canvasPreviewWithOutCrop(
   let newHeight = naturalHeight
   const scaledWidth = naturalWidth * scale * zoom
   const scaledHeight = naturalHeight * scale * zoom
-
-  if (naturalWidth / aspect > naturalHeight) {
-    newWidth = naturalHeight * aspect
-  } else {
-    newHeight = naturalWidth / aspect
+  if (aspect > 0) {
+    if (naturalWidth / aspect > naturalHeight) {
+      newWidth = naturalHeight * aspect
+    } else {
+      newHeight = naturalWidth / aspect
+    }
   }
 
   if (newWidth < scaledWidth && newHeight < scaledHeight) {
