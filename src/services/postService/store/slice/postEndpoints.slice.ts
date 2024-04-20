@@ -4,7 +4,6 @@ import {
   PostSliceInitialState,
 } from '@/services/postService/lib/postEndpoints.types'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { action } from '@storybook/addon-actions'
 
 const initialState: PostSliceInitialState = {
   isClosePostModal: false,

@@ -1,9 +1,14 @@
 import { useEffect, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
 
+import { useAppDispatch } from '@/app/store/hooks/useAppDispatch'
 import { useGetMeQuery } from '@/services/authService/authEndpoints'
 import { UserType } from '@/services/authService/lib/authEndpoints.types'
 import { useGetUserPostsQuery } from '@/services/postService/postEndpoints'
+import {
+  profileActions,
+  profileSlice,
+} from '@/services/profileService/store/slice/profileEndpoints.slice'
 
 export const useContainer = () => {
   const { inView, ref } = useInView({
@@ -13,6 +18,8 @@ export const useContainer = () => {
   const [lastPostId, setLastPostId] = useState<number | undefined>(undefined)
   const [photos, setPhotos] = useState<string[]>([])
   const [postIds, setPostIds] = useState<number[]>([])
+
+  const dispatch = useAppDispatch()
 
   const { data: me } = useGetMeQuery() as { data: UserType }
 
@@ -27,6 +34,7 @@ export const useContainer = () => {
       const ids = posts.items.map(item => item.id)
       const images = posts.items.map(item => item.images[0].url)
 
+      // dispatch(profileActions.setProfilePosts(images))
       setPhotos(images)
 
       setPostIds(ids)
