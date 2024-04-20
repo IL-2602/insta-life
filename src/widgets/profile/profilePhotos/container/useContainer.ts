@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
 
 import { useAppDispatch } from '@/app/store/hooks/useAppDispatch'
+import { useAppSelector } from '@/app/store/hooks/useAppSelector'
 import { useGetMeQuery } from '@/services/authService/authEndpoints'
 import { UserType } from '@/services/authService/lib/authEndpoints.types'
 import { useGetUserPostsQuery } from '@/services/postService/postEndpoints'
@@ -29,12 +30,15 @@ export const useContainer = () => {
     userId: me.userId,
   })
 
+  const profilePosts = useAppSelector(state => state.profileReducer.profilePosts)
+
   useEffect(() => {
     if (posts) {
       const ids = posts.items.map(item => item.id)
       const images = posts.items.map(item => item.images[0].url)
 
-      // dispatch(profileActions.setProfilePosts(images))
+      // dispatch(profileActions.setProfilePosts(images.join(',')))
+      // console.log('profilePosts: ', profilePosts)
       setPhotos(images)
 
       setPostIds(ids)
