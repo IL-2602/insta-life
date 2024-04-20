@@ -1,3 +1,5 @@
+import { PublishPostResponse } from '@/services/postService/lib/postEndpoints.types'
+
 export type UpdateProfileParams = {
   aboutMe?: null | string
   city?: null | string
@@ -8,5 +10,6 @@ export type UpdateProfileParams = {
 }
 
 export type ProfileSliceInitialState = {
-  profilePosts: string[]
+  postId: null | number
+  profilePosts: PublishPostResponse[]
 }
