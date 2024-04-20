@@ -4,15 +4,16 @@ import { DeletePostModal } from '@/layouts/local/ui/DeletePost/DeletePostModal'
 import { EditPostModal } from '@/layouts/local/ui/EditPost/EditPostModal'
 import { MyPostModalProps } from '@/layouts/local/ui/MyPost/MyPostModal/container'
 import { TestComment } from '@/layouts/local/ui/MyPost/TESTcomment/Comment'
+import { Bookmark } from '@/shared/assets/icons/Bookmark'
+import { HeartOutline } from '@/shared/assets/icons/Heart/HeartOutline'
 import { HorizontalDots } from '@/shared/assets/icons/HorizontalDots/HorizontalDots'
+import { PaperLine } from '@/shared/assets/icons/PaperLine'
 import { PostPhotos } from '@/shared/components/PostPhotos/PostPhotos'
 import { Button } from '@/shared/ui/Button'
 import { Modal } from '@/shared/ui/Modal'
 import { CustomPopover } from '@/shared/ui/Popover/CustomPopover'
 import { PostOptions } from '@/shared/ui/PostOptions/PostOptions'
 import { Typography } from '@/shared/ui/Typography'
-import { ControlledTextAreaField } from '@/shared/ui/controlledInsta/ControlledTextArea/ControlledTextArea'
-import { ControlledTextField } from '@/shared/ui/controlledInsta/ControlledTextField/ControlledTextField'
 import Image from 'next/image'
 
 import s from './MyPostModal.module.scss'
@@ -23,7 +24,6 @@ export const MyPostModal = memo(
   ({
     closeModalWithRefresh,
     commentPublish,
-    commentsTEST,
     control,
     currPhotoIndex,
     deletePostModalHandler,
@@ -51,7 +51,6 @@ export const MyPostModal = memo(
         >
           <div className={s.container}>
             <div className={s.postPhotoWrapper}>
-              {/*<PostPhotos className={s.postPhoto} height={503} photos={postPhotos} width={490} />*/}
               <PostPhotos currentPhoto={currPhotoIndex} onChangeCurrentPhoto={onChangeCurrPhoto}>
                 {postPhotos &&
                   postPhotos.map((photo, i) => {
@@ -107,7 +106,16 @@ export const MyPostModal = memo(
                   <TestComment />
                   <TestComment />
                 </div>
-                <div className={s.likesBlock}>Likes</div>
+                <div className={s.likesBlock}>
+                  <div className={s.buttonIcons}>
+                    <div>
+                      <HeartOutline className={s.buttonIcon} />
+                      <PaperLine className={s.buttonIcon} />
+                    </div>
+
+                    <Bookmark className={s.buttonIcon} />
+                  </div>
+                </div>
                 <div className={s.addCommentBlock}>
                   <input placeholder={'Add comment...'} type={'text'} />
                   <Button
@@ -123,33 +131,33 @@ export const MyPostModal = memo(
             )}
           </div>
         </Modal>
-        {isOpenClosePostModal && (
-          <Modal
-            className={s.closePostModal}
-            customButtonsBlock={
-              <div className={s.buttonsBlock}>
-                <Button disabled={false} onClick={closeModalWithRefresh} variant={'outlined'}>
-                  <Typography variant={'h3'}>{t.button.yes}</Typography>
-                </Button>
-                <Button
-                  className={s.button}
-                  disabled={false}
-                  onClick={handleClosePostModal}
-                  variant={'primary'}
-                >
-                  <Typography variant={'h3'}>{t.button.no}</Typography>
-                </Button>
-              </div>
-            }
-            modalHandler={handleClosePostModal}
-            open={isOpenClosePostModal}
-            title={t.modal.closeModalTitle}
-          >
-            <div className={s.closeOpenModalContent}>
-              <Typography variant={'regular16'}>{t.modal.closeModalTextTwo}</Typography>
-            </div>
-          </Modal>
-        )}
+        {/*{isOpenClosePostModal && (*/}
+        {/*  <Modal*/}
+        {/*    className={s.closePostModal}*/}
+        {/*    customButtonsBlock={*/}
+        {/*      <div className={s.buttonsBlock}>*/}
+        {/*        <Button disabled={false} onClick={closeModalWithRefresh} variant={'outlined'}>*/}
+        {/*          <Typography variant={'h3'}>{t.button.yes}</Typography>*/}
+        {/*        </Button>*/}
+        {/*        <Button*/}
+        {/*          className={s.button}*/}
+        {/*          disabled={false}*/}
+        {/*          onClick={handleClosePostModal}*/}
+        {/*          variant={'primary'}*/}
+        {/*        >*/}
+        {/*          <Typography variant={'h3'}>{t.button.no}</Typography>*/}
+        {/*        </Button>*/}
+        {/*      </div>*/}
+        {/*    }*/}
+        {/*    modalHandler={handleClosePostModal}*/}
+        {/*    open={isOpenClosePostModal}*/}
+        {/*    title={t.modal.closeModalTitle}*/}
+        {/*  >*/}
+        {/*    <div className={s.closeOpenModalContent}>*/}
+        {/*      <Typography variant={'regular16'}>{t.modal.closeModalTextTwo}</Typography>*/}
+        {/*    </div>*/}
+        {/*  </Modal>*/}
+        {/*)}*/}
         <EditPostModal.widget />
         <DeletePostModal.widget />
       </>

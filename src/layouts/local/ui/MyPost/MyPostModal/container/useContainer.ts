@@ -42,30 +42,6 @@ export const useContainer = () => {
   const myPostDescription = watch('myPostDescription')
   const { myPostDescription: errorDescription } = errors
 
-  const commentsTEST = [
-    {
-      added: '2 Hours ago',
-      avatar: '',
-      comment:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      userName: 'URLProfiele',
-    },
-    {
-      added: '3 Hours ago',
-      avatar: '',
-      comment:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      userName: 'URLProfiele',
-    },
-    {
-      added: '4 Hours ago',
-      avatar: '',
-      comment:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      userName: 'URLProfiele',
-    },
-  ]
-
   const openEditPostModal = () => {
     dispatch(postActions.setIsEditPostModal(true))
   }
@@ -75,15 +51,6 @@ export const useContainer = () => {
   // const { postId } = useParams()
   const commentPublish = () => {}
 
-  // const handleCloseModal = () => {
-  //   setIsOpenClosePostModal(true)
-  // }
-  // const closeModalWithRefresh = () => {
-  //   dispatch(postActions.setIsMyPostModal(false))
-  // }
-  // const handleClosePostModal = () => {
-  //   setIsOpenClosePostModal(false)
-  // }
   const deletePostModalHandler = (id: number) => {
     dispatch(postActions.setIsDeletePostModal(true))
   }
@@ -92,7 +59,7 @@ export const useContainer = () => {
   }
 
   const handleCloseModal = () => {
-    setIsOpenClosePostModal(true)
+    dispatch(postActions.setIsMyPostModal(false))
   }
   const closeModalWithRefresh = () => {
     dispatch(postActions.setIsEditPostModal(false))
@@ -106,7 +73,6 @@ export const useContainer = () => {
   return {
     closeModalWithRefresh,
     commentPublish,
-    commentsTEST,
     control,
     currPhotoIndex,
     deletePostModalHandler,
