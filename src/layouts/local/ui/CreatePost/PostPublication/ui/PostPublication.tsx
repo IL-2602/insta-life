@@ -57,7 +57,12 @@ export const PostPublication = memo(
           }
           open={isCreatePostModal && modalSteps === 'publication'}
           previousStepBtn={
-            <Button className={s.prevBtn} onClick={backToFilter} variant={'link'}>
+            <Button
+              className={s.prevBtn}
+              disabled={isLoading}
+              onClick={backToFilter}
+              variant={'link'}
+            >
               <ArrowIosBack />
             </Button>
           }

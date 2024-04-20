@@ -6,50 +6,39 @@ import { useAppSelector } from '@/app/store/hooks/useAppSelector'
 import { useGetMeQuery } from '@/services/authService/authEndpoints'
 import { UserType } from '@/services/authService/lib/authEndpoints.types'
 import { useGetUserPostsQuery } from '@/services/postService/postEndpoints'
-import {
-  profileActions,
-  profileSlice,
-} from '@/services/profileService/store/slice/profileEndpoints.slice'
+import { profileActions } from '@/services/profileService/store/slice/profileEndpoints.slice'
 
 export const useContainer = () => {
+  const dispatch = useAppDispatch()
   const { inView, ref } = useInView({
     threshold: 1,
   })
 
+  const profilePosts = useAppSelector(state => state.profileReducer.profilePosts)
   const [lastPostId, setLastPostId] = useState<number | undefined>(undefined)
-  const [photos, setPhotos] = useState<string[]>([])
-  const [postIds, setPostIds] = useState<number[]>([])
-
-  const dispatch = useAppDispatch()
 
   const { data: me } = useGetMeQuery() as { data: UserType }
-
   const { data: posts, isFetching } = useGetUserPostsQuery({
     endCursorPostId: lastPostId,
     pageSize: !lastPostId ? 12 : 8,
     userId: me.userId,
   })
 
-  const profilePosts = useAppSelector(state => state.profileReducer.profilePosts)
-
   useEffect(() => {
     if (posts) {
-      const ids = posts.items.map(item => item.id)
-      const images = posts.items.map(item => item.images[0].url)
-
-      // dispatch(profileActions.setProfilePosts(images.join(',')))
-      // console.log('profilePosts: ', profilePosts)
-      setPhotos(images)
-
-      setPostIds(ids)
+      dispatch(profileActions.setProfilePosts(posts.items))
     }
-  }, [posts])
+  }, [dispatch, posts])
 
   useEffect(() => {
-    if (inView && postIds.length > 0) {
-      setLastPostId(postIds[0] - 8)
+    if (inView && profilePosts.length > 0) {
+      setLastPostId(profilePosts[profilePosts.length - 1].id)
     }
   }, [inView])
 
-  return { isFetching, photos, ref }
+  const handleReceivingPostId = (id: number) => {
+    dispatch(profileActions.setPostId(id))
+  }
+
+  return { handleReceivingPostId, isFetching, profilePosts, ref }
 }
