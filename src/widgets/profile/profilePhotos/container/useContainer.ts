@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useInView } from 'react-intersection-observer'
 
 import { useAppDispatch } from '@/app/store/hooks/useAppDispatch'
@@ -15,7 +15,7 @@ export const useContainer = () => {
   })
 
   const profilePosts = useAppSelector(state => state.profileReducer.profilePosts)
-  const [lastPostId, setLastPostId] = useState<number | undefined>(undefined)
+  const lastPostId = useAppSelector(state => state.profileReducer.lastPostId)
 
   const { data: me } = useGetMeQuery() as { data: UserType }
   const { data: posts, isFetching } = useGetUserPostsQuery({
@@ -25,14 +25,18 @@ export const useContainer = () => {
   })
 
   useEffect(() => {
-    if (posts) {
+    if (posts && posts.items.length > 0) {
       dispatch(profileActions.setProfilePosts(posts.items))
     }
   }, [dispatch, posts])
 
   useEffect(() => {
+    if (posts && profilePosts.length >= posts.totalCount) {
+      return
+    }
+
     if (inView && profilePosts.length > 0) {
-      setLastPostId(profilePosts[profilePosts.length - 1].id)
+      dispatch(profileActions.setLastPostId(profilePosts[profilePosts.length - 1].id))
     }
   }, [inView])
 
