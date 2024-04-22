@@ -22,9 +22,7 @@ export const useContainer = () => {
 
   const handleLogOut = async () => {
     try {
-      const res = await logOut().unwrap()
-
-      console.log(res)
+      return await logOut().unwrap()
     } catch (error) {
       console.error(error)
     }

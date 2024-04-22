@@ -7,8 +7,9 @@ import {
   getUserPostsParams,
   getUserPostsResponse,
 } from '@/services/postService/lib/postEndpoints.types'
+import { profileActions } from '@/services/profileService/store/slice/profileEndpoints.slice'
 
-const postEndpoints = api.injectEndpoints({
+export const postEndpoints = api.injectEndpoints({
   endpoints: builder => ({
     deletePost: builder.mutation<void, number>({
       invalidatesTags: [],
@@ -44,7 +45,32 @@ const postEndpoints = api.injectEndpoints({
       },
     }),
     publishPost: builder.mutation<PublishPostResponse, PublishPostParams>({
-      invalidatesTags: ['Post'],
+      onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
+        try {
+          const result = await queryFulfilled
+
+          dispatch(profileActions.setClearProfilePosts())
+
+          dispatch(
+            postEndpoints.util.updateQueryData(
+              'getUserPosts',
+              { endCursorPostId: undefined, pageSize: 12, userId: result.data.ownerId },
+              draft => {
+                draft.items.splice(-1, 1)
+                draft.items.unshift(result.data)
+
+                return draft
+              }
+            )
+          )
+
+          setTimeout(() => {
+            dispatch(api.util.invalidateTags(['Post']))
+          }, 50)
+        } catch (e) {
+          console.log(e)
+        }
+      },
       query: body => {
         return {
           body: body,
@@ -64,6 +90,8 @@ const postEndpoints = api.injectEndpoints({
     }),
   }),
 })
+
+// export const fetchPostsAction = postEndpoints.endpoints.publishPost
 
 export const {
   useDeletePostMutation,

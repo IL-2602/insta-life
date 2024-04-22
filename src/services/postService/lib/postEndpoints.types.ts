@@ -33,7 +33,7 @@ export type EditPostParams = {
 }
 
 export type getUserPostsParams = {
-  endCursorPostId?: number
+  endCursorPostId?: number | undefined
   pageSize?: number
   sortDirection?: 'asc' | 'desc'
   userId: number

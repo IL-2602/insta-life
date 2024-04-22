@@ -10,6 +10,7 @@ export type UpdateProfileParams = {
 }
 
 export type ProfileSliceInitialState = {
+  lastPostId: number | undefined
   postId: null | number
   profilePosts: PublishPostResponse[]
 }
