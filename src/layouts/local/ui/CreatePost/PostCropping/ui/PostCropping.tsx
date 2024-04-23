@@ -60,11 +60,12 @@ export const PostCropping = memo(
         title={t.post.cropping}
       >
         <div className={s.croppingWrapper}>
-          {postPhotoError && (
-            <div className={s.errorWrapper}>
+          <div className={s.errorWrapper}>
+            {postPhotoError && (
+              //@ts-ignore
               <Typography variant={'error'}>{t.myProfile.error[postPhotoError]}</Typography>
-            </div>
-          )}
+            )}
+          </div>
 
           <PostPhotos
             cropping
