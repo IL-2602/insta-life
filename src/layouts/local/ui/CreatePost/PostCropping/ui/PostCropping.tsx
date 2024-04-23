@@ -19,6 +19,7 @@ import s from './PostCropping.module.scss'
 export const PostCropping = memo(
   ({
     canvasRef,
+    postPhotoError,
     control,
     currPhotoIndex,
     delPostPhoto,
@@ -38,6 +39,7 @@ export const PostCropping = memo(
     showSaveDraft,
     t,
   }: Props) => {
+    // @ts-ignore
     return (
       <Modal
         className={s.container}
@@ -59,6 +61,12 @@ export const PostCropping = memo(
         title={t.post.cropping}
       >
         <div className={s.croppingWrapper}>
+          <div className={s.errorWrapper}>
+            {postPhotoError && (
+              //@ts-ignore
+              <Typography variant={'error'}>{t.myProfile.error[postPhotoError]}</Typography>
+            )}
+          </div>
           <PostPhotos
             cropping
             currentPhoto={currPhotoIndex}
