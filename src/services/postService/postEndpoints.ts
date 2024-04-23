@@ -38,28 +38,11 @@ export const postEndpoints = api.injectEndpoints({
         return currentArg !== previousArg
       },
       merge: (currentCache, newItems, otherArgs) => {
-        console.log('otherArgs.arg.endCursorPostId: ', otherArgs.arg.endCursorPostId)
-        console.log('currentCache.items: ', currentCache.items)
-        console.log('newItems.items: ', newItems.items)
-
         if (otherArgs.arg.endCursorPostId === undefined) {
           currentCache.items = newItems.items
         } else {
           currentCache.items.push(...newItems.items)
         }
-
-        // if (currentCache.items.length === newItems.items.length) {
-        //   console.log('tut if')
-        //   currentCache.items = newItems.items
-        // }
-        // else {
-        //   console.log('tut else')
-        //   currentCache.items = newItems.items
-        // }
-        // // else if (currentCache.items.length > 0) {
-        // //     currentCache.items.concat(newItems.items)
-        // //     console.log('tut else if')
-        // //   }
       },
       providesTags: ['Post'],
 
@@ -75,10 +58,7 @@ export const postEndpoints = api.injectEndpoints({
       },
     }),
     publishPost: builder.mutation<PublishPostResponse, PublishPostParams>({
-      // invalidatesTags: ['Post'],
-
-      onQueryStarted: async ({ lastPostId }, { dispatch, queryFulfilled }) => {
-        console.log('lastPostId: ', lastPostId)
+      onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
         try {
           const { data } = await queryFulfilled
 
@@ -91,25 +71,6 @@ export const postEndpoints = api.injectEndpoints({
               }
             )
           )
-
-          // dispatch(profileActions.setClearProfilePosts())
-
-          // dispatch(
-          //   postEndpoints.util.updateQueryData(
-          //     'getUserPosts',
-          //     { endCursorPostId: undefined, pageSize: 12, userId: result.data.ownerId },
-          //     draft => {
-          //       draft.items.splice(-1, 1)
-          //       draft.items.unshift(result.data)
-          //
-          //       return draft
-          //     }
-          //   )
-          // )
-          //
-          // setTimeout(() => {
-          //   dispatch(postEndpoints.util.invalidateTags(['Post']))
-          // }, 500)
         } catch (e) {
           console.log(e)
         }

@@ -8,7 +8,7 @@ import Image from 'next/image'
 import s from './ProfilePhotos.module.scss'
 
 export const ProfilePhotos = forwardRef<HTMLDivElement, ProfilePhotosProps>(
-  ({ handleReceivingPostId, isFetching, posts, profilePosts }, ref) => {
+  ({ handleReceivingPostId, isFetching, posts }, ref) => {
     return (
       <>
         <div className={s.container}>
