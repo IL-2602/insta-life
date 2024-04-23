@@ -7,7 +7,6 @@ import {
   getUserPostsParams,
   getUserPostsResponse,
 } from '@/services/postService/lib/postEndpoints.types'
-import { profileActions } from '@/services/profileService/store/slice/profileEndpoints.slice'
 
 export const postEndpoints = api.injectEndpoints({
   endpoints: builder => ({
@@ -35,7 +34,18 @@ export const postEndpoints = api.injectEndpoints({
       },
     }),
     getUserPosts: builder.query<getUserPostsResponse, getUserPostsParams>({
+      forceRefetch({ currentArg, previousArg }) {
+        return currentArg !== previousArg
+      },
+      merge: (currentCache, newItems, otherArgs) => {
+        if (otherArgs.arg.endCursorPostId === undefined) {
+          currentCache.items = newItems.items
+        } else {
+          currentCache.items.push(...newItems.items)
+        }
+      },
       providesTags: ['Post'],
+
       query: ({ endCursorPostId, pageSize, userId }) => {
         return {
           method: 'GET',
@@ -43,30 +53,24 @@ export const postEndpoints = api.injectEndpoints({
           url: `public-posts/user/${userId}/${endCursorPostId}`,
         }
       },
+      serializeQueryArgs: ({ endpointName }) => {
+        return endpointName
+      },
     }),
     publishPost: builder.mutation<PublishPostResponse, PublishPostParams>({
       onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
         try {
-          const result = await queryFulfilled
-
-          dispatch(profileActions.setClearProfilePosts())
+          const { data } = await queryFulfilled
 
           dispatch(
             postEndpoints.util.updateQueryData(
               'getUserPosts',
-              { endCursorPostId: undefined, pageSize: 12, userId: result.data.ownerId },
+              { endCursorPostId: undefined, userId: data.ownerId },
               draft => {
-                draft.items.splice(-1, 1)
-                draft.items.unshift(result.data)
-
-                return draft
+                draft.items.unshift(data)
               }
             )
           )
-
-          setTimeout(() => {
-            dispatch(api.util.invalidateTags(['Post']))
-          }, 50)
         } catch (e) {
           console.log(e)
         }
@@ -90,8 +94,6 @@ export const postEndpoints = api.injectEndpoints({
     }),
   }),
 })
-
-// export const fetchPostsAction = postEndpoints.endpoints.publishPost
 
 export const {
   useDeletePostMutation,

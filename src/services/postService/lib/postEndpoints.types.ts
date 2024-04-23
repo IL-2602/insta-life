@@ -25,6 +25,7 @@ type Metadata = {
 export type PublishPostParams = {
   childrenMetadata: Metadata[]
   description: string
+  lastPostId?: number | undefined
 }
 
 export type EditPostParams = {
