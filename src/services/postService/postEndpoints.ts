@@ -7,7 +7,6 @@ import {
   getUserPostsParams,
   getUserPostsResponse,
 } from '@/services/postService/lib/postEndpoints.types'
-import { profileActions } from '@/services/profileService/store/slice/profileEndpoints.slice'
 
 export const postEndpoints = api.injectEndpoints({
   endpoints: builder => ({
@@ -35,7 +34,35 @@ export const postEndpoints = api.injectEndpoints({
       },
     }),
     getUserPosts: builder.query<getUserPostsResponse, getUserPostsParams>({
+      forceRefetch({ currentArg, previousArg }) {
+        return currentArg !== previousArg
+      },
+      merge: (currentCache, newItems, otherArgs) => {
+        console.log('otherArgs.arg.endCursorPostId: ', otherArgs.arg.endCursorPostId)
+        console.log('currentCache.items: ', currentCache.items)
+        console.log('newItems.items: ', newItems.items)
+
+        if (otherArgs.arg.endCursorPostId === undefined) {
+          currentCache.items = newItems.items
+        } else {
+          currentCache.items.push(...newItems.items)
+        }
+
+        // if (currentCache.items.length === newItems.items.length) {
+        //   console.log('tut if')
+        //   currentCache.items = newItems.items
+        // }
+        // else {
+        //   console.log('tut else')
+        //   currentCache.items = newItems.items
+        // }
+        // // else if (currentCache.items.length > 0) {
+        // //     currentCache.items.concat(newItems.items)
+        // //     console.log('tut else if')
+        // //   }
+      },
       providesTags: ['Post'],
+
       query: ({ endCursorPostId, pageSize, userId }) => {
         return {
           method: 'GET',
@@ -43,30 +70,46 @@ export const postEndpoints = api.injectEndpoints({
           url: `public-posts/user/${userId}/${endCursorPostId}`,
         }
       },
+      serializeQueryArgs: ({ endpointName }) => {
+        return endpointName
+      },
     }),
     publishPost: builder.mutation<PublishPostResponse, PublishPostParams>({
-      onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
-        try {
-          const result = await queryFulfilled
+      // invalidatesTags: ['Post'],
 
-          dispatch(profileActions.setClearProfilePosts())
+      onQueryStarted: async ({ lastPostId }, { dispatch, queryFulfilled }) => {
+        console.log('lastPostId: ', lastPostId)
+        try {
+          const { data } = await queryFulfilled
 
           dispatch(
             postEndpoints.util.updateQueryData(
               'getUserPosts',
-              { endCursorPostId: undefined, pageSize: 12, userId: result.data.ownerId },
+              { endCursorPostId: undefined, userId: data.ownerId },
               draft => {
-                draft.items.splice(-1, 1)
-                draft.items.unshift(result.data)
-
-                return draft
+                draft.items.unshift(data)
               }
             )
           )
 
-          setTimeout(() => {
-            dispatch(api.util.invalidateTags(['Post']))
-          }, 50)
+          // dispatch(profileActions.setClearProfilePosts())
+
+          // dispatch(
+          //   postEndpoints.util.updateQueryData(
+          //     'getUserPosts',
+          //     { endCursorPostId: undefined, pageSize: 12, userId: result.data.ownerId },
+          //     draft => {
+          //       draft.items.splice(-1, 1)
+          //       draft.items.unshift(result.data)
+          //
+          //       return draft
+          //     }
+          //   )
+          // )
+          //
+          // setTimeout(() => {
+          //   dispatch(postEndpoints.util.invalidateTags(['Post']))
+          // }, 500)
         } catch (e) {
           console.log(e)
         }
@@ -90,8 +133,6 @@ export const postEndpoints = api.injectEndpoints({
     }),
   }),
 })
-
-// export const fetchPostsAction = postEndpoints.endpoints.publishPost
 
 export const {
   useDeletePostMutation,

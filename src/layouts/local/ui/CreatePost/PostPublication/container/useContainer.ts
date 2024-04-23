@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { useAppDispatch } from '@/app/store/hooks/useAppDispatch'
@@ -11,7 +11,6 @@ import {
 } from '@/services/postService/postEndpoints'
 import { postActions } from '@/services/postService/store/slice/postEndpoints.slice'
 import { useGetProfileQuery } from '@/services/profileService/profileEndpoints'
-import { profileActions } from '@/services/profileService/store/slice/profileEndpoints.slice'
 import { useTranslation } from '@/shared/hooks/useTranslation'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -24,7 +23,6 @@ export const useContainer = () => {
   const isCreatePostModal = useAppSelector(state => state.postReducer.isCreatePostModal)
   const modalSteps = useAppSelector(state => state.postReducer.modalSteps)
   const postPhotos = useAppSelector(state => state.postReducer.postPhotos)
-  const profilePosts = useAppSelector(state => state.profileReducer.profilePosts)
 
   const [currPhotoIndex, setCurrPhotoIndex] = useState(0)
 
