@@ -9,7 +9,7 @@
 
 .DialogContent {
   position: fixed;
-  z-index: 100;
+  z-index: var(--zindex-modal);
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);

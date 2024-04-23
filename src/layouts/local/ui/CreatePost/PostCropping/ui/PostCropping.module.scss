@@ -9,6 +9,7 @@
 
   .errorWrapper {
     position: absolute;
+    z-index: var(--zindex-crop-error);
     top: 10px;
     left: 50%;
     transform: translate(-50%, 0);
@@ -25,6 +26,7 @@
 
   .imgWrapper {
     position: absolute;
+    z-index: var(--zindex-crop);
     top: 0;
     left: 0;
 
@@ -33,12 +35,14 @@
 
     .croppingImage {
       position: absolute;
+      z-index: var(--zindex-crop);
       object-fit: contain;
     }
   }
 
   .btnGroup {
     position: absolute;
+    z-index: var(--zindex-crop);
     bottom: 0;
     left: 0;
 

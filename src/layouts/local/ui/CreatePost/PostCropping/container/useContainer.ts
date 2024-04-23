@@ -59,6 +59,7 @@ export const useContainer = () => {
     if (file) {
       const badCase = ''
       const img = success ? URL.createObjectURL(file) : badCase
+
       if (!errors.postPhoto && success) {
         dispatch(postActions.setPostPhotos(img))
         setCurrPhotoIndex(typeof currPhotoIndex === 'number' ? currPhotoIndex + 1 : 0)
@@ -125,11 +126,11 @@ export const useContainer = () => {
     onNext,
     onPrev,
     postPhoto,
+    postPhotoError,
     postPhotos,
     setCurrentPhotoAspect,
     setCurrentPhotoZoom,
     showSaveDraft,
-    postPhotoError,
     t,
   }
 }
