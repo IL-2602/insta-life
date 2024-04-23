@@ -7,8 +7,30 @@
     margin: 0;
   }
 
+  .errorWrapper {
+    position: absolute;
+    z-index: var(--zindex-crop-error);
+    top: 10px;
+    left: 50%;
+    transform: translate(-50%, 0);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+
+    & p {
+      width: 90%;
+      text-align: center;
+      background: var(--color-danger-900);
+      border: 1px solid var(--color-danger-500);
+    }
+  }
+
   .imgWrapper {
     position: absolute;
+    z-index: var(--zindex-crop);
     top: 0;
     left: 0;
 
@@ -17,12 +39,14 @@
 
     .croppingImage {
       position: absolute;
+      z-index: var(--zindex-crop);
       object-fit: contain;
     }
   }
 
   .btnGroup {
     position: absolute;
+    z-index: var(--zindex-crop);
     bottom: 0;
     left: 0;
 
