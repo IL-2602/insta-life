@@ -1,3 +1,3 @@
-import { store } from '../store'
+import { AppStore } from '@/app/store/types/appStore'
 
-export type RootState = ReturnType<typeof store.getState>
+export type RootState = ReturnType<AppStore['getState']>
