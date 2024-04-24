@@ -1,1 +1,1 @@
-export { store, wrapper } from './store'
+export { makeStore, wrapper } from './store'
