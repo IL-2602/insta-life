@@ -7,11 +7,6 @@ import { createWrapper } from 'next-redux-wrapper'
 
 const rootReducer = combineSlices(api, authSlice, postSlice)
 
-export const store = configureStore({
-  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(api.middleware),
-  reducer: rootReducer,
-})
-
 export const makeStore = () =>
   configureStore({
     middleware: getDefaultMiddleware => getDefaultMiddleware().concat(api.middleware),
