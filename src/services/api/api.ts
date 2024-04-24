@@ -7,6 +7,7 @@ import {
   createApi,
   fetchBaseQuery,
 } from '@reduxjs/toolkit/query/react'
+import { HYDRATE } from 'next-redux-wrapper'
 const baseUrl = process.env.NEXT_PUBLIC_BASE_API_URL
 
 export const baseQuery = fetchBaseQuery({
@@ -53,9 +54,20 @@ export const baseQueryWithReAuth: BaseQueryFn<
   return result
 }
 
+function isHydrateAction(action: Action): action is PayloadAction<RootState> {
+  return action.type === HYDRATE
+}
+
 export const api = createApi({
   baseQuery: baseQueryWithReAuth,
   endpoints: () => ({}),
+  extractRehydrationInfo(action, { reducerPath }): any {
+    if (isHydrateAction(action)) {
+      return action.payload[reducerPath]
+    }
+  },
   reducerPath: 'api',
   tagTypes: ['Me', 'Profile', 'Post'],
 })
+
+export const { getRunningQueriesThunk } = api.util
