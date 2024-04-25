@@ -157,3 +157,5 @@ export const {
   useSignUpEmailResendingMutation,
   useSignUpMutation,
 } = authEndpoints
+
+export const { getMe } = authEndpoints.endpoints

@@ -2,7 +2,7 @@ import { AuthSliceInitialState } from '@/services/authService/lib/authEndpoints.
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 const initialState: AuthSliceInitialState = {
-  accessToken: undefined,
+  accessToken: '',
   email: '',
   recaptchaToken: null,
 }

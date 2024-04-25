@@ -7,8 +7,6 @@ import { UserStat } from '@/widgets/profile/profileHeader/ui/ProfileInfo/UserSta
 import s from './ProfileInfo.module.scss'
 
 export const ProfileInfo = ({ aboutMe, userName }: Props) => {
-  const SettingsButton = 'Profile Settings'
-
   return (
     <div className={s.profileInfo}>
       <div className={s.mainWrapper}>
@@ -19,12 +17,9 @@ export const ProfileInfo = ({ aboutMe, userName }: Props) => {
             <UserStat count={2218} title={'Followers'} />
             <UserStat count={2218} title={'Publications'} />
           </div>
+          <Description text={aboutMe} />
         </div>
-        <Button as={'a'} href={'/profile/settings'} variant={'secondary'}>
-          {SettingsButton}
-        </Button>
       </div>
-      <Description text={aboutMe} />
     </div>
   )
 }

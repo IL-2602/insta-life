@@ -4,16 +4,17 @@ import { ProfileHeaderProps } from '@/widgets/profile/profileHeader/container'
 import { ProfileInfo } from '@/widgets/profile/profileHeader/ui/ProfileInfo/ProfileInfo'
 
 import s from './ProfileHeader.module.scss'
+import { Button } from '@/shared/ui/Button'
 
 export const ProfileHeader = (props: ProfileHeaderProps) => {
-  const { data, isError, isLoading } = props
+  const { data, isError, isLoading, me } = props
 
   if (isLoading) {
     return <Spinner />
   }
   if (data) {
     const { aboutMe, avatars, userName } = data
-
+    const SettingsButton = 'Profile Settings'
     return (
       <div className={s.wrapper}>
         <div className={s.avatarWrapper}>
@@ -24,6 +25,11 @@ export const ProfileHeader = (props: ProfileHeaderProps) => {
           />
         </div>
         <ProfileInfo aboutMe={aboutMe} userName={userName} />
+        {!!me && (
+          <Button as={'a'} href={'/profile/settings'} variant={'secondary'} className={s.button}>
+            {SettingsButton}
+          </Button>
+        )}
       </div>
     )
   }

@@ -2,8 +2,17 @@
   display: flex;
   gap: 28px;
 
-  @media (width <= 720px) {
+  @media (width <= 1024px) {
     flex-wrap: wrap;
+
+    & > *:first-child{
+      margin: 0 auto;
+    }
+
+    & > *:last-child{
+      flex-grow: 1;
+      text-align: center;
+    }
   }
 }
 
@@ -20,4 +29,9 @@
 
   background: var(--color-dark-500);
   border-radius: 50%;
+}
+
+.button {
+  display: inline-block;
+  height: 35px;
 }
