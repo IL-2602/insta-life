@@ -12,6 +12,7 @@ import { ProfileIcon } from '@/shared/assets/icons/asideIcons/profileIcon'
 import { SearchIcon } from '@/shared/assets/icons/asideIcons/searchIcon'
 import { StatisticsIcon } from '@/shared/assets/icons/asideIcons/statisticsIcon'
 import { ROUTES } from '@/shared/constants/routes'
+import { Button } from '@/shared/ui/Button'
 import { Modal } from '@/shared/ui/Modal'
 import { Spinner } from '@/shared/ui/Spinner'
 import { Typography } from '@/shared/ui/Typography'
@@ -19,7 +20,6 @@ import { clsx } from 'clsx'
 import Link from 'next/link'
 
 import s from './SideBar.module.scss'
-import { Button } from '@/shared/ui/Button'
 
 export const SideBar = ({
   email,
@@ -98,7 +98,7 @@ export const SideBar = ({
           {t.sidebar.favourites}
         </Typography>
       </Link>
-      <Button variant={'link'} onClick={() => setIsOpen(true)}>
+      <Button onClick={() => setIsOpen(true)} variant={'link'}>
         <LogOutIcon className={s.navIcon} />
         <Typography className={s.navLink} color={'light'} variant={'medium14'}>
           {t.sidebar.logOut}

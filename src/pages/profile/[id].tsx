@@ -2,10 +2,10 @@ import { wrapper } from '@/app/store'
 import { getBaseLayout } from '@/layouts/publ/BaseLayout/BaseLayout'
 import { api } from '@/services/api'
 import { getMe } from '@/services/authService/authEndpoints'
+import { getUserPosts } from '@/services/postService/postEndpoints'
 import { getPublicUserProfile } from '@/services/publicProfileSerice/publicProfileEndpoints'
 import { ProfileHeader } from '@/widgets/profile/profileHeader'
 import { ProfilePhotos } from '@/widgets/profile/profilePhotos'
-import { getUserPosts } from '@/services/postService/postEndpoints'
 
 const PublicProfilePage = () => {
   return (
@@ -18,13 +18,15 @@ const PublicProfilePage = () => {
 
 export const getServerSideProps = wrapper.getServerSideProps(store => async context => {
   const profileId = context.params?.id as string | undefined
+
   if (!profileId) {
     return { notFound: true }
   }
   const {} = store.getState()
+
   store.dispatch(getMe.initiate(undefined))
   store.dispatch(getPublicUserProfile.initiate({ profileId: +profileId }))
-  store.dispatch(getUserPosts.initiate({ userId: +profileId, pageSize: 12 }))
+  store.dispatch(getUserPosts.initiate({ pageSize: 12, userId: +profileId }))
   const allRes = await Promise.all(store.dispatch(api.util.getRunningQueriesThunk()))
 
   if (!allRes) {

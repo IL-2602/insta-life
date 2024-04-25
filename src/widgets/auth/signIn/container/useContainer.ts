@@ -8,6 +8,7 @@ import {
   useOAuthGoogleMutation,
   useSignInMutation,
 } from '@/services/authService/authEndpoints'
+import { UserType } from '@/services/authService/lib/authEndpoints.types'
 import { authActions } from '@/services/authService/store/slice/authEndpoints.slice'
 import { ROUTES } from '@/shared/constants/routes'
 import { useTranslation } from '@/shared/hooks/useTranslation'
@@ -15,7 +16,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useGoogleLogin } from '@react-oauth/google'
 import { useRouter } from 'next/router'
 import { z } from 'zod'
-import { UserType } from '@/services/authService/lib/authEndpoints.types'
 
 export const signInSchema = z.object({
   email: z.string().email('invalidEmailAddress'),

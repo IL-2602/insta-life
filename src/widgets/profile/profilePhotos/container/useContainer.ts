@@ -23,6 +23,7 @@ export const useContainer = () => {
     pageSize: !lastPostId ? 12 : 8,
     userId: +profileId,
   })
+
   console.log('profileId', profileId, inView)
   useEffect(() => {
     if (posts && posts.items.length >= posts.totalCount) {
