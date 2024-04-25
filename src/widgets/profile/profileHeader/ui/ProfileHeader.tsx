@@ -8,12 +8,13 @@ import s from './ProfileHeader.module.scss'
 
 export const ProfileHeader = (props: ProfileHeaderProps) => {
   const { data, isError, isLoading, me } = props
+
   console.log(data)
   if (isLoading) {
     return <Spinner />
   }
   if (data) {
-    const { aboutMe, avatars, userName, id } = data
+    const { aboutMe, avatars, id, userName } = data
     const SettingsButton = 'Profile Settings'
 
     return (

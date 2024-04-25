@@ -1,18 +1,19 @@
+import { useGetMeQuery } from '@/services/authService/authEndpoints'
 import { Bell } from '@/shared/assets/icons/Bell'
 import { ROUTES } from '@/shared/constants/routes'
+import { useTranslation } from '@/shared/hooks/useTranslation'
+import { Button } from '@/shared/ui/Button'
 import { Container } from '@/shared/ui/Container'
 import { LangSwitcher } from '@/shared/ui/LangSwitcher'
 import { Typography } from '@/shared/ui/Typography'
 import Link from 'next/link'
 
 import s from './Header.module.scss'
-import { useGetMeQuery } from '@/services/authService/authEndpoints'
-import { Button } from '@/shared/ui/Button'
-import { useTranslation } from '@/shared/hooks/useTranslation'
 
 export const Header = () => {
   const { data: me } = useGetMeQuery()
   const { t } = useTranslation()
+
   return (
     <header className={s.header}>
       <Container className={s.container}>
@@ -34,10 +35,10 @@ export const Header = () => {
           <LangSwitcher />
           {!me && (
             <>
-              <Button as={'a'} variant={'link'} href={ROUTES.LOGIN}>
+              <Button as={'a'} href={ROUTES.LOGIN} variant={'link'}>
                 <Typography variant={'h3'}>{t.auth.button.signInButton}</Typography>
               </Button>
-              <Button as={'a'} variant={'primary'} href={ROUTES.REGISTER}>
+              <Button as={'a'} href={ROUTES.REGISTER} variant={'primary'}>
                 <Typography variant={'h3'}>{t.auth.button.signUpButton}</Typography>
               </Button>
             </>
