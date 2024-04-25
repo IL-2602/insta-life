@@ -24,7 +24,6 @@ export const getServerSideProps = wrapper.getServerSideProps(store => async cont
 
   store.dispatch(getMe.initiate(undefined))
   store.dispatch(getPublicUserProfile.initiate({ profileId: +profileId }))
-  store.dispatch(getPublicUserProfile.initiate({ profileId: +profileId }))
 
   const allRes = await Promise.all(store.dispatch(api.util.getRunningQueriesThunk()))
 
