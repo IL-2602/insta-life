@@ -1,5 +1,6 @@
 import { RootState } from '@/app/store/types/rootState'
 import { authActions } from '@/services/authService/store/slice/authEndpoints.slice'
+import { PayloadAction } from '@reduxjs/toolkit'
 import {
   BaseQueryFn,
   FetchArgs,
@@ -8,6 +9,7 @@ import {
   fetchBaseQuery,
 } from '@reduxjs/toolkit/query/react'
 import { HYDRATE } from 'next-redux-wrapper'
+import { Action } from 'redux'
 const baseUrl = process.env.NEXT_PUBLIC_BASE_API_URL
 
 export const baseQuery = fetchBaseQuery({

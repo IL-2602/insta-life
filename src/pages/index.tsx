@@ -1,8 +1,5 @@
 import { getBaseLayout } from '@/layouts/publ/BaseLayout/BaseLayout'
-import { Inter } from 'next/font/google'
 import Head from 'next/head'
-
-const inter = Inter({ subsets: ['latin'] })
 
 export const HomePage = () => {
   return (
@@ -13,7 +10,9 @@ export const HomePage = () => {
         <meta content={'width=device-width, initial-scale=1'} name={'viewport'} />
         <link href={'/favicon.ico'} rel={'icon'} />
       </Head>
-      <main></main>
+      <main>
+        <h1>DEFAULT PAGE</h1>
+      </main>
     </>
   )
 }

@@ -24,7 +24,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     } else {
       if (!me && isPrivateRoute) {
         !token &&
-          push(ROUTES.LOGIN).then(() => {
+          push(ROUTES.DEFAULT).then(() => {
             setIsLoading(false)
           })
       }
