@@ -8,7 +8,7 @@ import { ProfilePhotos } from '@/widgets/profile/profilePhotos'
 
 const PublicProfilePage = () => {
   return (
-    <div>
+    <div style={{ width: '100%' }}>
       <ProfileHeader.widget />
       <ProfilePhotos.widget />
     </div>
