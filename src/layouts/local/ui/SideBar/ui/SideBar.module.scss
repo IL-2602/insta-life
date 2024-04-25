@@ -35,9 +35,8 @@
     margin-top: 60px;
   }
 
-  & > a:nth-child(8) {
+  & > *:last-child {
     margin-top: 180px;
-    padding-bottom: 100px;
   }
 
   & > .spinner {
@@ -80,3 +79,5 @@
     background-color: transparent;
   }
 }
+
+

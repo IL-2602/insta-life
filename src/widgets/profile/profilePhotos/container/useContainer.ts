@@ -21,9 +21,9 @@ export const useContainer = () => {
   const { data: posts, isFetching } = useGetUserPostsQuery({
     endCursorPostId: lastPostId,
     pageSize: !lastPostId ? 12 : 8,
-    userId: +profileId || me.userId,
+    userId: +profileId,
   })
-
+  console.log('profileId', profileId, inView)
   useEffect(() => {
     if (posts && posts.items.length >= posts.totalCount) {
       return

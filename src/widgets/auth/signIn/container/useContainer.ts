@@ -3,7 +3,11 @@ import { useForm } from 'react-hook-form'
 
 import { useAppDispatch } from '@/app/store/hooks/useAppDispatch'
 import { useAppSelector } from '@/app/store/hooks/useAppSelector'
-import { useOAuthGoogleMutation, useSignInMutation } from '@/services/authService/authEndpoints'
+import {
+  useGetMeQuery,
+  useOAuthGoogleMutation,
+  useSignInMutation,
+} from '@/services/authService/authEndpoints'
 import { authActions } from '@/services/authService/store/slice/authEndpoints.slice'
 import { ROUTES } from '@/shared/constants/routes'
 import { useTranslation } from '@/shared/hooks/useTranslation'
@@ -11,6 +15,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useGoogleLogin } from '@react-oauth/google'
 import { useRouter } from 'next/router'
 import { z } from 'zod'
+import { UserType } from '@/services/authService/lib/authEndpoints.types'
 
 export const signInSchema = z.object({
   email: z.string().email('invalidEmailAddress'),
@@ -36,7 +41,6 @@ export const useContainer = () => {
   })
   const [signIn, { isLoading: signIsLoading }] = useSignInMutation()
   const [oAuthGoogle, { isLoading: isLoadingGoogle }] = useOAuthGoogleMutation()
-
   const errorPassword = errors.password?.message
   const errorEmail = errors.email?.message
 
@@ -86,7 +90,7 @@ export const useContainer = () => {
 
   useEffect(() => {
     if (token) {
-      push(ROUTES.PROFILE)
+      push(ROUTES.HOME)
     }
   }, [token])
 

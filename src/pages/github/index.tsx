@@ -21,7 +21,7 @@ const GitHubPage = () => {
       return
     }
     if (query.accessToken) {
-      void push(ROUTES.PROFILE)
+      void push(ROUTES.HOME)
     } else {
       void push(ROUTES.LOGIN)
     }

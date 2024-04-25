@@ -49,7 +49,7 @@ export const postEndpoints = api.injectEndpoints({
       query: ({ endCursorPostId, pageSize, userId }) => {
         return {
           method: 'GET',
-          params: { endCursorPostId, pageSize, userId },
+          params: { pageSize, userId },
           url: `public-posts/user/${userId}/${endCursorPostId}`,
         }
       },

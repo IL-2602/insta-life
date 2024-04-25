@@ -19,6 +19,7 @@ import { clsx } from 'clsx'
 import Link from 'next/link'
 
 import s from './SideBar.module.scss'
+import { Button } from '@/shared/ui/Button'
 
 export const SideBar = ({
   email,
@@ -35,7 +36,7 @@ export const SideBar = ({
     <aside className={s.aside}>
       <Link
         className={handleActiveLink(ROUTES.HOME) ? s.activeLink : ''}
-        href={`${ROUTES.PROFILE}/1`}
+        href={`${ROUTES.PROFILE}/3`}
       >
         <HomeIcon className={s.navIcon} />
         <Typography className={s.navLink} color={'light'} variant={'medium14'}>
@@ -97,12 +98,12 @@ export const SideBar = ({
           {t.sidebar.favourites}
         </Typography>
       </Link>
-      <Link href={''} onClick={() => setIsOpen(true)}>
+      <Button variant={'link'} onClick={() => setIsOpen(true)}>
         <LogOutIcon className={s.navIcon} />
         <Typography className={s.navLink} color={'light'} variant={'medium14'}>
           {t.sidebar.logOut}
         </Typography>
-      </Link>
+      </Button>
       {isLoading ? (
         <div className={s.spinner}>
           <Spinner />
