@@ -1,7 +1,7 @@
-import { useGetProfileQuery } from '@/services/profileService/profileEndpoints'
-import { useRouter } from 'next/router'
 import { useGetMeQuery } from '@/services/authService/authEndpoints'
+import { useGetProfileQuery } from '@/services/profileService/profileEndpoints'
 import { useGetPublicUserProfileQuery } from '@/services/publicProfileSerice/publicProfileEndpoints'
+import { useRouter } from 'next/router'
 
 export const useContainer = () => {
   const { data: me } = useGetMeQuery()
@@ -23,5 +23,6 @@ export const useContainer = () => {
   const data = profile || publicProfile
   const isError = isProfileError || isPublicProfileError
   const isLoading = isProfileLoading || isPublicProfileLoading
+
   return { data, isError, isLoading, me }
 }

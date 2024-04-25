@@ -3,16 +3,16 @@ export type PublicProfileParams = {
 }
 
 export type PublicProfileResponse = {
-  id: number
-  userName: string
   aboutMe: string
   avatars: Avatar[]
+  id: number
+  userName: string
 }
 
 type Avatar = {
+  createdAt: string
+  fileSize: number
+  height: number
   url: string
   width: number
-  height: number
-  fileSize: number
-  createdAt: string
 }

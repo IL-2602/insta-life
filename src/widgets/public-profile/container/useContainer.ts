@@ -1,6 +1,6 @@
+import { useGetPublicUserProfileQuery } from '@/services/publicProfileSerice/publicProfileEndpoints'
 import { useTranslation } from '@/shared/hooks/useTranslation'
 import { useRouter } from 'next/router'
-import { useGetPublicUserProfileQuery } from '@/services/publicProfileSerice/publicProfileEndpoints'
 
 export const useContainer = () => {
   const { t } = useTranslation()
@@ -13,5 +13,5 @@ export const useContainer = () => {
     profileId: +profileId,
   })
 
-  return { t, publicProfile }
+  return { publicProfile, t }
 }

@@ -1,8 +1,8 @@
-import { getBaseLayout } from '@/layouts/publ/BaseLayout/BaseLayout'
 import { wrapper } from '@/app/store'
-import { getPublicUserProfile } from '@/services/publicProfileSerice/publicProfileEndpoints'
+import { getBaseLayout } from '@/layouts/publ/BaseLayout/BaseLayout'
 import { api } from '@/services/api'
 import { getMe } from '@/services/authService/authEndpoints'
+import { getPublicUserProfile } from '@/services/publicProfileSerice/publicProfileEndpoints'
 import { ProfileHeader } from '@/widgets/profile/profileHeader'
 
 const PublicProfilePage = () => {
@@ -12,6 +12,7 @@ const PublicProfilePage = () => {
     </div>
   )
 }
+
 export const getServerSideProps = wrapper.getServerSideProps(store => async context => {
   const profileId = context.params?.id as string | undefined
 

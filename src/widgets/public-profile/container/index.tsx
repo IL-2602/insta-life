@@ -1,5 +1,6 @@
-import { useContainer } from './useContainer'
 import { PublicProfile } from '@/widgets/public-profile/ui'
+
+import { useContainer } from './useContainer'
 
 export const Container = () => <PublicProfile {...useContainer()} />
 

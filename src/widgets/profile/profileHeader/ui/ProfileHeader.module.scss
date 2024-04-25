@@ -5,11 +5,11 @@
   @media (width <= 1024px) {
     flex-wrap: wrap;
 
-    & > *:first-child{
+    & > *:first-child {
       margin: 0 auto;
     }
 
-    & > *:last-child{
+    & > *:last-child {
       flex-grow: 1;
       text-align: center;
     }
