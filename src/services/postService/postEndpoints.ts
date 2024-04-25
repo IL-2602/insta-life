@@ -102,3 +102,5 @@ export const {
   usePublishPostImageMutation,
   usePublishPostMutation,
 } = postEndpoints
+
+export const { getUserPosts } = postEndpoints.endpoints

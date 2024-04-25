@@ -6,8 +6,13 @@ import { Typography } from '@/shared/ui/Typography'
 import Link from 'next/link'
 
 import s from './Header.module.scss'
+import { useGetMeQuery } from '@/services/authService/authEndpoints'
+import { Button } from '@/shared/ui/Button'
+import { useTranslation } from '@/shared/hooks/useTranslation'
 
 export const Header = () => {
+  const { data: me } = useGetMeQuery()
+  const { t } = useTranslation()
   return (
     <header className={s.header}>
       <Container className={s.container}>
@@ -17,13 +22,26 @@ export const Header = () => {
           </Typography>
         </Link>
         <div className={s.wrapper}>
-          <button className={s.bellButton}>
-            <Bell />
-            <Typography as={'span'} className={s.span}>
-              3
-            </Typography>
-          </button>
+          {!!me && (
+            <button className={s.bellButton}>
+              <Bell />
+              <Typography as={'span'} className={s.span}>
+                3
+              </Typography>
+            </button>
+          )}
+
           <LangSwitcher />
+          {!me && (
+            <>
+              <Button as={'a'} variant={'link'} href={ROUTES.LOGIN}>
+                <Typography variant={'h3'}>{t.auth.button.signInButton}</Typography>
+              </Button>
+              <Button as={'a'} variant={'primary'} href={ROUTES.REGISTER}>
+                <Typography variant={'h3'}>{t.auth.button.signUpButton}</Typography>
+              </Button>
+            </>
+          )}
         </div>
       </Container>
     </header>

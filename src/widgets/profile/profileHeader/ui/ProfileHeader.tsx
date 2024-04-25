@@ -8,12 +8,12 @@ import s from './ProfileHeader.module.scss'
 
 export const ProfileHeader = (props: ProfileHeaderProps) => {
   const { data, isError, isLoading, me } = props
-
+  console.log(data)
   if (isLoading) {
     return <Spinner />
   }
   if (data) {
-    const { aboutMe, avatars, userName } = data
+    const { aboutMe, avatars, userName, id } = data
     const SettingsButton = 'Profile Settings'
 
     return (
@@ -26,7 +26,7 @@ export const ProfileHeader = (props: ProfileHeaderProps) => {
           />
         </div>
         <ProfileInfo aboutMe={aboutMe} userName={userName} />
-        {!!me && (
+        {!!me && me?.userId === id && (
           <Button as={'a'} className={s.button} href={'/profile/settings'} variant={'secondary'}>
             {SettingsButton}
           </Button>
