@@ -19,7 +19,6 @@ export const ROUTES = {
   VERIFICATION_LINK_EXPIRED: '/auth/forgot-password/verification-link-expired',
 }
 export const PRIVATE_ROUTES = [
-  ROUTES.DEFAULT,
   ROUTES.HOME,
   ROUTES.CREATE,
   ROUTES.PROFILE,
