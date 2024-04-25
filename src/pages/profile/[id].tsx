@@ -4,11 +4,13 @@ import { api } from '@/services/api'
 import { getMe } from '@/services/authService/authEndpoints'
 import { getPublicUserProfile } from '@/services/publicProfileSerice/publicProfileEndpoints'
 import { ProfileHeader } from '@/widgets/profile/profileHeader'
+import { ProfilePhotos } from '@/widgets/profile/profilePhotos'
 
 const PublicProfilePage = () => {
   return (
     <div>
       <ProfileHeader.widget />
+      <ProfilePhotos.widget />
     </div>
   )
 }

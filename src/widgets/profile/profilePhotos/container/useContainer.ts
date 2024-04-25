@@ -13,13 +13,15 @@ export const useContainer = () => {
   })
   const router = useRouter()
 
+  const profileId = router.query.id as string
+
   const [lastPostId, setLastPostId] = useState<number | undefined>(undefined)
 
   const { data: me } = useGetMeQuery() as { data: UserType }
   const { data: posts, isFetching } = useGetUserPostsQuery({
     endCursorPostId: lastPostId,
     pageSize: !lastPostId ? 12 : 8,
-    userId: me.userId,
+    userId: +profileId || me.userId,
   })
 
   useEffect(() => {
