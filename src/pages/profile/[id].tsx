@@ -19,6 +19,7 @@ const PublicProfilePage = () => {
 export const getServerSideProps = wrapper.getServerSideProps(store => async context => {
   const profileId = context.params?.id as string | undefined
   const cookie = context.req?.cookies
+
   if (!profileId) {
     return { notFound: true }
   }

@@ -1,5 +1,6 @@
 import { PropsWithChildren, ReactElement } from 'react'
 
+import { useAppSelector } from '@/app/store/hooks/useAppSelector'
 import { AuthLayout } from '@/layouts/publ/AuthLayout'
 import { MainLayout } from '@/layouts/publ/MainLayout'
 import { useGetMeQuery } from '@/services/authService/authEndpoints'
@@ -7,7 +8,7 @@ import { PRIVATE_ROUTES, ROUTES } from '@/shared/constants/routes'
 import { NextPage } from 'next'
 import { usePathname } from 'next/navigation'
 import { useRouter } from 'next/router'
-import { useAppSelector } from '@/app/store/hooks/useAppSelector'
+import { AuthProvider } from '@/app/providers/authProvider'
 
 const BaseLayout: NextPage<PropsWithChildren> = props => {
   const { children } = props
@@ -15,7 +16,7 @@ const BaseLayout: NextPage<PropsWithChildren> = props => {
   const router = useRouter()
 
   const { asPath, pathname } = router
-  console.log()
+
   const isPublicPathName =
     (!token && asPath.startsWith(ROUTES.PROFILE)) ||
     pathname === '/' ||
@@ -24,7 +25,9 @@ const BaseLayout: NextPage<PropsWithChildren> = props => {
   return (
     <>
       {!isPublicPathName ? (
-        <MainLayout>{children}</MainLayout>
+        <AuthProvider>
+          <MainLayout>{children}</MainLayout>
+        </AuthProvider>
       ) : (
         <AuthLayout>{children}</AuthLayout>
       )}
