@@ -18,13 +18,11 @@ const PublicProfilePage = () => {
 
 export const getServerSideProps = wrapper.getServerSideProps(store => async context => {
   const profileId = context.params?.id as string | undefined
-
+  const cookie = context.req?.cookies
   if (!profileId) {
     return { notFound: true }
   }
-  const {} = store.getState()
 
-  store.dispatch(getMe.initiate(undefined))
   store.dispatch(getPublicUserProfile.initiate({ profileId: +profileId }))
   store.dispatch(getUserPosts.initiate({ pageSize: 12, userId: +profileId }))
   const allRes = await Promise.all(store.dispatch(api.util.getRunningQueriesThunk()))
@@ -34,7 +32,7 @@ export const getServerSideProps = wrapper.getServerSideProps(store => async cont
   }
 
   return {
-    props: {},
+    props: { cookie },
   }
 })
 
