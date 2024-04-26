@@ -1,5 +1,6 @@
 import { PropsWithChildren, ReactElement } from 'react'
 
+import { AuthProvider } from '@/app/providers/authProvider'
 import { useAppSelector } from '@/app/store/hooks/useAppSelector'
 import { AuthLayout } from '@/layouts/publ/AuthLayout'
 import { MainLayout } from '@/layouts/publ/MainLayout'
@@ -8,7 +9,6 @@ import { PRIVATE_ROUTES, ROUTES } from '@/shared/constants/routes'
 import { NextPage } from 'next'
 import { usePathname } from 'next/navigation'
 import { useRouter } from 'next/router'
-import { AuthProvider } from '@/app/providers/authProvider'
 
 const BaseLayout: NextPage<PropsWithChildren> = props => {
   const { children } = props
