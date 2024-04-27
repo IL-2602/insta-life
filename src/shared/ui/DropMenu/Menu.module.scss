@@ -1,6 +1,6 @@
 .content {
   position: relative;
-  z-index: 300;
+  z-index: var(--zindex-drop-menu);
 
   background-color: var(--color-dark-500);
   border: 1px solid var(--color-dark-100dark-100);

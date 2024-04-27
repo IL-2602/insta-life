@@ -26,6 +26,7 @@ type Metadata = {
 export type PublishPostParams = {
   childrenMetadata: Metadata[]
   description: string
+  lastPostId?: number | undefined
 }
 
 export type EditPostParams = {
@@ -34,7 +35,7 @@ export type EditPostParams = {
 }
 
 export type getUserPostsParams = {
-  endCursorPostId?: number
+  endCursorPostId?: number | undefined
   pageSize?: number
   sortDirection?: 'asc' | 'desc'
   userId: number

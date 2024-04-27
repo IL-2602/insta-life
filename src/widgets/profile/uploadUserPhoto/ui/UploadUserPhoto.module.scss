@@ -27,7 +27,7 @@
       cursor: pointer;
 
       position: absolute;
-      z-index: 20;
+      z-index: var(--zindex-10);
       top: 19px;
       right: 19px;
 

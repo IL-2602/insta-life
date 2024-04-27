@@ -1,3 +1,3 @@
-import { store } from '../store'
+import { AppStore } from '@/app/store/types/appStore'
 
-export type AppDispatch = typeof store.dispatch
+export type AppDispatch = AppStore['dispatch']

@@ -32,6 +32,7 @@ export const PostCropping = memo(
     onNext,
     onPrev,
     postPhoto,
+    postPhotoError,
     postPhotos,
     setCurrentPhotoAspect,
     setCurrentPhotoZoom,
@@ -59,6 +60,13 @@ export const PostCropping = memo(
         title={t.post.cropping}
       >
         <div className={s.croppingWrapper}>
+          <div className={s.errorWrapper}>
+            {postPhotoError && (
+              //@ts-ignore
+              <Typography variant={'error'}>{t.myProfile.error[postPhotoError]}</Typography>
+            )}
+          </div>
+
           <PostPhotos
             cropping
             currentPhoto={currPhotoIndex}

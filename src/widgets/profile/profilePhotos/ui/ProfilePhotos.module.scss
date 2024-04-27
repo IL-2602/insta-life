@@ -6,17 +6,24 @@
 
   margin-top: 48px;
 
-  img {
+  .imageContainer img {
     width: 100%;
     height: 234px;
     object-fit: cover;
+    transition: transform 0.5s;
+  }
+
+  .imageContainer:hover img {
+    cursor: pointer;
+    transform: scale(1.035);
   }
 }
 
 .fetchSpinner {
   display: grid;
   place-items: center;
-  height: 190px;
+  height: 100px;
+  margin-bottom: 100px;
 }
 
 .work {

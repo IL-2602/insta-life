@@ -27,7 +27,7 @@ export const useContainer = () => {
   const [currPhotoIndex, setCurrPhotoIndex] = useState(0)
 
   const [publishPostImage, { isLoading: isLoadingPostImage }] = usePublishPostImageMutation()
-  const [publishPost, { isLoading: isLoadingPost }] = usePublishPostMutation()
+  const [publishPost, { isLoading: isLoadingPost, isSuccess }] = usePublishPostMutation()
   const { data: getProfile, isLoading: isGetUserLoading } = useGetProfileQuery()
 
   const { postPublicationSchema } = usePostPublicationSchema()
@@ -38,6 +38,7 @@ export const useContainer = () => {
     control,
     formState: { errors },
     handleSubmit,
+    resetField,
     watch,
   } = useForm<postPublicationFormSchema>({
     defaultValues: {
@@ -92,6 +93,8 @@ export const useContainer = () => {
 
       dispatch(postActions.setIsCreatePostModal(false))
       dispatch(postActions.setClearPostPhotos())
+
+      resetField('postDescription')
 
       return await publishPost(postBody).unwrap()
     } catch (error) {

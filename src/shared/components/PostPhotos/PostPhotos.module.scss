@@ -3,6 +3,7 @@
 
   .photoScale {
     position: absolute;
+    z-index: var(--zindex-15);
     bottom: 12px;
     left: 50%;
     transform: translateX(-50%);
@@ -33,6 +34,7 @@
 
   .btn {
     position: absolute;
+    z-index: var(--zindex-15);
     top: 50%;
     transform: translateY(-50%);
 

@@ -8,7 +8,7 @@ import {
   getUserPostsResponse,
 } from '@/services/postService/lib/postEndpoints.types'
 
-const postEndpoints = api.injectEndpoints({
+export const postEndpoints = api.injectEndpoints({
   endpoints: builder => ({
     deletePost: builder.mutation<void, number>({
       invalidatesTags: [],
@@ -34,7 +34,18 @@ const postEndpoints = api.injectEndpoints({
       },
     }),
     getUserPosts: builder.query<getUserPostsResponse, getUserPostsParams>({
+      forceRefetch({ currentArg, previousArg }) {
+        return currentArg !== previousArg
+      },
+      merge: (currentCache, newItems, otherArgs) => {
+        if (otherArgs.arg.endCursorPostId === undefined) {
+          currentCache.items = newItems.items
+        } else {
+          currentCache.items.push(...newItems.items)
+        }
+      },
       providesTags: ['Post'],
+
       query: ({ endCursorPostId, pageSize, userId }) => {
         return {
           method: 'GET',
@@ -42,9 +53,28 @@ const postEndpoints = api.injectEndpoints({
           url: `public-posts/user/${userId}/${endCursorPostId}`,
         }
       },
+      serializeQueryArgs: ({ endpointName }) => {
+        return endpointName
+      },
     }),
     publishPost: builder.mutation<PublishPostResponse, PublishPostParams>({
-      invalidatesTags: ['Post'],
+      onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
+        try {
+          const { data } = await queryFulfilled
+
+          dispatch(
+            postEndpoints.util.updateQueryData(
+              'getUserPosts',
+              { endCursorPostId: undefined, userId: data.ownerId },
+              draft => {
+                draft.items.unshift(data)
+              }
+            )
+          )
+        } catch (e) {
+          console.log(e)
+        }
+      },
       query: body => {
         return {
           body: body,
@@ -54,7 +84,6 @@ const postEndpoints = api.injectEndpoints({
       },
     }),
     publishPostImage: builder.mutation<PublishPostImageResponse, FormData>({
-      invalidatesTags: ['Post'],
       query: file => {
         return {
           body: file,
