@@ -1,1 +1,5 @@
-export { Header } from './Header'
+import { Container } from './container'
+
+export const Header = {
+  widget: Container,
+}

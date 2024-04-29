@@ -18,7 +18,7 @@ export const MainLayout: NextPage<PropsWithChildren> = props => {
   ) {
     return (
       <>
-        <Header />
+        <Header.widget />
         <Container className={s.wrapper}>
           <SideBar.widget />
           <main className={s.main}>{children}</main>
@@ -30,7 +30,7 @@ export const MainLayout: NextPage<PropsWithChildren> = props => {
   return (
     <AuthProvider>
       <Wrapper>
-        <Header />
+        <Header.widget />
         <Container className={s.wrapper}>
           <SideBar.widget />
           <main className={s.main}>{children}</main>

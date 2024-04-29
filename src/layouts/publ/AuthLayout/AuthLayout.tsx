@@ -12,7 +12,7 @@ export const AuthLayout: NextPage<PropsWithChildren> = props => {
 
   return (
     <Wrapper>
-      <Header />
+      <Header.widget />
       <main className={s.main}>
         <Container className={s.container}>{children}</Container>
       </main>
