@@ -1,6 +1,6 @@
 import { ErrorResponse } from '@/services/authService/lib/authEndpoints.types'
 
-export type ModalSteps = 'cropping' | 'filters' | 'publication' | 'upload' | undefined
+export type ModalSteps = 'cropping' | 'filters' | 'publication' | 'upload'
 
 export type PostSliceInitialState = {
   isClosePostModal: boolean
@@ -10,6 +10,7 @@ export type PostSliceInitialState = {
   modalSteps: ModalSteps
   postPhotos: PostPhoto[]
 }
+
 export type PostPhoto = {
   aspect: number
   cropImg: string

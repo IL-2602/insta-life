@@ -4,9 +4,8 @@ import {
   PublishPostImageResponse,
   PublishPostParams,
   PublishPostResponse,
-  getUserPostsParams,
-  getUserPostsResponse,
 } from '@/services/postService/lib/postEndpoints.types'
+import { publicEndpoints } from '@/services/publicService/publicEndpoints'
 
 export const postEndpoints = api.injectEndpoints({
   endpoints: builder => ({
@@ -33,37 +32,13 @@ export const postEndpoints = api.injectEndpoints({
         }
       },
     }),
-    getUserPosts: builder.query<getUserPostsResponse, getUserPostsParams>({
-      forceRefetch({ currentArg, previousArg }) {
-        return currentArg !== previousArg
-      },
-      merge: (currentCache, newItems, otherArgs) => {
-        if (otherArgs.arg.endCursorPostId === undefined) {
-          currentCache.items = newItems.items
-        } else {
-          currentCache.items.push(...newItems.items)
-        }
-      },
-      providesTags: ['Post'],
-
-      query: ({ endCursorPostId, pageSize, userId }) => {
-        return {
-          method: 'GET',
-          params: { endCursorPostId, pageSize, userId },
-          url: `public-posts/user/${userId}/${endCursorPostId}`,
-        }
-      },
-      serializeQueryArgs: ({ endpointName }) => {
-        return endpointName
-      },
-    }),
     publishPost: builder.mutation<PublishPostResponse, PublishPostParams>({
       onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
         try {
           const { data } = await queryFulfilled
 
           dispatch(
-            postEndpoints.util.updateQueryData(
+            publicEndpoints.util.updateQueryData(
               'getUserPosts',
               { endCursorPostId: undefined, userId: data.ownerId },
               draft => {
@@ -98,7 +73,6 @@ export const postEndpoints = api.injectEndpoints({
 export const {
   useDeletePostMutation,
   useEditPostMutation,
-  useGetUserPostsQuery,
   usePublishPostImageMutation,
   usePublishPostMutation,
 } = postEndpoints
