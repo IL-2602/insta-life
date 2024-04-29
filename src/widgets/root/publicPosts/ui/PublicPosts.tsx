@@ -30,7 +30,7 @@ export const PublicPosts = memo(
                 <PublicPhotos
                   className={clsx(
                     s.photo,
-                    item.description.length > 105 && !openPosts[item.id]
+                    item.description.length > 105 && openPosts[item.id]
                       ? s.halfPhotoHeight
                       : s.photoHeight
                   )}
