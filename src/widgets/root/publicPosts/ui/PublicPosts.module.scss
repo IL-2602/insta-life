@@ -1,0 +1,129 @@
+.counterWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+  height: 72px;
+  padding-right: 24px;
+  padding-left: 24px;
+
+  background-color: var(--color-dark-500);
+  border: 1px solid var(--color-dark-300);
+  border-radius: 2px;
+}
+
+.counter {
+  padding: 9px 17px;
+
+  font-variant-numeric: tabular-nums;
+
+  background-color: var(--color-dark-700);
+  border: 1px solid var(--color-dark-300);
+  border-radius: 2px;
+}
+
+.photosWrapper {
+  display: grid;
+  grid-template-columns: repeat(4, 234px);
+  gap: 12px;
+  justify-content: center;
+
+  margin-top: 36px;
+}
+
+@media screen and (width <= 1095px) {
+  .photosWrapper {
+    grid-template-columns: repeat(2, 234px);
+    gap: 24px;
+  }
+}
+
+@media screen and (width <= 630px) {
+  .photosWrapper {
+    grid-template-columns: repeat(1, 234px);
+    gap: 12px;
+  }
+}
+
+.photoWrapper {
+  display: flex;
+  flex-direction: column;
+
+  .photo {
+    object-fit: cover;
+    border-radius: 2px;
+
+    &:hover {
+      cursor: pointer;
+      transform: scale(1.015);
+      transition: transform 0.5s;
+    }
+  }
+
+  .halfPhotoHeight {
+    height: 120px;
+    transition: height 0.5s ease-in-out;
+  }
+
+  .photoHeight {
+    height: 240px;
+    transition: height 0.5s ease-in-out;
+  }
+
+  .avatarWrapper {
+    display: flex;
+    align-items: center;
+    margin-top: 12px;
+    margin-bottom: 12px;
+
+    .avatar {
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+
+      width: 36px;
+      height: 36px;
+      margin-right: 12px;
+
+      object-fit: cover;
+      background-color: var(--color-dark-700);
+      border-radius: 50%;
+    }
+  }
+
+  .time {
+    margin-bottom: 3px;
+    color: var(--color-light-900);
+  }
+
+  .lineClamp {
+    position: relative;
+
+    overflow: hidden;
+    display: -webkit-box;
+
+    text-overflow: ellipsis;
+    word-break: break-all;
+
+    transition: line-height 0.5s ease;
+  }
+
+  .btnMore {
+    padding: 0 0 3px 5px;
+    text-decoration: underline;
+
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .btnHide {
+    padding: 0 0 3px 3px;
+    text-decoration: underline;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
