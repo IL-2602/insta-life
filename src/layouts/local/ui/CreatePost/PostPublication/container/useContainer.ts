@@ -27,7 +27,7 @@ export const useContainer = () => {
   const [currPhotoIndex, setCurrPhotoIndex] = useState(0)
 
   const [publishPostImage, { isLoading: isLoadingPostImage }] = usePublishPostImageMutation()
-  const [publishPost, { isLoading: isLoadingPost, isSuccess }] = usePublishPostMutation()
+  const [publishPost, { isLoading: isLoadingPost }] = usePublishPostMutation()
   const { data: getProfile, isLoading: isGetUserLoading } = useGetProfileQuery()
 
   const { postPublicationSchema } = usePostPublicationSchema()
