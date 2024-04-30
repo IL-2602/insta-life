@@ -27,6 +27,7 @@
     "@reduxjs/toolkit": "^2.2.1",
     "async-mutex": "^0.4.1",
     "clsx": "^2.1.0",
+    "cookies-next": "^4.1.1",
     "debounce": "^2.0.0",
     "env-cmd": "^10.1.0",
     "esbuild": "^0.20.1",

@@ -11,7 +11,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isLoading, setIsLoading] = useState(true)
   const { data: me, isLoading: isLoadingMe } = useGetMeQuery()
   const pathname = usePathname()
-  const token = useAppSelector(state => state.authReducer.accessToken)
   const { isReady, push } = useRouter()
   const isPrivateRoute = !!PRIVATE_ROUTES.find(route => route === pathname)
 
@@ -23,14 +22,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setIsLoading(true)
     } else {
       if (!me && isPrivateRoute) {
-        !token &&
-          push(ROUTES.DEFAULT).then(() => {
-            setIsLoading(false)
-          })
+        push(ROUTES.DEFAULT).then(() => {
+          setIsLoading(false)
+        })
       }
       setIsLoading(false)
     }
-  }, [push, isLoadingMe, isPrivateRoute, me, setIsLoading, token, isReady])
+  }, [push, isLoadingMe, isPrivateRoute, me, setIsLoading, isReady])
 
   if (!me && isPrivateRoute) {
     return null

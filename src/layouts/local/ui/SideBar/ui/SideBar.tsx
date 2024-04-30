@@ -30,14 +30,12 @@ export const SideBar = ({
   isOpen,
   setIsOpen,
   t,
+  me,
   uploadPostPhoto,
 }: SideBarProps) => {
   return (
     <aside className={s.aside}>
-      <Link
-        className={handleActiveLink(ROUTES.HOME) ? s.activeLink : ''}
-        href={`${ROUTES.PROFILE}/3`}
-      >
+      <Link className={handleActiveLink(ROUTES.HOME) ? s.activeLink : ''} href={ROUTES.HOME}>
         <HomeIcon className={s.navIcon} />
         <Typography className={s.navLink} color={'light'} variant={'medium14'}>
           {t.sidebar.home}
@@ -58,7 +56,7 @@ export const SideBar = ({
             ? s.activeLink
             : ''
         }
-        href={`${ROUTES.PROFILE}/5`}
+        href={`${ROUTES.PROFILE}/${me.userId}`}
       >
         <ProfileIcon className={s.navIcon} />
         <Typography className={s.navLink} color={'light'} variant={'medium14'}>

@@ -28,14 +28,12 @@ export const MainLayout: NextPage<PropsWithChildren> = props => {
   }
 
   return (
-    <AuthProvider>
-      <Wrapper>
-        <Header.widget />
-        <Container className={s.wrapper}>
-          <SideBar.widget />
-          <main className={s.main}>{children}</main>
-        </Container>
-      </Wrapper>
-    </AuthProvider>
+    <Wrapper>
+      <Header.widget />
+      <Container className={s.wrapper}>
+        <SideBar.widget />
+        <main className={s.main}>{children}</main>
+      </Container>
+    </Wrapper>
   )
 }

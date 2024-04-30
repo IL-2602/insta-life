@@ -2,10 +2,11 @@ import { useState } from 'react'
 
 import { useAppDispatch } from '@/app/store/hooks/useAppDispatch'
 import { useAppSelector } from '@/app/store/hooks/useAppSelector'
-import { useLogOutMutation } from '@/services/authService/authEndpoints'
+import { useGetMeQuery, useLogOutMutation } from '@/services/authService/authEndpoints'
 import { postActions } from '@/services/postService/store/slice/postEndpoints.slice'
 import { useTranslation } from '@/shared/hooks/useTranslation'
 import { useRouter } from 'next/router'
+import { UserType } from '@/services/authService/lib/authEndpoints.types'
 
 export const useContainer = () => {
   const { t } = useTranslation()
@@ -19,14 +20,11 @@ export const useContainer = () => {
   const isCreatePostModal = useAppSelector(state => state.postReducer.isCreatePostModal)
 
   const [logOut, { isLoading }] = useLogOutMutation()
-
-  const handleLogOut = async () => {
-    try {
-      return await logOut().unwrap()
-    } catch (error) {
-      console.error(error)
-    }
-  }
+  const { data: me } = useGetMeQuery() as { data: UserType }
+  const handleLogOut = () =>
+    logOut()
+      .unwrap()
+      .catch(e => console.log(e))
 
   const uploadPostPhoto = () => {
     dispatch(postActions.setIsCreatePostModal(true))
@@ -48,5 +46,6 @@ export const useContainer = () => {
     setIsOpen,
     t,
     uploadPostPhoto,
+    me,
   }
 }

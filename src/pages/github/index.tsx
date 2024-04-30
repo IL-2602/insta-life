@@ -6,13 +6,22 @@ import { authActions } from '@/services/authService/store/slice/authEndpoints.sl
 import { ROUTES } from '@/shared/constants/routes'
 import { Spinner } from '@/shared/ui/Spinner'
 import { useRouter } from 'next/router'
+import { useGetMeQuery } from '@/services/authService/authEndpoints'
+import { UserType } from '@/services/authService/lib/authEndpoints.types'
+import { setCookie } from 'cookies-next'
 
 const GitHubPage = () => {
   const { isReady, push, query } = useRouter()
+  const { data: me } = useGetMeQuery() as { data: UserType }
   const dispatch = useAppDispatch()
 
   if (query.accessToken && query.email) {
     dispatch(authActions.setAccessToken(query.accessToken as string))
+    setCookie('accessToken', query.accessToken as string, {
+      maxAge: 30 * 60,
+      sameSite: 'none',
+      secure: true,
+    })
     dispatch(authActions.setEmail(query.email as string))
   }
 
@@ -20,8 +29,8 @@ const GitHubPage = () => {
     if (!isReady) {
       return
     }
-    if (query.accessToken) {
-      void push(ROUTES.HOME)
+    if (query.accessToken && me.userId) {
+      void push(`${ROUTES.PROFILE}/${me.userId}`)
     } else {
       void push(ROUTES.LOGIN)
     }

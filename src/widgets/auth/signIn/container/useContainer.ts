@@ -1,14 +1,7 @@
-import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { useAppDispatch } from '@/app/store/hooks/useAppDispatch'
-import { useAppSelector } from '@/app/store/hooks/useAppSelector'
-import {
-  useGetMeQuery,
-  useOAuthGoogleMutation,
-  useSignInMutation,
-} from '@/services/authService/authEndpoints'
-import { UserType } from '@/services/authService/lib/authEndpoints.types'
+import { useOAuthGoogleMutation, useSignInMutation } from '@/services/authService/authEndpoints'
 import { authActions } from '@/services/authService/store/slice/authEndpoints.slice'
 import { ROUTES } from '@/shared/constants/routes'
 import { useTranslation } from '@/shared/hooks/useTranslation'
@@ -50,8 +43,6 @@ export const useContainer = () => {
 
   const dispatch = useAppDispatch()
 
-  const token = useAppSelector(state => state.authReducer.accessToken)
-
   const { t } = useTranslation()
   const { push } = useRouter()
   const onSubmit = handleSubmit((data: signInFormSchema) => {
@@ -88,12 +79,6 @@ export const useContainer = () => {
     },
   })
 
-  useEffect(() => {
-    if (token) {
-      push(ROUTES.HOME)
-    }
-  }, [token])
-
   return {
     control,
     errorEmail,
@@ -104,6 +89,5 @@ export const useContainer = () => {
     onSubmit,
     signIsLoading,
     t,
-    token,
   }
 }
