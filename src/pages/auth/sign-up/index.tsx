@@ -1,6 +1,6 @@
 import { getBaseLayout } from '@/layouts/publ/BaseLayout/BaseLayout'
-import { SignUp } from '@/widgets/auth/signUp'
 import { AuthRouteChecker } from '@/shared/hocs/AuthRouteChecker'
+import { SignUp } from '@/widgets/auth/signUp'
 
 const SignUpPage = () => {
   return <SignUp.widget />

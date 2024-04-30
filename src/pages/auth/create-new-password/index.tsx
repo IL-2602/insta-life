@@ -1,6 +1,6 @@
 import { getBaseLayout } from '@/layouts/publ/BaseLayout'
-import { CreateNewPassword } from '@/widgets/auth/createNewPassword'
 import { AuthRouteChecker } from '@/shared/hocs/AuthRouteChecker'
+import { CreateNewPassword } from '@/widgets/auth/createNewPassword'
 
 const CreateNewPasswordPage = () => {
   return <CreateNewPassword.widget />

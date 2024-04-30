@@ -1,6 +1,6 @@
 import { getBaseLayout } from '@/layouts/publ/BaseLayout'
-import { EmailLinkExpired } from '@/widgets/auth/emailLinkExpired'
 import { AuthRouteChecker } from '@/shared/hocs/AuthRouteChecker'
+import { EmailLinkExpired } from '@/widgets/auth/emailLinkExpired'
 
 const VerificationLinkExpiredPage = () => {
   return <EmailLinkExpired.widget />

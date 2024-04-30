@@ -28,9 +28,9 @@ export const SideBar = ({
   isCreatePostModal,
   isLoading,
   isOpen,
+  me,
   setIsOpen,
   t,
-  me,
   uploadPostPhoto,
 }: SideBarProps) => {
   return (

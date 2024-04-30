@@ -1,6 +1,6 @@
 import { getBaseLayout } from '@/layouts/publ/BaseLayout'
-import { TermsOfService } from '@/widgets/auth/termsOfServices'
 import { AuthRouteChecker } from '@/shared/hocs/AuthRouteChecker'
+import { TermsOfService } from '@/widgets/auth/termsOfServices'
 
 const TermsOfServicePage = () => {
   return <TermsOfService.widget />

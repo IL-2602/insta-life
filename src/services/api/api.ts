@@ -8,9 +8,9 @@ import {
   createApi,
   fetchBaseQuery,
 } from '@reduxjs/toolkit/query/react'
+import { deleteCookie, getCookie, setCookie } from 'cookies-next'
 import { Context, HYDRATE } from 'next-redux-wrapper'
 import { Action } from 'redux'
-import { deleteCookie, getCookie, setCookie } from 'cookies-next'
 const baseUrl = process.env.NEXT_PUBLIC_BASE_API_URL
 
 const isNotServer = typeof window !== 'undefined'
@@ -18,10 +18,11 @@ const isNotServer = typeof window !== 'undefined'
 export const baseQuery = fetchBaseQuery({
   baseUrl,
   credentials: 'include',
-  prepareHeaders: (headers, { getState, extra }) => {
+  prepareHeaders: (headers, { extra, getState }) => {
     if (isNotServer) {
       // const token = (getState() as RootState).authReducer?.accessToken
       const accessTokenFront = getCookie('accessToken')
+
       if (accessTokenFront) {
         headers.set('Authorization', `Bearer ${accessTokenFront}`)
       }
@@ -29,6 +30,7 @@ export const baseQuery = fetchBaseQuery({
       const context = extra as Context | undefined
 
       const isContextReqExist = context && 'req' in context
+
       if (isContextReqExist && context.req && 'cookies' in context.req) {
         const token = context.req.cookies.accessToken
 

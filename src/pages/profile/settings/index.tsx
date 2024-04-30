@@ -1,6 +1,6 @@
 import { getBaseLayout } from '@/layouts/publ/BaseLayout'
-import { ProfileSettings } from '@/widgets/profile/profileSettings'
 import { AuthDefender } from '@/shared/hocs/AuthDefender'
+import { ProfileSettings } from '@/widgets/profile/profileSettings'
 
 const ProfileSettingsPage = () => {
   return <ProfileSettings.widget />

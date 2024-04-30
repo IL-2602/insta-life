@@ -3,10 +3,10 @@ import { useState } from 'react'
 import { useAppDispatch } from '@/app/store/hooks/useAppDispatch'
 import { useAppSelector } from '@/app/store/hooks/useAppSelector'
 import { useGetMeQuery, useLogOutMutation } from '@/services/authService/authEndpoints'
+import { UserType } from '@/services/authService/lib/authEndpoints.types'
 import { postActions } from '@/services/postService/store/slice/postEndpoints.slice'
 import { useTranslation } from '@/shared/hooks/useTranslation'
 import { useRouter } from 'next/router'
-import { UserType } from '@/services/authService/lib/authEndpoints.types'
 
 export const useContainer = () => {
   const { t } = useTranslation()
@@ -42,10 +42,10 @@ export const useContainer = () => {
     isCreatePostModal,
     isLoading,
     isOpen,
+    me,
     pathname,
     setIsOpen,
     t,
     uploadPostPhoto,
-    me,
   }
 }

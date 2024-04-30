@@ -2,13 +2,13 @@ import { useEffect } from 'react'
 
 import { useAppDispatch } from '@/app/store/hooks/useAppDispatch'
 import { getBaseLayout } from '@/layouts/publ/BaseLayout/BaseLayout'
+import { useGetMeQuery } from '@/services/authService/authEndpoints'
+import { UserType } from '@/services/authService/lib/authEndpoints.types'
 import { authActions } from '@/services/authService/store/slice/authEndpoints.slice'
 import { ROUTES } from '@/shared/constants/routes'
 import { Spinner } from '@/shared/ui/Spinner'
-import { useRouter } from 'next/router'
-import { useGetMeQuery } from '@/services/authService/authEndpoints'
-import { UserType } from '@/services/authService/lib/authEndpoints.types'
 import { setCookie } from 'cookies-next'
+import { useRouter } from 'next/router'
 
 const GitHubPage = () => {
   const { isReady, push, query } = useRouter()
