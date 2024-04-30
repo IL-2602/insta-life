@@ -19,12 +19,12 @@ export type PostPhoto = {
   zoom: number
 }
 
-type Metadata = {
-  uploadId: string | undefined
-}
+// type Metadata = {
+//   uploadId: string | undefined
+// }
 
 export type PublishPostParams = {
-  childrenMetadata: Metadata[]
+  childrenMetadata: Array<{ uploadId: string }>
   description: string
   lastPostId?: number | undefined
 }

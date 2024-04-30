@@ -1,7 +1,9 @@
 import { useState } from 'react'
 
 import { NextPhotoArrow } from '@/shared/assets/icons/NextPhotoArrow/NextPhotoArrow'
+import { NextPublicPhotoArrow } from '@/shared/assets/icons/NextPublicPhotoArrow/NextPublicPhotoArrow'
 import { PrevPhotoArrow } from '@/shared/assets/icons/PrevPhotoArrow/PrevPhotoArrow'
+import { PrevPublicPhotoArrow } from '@/shared/assets/icons/PrevPublicPhotoArrow/PrevPublicPhotoArrow'
 import { Button } from '@/shared/ui/Button'
 import { clsx } from 'clsx'
 import Image from 'next/image'
@@ -33,7 +35,7 @@ export const PublicPhotos = ({ height, photos, width, ...rest }: Props) => {
   return (
     <div className={s.photosWrapper}>
       <Image
-        alt={'postPhoto'}
+        alt={'photo'}
         height={height}
         src={photos[currentPhotoIndex]}
         width={width}
@@ -47,7 +49,7 @@ export const PublicPhotos = ({ height, photos, width, ...rest }: Props) => {
             onClick={goToPrevPhoto}
             variant={'noStyle'}
           >
-            <PrevPhotoArrow className={s.prevArrow} />
+            <PrevPublicPhotoArrow className={s.prevArrow} />
           </Button>
           <Button
             className={clsx(s.btn, s.nextBtn)}
@@ -55,7 +57,7 @@ export const PublicPhotos = ({ height, photos, width, ...rest }: Props) => {
             onClick={goToNextPhoto}
             variant={'noStyle'}
           >
-            <NextPhotoArrow className={s.nextArrow} />
+            <NextPublicPhotoArrow className={s.nextArrow} />
           </Button>
           <div className={s.photoScale}>
             {photos.map((photo, index) => (

@@ -10,14 +10,14 @@
     display: flex;
     gap: 12px;
 
-    padding: 8px;
+    padding: 4px 8px;
 
     background-color: rgb(33 33 33 / 50%);
     border-radius: 2px;
 
     .circle {
-      width: 8px;
-      height: 8px;
+      width: 6px;
+      height: 6px;
       background-color: var(--color-light-100);
       border-radius: 50%;
     }
@@ -39,8 +39,8 @@
     display: grid;
     place-items: center;
 
-    width: 48px;
-    height: 48px;
+    width: 24px;
+    height: 24px;
 
     background-color: rgb(33 33 33 / 50%);
     border-radius: 2px;
@@ -66,14 +66,10 @@
   .prevBtn {
     left: 0;
     margin-left: 12px;
+  }
 
-    .prevArrow {
-      margin-right: 3px;
-    }
-
-    .nextArrow {
-      margin-left: 3px;
-    }
+  .nextArrow {
+    margin-left: 2px;
   }
 
   .nextBtn {

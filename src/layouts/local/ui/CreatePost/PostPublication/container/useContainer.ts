@@ -56,18 +56,18 @@ export const useContainer = () => {
   const isLoading = isLoadingPostImage || isLoadingPost
 
   const handleCropImages = async (urlFiles: string[]) => {
+    const formData = new FormData()
+
     for (const url of urlFiles) {
       const response = await fetch(url)
 
       const blob = await response.blob()
       const file = new File([blob], 'postPhoto', { type: 'image/jpeg' })
 
-      const formData = new FormData()
-
       formData.append('file', file)
-
-      return formData
     }
+
+    return formData
   }
 
   const handleReceivingUploadId = async () => {
@@ -86,9 +86,19 @@ export const useContainer = () => {
     try {
       const uploadIds = await handleReceivingUploadId()
 
-      const postBody = {
-        childrenMetadata: [{ uploadId: uploadIds?.join(',') }],
-        description: postDescription as string,
+      const uploadId = uploadIds?.map(id => ({ uploadId: id }))
+
+      let postBody
+
+      if (uploadId) {
+        postBody = {
+          childrenMetadata: uploadId,
+          description: postDescription as string,
+        }
+      }
+
+      if (!postBody) {
+        return null
       }
 
       dispatch(postActions.setIsCreatePostModal(false))

@@ -31,7 +31,8 @@ export const PostDescription = ({ description, id, openPosts, setOpenPosts }: Pr
   } else if (description.length > 105 && description.length > 320 && !openPosts[id]) {
     return (
       <Typography className={s.lineClamp} variant={'regular14'}>
-        {description.slice(0, 84)} ...
+        {description.slice(0, 84)}
+        <span style={{ paddingRight: '3px' }}>...</span>
         <Button className={s.btnHide} onClick={() => handleToggleText(String(id))} variant={'link'}>
           {t.button.showMore}
         </Button>
@@ -40,7 +41,8 @@ export const PostDescription = ({ description, id, openPosts, setOpenPosts }: Pr
   } else if (description.length > 105 && description.length > 320 && openPosts[id]) {
     return (
       <Typography className={s.lineClamp} variant={'regular14'}>
-        {description.slice(0, 290)} ...
+        {description.slice(0, 280)}
+        <span style={{ paddingRight: '3px' }}>...</span>
         <Button className={s.btnHide} onClick={() => handleToggleText(String(id))} variant={'link'}>
           {t.button.hide}
         </Button>
@@ -49,7 +51,8 @@ export const PostDescription = ({ description, id, openPosts, setOpenPosts }: Pr
   } else if (description.length > 105 && description.length <= 320 && !openPosts[id]) {
     return (
       <Typography>
-        {description.slice(0, 84)} ...
+        {description.slice(0, 84)}
+        <span style={{ paddingRight: '3px' }}>...</span>
         <Button className={s.btnMore} onClick={() => handleToggleText(String(id))} variant={'link'}>
           {t.button.showMore}
         </Button>
@@ -59,6 +62,7 @@ export const PostDescription = ({ description, id, openPosts, setOpenPosts }: Pr
     return (
       <Typography className={s.lineClamp} variant={'regular14'}>
         {description}
+        <span style={{ paddingRight: '3px' }}></span>
         <Button className={s.btnHide} onClick={() => handleToggleText(String(id))} variant={'link'}>
           {t.button.hide}
         </Button>

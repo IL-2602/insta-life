@@ -56,8 +56,6 @@
 
     &:hover {
       cursor: pointer;
-      transform: scale(1.015);
-      transition: transform 0.5s;
     }
   }
 
@@ -99,18 +97,12 @@
 
   .lineClamp {
     position: relative;
-
     overflow: hidden;
-    display: -webkit-box;
-
-    text-overflow: ellipsis;
-    word-break: break-all;
-
-    transition: line-height 0.5s ease;
+    word-wrap: break-word;
   }
 
   .btnMore {
-    padding: 0 0 3px 5px;
+    padding: 0 0 3px;
     text-decoration: underline;
 
     &:focus {
@@ -119,7 +111,7 @@
   }
 
   .btnHide {
-    padding: 0 0 3px 3px;
+    padding: 0 0 3px;
     text-decoration: underline;
 
     &:focus {
