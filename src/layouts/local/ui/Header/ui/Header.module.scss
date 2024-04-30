@@ -9,6 +9,25 @@
   gap: 20px;
   align-items: center;
   justify-content: space-between;
+
+  .meContainer {
+    display: flex;
+    gap: 48px;
+  }
+
+  .notMeContainer {
+    display: flex;
+
+    .btnLogIn {
+      margin-right: 34px;
+      margin-left: 46px;
+    }
+
+    .btnSignUp {
+      height: 35px;
+      margin-top: 2px;
+    }
+  }
 }
 
 .wrapper {
@@ -19,12 +38,12 @@
 .bellButton {
   position: relative;
   display: inline-block;
-  padding-top: 5px;
+  padding-top: 8px;
 }
 
 .span {
   position: absolute;
-  top: -2px;
+  top: 1px;
   right: 0;
 
   display: flex;
