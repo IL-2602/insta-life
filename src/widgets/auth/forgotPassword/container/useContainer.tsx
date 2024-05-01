@@ -6,6 +6,7 @@ import { useAppDispatch } from '@/app/store/hooks/useAppDispatch'
 import { useAppSelector } from '@/app/store/hooks/useAppSelector'
 import { usePasswordRecoveryMutation } from '@/services/authService/authEndpoints'
 import { authActions } from '@/services/authService/store/slice/authEndpoints.slice'
+import { FRONTEND_URL } from '@/shared/constants/frontendUrl'
 import { useTranslation } from '@/shared/hooks/useTranslation'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/router'
@@ -60,15 +61,14 @@ export const useContainer = () => {
       const { email } = data
 
       passwordRecovery({
-        baseUrl: 'http://localhost:3000',
+        baseUrl: FRONTEND_URL,
         email,
         recaptcha: token,
       })
         .unwrap()
-        .then(res => {
+        .then(() => {
           setIsOpen(true)
           dispatch(authActions.setEmail(email))
-          console.log(res)
         })
         .catch(err => {
           console.log(err.data.messages)
