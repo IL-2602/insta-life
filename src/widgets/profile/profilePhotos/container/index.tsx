@@ -1,5 +1,3 @@
-import { FC } from 'react'
-
 import { ProfilePhotos } from '../ui/ProfilePhotos'
 import { useContainer } from './useContainer'
 

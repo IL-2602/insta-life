@@ -151,6 +151,7 @@ export const ru: Local = {
     discard: 'Сбросить',
     editPost: 'Редактировать пост',
     follow: 'Подписаться',
+    hide: 'Скрыть',
     moreInformation: 'Дополнительная информация',
     next: 'Дальше',
     no: 'Нет',
@@ -166,6 +167,7 @@ export const ru: Local = {
     saveDraft: 'Сохранить черновик',
     selectFromComputer: 'Выбрать фаил',
     sendMessage: 'Отправить сообщение',
+    showMore: 'Показать больше',
     terminateAllOtherSession: 'Завершите все остальные сеансы',
     unfollow: 'Отписаться',
     yes: 'Да',
@@ -222,6 +224,7 @@ export const ru: Local = {
     filters: 'Применить фильтр',
     like: 'Нравится',
     publication: 'Опубликовать',
+    totalUsers: 'Зарегистрированные пользователи',
     viewAllcomments: 'Просмотреть все комментарии',
   },
   profileSettings: {
@@ -306,6 +309,10 @@ export const ru: Local = {
     search: 'Поиск',
     statistics: 'Статистика',
     usersList: 'Пользователи',
+  },
+  time: {
+    hours: 'ч',
+    minutes: 'мин назад',
   },
   toast: {
     profileError: 'Ошибка! Сервер недоступен',

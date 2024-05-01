@@ -6,7 +6,7 @@ import { useRouter } from 'next/router'
 export const useContainer = () => {
   const { t } = useTranslation()
   const router = useRouter()
-  const { data: me } = useGetMeQuery()
+  const { data: me, isLoading } = useGetMeQuery()
 
   const toSignUp = () => {
     router.push(ROUTES.REGISTER)
@@ -16,5 +16,5 @@ export const useContainer = () => {
     router.push(ROUTES.LOGIN)
   }
 
-  return { me, router, t, toSignIn, toSignUp }
+  return { isLoading, me, router, t, toSignIn, toSignUp }
 }
