@@ -5,7 +5,6 @@ import { useSignUpConfirmationMutation } from '@/services/authService/authEndpoi
 import { authActions } from '@/services/authService/store/slice/authEndpoints.slice'
 import { ROUTES } from '@/shared/constants/routes'
 import { useLoader } from '@/shared/hooks/useLoader'
-import { RegistrationConfirmation } from '@/widgets/auth/registrationConfirmation'
 import { useRouter } from 'next/router'
 
 export const useContainer = () => {
@@ -23,7 +22,7 @@ export const useContainer = () => {
         confirmationCode: query.code as string,
       })
         .unwrap()
-        .then(res => {
+        .then(() => {
           push({ pathname: ROUTES.CONGRATULATION })
         })
         .catch(err => {
