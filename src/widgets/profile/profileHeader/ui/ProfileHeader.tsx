@@ -24,7 +24,7 @@ export const ProfileHeader = (props: ProfileHeaderProps) => {
             width={avatars[0]?.width}
           />
         </div>
-        <ProfileInfo aboutMe={aboutMe} userName={userName} isMe={!!me && me.userId === id} />
+        <ProfileInfo aboutMe={aboutMe} isMe={!!me && me.userId === id} userName={userName} />
       </div>
     )
   }

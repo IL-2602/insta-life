@@ -1,3 +1,4 @@
+import { useTranslation } from '@/shared/hooks/useTranslation'
 import { Profile } from '@/shared/types/profile'
 import { Button } from '@/shared/ui/Button'
 import { Typography } from '@/shared/ui/Typography'
@@ -5,10 +6,10 @@ import { Description } from '@/widgets/profile/profileHeader/ui/ProfileInfo/Desc
 import { UserStat } from '@/widgets/profile/profileHeader/ui/ProfileInfo/UserStat'
 
 import s from './ProfileInfo.module.scss'
-import { useTranslation } from '@/shared/hooks/useTranslation'
 
-export const ProfileInfo = ({ aboutMe, userName, isMe = false }: Props) => {
+export const ProfileInfo = ({ aboutMe, isMe = false, userName }: Props) => {
   const { t } = useTranslation()
+
   return (
     <div className={s.profileInfo}>
       <div className={s.mainWrapper}>
