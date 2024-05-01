@@ -6,10 +6,10 @@ import { useGetMeQuery } from '@/services/authService/authEndpoints'
 import { UserType } from '@/services/authService/lib/authEndpoints.types'
 import { authActions } from '@/services/authService/store/slice/authEndpoints.slice'
 import { ROUTES } from '@/shared/constants/routes'
+import { AuthDefender } from '@/shared/hocs/AuthDefender'
 import { Spinner } from '@/shared/ui/Spinner'
 import { setCookie } from 'cookies-next'
 import { useRouter } from 'next/router'
-import { AuthDefender } from '@/shared/hocs/AuthDefender'
 
 const GitHubPage = () => {
   const { isReady, push, query } = useRouter()
