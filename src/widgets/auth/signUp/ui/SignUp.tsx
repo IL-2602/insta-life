@@ -52,6 +52,7 @@ export const SignUp = memo(
               errorMessage={userNameErrorMessage}
               label={t.auth.form.username}
               name={'userName'}
+              placeholder={'Epam11'}
             />
             <ControlledTextField
               className={s.email}
@@ -59,6 +60,7 @@ export const SignUp = memo(
               errorMessage={emailErrorMessage}
               label={t.auth.form.email}
               name={'email'}
+              placeholder={'Epam@epam.com'}
               type={'email'}
             />
             <ControlledTextField
@@ -67,6 +69,7 @@ export const SignUp = memo(
               errorMessage={passwordErrorMessage}
               label={t.auth.form.password}
               name={'password'}
+              placeholder={'******************'}
               type={'password'}
             />
             <ControlledTextField
@@ -75,6 +78,7 @@ export const SignUp = memo(
               errorMessage={passwordConfirmationErrorMessage}
               label={t.auth.form.passwordConfirmation}
               name={'passwordConfirmation'}
+              placeholder={'******************'}
               type={'password'}
             />
             <div className={s.checkAgreement}>
