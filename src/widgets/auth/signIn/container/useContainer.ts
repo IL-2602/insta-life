@@ -48,14 +48,13 @@ export const useContainer = () => {
   const onSubmit = handleSubmit((data: signInFormSchema) => {
     signIn(data)
       .unwrap()
-      .catch(e => {
+      .then(() => dispatch(authActions.setEmail(email)))
+      .catch(() => {
         setError('password', {
           message: 'invalidEmailOrPass',
           type: 'manual',
         })
       })
-
-    dispatch(authActions.setEmail(email))
   })
 
   const login = useGoogleLogin({

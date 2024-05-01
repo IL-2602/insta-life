@@ -9,6 +9,7 @@ import { ROUTES } from '@/shared/constants/routes'
 import { Spinner } from '@/shared/ui/Spinner'
 import { setCookie } from 'cookies-next'
 import { useRouter } from 'next/router'
+import { AuthDefender } from '@/shared/hocs/AuthDefender'
 
 const GitHubPage = () => {
   const { isReady, push, query } = useRouter()
@@ -28,19 +29,12 @@ const GitHubPage = () => {
     if (!isReady) {
       return
     }
-    if (query.accessToken && me.userId) {
+    if (query.accessToken && me?.userId) {
       void push(`${ROUTES.PROFILE}/${me.userId}`)
-    } else {
-      void push(ROUTES.LOGIN)
     }
-  }, [query.accessToken, push, dispatch, isReady])
+  }, [query.accessToken, push, dispatch, isReady, me?.userId])
 
-  return (
-    <div>
-      <Spinner />
-    </div>
-  )
+  return null
 }
 
-GitHubPage.getLayout = getBaseLayout
-export default GitHubPage
+export default AuthDefender(GitHubPage)

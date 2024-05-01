@@ -21,10 +21,12 @@ export const useContainer = () => {
 
   const [logOut, { isLoading }] = useLogOutMutation()
   const { data: me } = useGetMeQuery() as { data: UserType }
-  const handleLogOut = () =>
+  const handleLogOut = () => {
+    router.push('/')
     logOut()
       .unwrap()
       .catch(e => console.log(e))
+  }
 
   const uploadPostPhoto = () => {
     dispatch(postActions.setIsCreatePostModal(true))

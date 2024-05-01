@@ -1,6 +1,5 @@
 import { PropsWithChildren, ReactElement } from 'react'
 
-import { AuthProvider } from '@/app/providers/authProvider'
 import { AuthLayout } from '@/layouts/publ/AuthLayout'
 import { MainLayout } from '@/layouts/publ/MainLayout'
 import { ROUTES } from '@/shared/constants/routes'
@@ -18,9 +17,7 @@ const BaseLayout: NextPage<PropsWithChildren> = props => {
   return (
     <>
       {!isPublicPathName ? (
-        <AuthProvider>
-          <MainLayout>{children}</MainLayout>
-        </AuthProvider>
+        <MainLayout>{children}</MainLayout>
       ) : (
         <AuthLayout>{children}</AuthLayout>
       )}
