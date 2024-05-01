@@ -8,8 +8,8 @@ import { useRouter } from 'next/router'
 
 const BaseLayout: NextPage<PropsWithChildren> = props => {
   const { children } = props
-  const router = useRouter()
 
+  const router = useRouter()
   const { pathname } = router
 
   const isPublicPathName = pathname === '/' || pathname.startsWith(ROUTES.AUTH)

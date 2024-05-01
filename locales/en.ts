@@ -145,6 +145,7 @@ export const en = {
     discard: 'Discard',
     editPost: 'Edit Post',
     follow: 'Follow',
+    hide: 'Hide',
     moreInformation: 'More information',
     next: 'Next',
     no: 'No',
@@ -160,6 +161,7 @@ export const en = {
     saveDraft: 'Save draft',
     selectFromComputer: 'Select from Computer',
     sendMessage: 'Send Message',
+    showMore: 'Show More',
     terminateAllOtherSession: 'Terminate all other session',
     unfollow: 'Unfollow',
     yes: 'Yes',
@@ -215,6 +217,7 @@ export const en = {
     filters: 'Filters',
     like: 'Like',
     publication: 'Publication',
+    totalUsers: 'Registered Users',
     viewAllcomments: 'View All Comments',
   },
   profileSettings: {
@@ -299,6 +302,10 @@ export const en = {
     search: 'Search',
     statistics: 'Statistics',
     usersList: 'Users list',
+  },
+  time: {
+    hours: 'h',
+    minutes: 'min ago',
   },
   toast: {
     profileError: 'Error! Server is not available!',

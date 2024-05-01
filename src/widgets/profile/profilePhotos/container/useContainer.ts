@@ -3,7 +3,7 @@ import { useInView } from 'react-intersection-observer'
 
 import { useGetMeQuery } from '@/services/authService/authEndpoints'
 import { UserType } from '@/services/authService/lib/authEndpoints.types'
-import { useGetUserPostsQuery } from '@/services/postService/postEndpoints'
+import { useGetUserPostsQuery } from '@/services/publicService/publicEndpoints'
 import { ROUTES } from '@/shared/constants/routes'
 import { useRouter } from 'next/router'
 

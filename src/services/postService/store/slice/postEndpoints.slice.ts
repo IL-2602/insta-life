@@ -10,7 +10,7 @@ const initialState: PostSliceInitialState = {
   isCreatePostModal: false,
   isDeletePostModal: false,
   isEditPostModal: false,
-  modalSteps: '',
+  modalSteps: 'upload',
   postPhotos: [],
 }
 

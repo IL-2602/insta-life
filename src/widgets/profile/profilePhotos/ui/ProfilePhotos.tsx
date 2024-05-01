@@ -21,7 +21,7 @@ export const ProfilePhotos = forwardRef<HTMLDivElement, ProfilePhotosProps>(
                   onClick={() => handleReceivingPostId(item.id)}
                 >
                   {item.images[0] && (
-                    <Image alt={'postPhotos'} height={228} src={item.images[0].url} width={234} />
+                    <Image alt={'photo'} height={228} src={item.images[0].url} width={234} />
                   )}
                 </div>
               )
