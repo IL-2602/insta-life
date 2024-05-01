@@ -1,6 +1,5 @@
 import { wrapper } from '@/app/store'
 import { AuthLayout } from '@/layouts/publ/AuthLayout'
-import { getBaseLayout } from '@/layouts/publ/BaseLayout/BaseLayout'
 import { MainLayout } from '@/layouts/publ/MainLayout'
 import { api } from '@/services/api'
 import { getMe } from '@/services/authService/authEndpoints'
@@ -38,7 +37,7 @@ export const getServerSideProps = wrapper.getServerSideProps(store => async cont
   }
 
   return {
-    props: { isAuth: !!me },
+    props: { isAuth: !!me.data },
   }
 })
 

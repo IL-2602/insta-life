@@ -17,6 +17,13 @@
   flex-direction: column;
   gap: 20px;
   width: 100%;
+
+  .titleAndStatHeader {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+  }
 }
 
 .stat {
@@ -24,4 +31,10 @@
   align-items: flex-start;
   justify-content: space-between;
   max-width: 400px;
+
+}
+
+.button {
+  display: inline-block;
+  height: 35px;
 }

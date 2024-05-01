@@ -56,7 +56,7 @@ export const SideBar = ({
             ? s.activeLink
             : ''
         }
-        href={`${ROUTES.PROFILE}/${me.userId}`}
+        href={`${ROUTES.PROFILE}/${me?.userId}`}
       >
         <ProfileIcon className={s.navIcon} />
         <Typography className={s.navLink} color={'light'} variant={'medium14'}>

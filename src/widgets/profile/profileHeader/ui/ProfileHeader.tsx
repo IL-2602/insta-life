@@ -7,15 +7,13 @@ import { ProfileInfo } from '@/widgets/profile/profileHeader/ui/ProfileInfo/Prof
 import s from './ProfileHeader.module.scss'
 
 export const ProfileHeader = (props: ProfileHeaderProps) => {
-  const { data, isError, isLoading, me } = props
+  const { data, isLoading, me } = props
 
-  console.log(data)
   if (isLoading) {
     return <Spinner />
   }
   if (data) {
     const { aboutMe, avatars, id, userName } = data
-    const SettingsButton = 'Profile Settings'
 
     return (
       <div className={s.wrapper}>
@@ -26,12 +24,7 @@ export const ProfileHeader = (props: ProfileHeaderProps) => {
             width={avatars[0]?.width}
           />
         </div>
-        <ProfileInfo aboutMe={aboutMe} userName={userName} />
-        {!!me && me?.userId === id && (
-          <Button as={'a'} className={s.button} href={'/profile/settings'} variant={'secondary'}>
-            {SettingsButton}
-          </Button>
-        )}
+        <ProfileInfo aboutMe={aboutMe} userName={userName} isMe={!!me && me.userId === id} />
       </div>
     )
   }
