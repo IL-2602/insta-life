@@ -5,9 +5,9 @@ import { api } from '@/services/api'
 import { getMe } from '@/services/authService/authEndpoints'
 import { UserType } from '@/services/authService/lib/authEndpoints.types'
 import { getPublicUserProfile } from '@/services/publicProfileSerice/publicProfileEndpoints'
+import { getUserPosts } from '@/services/publicService/publicEndpoints'
 import { ProfileHeader } from '@/widgets/profile/profileHeader'
 import { ProfilePhotos } from '@/widgets/profile/profilePhotos'
-import { getUserPosts } from '@/services/publicService/publicEndpoints'
 
 const PublicProfilePage = ({ isAuth }: Props) => {
   const content = (
