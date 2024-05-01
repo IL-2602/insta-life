@@ -53,7 +53,6 @@ const authEndpoints = api.injectEndpoints({
         try {
           await queryFulfilled
           deleteCookie('accessToken')
-          dispatch(authSlice.actions.setAccessToken(''))
 
           const patchResult = dispatch(
             authEndpoints.util.updateQueryData('getMe', undefined, () => {
@@ -77,13 +76,17 @@ const authEndpoints = api.injectEndpoints({
           } = await queryFulfilled
 
           if (accessToken) {
-            dispatch(authActions.setAccessToken(accessToken))
+            setCookie('accessToken', accessToken, {
+              maxAge: 30 * 60,
+              sameSite: 'none',
+              secure: true,
+            })
             setTimeout(() => {
               dispatch(api.util.invalidateTags(['Me']))
             }, 50)
           }
         } catch (e) {
-          console.log(e)
+          deleteCookie('accessToken')
         }
       },
       query: body => ({
@@ -107,7 +110,6 @@ const authEndpoints = api.injectEndpoints({
           } = await queryFulfilled
 
           if (accessToken) {
-            dispatch(authActions.setAccessToken(accessToken))
             setCookie('accessToken', accessToken, {
               maxAge: 30 * 60,
               sameSite: 'none',

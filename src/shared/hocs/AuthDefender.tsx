@@ -22,7 +22,7 @@ export const AuthDefender = (Page: NextPageWithLayout) => {
       if (isError) {
         void push(ROUTES.LOGIN)
       }
-    }, [data, push, isError])
+    }, [data, push, isError, isReady])
 
     if (!data || isFetching) {
       return (

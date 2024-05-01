@@ -96,12 +96,12 @@ export const SideBar = ({
           {t.sidebar.favourites}
         </Typography>
       </Link>
-      <Button onClick={() => setIsOpen(true)} variant={'link'}>
+      <button className={s.btnCreate} onClick={() => setIsOpen(true)}>
         <LogOutIcon className={s.navIcon} />
         <Typography className={s.navLink} color={'light'} variant={'medium14'}>
           {t.sidebar.logOut}
         </Typography>
-      </Button>
+      </button>
       {isLoading ? (
         <div className={s.spinner}>
           <Spinner />

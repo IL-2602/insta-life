@@ -69,7 +69,7 @@ export const useContainer = () => {
         .unwrap()
         .then(res => {
           void push(ROUTES.PROFILE)
-          dispatch(authActions.setAccessToken(res.accessToken!))
+          //cookie
           dispatch(authActions.setEmail(res.email!))
         })
         .catch(err => {

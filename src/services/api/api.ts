@@ -59,9 +59,6 @@ export const baseQueryWithReAuth: BaseQueryFn<
 
     if (refreshResult.data) {
       // store the new token
-      api.dispatch(
-        authActions.setAccessToken((refreshResult.data as { accessToken: string }).accessToken)
-      )
       setCookie('accessToken', (refreshResult.data as { accessToken: string }).accessToken, {
         maxAge: 30 * 60,
         sameSite: 'none',

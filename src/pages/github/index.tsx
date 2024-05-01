@@ -16,7 +16,6 @@ const GitHubPage = () => {
   const dispatch = useAppDispatch()
 
   if (query.accessToken && query.email) {
-    dispatch(authActions.setAccessToken(query.accessToken as string))
     setCookie('accessToken', query.accessToken as string, {
       maxAge: 30 * 60,
       sameSite: 'none',
