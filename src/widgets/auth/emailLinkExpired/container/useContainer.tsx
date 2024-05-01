@@ -5,6 +5,7 @@ import { useAppDispatch } from '@/app/store/hooks/useAppDispatch'
 import { useAppSelector } from '@/app/store/hooks/useAppSelector'
 import { usePasswordRecoveryMutation } from '@/services/authService/authEndpoints'
 import { authActions } from '@/services/authService/store/slice/authEndpoints.slice'
+import { FRONTEND_URL } from '@/shared/constants/frontendUrl'
 import { useTranslation } from '@/shared/hooks/useTranslation'
 import { useRouter } from 'next/router'
 
@@ -38,13 +39,12 @@ export const useContainer = () => {
   const onRecentLink = () => {
     if (email && token) {
       passwordRecovery({
-        baseUrl: 'http://localhost:3000',
+        baseUrl: FRONTEND_URL,
         email: email as string,
         recaptcha: token,
       })
         .unwrap()
-        .then(res => {
-          console.log(res)
+        .then(() => {
           setIsOpen(true)
         })
         .catch(err => {
