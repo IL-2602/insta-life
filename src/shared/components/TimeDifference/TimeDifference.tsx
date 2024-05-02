@@ -5,7 +5,7 @@ import { useTranslation } from '@/shared/hooks/useTranslation'
 export const TimeDifference = ({ postTime }: { postTime: string }): ReactNode => {
   const { t } = useTranslation()
 
-  const [time, setTime] = useState({ hours: 0, minutes: 0, diffInMinutes: 0 })
+  const [time, setTime] = useState({ diffInMinutes: 0, hours: 0, minutes: 0 })
   const postDate = new Date(postTime)
   const currentDate = new Date()
 
@@ -16,9 +16,15 @@ export const TimeDifference = ({ postTime }: { postTime: string }): ReactNode =>
   const minutes = diffInMinutes % 60
 
   useEffect(() => {
-    if (hours) setTime(p => ({ ...p, hours: hours }))
-    if (minutes) setTime(p => ({ ...p, minutes: minutes }))
-    if (diffInMinutes) setTime(p => ({ ...p, diffInMinutes: diffInMinutes }))
+    if (hours) {
+      setTime(p => ({ ...p, hours: hours }))
+    }
+    if (minutes) {
+      setTime(p => ({ ...p, minutes: minutes }))
+    }
+    if (diffInMinutes) {
+      setTime(p => ({ ...p, diffInMinutes: diffInMinutes }))
+    }
   }, [])
 
   if (hours > 0) {
