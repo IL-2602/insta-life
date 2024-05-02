@@ -1,5 +1,6 @@
 .profileInfo {
-  flex-grow: 1;
+  display: flex;
+  flex: 1;
 }
 
 .mainWrapper {
@@ -14,12 +15,25 @@
 .titleAndStat {
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
   gap: 20px;
+  width: 100%;
+
+  .titleAndStatHeader {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+  }
 }
 
 .stat {
   display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
+  align-items: flex-start;
+  justify-content: space-between;
+  max-width: 400px;
+}
+
+.button {
+  display: inline-block;
+  height: 35px;
 }

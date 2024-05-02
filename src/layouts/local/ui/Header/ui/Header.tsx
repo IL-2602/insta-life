@@ -11,11 +11,7 @@ import Link from 'next/link'
 
 import s from './Header.module.scss'
 
-export const Header = memo(({ isLoading, me, router, t, toSignIn, toSignUp }: HeaderProps) => {
-  if (isLoading) {
-    return
-  }
-
+export const Header = memo(({ me, router, t, toSignIn, toSignUp }: HeaderProps) => {
   return (
     <header className={s.header}>
       <Container className={s.container}>

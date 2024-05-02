@@ -1,4 +1,5 @@
 export const ROUTES = {
+  AUTH: '/auth',
   CONFIRMATION_LINK_EXPIRED: '/auth/sign-up/confirmation-link-expired',
   CONGRATULATION: '/auth/congratulation',
   CREATE: '/create',

@@ -1,4 +1,5 @@
 import { Avatar } from '@/shared/ui/Avatar'
+import { Button } from '@/shared/ui/Button'
 import { Spinner } from '@/shared/ui/Spinner'
 import { ProfileHeaderProps } from '@/widgets/profile/profileHeader/container'
 import { ProfileInfo } from '@/widgets/profile/profileHeader/ui/ProfileInfo/ProfileInfo'
@@ -6,13 +7,13 @@ import { ProfileInfo } from '@/widgets/profile/profileHeader/ui/ProfileInfo/Prof
 import s from './ProfileHeader.module.scss'
 
 export const ProfileHeader = (props: ProfileHeaderProps) => {
-  const { data, isError, isLoading } = props
+  const { data, isLoading, me } = props
 
   if (isLoading) {
     return <Spinner />
   }
   if (data) {
-    const { aboutMe, avatars, userName } = data
+    const { aboutMe, avatars, id, userName } = data
 
     return (
       <div className={s.wrapper}>
@@ -23,7 +24,7 @@ export const ProfileHeader = (props: ProfileHeaderProps) => {
             width={avatars[0]?.width}
           />
         </div>
-        <ProfileInfo aboutMe={aboutMe} userName={userName} />
+        <ProfileInfo aboutMe={aboutMe} isMe={!!me && me.userId === id} userName={userName} />
       </div>
     )
   }

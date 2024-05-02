@@ -1,3 +1,4 @@
+import { useTranslation } from '@/shared/hooks/useTranslation'
 import { Profile } from '@/shared/types/profile'
 import { Button } from '@/shared/ui/Button'
 import { Typography } from '@/shared/ui/Typography'
@@ -6,27 +7,38 @@ import { UserStat } from '@/widgets/profile/profileHeader/ui/ProfileInfo/UserSta
 
 import s from './ProfileInfo.module.scss'
 
-export const ProfileInfo = ({ aboutMe, userName }: Props) => {
-  const SettingsButton = 'Profile Settings'
+export const ProfileInfo = ({ aboutMe, isMe = false, userName }: Props) => {
+  const { t } = useTranslation()
 
   return (
     <div className={s.profileInfo}>
       <div className={s.mainWrapper}>
         <div className={s.titleAndStat}>
-          <Typography variant={'h1'}>{userName}</Typography>
+          <div className={s.titleAndStatHeader}>
+            <Typography variant={'h1'}>{userName}</Typography>
+            {isMe && (
+              <Button
+                as={'a'}
+                className={s.button}
+                href={'/profile/settings'}
+                variant={'secondary'}
+              >
+                {t.button.profileSettings}
+              </Button>
+            )}
+          </div>
+
           <div className={s.stat}>
             <UserStat count={2218} title={'Following'} />
             <UserStat count={2218} title={'Followers'} />
             <UserStat count={2218} title={'Publications'} />
           </div>
+
+          <Description text={aboutMe} />
         </div>
-        <Button as={'a'} href={'/profile/settings'} variant={'secondary'}>
-          {SettingsButton}
-        </Button>
       </div>
-      <Description text={aboutMe} />
     </div>
   )
 }
 
-type Props = Pick<Profile, 'aboutMe' | 'userName'>
+type Props = Pick<Profile, 'aboutMe' | 'userName'> & { isMe?: boolean }
