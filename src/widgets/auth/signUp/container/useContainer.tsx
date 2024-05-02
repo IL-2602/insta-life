@@ -14,12 +14,12 @@ const signUpSchema = z
     password: z
       .string()
       .trim()
+      .min(6, 'Minimum number of characters 6')
+      .max(20, 'Maximum number of characters 20')
       .regex(
         passwordRegExp,
-        'Password must contain a-z, A-Z, 0-9, ! " # $ % & \' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _` { | } ~'
-      )
-      .min(6, 'Minimum number of characters 6')
-      .max(20),
+        'Password must contain 0-9, a-z, A-Z, ! " # $ % & \' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _` { | } ~'
+      ),
     passwordConfirmation: z.string().regex(passwordRegExp).trim().min(6).max(20),
     termsAgreement: z.boolean(),
     userName: z
@@ -53,7 +53,7 @@ export const useContainer = () => {
       termsAgreement: false,
       userName: '',
     },
-    mode: 'onBlur',
+    mode: 'all',
     resolver: zodResolver(signUpSchema),
   })
 
@@ -69,6 +69,17 @@ export const useContainer = () => {
     (Object.keys(errors).length === 0 && isDirty && dirtyFields.termsAgreement) || isLoading
 
   const { t } = useTranslation()
+
+  // const customErrorMap = (errMessage: string) => {
+  //   if (
+  //     errMessage === 'Password must contain only Latin letters, numbers, and special characters.' ||
+  //     errMessage === 'Invalid'
+  //   ) {
+  //     return 'Password must contain 0-9, a-z, A-Z, ! " # $ % & \' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _` { | } ~'
+  //   }
+  //
+  //   return errMessage
+  // }
 
   const onSubmit = handleSubmit((data: SignUpFormSchema) => {
     const { email, password, userName } = data
@@ -91,6 +102,7 @@ export const useContainer = () => {
 
   return {
     control,
+    // customErrorMap,
     email,
     emailErrorMessage,
     handleCloseModal,

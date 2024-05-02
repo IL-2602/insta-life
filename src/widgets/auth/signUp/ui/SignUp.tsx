@@ -101,7 +101,7 @@ export const SignUp = memo(
               isLoading={isLoading}
               type={'submit'}
             >
-              {t.auth.button.signUpButton}
+              {!isLoading ? t.auth.button.signUpButton : ''}
             </Button>
             <div className={s.signInSuggestion}>
               <Typography variant={'regular16'}>{t.auth.signUpPage.question}</Typography>
