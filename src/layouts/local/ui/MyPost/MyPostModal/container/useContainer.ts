@@ -4,21 +4,23 @@ import { useForm } from 'react-hook-form'
 import { useAppDispatch } from '@/app/store/hooks/useAppDispatch'
 import { useAppSelector } from '@/app/store/hooks/useAppSelector'
 import { useMyPostSchema } from '@/layouts/local/ui/MyPost/MyPostModal/schema/myPostPublicationSchema'
+import { useGetCurrentPostQuery } from '@/services/postService/postEndpoints'
 import { postActions } from '@/services/postService/store/slice/postEndpoints.slice'
 import { useGetProfileQuery } from '@/services/profileService/profileEndpoints'
 import { useTranslation } from '@/shared/hooks/useTranslation'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useRouter } from 'next/router'
 import { z } from 'zod'
 
 export const useContainer = () => {
   const { t } = useTranslation()
-  const postPhotos = useAppSelector(state => state.postReducer.postPhotos)
+  //const postPhotos = useAppSelector(state => state.postReducer.postPhotos)
   const { isMyPostModal } = useAppSelector(state => state.postReducer)
   const { data: getProfile, isLoading: isGetUserLoading } = useGetProfileQuery()
   const [isOpenClosePostModal, setIsOpenClosePostModal] = useState(false)
   const [currPhotoIndex, setCurrPhotoIndex] = useState(0)
   const onChangeCurrPhoto = (currPhoto: number) => setCurrPhotoIndex(currPhoto)
-
+  const { query, replace } = useRouter()
   const { myPostSchema } = useMyPostSchema()
 
   type myPostFormSchema = z.infer<typeof myPostSchema>
@@ -46,11 +48,11 @@ export const useContainer = () => {
     dispatch(postActions.setIsEditPostModal(true))
   }
 
-  const postId = '1'
+  // запрос и прокинуть пост фотос
+  const postId = query?.postId as string | undefined
+  const { data: postPhotos, error, isLoading } = useGetCurrentPostQuery(Number(postId))
 
-  // const { postId } = useParams()
   const commentPublish = () => {}
-
   const deletePostModalHandler = (id: number) => {
     dispatch(postActions.setIsDeletePostModal(true))
   }
@@ -59,15 +61,24 @@ export const useContainer = () => {
   }
 
   const handleCloseModal = () => {
+    void replace({ query: { id: query.id } }, undefined, {
+      shallow: true,
+    })
     dispatch(postActions.setIsMyPostModal(false))
   }
   const closeModalWithRefresh = () => {
+    void replace({ query: { id: query.id } }, undefined, {
+      shallow: true,
+    })
     dispatch(postActions.setIsEditPostModal(false))
     setIsOpenClosePostModal(false)
     reset({ myPostDescription: '' })
   }
   const handleClosePostModal = () => {
     setIsOpenClosePostModal(false)
+    void replace({ query: { id: query.id } }, undefined, {
+      shallow: true,
+    })
   }
 
   return {
