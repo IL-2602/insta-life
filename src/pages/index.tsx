@@ -1,62 +1,66 @@
 import { wrapper } from '@/app/store'
-import { getBaseLayout } from '@/layouts/publ/BaseLayout/BaseLayout'
+import { AuthLayout } from '@/layouts/publ/AuthLayout'
+import { MainLayout } from '@/layouts/publ/MainLayout'
 import { getRunningQueriesThunk } from '@/services/api/api'
 import { getMe } from '@/services/authService/authEndpoints'
+import { UserType } from '@/services/authService/lib/authEndpoints.types'
 import { getAllPosts, getTotalCount } from '@/services/publicService/publicEndpoints'
 import { PublicPosts } from '@/widgets/root/publicPosts'
 import { GetStaticPropsResult } from 'next'
 import Head from 'next/head'
 
 type Props = {
+  isAuth?: any
   isMeError?: boolean
   isPostsError?: boolean
   isUsersError?: boolean
 }
 
 export const getStaticProps = wrapper.getStaticProps(
-  store => async (): Promise<GetStaticPropsResult<Props>> => {
-    const users = await store.dispatch(getTotalCount.initiate(undefined, { forceRefetch: true }))
-    const posts = await store.dispatch(getAllPosts.initiate({}, { forceRefetch: true }))
-    const me = await store.dispatch(getMe.initiate(undefined, { forceRefetch: true }))
+  store =>
+    async ({ params }): Promise<GetStaticPropsResult<Props>> => {
+      const users = await store.dispatch(getTotalCount.initiate(undefined))
+      const posts = await store.dispatch(getAllPosts.initiate({}))
+      const me = (await store.dispatch(getMe.initiate())) as { data: UserType }
 
-    await Promise.all(store.dispatch(getRunningQueriesThunk()))
+      await Promise.all(store.dispatch(getRunningQueriesThunk()))
 
-    if (!posts) {
+      if (!posts) {
+        return {
+          props: {
+            isPostsError: true,
+          },
+          revalidate: 60,
+        }
+      }
+
+      if (!users) {
+        return {
+          props: {
+            isUsersError: true,
+          },
+          revalidate: 60,
+        }
+      }
+
+      // if (!me) {
+      //   return {
+      //     props: {
+      //       isMeError: true,
+      //     },
+      //     revalidate: 60,
+      //   }
+      // }
+
       return {
-        props: {
-          isPostsError: true,
-        },
+        props: { isAuth: me },
         revalidate: 60,
       }
     }
-
-    if (!users) {
-      return {
-        props: {
-          isUsersError: true,
-        },
-        revalidate: 60,
-      }
-    }
-
-    if (!me) {
-      return {
-        props: {
-          isMeError: true,
-        },
-        revalidate: 60,
-      }
-    }
-
-    return {
-      props: {},
-      revalidate: 60,
-    }
-  }
 )
 
-const HomePage = () => {
-  return (
+const HomePage = ({ isAuth }: Props) => {
+  const content = (
     <>
       <Head>
         <title>InstaLife</title>
@@ -64,12 +68,13 @@ const HomePage = () => {
         <meta content={'width=device-width, initial-scale=1'} name={'viewport'} />
         <link href={'/favicon.ico'} rel={'icon'} />
       </Head>
-      <main style={{ width: '100%' }}>
+      <div style={{ width: '100%' }}>
         <PublicPosts.widget />
-      </main>
+      </div>
     </>
   )
+
+  return isAuth ? <MainLayout>{content}</MainLayout> : <AuthLayout>{content}</AuthLayout>
 }
 
-HomePage.getLayout = getBaseLayout
 export default HomePage
