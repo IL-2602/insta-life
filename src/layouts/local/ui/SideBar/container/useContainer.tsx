@@ -5,15 +5,15 @@ import { useAppSelector } from '@/app/store/hooks/useAppSelector'
 import { useGetMeQuery, useLogOutMutation } from '@/services/authService/authEndpoints'
 import { UserType } from '@/services/authService/lib/authEndpoints.types'
 import { postActions } from '@/services/postService/store/slice/postEndpoints.slice'
+import { ROUTES } from '@/shared/constants/routes'
 import { useTranslation } from '@/shared/hooks/useTranslation'
 import { useRouter } from 'next/router'
-import { ROUTES } from '@/shared/constants/routes'
 
 export const useContainer = () => {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
   const router = useRouter()
-  const { pathname, isReady } = router
+  const { isReady, pathname } = router
 
   const [isOpen, setIsOpen] = useState(false)
 
@@ -40,6 +40,7 @@ export const useContainer = () => {
   }
 
   const isLoading = isLoadingLogOut || !isReady
+
   return {
     email,
     handleActiveLink,
