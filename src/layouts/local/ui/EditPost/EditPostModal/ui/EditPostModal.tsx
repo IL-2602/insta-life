@@ -92,7 +92,7 @@ export const EditPostModal = memo(
                       rows={4}
                       value={description}
                     />
-                    <span className={s.charCount}>{editPostDescription?.length}/500</span>
+                    <span className={s.charCount}>{description?.length}/500</span>
                   </label>
                 </div>
 

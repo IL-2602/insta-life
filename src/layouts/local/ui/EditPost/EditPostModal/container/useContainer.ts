@@ -98,6 +98,7 @@ export const useContainer = () => {
   const closeModalWithRefresh = () => {
     dispatch(postActions.setIsEditPostModal(false))
     setIsOpenClosePostModal(false)
+    setDescription(postPhotos.description)
     reset({ editPostDescription: '' })
   }
   const handleClosePostModal = () => {
