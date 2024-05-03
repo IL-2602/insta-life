@@ -6,19 +6,21 @@ import { useDeletePostMutation } from '@/services/postService/postEndpoints'
 import { postActions } from '@/services/postService/store/slice/postEndpoints.slice'
 import { useTranslation } from '@/shared/hooks/useTranslation'
 import { useParams } from 'next/navigation'
+import { useRouter } from 'next/router'
 
 export const useContainer = () => {
   const { t } = useTranslation()
   const { isDeletePostModal } = useAppSelector(state => state.postReducer)
   const [deletePost, { isLoading }] = useDeletePostMutation()
+  const { query } = useRouter()
 
-  //const { postId } = useParams()
-  const postId = '1'
+  const postId = query?.postId as string | undefined
   const removePostHandler = async () => {
     deletePost(Number(postId))
       .unwrap()
       .then((res: any) => {
         dispatch(postActions.setIsDeletePostModal(false))
+        dispatch(postActions.setIsMyPostModal(false))
         toast.success('The post has been deleted', {
           pauseOnHover: false,
           style: {
