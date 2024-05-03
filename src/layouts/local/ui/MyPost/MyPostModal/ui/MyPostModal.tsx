@@ -20,6 +20,14 @@ import s from './MyPostModal.module.scss'
 
 import noPhoto from '../../../../../../../public/assets/noPhoto.svg'
 
+type PhotoType = {
+  createdAt: string
+  fileSize: number
+  height: number
+  uploadId: string
+  url: string
+  width: number
+}
 export const MyPostModal = memo(
   ({
     closeModalWithRefresh,
@@ -53,10 +61,10 @@ export const MyPostModal = memo(
             <div className={s.postPhotoWrapper}>
               <PostPhotos currentPhoto={currPhotoIndex} onChangeCurrentPhoto={onChangeCurrPhoto}>
                 {postPhotos &&
-                  postPhotos.map((photo, i) => {
+                  postPhotos.images.map((photo: PhotoType, i: number) => {
                     return (
                       <div key={i}>
-                        <img alt={'photo'} className={s.postPhoto} src={photo.cropImg} />
+                        <img alt={'photo'} className={s.postPhoto} src={photo.url} />
                       </div>
                     )
                   })}
@@ -74,12 +82,12 @@ export const MyPostModal = memo(
                           <Image
                             alt={'userPhoto'}
                             height={36}
-                            src={getProfile?.avatars[0].url}
+                            src={postPhotos?.avatarOwner}
                             width={36}
                           />
                         )}
                       </div>
-                      <Typography variant={'h3'}>{getProfile?.userName}</Typography>
+                      <Typography variant={'h3'}>{postPhotos?.userName}</Typography>
                     </div>
                   </div>
 
@@ -94,7 +102,7 @@ export const MyPostModal = memo(
                         />
                       }
                       icon={
-                        <div>
+                        <div style={{ position: 'relative' }}>
                           <HorizontalDots />
                         </div>
                       }
@@ -131,33 +139,6 @@ export const MyPostModal = memo(
             )}
           </div>
         </Modal>
-        {/*{isOpenClosePostModal && (*/}
-        {/*  <Modal*/}
-        {/*    className={s.closePostModal}*/}
-        {/*    customButtonsBlock={*/}
-        {/*      <div className={s.buttonsBlock}>*/}
-        {/*        <Button disabled={false} onClick={closeModalWithRefresh} variant={'outlined'}>*/}
-        {/*          <Typography variant={'h3'}>{t.button.yes}</Typography>*/}
-        {/*        </Button>*/}
-        {/*        <Button*/}
-        {/*          className={s.button}*/}
-        {/*          disabled={false}*/}
-        {/*          onClick={handleClosePostModal}*/}
-        {/*          variant={'primary'}*/}
-        {/*        >*/}
-        {/*          <Typography variant={'h3'}>{t.button.no}</Typography>*/}
-        {/*        </Button>*/}
-        {/*      </div>*/}
-        {/*    }*/}
-        {/*    modalHandler={handleClosePostModal}*/}
-        {/*    open={isOpenClosePostModal}*/}
-        {/*    title={t.modal.closeModalTitle}*/}
-        {/*  >*/}
-        {/*    <div className={s.closeOpenModalContent}>*/}
-        {/*      <Typography variant={'regular16'}>{t.modal.closeModalTextTwo}</Typography>*/}
-        {/*    </div>*/}
-        {/*  </Modal>*/}
-        {/*)}*/}
         <EditPostModal.widget />
         <DeletePostModal.widget />
       </>
