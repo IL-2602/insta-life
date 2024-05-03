@@ -14,13 +14,11 @@ export const postEndpoints = api.injectEndpoints({
       query: postId => {
         return {
           method: 'DELETE',
-          params: {
-            postId,
-          },
-          url: 'posts',
+          url: `posts/${postId}`,
         }
       },
     }),
+
     editPost: builder.mutation<void, EditPostParams>({
       invalidatesTags: [],
       query: ({ description, postId }) => {
@@ -29,6 +27,14 @@ export const postEndpoints = api.injectEndpoints({
           method: 'PUT',
           params: { postId },
           url: `posts/${postId}`,
+        }
+      },
+    }),
+    getCurrentPost: builder.query<any, number>({
+      query: postId => {
+        return {
+          method: 'GET',
+          url: `public-posts/${postId}`,
         }
       },
     }),
@@ -73,6 +79,7 @@ export const postEndpoints = api.injectEndpoints({
 export const {
   useDeletePostMutation,
   useEditPostMutation,
+  useGetCurrentPostQuery,
   usePublishPostImageMutation,
   usePublishPostMutation,
 } = postEndpoints
