@@ -2,64 +2,60 @@ import { wrapper } from '@/app/store'
 import { AuthLayout } from '@/layouts/publ/AuthLayout'
 import { MainLayout } from '@/layouts/publ/MainLayout'
 import { getRunningQueriesThunk } from '@/services/api/api'
-import { getMe } from '@/services/authService/authEndpoints'
-import { UserType } from '@/services/authService/lib/authEndpoints.types'
+import { useGetMeQuery } from '@/services/authService/authEndpoints'
 import { getAllPosts, getTotalCount } from '@/services/publicService/publicEndpoints'
+import { Spinner } from '@/shared/ui/Spinner'
 import { PublicPosts } from '@/widgets/root/publicPosts'
 import { GetStaticPropsResult } from 'next'
 import Head from 'next/head'
 
 type Props = {
-  isAuth?: any
-  isMeError?: boolean
   isPostsError?: boolean
   isUsersError?: boolean
 }
 
 export const getStaticProps = wrapper.getStaticProps(
-  store =>
-    async ({ params }): Promise<GetStaticPropsResult<Props>> => {
-      const users = await store.dispatch(getTotalCount.initiate(undefined))
-      const posts = await store.dispatch(getAllPosts.initiate({}))
-      const me = (await store.dispatch(getMe.initiate())) as { data: UserType }
+  store => async (): Promise<GetStaticPropsResult<Props>> => {
+    const users = await store.dispatch(getTotalCount.initiate(undefined))
+    const posts = await store.dispatch(getAllPosts.initiate({}))
 
-      await Promise.all(store.dispatch(getRunningQueriesThunk()))
+    await Promise.all(store.dispatch(getRunningQueriesThunk()))
 
-      if (!posts) {
-        return {
-          props: {
-            isPostsError: true,
-          },
-          revalidate: 60,
-        }
-      }
-
-      if (!users) {
-        return {
-          props: {
-            isUsersError: true,
-          },
-          revalidate: 60,
-        }
-      }
-
-      // if (!me) {
-      //   return {
-      //     props: {
-      //       isMeError: true,
-      //     },
-      //     revalidate: 60,
-      //   }
-      // }
-
+    if (!posts) {
       return {
-        props: { isAuth: me },
+        props: {
+          isPostsError: true,
+        },
         revalidate: 60,
       }
     }
+
+    if (!users) {
+      return {
+        props: {
+          isUsersError: true,
+        },
+        revalidate: 60,
+      }
+    }
+
+    return {
+      props: {},
+    }
+  }
 )
 
-const HomePage = ({ isAuth }: Props) => {
+const HomePage = ({}: Props) => {
+  const { data: me, isLoading } = useGetMeQuery()
+
+  // if (isLoading) {
+  //   // return (
+  //   //   <div style={{ display: 'grid', placeItems: 'center' }}>
+  //   //     <Spinner />
+  //   //   </div>
+  //   // )
+  // }
+
   const content = (
     <>
       <Head>
@@ -74,7 +70,7 @@ const HomePage = ({ isAuth }: Props) => {
     </>
   )
 
-  return isAuth ? <MainLayout>{content}</MainLayout> : <AuthLayout>{content}</AuthLayout>
+  return me ? <MainLayout>{content}</MainLayout> : <AuthLayout>{content}</AuthLayout>
 }
 
 export default HomePage
