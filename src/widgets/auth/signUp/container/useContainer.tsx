@@ -53,7 +53,7 @@ export const useContainer = () => {
       termsAgreement: false,
       userName: '',
     },
-    mode: 'all',
+    mode: 'onBlur',
     resolver: zodResolver(signUpSchema),
   })
 
