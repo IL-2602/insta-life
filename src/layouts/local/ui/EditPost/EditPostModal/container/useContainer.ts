@@ -10,7 +10,6 @@ import { postActions } from '@/services/postService/store/slice/postEndpoints.sl
 import { useGetProfileQuery } from '@/services/profileService/profileEndpoints'
 import { useTranslation } from '@/shared/hooks/useTranslation'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useParams } from 'next/navigation'
 import { useRouter } from 'next/router'
 import { z } from 'zod'
 
