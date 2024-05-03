@@ -52,10 +52,7 @@ const authEndpoints = api.injectEndpoints({
       onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
         try {
           await queryFulfilled
-          setTimeout(() => {
-            deleteCookie('accessToken')
-          }, 50)
-
+          deleteCookie('accessToken')
           dispatch(api.util.resetApiState())
         } catch (e) {
           console.log(e)

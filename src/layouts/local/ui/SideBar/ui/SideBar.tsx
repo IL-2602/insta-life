@@ -102,23 +102,17 @@ export const SideBar = ({
           {t.sidebar.logOut}
         </Typography>
       </button>
-      {isLoading ? (
-        <div className={s.spinner}>
-          <Spinner />
-        </div>
-      ) : (
-        <Modal
-          logOut
-          modalHandler={() => setIsOpen(false)}
-          onSubmit={handleLogOut}
-          open={isOpen}
-          title={t.auth.modal.notification}
-        >
-          <Typography variant={'regular16'}>
-            {t.auth.modal.modalLogOutText.getEmail(email)}
-          </Typography>
-        </Modal>
-      )}
+      <Modal
+        logOut
+        modalHandler={() => setIsOpen(false)}
+        onSubmit={handleLogOut}
+        open={isOpen}
+        title={t.auth.modal.notification}
+      >
+        <Typography variant={'regular16'}>
+          {!isLoading ? t.auth.modal.modalLogOutText.getEmail(me?.email) : 'loading...'}
+        </Typography>
+      </Modal>
       <CreatePostModal.widget />
       <PostPublication.widget />
       <PostCropping.widget />
