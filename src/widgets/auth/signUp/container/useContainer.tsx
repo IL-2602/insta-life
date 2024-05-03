@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { useSignUpMutation } from '@/services/authService/authEndpoints'
@@ -20,7 +20,12 @@ const signUpSchema = z
         passwordRegExp,
         'Password must contain 0-9, a-z, A-Z, ! " # $ % & \' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _` { | } ~'
       ),
-    passwordConfirmation: z.string().regex(passwordRegExp).trim().min(6).max(20),
+    passwordConfirmation: z
+      .string()
+      .regex(passwordRegExp)
+      .trim()
+      .min(6, 'Minimum number of characters 6')
+      .max(20, 'Maximum number of characters 20'),
     termsAgreement: z.boolean(),
     userName: z
       .string()
@@ -38,6 +43,10 @@ export type SignUpFormSchema = z.infer<typeof signUpSchema>
 
 export const useContainer = () => {
   const [isOpen, setIsOpen] = useState(false)
+  const savedEmail = localStorage.getItem('savedEmail')
+  const savedPassword = localStorage.getItem('savedPassword')
+  const savedPasswordConfirmation = localStorage.getItem('savedPasswordConfirmation')
+  const savedUserName = localStorage.getItem('savedUserName')
 
   const {
     control,
@@ -47,17 +56,22 @@ export const useContainer = () => {
     setError,
   } = useForm<SignUpFormSchema>({
     defaultValues: {
-      email: '',
-      password: '',
-      passwordConfirmation: '',
+      email: savedEmail || '',
+      password: savedPassword || '',
+      passwordConfirmation: savedPasswordConfirmation || '',
       termsAgreement: false,
-      userName: '',
+      userName: savedUserName || '',
     },
     mode: 'onBlur',
     resolver: zodResolver(signUpSchema),
   })
 
-  const { email } = getValues()
+  const { email, password, passwordConfirmation, userName } = getValues()
+
+  localStorage.setItem('savedEmail', email)
+  localStorage.setItem('savedPassword', password)
+  localStorage.setItem('savedPasswordConfirmation', passwordConfirmation)
+  localStorage.setItem('savedUserName', userName)
 
   const userNameErrorMessage = errors.userName?.message
   const emailErrorMessage = errors.email?.message
@@ -81,7 +95,13 @@ export const useContainer = () => {
 
     signUp({ baseUrl: FRONTEND_URL, email, password, userName })
       .unwrap()
-      .then(() => setIsOpen(true))
+      .then(() => {
+        setIsOpen(true)
+        localStorage.removeItem('savedEmail')
+        localStorage.removeItem('savedPassword')
+        localStorage.removeItem('savedUserName')
+        localStorage.removeItem('savedPasswordConfirmation')
+      })
       .catch(err => {
         setError(err.data.messages[0].field, {
           message: err?.data?.messages[0].message,
