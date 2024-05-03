@@ -1,8 +1,7 @@
 .PopoverContent {
   will-change: transform, opacity;
 
-  position: absolute;
-  z-index: 1000000 !important;
+  z-index: var(--zindex-drop-menu);
   top: 0;
   left: 0;
 
