@@ -21,6 +21,7 @@ export const useContainer = () => {
   const {
     control,
     formState: { errors },
+    setError,
     trigger,
     watch,
   } = useForm<createPostModalFormSchema>({
@@ -49,10 +50,14 @@ export const useContainer = () => {
     }
   }
 
+  console.log('postPhotoError', postPhotoError)
   const extraActionsPostPhoto = async () => {
     if (postPhotos?.length >= 10) {
+      setError('postPhoto', { message: 'imgMoreThen10', type: 'custom' })
+
       return
     }
+
     const success = await trigger('postPhoto')
     const file = watch('postPhoto')
 
@@ -74,6 +79,7 @@ export const useContainer = () => {
       setCurrPhotoIndex(undefined)
     }
   }
+
   const onImageLoaded = () => {
     setIsImageLoading(true)
   }
@@ -100,7 +106,7 @@ export const useContainer = () => {
   const showSaveDraft = () => dispatch(postActions.setIsClosePostModal(true))
 
   useLayoutEffect(() => {
-    if (postPhoto && imgRef.current && canvasRef.current) {
+    if (postPhoto && imgRef.current && canvasRef.current && !isImageLoading) {
       canvasPreviewWithOutCrop(
         imgRef.current,
         canvasRef.current,
