@@ -10,7 +10,11 @@ import { z } from 'zod'
 
 const signUpSchema = z
   .object({
-    email: z.string().trim().email('The email must match the format example@example.com'),
+    email: z
+      .string()
+      .trim()
+      .max(30, 'Maximum number of characters 30')
+      .email('The email must match the format example@example.com'),
     password: z
       .string()
       .trim()
