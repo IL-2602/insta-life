@@ -12,6 +12,14 @@ import s from './EditPostModal.module.scss'
 
 import noPhoto from '../../../../../../../public/assets/noPhoto.svg'
 
+type PhotoType = {
+  createdAt: string
+  fileSize: number
+  height: number
+  uploadId: string
+  url: string
+  width: number
+}
 export const EditPostModal = memo(
   ({
     closeModalWithRefresh,
@@ -46,10 +54,10 @@ export const EditPostModal = memo(
               {/*<PostPhotos className={s.postPhoto} height={503} photos={postPhotos} width={490} />*/}
               <PostPhotos currentPhoto={currPhotoIndex} onChangeCurrentPhoto={onChangeCurrPhoto}>
                 {postPhotos &&
-                  postPhotos.map((photo, i) => {
+                  postPhotos.images.map((photo: PhotoType, i: number) => {
                     return (
                       <div key={i}>
-                        <img alt={'photo'} className={s.postPhoto} src={photo.cropImg} />
+                        <img alt={'photo'} className={s.postPhoto} src={photo.url} />
                       </div>
                     )
                   })}
@@ -66,12 +74,12 @@ export const EditPostModal = memo(
                         <Image
                           alt={'userPhoto'}
                           height={36}
-                          src={getProfile?.avatars[0].url}
+                          src={postPhotos?.avatarOwner}
                           width={36}
                         />
                       )}
                     </div>
-                    <Typography variant={'medium16'}>{getProfile?.userName}</Typography>
+                    <Typography variant={'medium16'}>{postPhotos?.userName}</Typography>
                   </div>
                   <label>
                     {t.auth.form.addPublicationDescription}
