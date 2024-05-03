@@ -14,12 +14,12 @@ const signUpSchema = z
     password: z
       .string()
       .trim()
+      .min(6, 'Minimum number of characters 6')
+      .max(20, 'Maximum number of characters 20')
       .regex(
         passwordRegExp,
-        'Password must contain a-z, A-Z, 0-9, ! " # $ % & \' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _` { | } ~'
-      )
-      .min(6, 'Minimum number of characters 6')
-      .max(20),
+        'Password must contain 0-9, a-z, A-Z, ! " # $ % & \' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _` { | } ~'
+      ),
     passwordConfirmation: z.string().regex(passwordRegExp).trim().min(6).max(20),
     termsAgreement: z.boolean(),
     userName: z
