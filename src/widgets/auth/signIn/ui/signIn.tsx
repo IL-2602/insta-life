@@ -61,6 +61,7 @@ export const SignIn = memo(
             errorMessage={errorEmail && t.auth.error[errorEmail]}
             label={t.auth.form.email}
             name={'email'}
+            placeholder={'Epam@epam.com'}
           />
           <ControlledTextField
             className={s.pass}
@@ -69,6 +70,7 @@ export const SignIn = memo(
             errorMessage={errorPassword && t.auth.error[errorPassword]}
             label={t.auth.form.password}
             name={'password'}
+            placeholder={'**********'}
             type={'password'}
           />
           <div className={s.forgot}>
