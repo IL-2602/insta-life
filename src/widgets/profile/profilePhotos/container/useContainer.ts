@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
 
+import { useAppDispatch } from '@/app/store/hooks/useAppDispatch'
 import { useGetMeQuery } from '@/services/authService/authEndpoints'
 import { UserType } from '@/services/authService/lib/authEndpoints.types'
+import { postActions } from '@/services/postService/store/slice/postEndpoints.slice'
 import { useGetUserPostsQuery } from '@/services/publicService/publicEndpoints'
 import { ROUTES } from '@/shared/constants/routes'
 import { useRouter } from 'next/router'
@@ -11,9 +13,9 @@ export const useContainer = () => {
   const { inView, ref } = useInView({
     threshold: 1,
   })
-  const router = useRouter()
+  const { query, replace } = useRouter()
 
-  const profileId = router.query.id as string
+  const profileId = query.id as string
 
   const [lastPostId, setLastPostId] = useState<number | undefined>(undefined)
 
@@ -23,6 +25,7 @@ export const useContainer = () => {
     pageSize: !lastPostId ? 12 : 8,
     userId: +profileId,
   })
+  const dispatch = useAppDispatch()
 
   console.log('profileId', profileId, inView)
   useEffect(() => {
@@ -36,10 +39,11 @@ export const useContainer = () => {
   }, [inView])
 
   const handleReceivingPostId = (id: number) => {
-    router.push({
-      pathname: ROUTES.PROFILE,
-      query: { id },
+    replace({ query: { id: query.id, postId: id } }, undefined, {
+      shallow: true,
     })
+
+    dispatch(postActions.setIsMyPostModal(true))
   }
 
   return { handleReceivingPostId, isFetching, posts, ref }
