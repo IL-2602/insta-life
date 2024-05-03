@@ -12,9 +12,7 @@ import { ProfileIcon } from '@/shared/assets/icons/asideIcons/profileIcon'
 import { SearchIcon } from '@/shared/assets/icons/asideIcons/searchIcon'
 import { StatisticsIcon } from '@/shared/assets/icons/asideIcons/statisticsIcon'
 import { ROUTES } from '@/shared/constants/routes'
-import { Button } from '@/shared/ui/Button'
 import { Modal } from '@/shared/ui/Modal'
-import { Spinner } from '@/shared/ui/Spinner'
 import { Typography } from '@/shared/ui/Typography'
 import { clsx } from 'clsx'
 import Link from 'next/link'
@@ -22,11 +20,9 @@ import Link from 'next/link'
 import s from './SideBar.module.scss'
 
 export const SideBar = ({
-  email,
   handleActiveLink,
   handleLogOut,
   isCreatePostModal,
-  isLoading,
   isOpen,
   me,
   setIsOpen,
@@ -110,7 +106,7 @@ export const SideBar = ({
         title={t.auth.modal.notification}
       >
         <Typography variant={'regular16'}>
-          {!isLoading ? t.auth.modal.modalLogOutText.getEmail(me?.email) : 'loading...'}
+          {t.auth.modal.modalLogOutText.getEmail(me?.email)}
         </Typography>
       </Modal>
       <CreatePostModal.widget />

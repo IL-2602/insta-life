@@ -48,13 +48,25 @@ export const getStaticProps = wrapper.getStaticProps(
 const HomePage = ({}: Props) => {
   const { data: me, isLoading } = useGetMeQuery()
 
-  // if (isLoading) {
-  //   // return (
-  //   //   <div style={{ display: 'grid', placeItems: 'center' }}>
-  //   //     <Spinner />
-  //   //   </div>
-  //   // )
-  // }
+  // console.log('isUninitialized: ', isUninitialized)
+
+  if (isLoading) {
+    return (
+      <div
+        style={{
+          alignItems: 'center',
+          display: 'flex',
+          height: '100vh',
+          justifyContent: 'center',
+          minWidth: '100%',
+        }}
+      >
+        <Spinner />
+      </div>
+    )
+  }
+
+  // const me = true
 
   const content = (
     <>
