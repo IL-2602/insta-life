@@ -37,7 +37,7 @@ export const EditPostModal = memo(
     isLoadingEditPost,
     isOpenClosePostModal,
     onChangeCurrPhoto,
-    onChangeHandler,
+    //onChangeHandler,
     postPhotos,
     t,
     updatePost,
@@ -58,8 +58,8 @@ export const EditPostModal = memo(
                 {postPhotos &&
                   postPhotos.images.map((photo: PhotoType, i: number) => {
                     return (
-                      <div key={i}>
-                        <img alt={'photo'} className={s.postPhoto} src={photo.url} />
+                      <div className={s.postPhotoWrapper} key={i}>
+                        <Image alt={'photo'} className={s.postPhoto} fill src={photo.url} />
                       </div>
                     )
                   })}
@@ -88,9 +88,10 @@ export const EditPostModal = memo(
                     <ControlledTextAreaField
                       control={control}
                       name={'editPostDescription'}
-                      onChange={(e: any) => onChangeHandler(e.currentTarget.value)}
+                      //onChange={(e: any) => onChangeHandler(e.currentTarget.value)}
                       rows={4}
-                      value={description}
+
+                      //value={description}
                     />
                     <span className={s.charCount}>{description?.length}/500</span>
                   </label>
