@@ -1,4 +1,4 @@
-import { memo } from 'react'
+import { Fragment, memo } from 'react'
 
 import { DeletePostModal } from '@/layouts/local/ui/DeletePost/DeletePostModal'
 import { EditPostModal } from '@/layouts/local/ui/EditPost/EditPostModal'
@@ -63,8 +63,8 @@ export const MyPostModal = memo(
                 {postPhotos &&
                   postPhotos.images.map((photo: PhotoType, i: number) => {
                     return (
-                      <div key={i}>
-                        <img alt={'photo'} className={s.postPhoto} src={photo.url} />
+                      <div className={s.postPhotoWrapper} key={i}>
+                        <Image alt={'photo'} className={s.postPhoto} fill src={photo.url} />
                       </div>
                     )
                   })}
