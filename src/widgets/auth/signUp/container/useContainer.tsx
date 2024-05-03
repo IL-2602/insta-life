@@ -87,8 +87,13 @@ export const useContainer = () => {
       .unwrap()
       .then(() => setIsOpen(true))
       .catch(err => {
+        const isEmailExist =
+          err?.data?.messages[0].message === 'User with this email is already exist'
+            ? 'User with this email is already registered'
+            : err?.data?.messages[0].message
+
         setError(err.data.messages[0].field, {
-          message: err?.data?.messages[0].message,
+          message: isEmailExist,
         })
       })
   })
