@@ -25,6 +25,7 @@ export const EditPostModal = memo(
     closeModalWithRefresh,
     control,
     currPhotoIndex,
+    description,
     editPostDescription,
     errorDescription,
     getProfile,
@@ -36,6 +37,7 @@ export const EditPostModal = memo(
     isLoadingEditPost,
     isOpenClosePostModal,
     onChangeCurrPhoto,
+    onChangeHandler,
     postPhotos,
     t,
     updatePost,
@@ -86,7 +88,9 @@ export const EditPostModal = memo(
                     <ControlledTextAreaField
                       control={control}
                       name={'editPostDescription'}
+                      onChange={(e: any) => onChangeHandler(e.currentTarget.value)}
                       rows={4}
+                      value={description}
                     />
                     <span className={s.charCount}>{editPostDescription?.length}/500</span>
                   </label>

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 
@@ -24,6 +24,7 @@ export const useContainer = () => {
   const [currPhotoIndex, setCurrPhotoIndex] = useState(0)
   const { query } = useRouter()
   const { editPostSchema } = useEditPostSchema()
+  const [description, setDescription] = useState<string>('')
 
   type editPostFormSchema = z.infer<typeof editPostSchema>
   const onChangeCurrPhoto = (currPhoto: number) => setCurrPhotoIndex(currPhoto)
@@ -53,11 +54,16 @@ export const useContainer = () => {
 
   const postId = query?.postId as string | undefined
   const { data: postPhotos, error, isLoading } = useGetCurrentPostQuery(Number(postId))
-  const updatePost = () => {
-    console.log('UPDATE DESCRIPTION : ', editPostDescription, 'POST ID : ', Number(postId))
 
-    if (editPostDescription) {
-      editPost({ description: editPostDescription, postId: Number(postId) })
+  useEffect(() => {
+    setDescription(postPhotos?.description ?? '')
+  }, [postPhotos])
+
+  const updatePost = () => {
+    console.log('UPDATE DESCRIPTION : ', description, 'POST ID : ', Number(postId))
+
+    if (description) {
+      editPost({ description: description, postId: Number(postId) })
         .unwrap()
         .then((res: any) => {
           dispatch(postActions.setIsEditPostModal(false))
@@ -97,11 +103,15 @@ export const useContainer = () => {
   const handleClosePostModal = () => {
     setIsOpenClosePostModal(false)
   }
+  const onChangeHandler = (newDescription: string) => {
+    setDescription(newDescription)
+  }
 
   return {
     closeModalWithRefresh,
     control,
     currPhotoIndex,
+    description,
     editPostDescription,
     errorDescription,
     getProfile,
@@ -113,6 +123,7 @@ export const useContainer = () => {
     isLoadingEditPost,
     isOpenClosePostModal,
     onChangeCurrPhoto,
+    onChangeHandler,
     openEditPostModal,
     postPhotos,
     t,
