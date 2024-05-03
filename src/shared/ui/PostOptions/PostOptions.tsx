@@ -35,12 +35,6 @@ export const PostOptions = (props: Props) => {
     },
   ]
 
-  // useEffect(() => {
-  //   if (isSuccess) {
-  //     props.editPostModeHandler ? props.editPostModeHandler() : null
-  //   }
-  // }, [isSuccess])
-
   return (
     <div className={s.container}>
       {myPostOptions.map(option => (
