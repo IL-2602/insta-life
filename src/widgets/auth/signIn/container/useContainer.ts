@@ -11,7 +11,7 @@ import { useRouter } from 'next/router'
 import { z } from 'zod'
 
 export const signInSchema = z.object({
-  email: z.string().email('invalidEmailAddress'),
+  email: z.string().max(30, 'Maximum number of characters 30').email('invalidEmailAddress'),
   password: z.string().min(6, 'passwordMin').max(20, 'passwordMax'),
 })
 
