@@ -11,6 +11,7 @@ export const useContainer = () => {
   const { inView, ref } = useInView({
     threshold: 1,
   })
+
   const router = useRouter()
 
   const profileId = router.query.id as string
@@ -24,7 +25,6 @@ export const useContainer = () => {
     userId: +profileId,
   })
 
-  console.log('profileId', profileId, inView)
   useEffect(() => {
     if (posts && posts.items.length >= posts.totalCount) {
       return

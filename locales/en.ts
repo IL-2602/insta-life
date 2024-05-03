@@ -204,6 +204,7 @@ export const en = {
       imgFormat: 'Only .jpg, .jpeg, .png  formats are supported',
       imgLarger332: 'Image should be larger than 332x332',
       imgLess10mb: 'Max image size is 10MB',
+      imgMoreThen10: 'Max image count 10',
     },
     followers: 'Followers',
     following: 'Following',
