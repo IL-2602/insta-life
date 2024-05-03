@@ -49,10 +49,12 @@ export const useContainer = () => {
       dispatch(postActions.updatePostPhoto({ aspect: aspect, img: postPhoto.img }))
     }
   }
+
   console.log('postPhotoError', postPhotoError)
   const extraActionsPostPhoto = async () => {
     if (postPhotos?.length >= 10) {
-      setError('postPhoto', { type: 'custom', message: 'imgMoreThen10' })
+      setError('postPhoto', { message: 'imgMoreThen10', type: 'custom' })
+
       return
     }
 
@@ -114,6 +116,7 @@ export const useContainer = () => {
       saveCropImg({ img: postPhoto?.img })
     }
   }, [postPhoto?.aspect, isImageLoading, postPhoto?.zoom, saveCropImg])
+
   return {
     canvasRef,
     control,
