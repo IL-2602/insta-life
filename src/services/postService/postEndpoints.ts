@@ -10,7 +10,7 @@ import { publicEndpoints } from '@/services/publicService/publicEndpoints'
 export const postEndpoints = api.injectEndpoints({
   endpoints: builder => ({
     deletePost: builder.mutation<void, number>({
-      invalidatesTags: [],
+      invalidatesTags: ['Post'],
       query: postId => {
         return {
           method: 'DELETE',
