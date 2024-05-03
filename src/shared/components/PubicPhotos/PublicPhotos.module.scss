@@ -1,0 +1,79 @@
+.photosWrapper {
+  position: relative;
+
+  .photoScale {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    display: flex;
+    gap: 12px;
+
+    padding: 4px 8px;
+
+    background-color: rgb(33 33 33 / 50%);
+    border-radius: 2px;
+
+    .circle {
+      width: 6px;
+      height: 6px;
+      background-color: var(--color-light-100);
+      border-radius: 50%;
+    }
+
+    .circlePrimary {
+      background-color: var(--color-primary-500);
+    }
+  }
+
+  .transparent {
+    background-color: transparent;
+  }
+
+  .btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+
+    display: grid;
+    place-items: center;
+
+    width: 24px;
+    height: 24px;
+
+    background-color: rgb(33 33 33 / 50%);
+    border-radius: 2px;
+
+    &:disabled {
+      display: none;
+    }
+
+    &:hover {
+      cursor: pointer;
+      background-color: rgb(33 33 33 / 45%);
+    }
+  }
+
+  .dark {
+    background-color: rgb(33 33 33 / 80%);
+
+    &:hover {
+      background-color: rgb(33 33 33 / 70%);
+    }
+  }
+
+  .prevBtn {
+    left: 0;
+    margin-left: 12px;
+  }
+
+  .nextArrow {
+    margin-left: 2px;
+  }
+
+  .nextBtn {
+    right: 0;
+    margin-right: 12px;
+  }
+}

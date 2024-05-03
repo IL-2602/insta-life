@@ -3,14 +3,15 @@ import { api } from '@/services/api'
 import { authSlice } from '@/services/authService/store/slice/authEndpoints.slice'
 import { postSlice } from '@/services/postService/store/slice/postEndpoints.slice'
 import { combineSlices, configureStore } from '@reduxjs/toolkit'
-import { createWrapper } from 'next-redux-wrapper'
+import { Context, createWrapper } from 'next-redux-wrapper'
 
 const rootReducer = combineSlices(api, authSlice, postSlice)
 
-export const makeStore = () =>
+export const makeStore = (context?: Context) =>
   configureStore({
-    middleware: getDefaultMiddleware => getDefaultMiddleware().concat(api.middleware),
+    middleware: getDefaultMiddleware =>
+      getDefaultMiddleware({ thunk: { extraArgument: context } }).concat(api.middleware),
     reducer: rootReducer,
   })
 
-export const wrapper = createWrapper<AppStore>(makeStore, { debug: true })
+export const wrapper = createWrapper<AppStore>(makeStore)

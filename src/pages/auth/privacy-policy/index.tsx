@@ -1,4 +1,5 @@
 import { getBaseLayout } from '@/layouts/publ/BaseLayout'
+import { AuthRouteChecker } from '@/shared/hocs/AuthRouteChecker'
 import { PrivacyPolicy } from '@/widgets/auth/privacyPolicy'
 
 const PrivacyPolicyPage = () => {
@@ -6,4 +7,4 @@ const PrivacyPolicyPage = () => {
 }
 
 PrivacyPolicyPage.getLayout = getBaseLayout
-export default PrivacyPolicyPage
+export default AuthRouteChecker(PrivacyPolicyPage)

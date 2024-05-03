@@ -3,7 +3,7 @@ import { useInView } from 'react-intersection-observer'
 
 import { useGetMeQuery } from '@/services/authService/authEndpoints'
 import { UserType } from '@/services/authService/lib/authEndpoints.types'
-import { useGetUserPostsQuery } from '@/services/postService/postEndpoints'
+import { useGetUserPostsQuery } from '@/services/publicService/publicEndpoints'
 import { ROUTES } from '@/shared/constants/routes'
 import { useRouter } from 'next/router'
 
@@ -13,15 +13,18 @@ export const useContainer = () => {
   })
   const router = useRouter()
 
+  const profileId = router.query.id as string
+
   const [lastPostId, setLastPostId] = useState<number | undefined>(undefined)
 
   const { data: me } = useGetMeQuery() as { data: UserType }
   const { data: posts, isFetching } = useGetUserPostsQuery({
     endCursorPostId: lastPostId,
     pageSize: !lastPostId ? 12 : 8,
-    userId: me.userId,
+    userId: +profileId,
   })
 
+  console.log('profileId', profileId, inView)
   useEffect(() => {
     if (posts && posts.items.length >= posts.totalCount) {
       return

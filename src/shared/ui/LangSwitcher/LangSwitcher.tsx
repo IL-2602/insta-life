@@ -1,5 +1,3 @@
-import { ChangeEvent, ReactElement } from 'react'
-
 import { SelectComponent } from '@/shared/ui/Select'
 import Image from 'next/image'
 import { useRouter } from 'next/router'

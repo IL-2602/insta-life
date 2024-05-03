@@ -2,7 +2,7 @@ import { PropsWithChildren, ReactElement } from 'react'
 
 import { AuthLayout } from '@/layouts/publ/AuthLayout'
 import { MainLayout } from '@/layouts/publ/MainLayout'
-import { PRIVATE_ROUTES } from '@/shared/constants/routes'
+import { ROUTES } from '@/shared/constants/routes'
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 
@@ -12,11 +12,11 @@ const BaseLayout: NextPage<PropsWithChildren> = props => {
   const router = useRouter()
   const { pathname } = router
 
-  const isPrivatePassName = !!PRIVATE_ROUTES.find(route => route === pathname)
+  const isPublicPathName = pathname === '/' || pathname.startsWith(ROUTES.AUTH)
 
   return (
     <>
-      {isPrivatePassName ? (
+      {!isPublicPathName ? (
         <MainLayout>{children}</MainLayout>
       ) : (
         <AuthLayout>{children}</AuthLayout>

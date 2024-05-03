@@ -1,8 +1,6 @@
-import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { useAppDispatch } from '@/app/store/hooks/useAppDispatch'
-import { useAppSelector } from '@/app/store/hooks/useAppSelector'
 import { useOAuthGoogleMutation, useSignInMutation } from '@/services/authService/authEndpoints'
 import { authActions } from '@/services/authService/store/slice/authEndpoints.slice'
 import { ROUTES } from '@/shared/constants/routes'
@@ -36,7 +34,6 @@ export const useContainer = () => {
   })
   const [signIn, { isLoading: signIsLoading }] = useSignInMutation()
   const [oAuthGoogle, { isLoading: isLoadingGoogle }] = useOAuthGoogleMutation()
-
   const errorPassword = errors.password?.message
   const errorEmail = errors.email?.message
 
@@ -46,21 +43,18 @@ export const useContainer = () => {
 
   const dispatch = useAppDispatch()
 
-  const token = useAppSelector(state => state.authReducer.accessToken)
-
   const { t } = useTranslation()
   const { push } = useRouter()
   const onSubmit = handleSubmit((data: signInFormSchema) => {
     signIn(data)
       .unwrap()
-      .catch(e => {
+      .then(() => dispatch(authActions.setEmail(email)))
+      .catch(() => {
         setError('password', {
           message: 'invalidEmailOrPass',
           type: 'manual',
         })
       })
-
-    dispatch(authActions.setEmail(email))
   })
 
   const login = useGoogleLogin({
@@ -74,7 +68,7 @@ export const useContainer = () => {
         .unwrap()
         .then(res => {
           void push(ROUTES.PROFILE)
-          dispatch(authActions.setAccessToken(res.accessToken!))
+          //cookie
           dispatch(authActions.setEmail(res.email!))
         })
         .catch(err => {
@@ -83,12 +77,6 @@ export const useContainer = () => {
         })
     },
   })
-
-  useEffect(() => {
-    if (token) {
-      push(ROUTES.PROFILE)
-    }
-  }, [token])
 
   return {
     control,
@@ -100,6 +88,5 @@ export const useContainer = () => {
     onSubmit,
     signIsLoading,
     t,
-    token,
   }
 }

@@ -16,6 +16,7 @@ import {
   SignUpEmailResendingArgs,
 } from '@/services/authService/lib/authEndpoints.types'
 import { authActions, authSlice } from '@/services/authService/store/slice/authEndpoints.slice'
+import { deleteCookie, setCookie } from 'cookies-next'
 
 const authEndpoints = api.injectEndpoints({
   endpoints: builder => ({
@@ -51,13 +52,11 @@ const authEndpoints = api.injectEndpoints({
       onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
         try {
           await queryFulfilled
-          dispatch(authSlice.actions.setAccessToken(''))
+          setTimeout(() => {
+            deleteCookie('accessToken')
+          }, 50)
 
-          const patchResult = dispatch(
-            authEndpoints.util.updateQueryData('getMe', undefined, () => {
-              return null
-            })
-          )
+          dispatch(api.util.resetApiState())
         } catch (e) {
           console.log(e)
         }
@@ -75,13 +74,17 @@ const authEndpoints = api.injectEndpoints({
           } = await queryFulfilled
 
           if (accessToken) {
-            dispatch(authActions.setAccessToken(accessToken))
+            setCookie('accessToken', accessToken, {
+              maxAge: 30 * 60,
+              sameSite: 'none',
+              secure: true,
+            })
             setTimeout(() => {
               dispatch(api.util.invalidateTags(['Me']))
             }, 50)
           }
         } catch (e) {
-          console.log(e)
+          deleteCookie('accessToken')
         }
       },
       query: body => ({
@@ -105,13 +108,17 @@ const authEndpoints = api.injectEndpoints({
           } = await queryFulfilled
 
           if (accessToken) {
-            dispatch(authActions.setAccessToken(accessToken))
+            setCookie('accessToken', accessToken, {
+              maxAge: 30 * 60,
+              sameSite: 'none',
+              secure: true,
+            })
             setTimeout(() => {
               dispatch(api.util.invalidateTags(['Me']))
             }, 50)
           }
         } catch (e) {
-          console.log(e)
+          deleteCookie('accessToken')
         }
       },
       query: args => ({
@@ -157,3 +164,5 @@ export const {
   useSignUpEmailResendingMutation,
   useSignUpMutation,
 } = authEndpoints
+
+export const { getMe } = authEndpoints.endpoints

@@ -8,18 +8,34 @@ import {
   createApi,
   fetchBaseQuery,
 } from '@reduxjs/toolkit/query/react'
-import { HYDRATE } from 'next-redux-wrapper'
+import { deleteCookie, getCookie, setCookie } from 'cookies-next'
+import { Context, HYDRATE } from 'next-redux-wrapper'
 import { Action } from 'redux'
 const baseUrl = process.env.NEXT_PUBLIC_BASE_API_URL
+
+const isNotServer = typeof window !== 'undefined'
 
 export const baseQuery = fetchBaseQuery({
   baseUrl,
   credentials: 'include',
-  prepareHeaders: (headers, { getState }) => {
-    const token = (getState() as RootState).authReducer?.accessToken
+  prepareHeaders: (headers, { extra, getState }) => {
+    if (isNotServer) {
+      // const token = (getState() as RootState).authReducer?.accessToken
+      const accessTokenFront = getCookie('accessToken')
 
-    if (token) {
-      headers.set('Authorization', `Bearer ${token}`)
+      if (accessTokenFront) {
+        headers.set('Authorization', `Bearer ${accessTokenFront}`)
+      }
+    } else {
+      const context = extra as Context | undefined
+
+      const isContextReqExist = context && 'req' in context
+
+      if (isContextReqExist && context.req && 'cookies' in context.req) {
+        const token = context.req.cookies.accessToken
+
+        token && headers.set('Authorization', `Bearer ${token}`)
+      }
     }
 
     return headers
@@ -43,13 +59,16 @@ export const baseQueryWithReAuth: BaseQueryFn<
 
     if (refreshResult.data) {
       // store the new token
-      api.dispatch(
-        authActions.setAccessToken((refreshResult.data as { accessToken: string }).accessToken)
-      )
+      setCookie('accessToken', (refreshResult.data as { accessToken: string }).accessToken, {
+        maxAge: 30 * 60,
+        sameSite: 'none',
+        secure: true,
+      })
       // retry the original query with new access token
       result = await baseQuery(args, api, extraOptions)
     } else {
       api.dispatch(authActions.reset())
+      deleteCookie('accessToken')
     }
   }
 

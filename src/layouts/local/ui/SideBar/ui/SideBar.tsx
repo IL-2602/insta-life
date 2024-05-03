@@ -12,6 +12,7 @@ import { ProfileIcon } from '@/shared/assets/icons/asideIcons/profileIcon'
 import { SearchIcon } from '@/shared/assets/icons/asideIcons/searchIcon'
 import { StatisticsIcon } from '@/shared/assets/icons/asideIcons/statisticsIcon'
 import { ROUTES } from '@/shared/constants/routes'
+import { Button } from '@/shared/ui/Button'
 import { Modal } from '@/shared/ui/Modal'
 import { Spinner } from '@/shared/ui/Spinner'
 import { Typography } from '@/shared/ui/Typography'
@@ -27,6 +28,7 @@ export const SideBar = ({
   isCreatePostModal,
   isLoading,
   isOpen,
+  me,
   setIsOpen,
   t,
   uploadPostPhoto,
@@ -54,7 +56,7 @@ export const SideBar = ({
             ? s.activeLink
             : ''
         }
-        href={ROUTES.PROFILE}
+        href={`${ROUTES.PROFILE}/${me?.userId}`}
       >
         <ProfileIcon className={s.navIcon} />
         <Typography className={s.navLink} color={'light'} variant={'medium14'}>
@@ -94,12 +96,12 @@ export const SideBar = ({
           {t.sidebar.favourites}
         </Typography>
       </Link>
-      <Link href={''} onClick={() => setIsOpen(true)}>
+      <button className={s.btnCreate} onClick={() => setIsOpen(true)}>
         <LogOutIcon className={s.navIcon} />
         <Typography className={s.navLink} color={'light'} variant={'medium14'}>
           {t.sidebar.logOut}
         </Typography>
-      </Link>
+      </button>
       {isLoading ? (
         <div className={s.spinner}>
           <Spinner />

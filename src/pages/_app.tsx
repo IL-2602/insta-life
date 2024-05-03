@@ -1,6 +1,7 @@
 import type { AppProps } from 'next/app'
 
 import { ReactElement, ReactNode } from 'react'
+import { Provider } from 'react-redux'
 
 import { Providers } from '@/app/providers/providers'
 import { wrapper } from '@/app/store'
@@ -19,11 +20,16 @@ type AppPropsWithLayout = AppProps & {
 }
 
 function App({ Component, pageProps }: AppPropsWithLayout) {
+  const { props, store } = wrapper.useWrappedStore(pageProps)
   const getLayout = Component.getLayout ?? (page => page)
 
   useLoader()
 
-  return <Providers>{getLayout(<Component {...pageProps} />)}</Providers>
+  return (
+    <Provider store={store}>
+      <Providers>{getLayout(<Component {...props} />)}</Providers>
+    </Provider>
+  )
 }
 
-export default wrapper.withRedux(App)
+export default App

@@ -109,7 +109,7 @@ export const useContainer = () => {
       )
       saveCropImg({ img: postPhoto?.img })
     }
-  }, [postPhoto?.aspect, isImageLoading, postPhoto?.zoom])
+  }, [postPhoto?.aspect, isImageLoading, postPhoto?.zoom, saveCropImg])
 
   return {
     canvasRef,

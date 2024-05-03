@@ -1,6 +1,5 @@
 import { PropsWithChildren } from 'react'
 
-import { AuthProvider } from '@/app/providers/authProvider'
 import { Header } from '@/layouts/local/ui/Header'
 import { SideBar } from '@/layouts/local/ui/SideBar'
 import { Container } from '@/shared/ui/Container'
@@ -18,7 +17,7 @@ export const MainLayout: NextPage<PropsWithChildren> = props => {
   ) {
     return (
       <>
-        <Header />
+        <Header.widget />
         <Container className={s.wrapper}>
           <SideBar.widget />
           <main className={s.main}>{children}</main>
@@ -28,14 +27,12 @@ export const MainLayout: NextPage<PropsWithChildren> = props => {
   }
 
   return (
-    <AuthProvider>
-      <Wrapper>
-        <Header />
-        <Container className={s.wrapper}>
-          <SideBar.widget />
-          <main className={s.main}>{children}</main>
-        </Container>
-      </Wrapper>
-    </AuthProvider>
+    <Wrapper>
+      <Header.widget />
+      <Container className={s.wrapper}>
+        <SideBar.widget />
+        <main className={s.main}>{children}</main>
+      </Container>
+    </Wrapper>
   )
 }

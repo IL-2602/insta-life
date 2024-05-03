@@ -1,4 +1,5 @@
 import { getBaseLayout } from '@/layouts/publ/BaseLayout'
+import { AuthRouteChecker } from '@/shared/hocs/AuthRouteChecker'
 import { TermsOfService } from '@/widgets/auth/termsOfServices'
 
 const TermsOfServicePage = () => {
@@ -6,4 +7,4 @@ const TermsOfServicePage = () => {
 }
 
 TermsOfServicePage.getLayout = getBaseLayout
-export default TermsOfServicePage
+export default AuthRouteChecker(TermsOfServicePage)

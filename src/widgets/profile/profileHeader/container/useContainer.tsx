@@ -1,7 +1,16 @@
-import { useGetProfileQuery } from '@/services/profileService/profileEndpoints'
+import { useGetMeQuery } from '@/services/authService/authEndpoints'
+import { UserType } from '@/services/authService/lib/authEndpoints.types'
+import { useGetPublicUserProfileQuery } from '@/services/publicProfileSerice/publicProfileEndpoints'
+import { useTranslation } from '@/shared/hooks/useTranslation'
+import { useRouter } from 'next/router'
 
 export const useContainer = () => {
-  const { data, isError, isLoading } = useGetProfileQuery()
+  const { data: me } = useGetMeQuery() as { data: UserType }
 
-  return { data, isError, isLoading }
+  const { query } = useRouter()
+  const profileId = query?.id as string
+
+  const { data, isError, isLoading } = useGetPublicUserProfileQuery({ profileId: +profileId })
+
+  return { data, isError, isLoading, me }
 }
