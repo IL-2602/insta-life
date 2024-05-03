@@ -64,6 +64,12 @@ export const useContainer = () => {
   const passwordErrorMessage = errors.password?.message
   const passwordConfirmationErrorMessage = errors.passwordConfirmation?.message
 
+  const allErrors =
+    userNameErrorMessage ||
+    emailErrorMessage ||
+    passwordErrorMessage ||
+    passwordConfirmationErrorMessage
+
   const [signUp, { isLoading }] = useSignUpMutation()
   const isFormValid =
     (Object.keys(errors).length === 0 && isDirty && dirtyFields.termsAgreement) || isLoading
@@ -90,6 +96,7 @@ export const useContainer = () => {
   const pointerOutsideClickHandler = () => setIsOpen(false)
 
   return {
+    allErrors,
     control,
     email,
     emailErrorMessage,

@@ -8,6 +8,7 @@ import { Typography } from '@/shared/ui/Typography'
 import { ControlledCheckbox } from '@/shared/ui/controlledInsta/ControlledCheckbox/ControlledCheckbox'
 import { ControlledTextField } from '@/shared/ui/controlledInsta/ControlledTextField/ControlledTextField'
 import { SignUpProps } from '@/widgets/auth/signUp/container'
+import { clsx } from 'clsx'
 import Image from 'next/image'
 import Link from 'next/link'
 import gitLogo from 'public/assets/githubLogo.svg'
@@ -17,6 +18,7 @@ import s from './SignUp.module.scss'
 
 export const SignUp = memo(
   ({
+    allErrors,
     control,
     email,
     emailErrorMessage,
@@ -45,16 +47,16 @@ export const SignUp = memo(
               <Image alt={'SignIn with github service'} height={36} src={gitLogo} width={36} />
             </Link>
           </div>
-          <form className={s.form} onSubmit={onSubmit}>
+          <form className={clsx(s.form, allErrors ? s.errors : '')} onSubmit={onSubmit}>
             <ControlledTextField
-              className={s.email}
+              className={clsx(s.email, emailErrorMessage ? s.error : '')}
               control={control}
               errorMessage={userNameErrorMessage}
               label={t.auth.form.username}
               name={'userName'}
             />
             <ControlledTextField
-              className={s.email}
+              className={clsx(s.email, userNameErrorMessage ? s.error : '')}
               control={control}
               errorMessage={emailErrorMessage}
               label={t.auth.form.email}
@@ -62,7 +64,7 @@ export const SignUp = memo(
               type={'email'}
             />
             <ControlledTextField
-              className={s.password}
+              className={clsx(s.password, emailErrorMessage ? s.error : '')}
               control={control}
               errorMessage={passwordErrorMessage}
               label={t.auth.form.password}
@@ -70,7 +72,7 @@ export const SignUp = memo(
               type={'password'}
             />
             <ControlledTextField
-              className={s.passwordConfirmation}
+              className={clsx(s.passwordConfirmation, passwordErrorMessage ? s.error : '')}
               control={control}
               errorMessage={passwordConfirmationErrorMessage}
               label={t.auth.form.passwordConfirmation}
