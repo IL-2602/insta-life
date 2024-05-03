@@ -14,7 +14,7 @@ export const CustomPopover = ({
   <Popover.Root>
     <Popover.Trigger asChild>{icon}</Popover.Trigger>
     <Popover.Portal>
-      <Popover.Content className={s.PopoverContent} sideOffset={5}>
+      <Popover.Content className={s.PopoverContent} sideOffset={0}>
         {contentChildren}
         <Popover.Arrow className={s.PopoverArrow} />
       </Popover.Content>
