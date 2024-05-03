@@ -70,17 +70,6 @@ export const useContainer = () => {
 
   const { t } = useTranslation()
 
-  // const customErrorMap = (errMessage: string) => {
-  //   if (
-  //     errMessage === 'Password must contain only Latin letters, numbers, and special characters.' ||
-  //     errMessage === 'Invalid'
-  //   ) {
-  //     return 'Password must contain 0-9, a-z, A-Z, ! " # $ % & \' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _` { | } ~'
-  //   }
-  //
-  //   return errMessage
-  // }
-
   const onSubmit = handleSubmit((data: SignUpFormSchema) => {
     const { email, password, userName } = data
 
@@ -102,7 +91,6 @@ export const useContainer = () => {
 
   return {
     control,
-    // customErrorMap,
     email,
     emailErrorMessage,
     handleCloseModal,
