@@ -5,6 +5,9 @@ import { useSignUpMutation } from '@/services/authService/authEndpoints'
 import { FRONTEND_URL } from '@/shared/constants/frontendUrl'
 import { useTranslation } from '@/shared/hooks/useTranslation'
 import { passwordRegExp, userNameRegExp } from '@/shared/regexps'
+import getFromLocalStorage from '@/shared/utils/localStorage/getFromLocalStorage'
+import removeFromLocalStorage from '@/shared/utils/localStorage/removeFromLocalStorage'
+import saveToLocalStorage from '@/shared/utils/localStorage/saveToLocalStorage'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -43,10 +46,6 @@ export type SignUpFormSchema = z.infer<typeof signUpSchema>
 
 export const useContainer = () => {
   const [isOpen, setIsOpen] = useState(false)
-  const savedEmail = localStorage.getItem('savedEmail')
-  const savedPassword = localStorage.getItem('savedPassword')
-  const savedPasswordConfirmation = localStorage.getItem('savedPasswordConfirmation')
-  const savedUserName = localStorage.getItem('savedUserName')
 
   const {
     control,
@@ -56,11 +55,11 @@ export const useContainer = () => {
     setError,
   } = useForm<SignUpFormSchema>({
     defaultValues: {
-      email: savedEmail || '',
-      password: savedPassword || '',
-      passwordConfirmation: savedPasswordConfirmation || '',
+      email: getFromLocalStorage('savedEmail', ''),
+      password: getFromLocalStorage('savedPassword', ''),
+      passwordConfirmation: getFromLocalStorage('savedPasswordConfirmation', ''),
       termsAgreement: false,
-      userName: savedUserName || '',
+      userName: getFromLocalStorage('savedUserName', ''),
     },
     mode: 'onBlur',
     resolver: zodResolver(signUpSchema),
@@ -68,10 +67,10 @@ export const useContainer = () => {
 
   const { email, password, passwordConfirmation, userName } = getValues()
 
-  localStorage.setItem('savedEmail', email)
-  localStorage.setItem('savedPassword', password)
-  localStorage.setItem('savedPasswordConfirmation', passwordConfirmation)
-  localStorage.setItem('savedUserName', userName)
+  saveToLocalStorage('savedEmail', email)
+  saveToLocalStorage('savedPassword', password)
+  saveToLocalStorage('savedPasswordConfirmation', passwordConfirmation)
+  saveToLocalStorage('savedUserName', userName)
 
   const userNameErrorMessage = errors.userName?.message
   const emailErrorMessage = errors.email?.message
@@ -97,10 +96,10 @@ export const useContainer = () => {
       .unwrap()
       .then(() => {
         setIsOpen(true)
-        localStorage.removeItem('savedEmail')
-        localStorage.removeItem('savedPassword')
-        localStorage.removeItem('savedUserName')
-        localStorage.removeItem('savedPasswordConfirmation')
+        removeFromLocalStorage('savedEmail')
+        removeFromLocalStorage('savedPassword')
+        removeFromLocalStorage('savedUserName')
+        removeFromLocalStorage('savedPasswordConfirmation')
       })
       .catch(err => {
         setError(err.data.messages[0].field, {
