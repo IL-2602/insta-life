@@ -46,6 +46,14 @@ export const SignUp = memo(
             <Link href={'#github#'}>
               <Image alt={'SignIn with github service'} height={36} src={gitLogo} width={36} />
             </Link>
+            <Button
+              as={'a'}
+              href={'https://inctagram.work/api/v1/auth/github/login'}
+              style={{ padding: '0' }}
+              variant={'link'}
+            >
+              <Image alt={'SignIn with github service'} height={36} src={gitLogo} width={36} />
+            </Button>
           </div>
           <form className={clsx(s.form, allErrors ? s.errors : '')} onSubmit={onSubmit}>
             <ControlledTextField
