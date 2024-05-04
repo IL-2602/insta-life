@@ -50,7 +50,6 @@ export const useContainer = () => {
     }
   }
 
-  console.log('postPhotoError', postPhotoError)
   const extraActionsPostPhoto = async () => {
     if (postPhotos?.length >= 10) {
       setError('postPhoto', { message: 'imgMoreThen10', type: 'custom' })

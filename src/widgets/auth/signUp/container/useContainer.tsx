@@ -1,14 +1,19 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { useSignUpMutation } from '@/services/authService/authEndpoints'
+import { useAppDispatch } from '@/app/store/hooks/useAppDispatch'
+import { useOAuthGoogleMutation, useSignUpMutation } from '@/services/authService/authEndpoints'
+import { authActions } from '@/services/authService/store/slice/authEndpoints.slice'
 import { FRONTEND_URL } from '@/shared/constants/frontendUrl'
+import { ROUTES } from '@/shared/constants/routes'
 import { useTranslation } from '@/shared/hooks/useTranslation'
 import { passwordRegExp, userNameRegExp } from '@/shared/regexps'
 import getFromLocalStorage from '@/shared/utils/localStorage/getFromLocalStorage'
 import removeFromLocalStorage from '@/shared/utils/localStorage/removeFromLocalStorage'
 import saveToLocalStorage from '@/shared/utils/localStorage/saveToLocalStorage'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useGoogleLogin } from '@react-oauth/google'
+import { useRouter } from 'next/router'
 import { z } from 'zod'
 
 const signUpSchema = z
@@ -50,6 +55,8 @@ export type SignUpFormSchema = z.infer<typeof signUpSchema>
 
 export const useContainer = () => {
   const [isOpen, setIsOpen] = useState(false)
+
+  const [oAuthGoogle, { isLoading: isLoadingGoogle }] = useOAuthGoogleMutation()
 
   const {
     control,
@@ -93,6 +100,9 @@ export const useContainer = () => {
 
   const { t } = useTranslation()
 
+  const dispatch = useAppDispatch()
+  const { push } = useRouter()
+
   const onSubmit = handleSubmit((data: SignUpFormSchema) => {
     const { email, password, userName } = data
 
@@ -117,6 +127,26 @@ export const useContainer = () => {
       })
   })
 
+  const googleLogin = useGoogleLogin({
+    flow: 'auth-code',
+    onSuccess: googleResponse => {
+      const data = {
+        code: googleResponse.code,
+      }
+
+      oAuthGoogle(data)
+        .unwrap()
+        .then(res => {
+          dispatch(authActions.setEmail(res.email!))
+        })
+        .catch(err => {
+          console.log(err)
+
+          void push(ROUTES.REGISTER)
+        })
+    },
+  })
+
   const handleCloseModal = (isOpen: boolean) => {
     setIsOpen(isOpen)
   }
@@ -128,9 +158,11 @@ export const useContainer = () => {
     control,
     email,
     emailErrorMessage,
+    googleLogin,
     handleCloseModal,
     isFormValid,
     isLoading,
+    isLoadingGoogle,
     isOpen,
     onSubmit,
     passwordConfirmationErrorMessage,
