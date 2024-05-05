@@ -41,7 +41,12 @@ export const CreateNewPassword = ({
             type={'password'}
           />
           <Typography as={'p'} variant={'regular14'} />
-          <Button className={s.submitButton} fullWidth type={'submit'}>
+          <Button
+            className={s.submitButton}
+            disabled={!!errorPassword || !!errorPasswordConfirmation}
+            fullWidth
+            type={'submit'}
+          >
             <Typography as={'span'} variant={'h3'}>
               {t.auth.button.createNewPassword}
             </Typography>
@@ -51,7 +56,3 @@ export const CreateNewPassword = ({
     </>
   )
 }
-
-// type Props = {
-//   onSubmit: (data: Omit<FormType, 'passwordConfirmation'>) => void
-// }
