@@ -13,6 +13,7 @@ export const CreateNewPassword = ({
   errorPassword,
   errorPasswordConfirmation,
   handleFormSubmit,
+  isDirty,
   t,
 }: CreateNewPasswordProps) => {
   return (
@@ -43,7 +44,7 @@ export const CreateNewPassword = ({
           <Typography as={'p'} variant={'regular14'} />
           <Button
             className={s.submitButton}
-            disabled={!!errorPassword || !!errorPasswordConfirmation}
+            disabled={!!errorPassword || !!errorPasswordConfirmation || !isDirty}
             fullWidth
             type={'submit'}
           >

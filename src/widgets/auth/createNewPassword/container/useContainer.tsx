@@ -34,7 +34,7 @@ export const useContainer = () => {
 
   const {
     control,
-    formState: { errors },
+    formState: { errors, isDirty },
     handleSubmit,
   } = useForm<FormType>({
     defaultValues: {
@@ -59,5 +59,5 @@ export const useContainer = () => {
     }
   })
 
-  return { control, errorPassword, errorPasswordConfirmation, handleFormSubmit, t }
+  return { control, errorPassword, errorPasswordConfirmation, handleFormSubmit, isDirty, t }
 }
