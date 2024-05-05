@@ -6,7 +6,6 @@ import { useGetMeQuery } from '@/services/authService/authEndpoints'
 import { UserType } from '@/services/authService/lib/authEndpoints.types'
 import { postActions } from '@/services/postService/store/slice/postEndpoints.slice'
 import { useGetUserPostsQuery } from '@/services/publicService/publicEndpoints'
-import { ROUTES } from '@/shared/constants/routes'
 import { useRouter } from 'next/router'
 
 export const useContainer = () => {
@@ -27,7 +26,6 @@ export const useContainer = () => {
   })
   const dispatch = useAppDispatch()
 
-  console.log('profileId', profileId, inView)
   useEffect(() => {
     if (posts && posts.items.length >= posts.totalCount) {
       return

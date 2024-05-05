@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 
@@ -15,7 +15,6 @@ import { z } from 'zod'
 
 export const useContainer = () => {
   const { t } = useTranslation()
-  //const postPhotos = useAppSelector(state => state.postReducer.postPhotos)
   const { isEditPostModal } = useAppSelector(state => state.postReducer)
   const { data: getProfile, isLoading: isGetUserLoading } = useGetProfileQuery()
   const [editPost, { isLoading: isLoadingEditPost }] = useEditPostMutation()
@@ -23,7 +22,6 @@ export const useContainer = () => {
   const [currPhotoIndex, setCurrPhotoIndex] = useState(0)
   const { query } = useRouter()
   const { editPostSchema } = useEditPostSchema()
-  //const [description, setDescription] = useState<string>('')
 
   type editPostFormSchema = z.infer<typeof editPostSchema>
   const onChangeCurrPhoto = (currPhoto: number) => setCurrPhotoIndex(currPhoto)
@@ -35,7 +33,9 @@ export const useContainer = () => {
   }
 
   const postId = query?.postId as string | undefined
-  const { data: postPhotos, error, isLoading } = useGetCurrentPostQuery(Number(postId))
+  const { data: postPhotos, isLoading: isLoadingCurrentPost } = useGetCurrentPostQuery(
+    Number(postId)
+  )
 
   const {
     control,
@@ -45,27 +45,23 @@ export const useContainer = () => {
     watch,
   } = useForm<editPostFormSchema>({
     defaultValues: {
-      editPostDescription: postPhotos?.description ?? '123',
+      editPostDescription: postPhotos?.description,
     },
     mode: 'onTouched',
     resolver: zodResolver(editPostSchema),
   })
+
   const editPostDescription = watch('editPostDescription')
 
   const { editPostDescription: errorDescription } = errors
-  // useEffect(() => {
-  //   setDescription(postPhotos?.description ?? '')
-  // }, [postPhotos])
 
   const updatePost = () => {
-    console.log('UPDATE DESCRIPTION : ', editPostDescription, 'POST ID : ', Number(postId))
-
     if (editPostDescription) {
       editPost({ description: editPostDescription, postId: Number(postId) })
         .unwrap()
         .then((res: any) => {
+          reset({ editPostDescription })
           dispatch(postActions.setIsEditPostModal(false))
-          reset({ editPostDescription: '' })
           toast.success('The post has been edit', {
             pauseOnHover: false,
             style: {
@@ -92,18 +88,18 @@ export const useContainer = () => {
 
   const handleCloseModal = () => {
     setIsOpenClosePostModal(true)
+    reset({ editPostDescription: postPhotos.description })
   }
+
   const closeModalWithRefresh = () => {
     dispatch(postActions.setIsEditPostModal(false))
     setIsOpenClosePostModal(false)
-    reset({ editPostDescription: '' })
   }
+
   const handleClosePostModal = () => {
     setIsOpenClosePostModal(false)
+    reset({ editPostDescription: postPhotos.description })
   }
-  // const onChangeHandler = (newDescription: string) => {
-  //   setDescription(newDescription)
-  // }
 
   return {
     closeModalWithRefresh,
@@ -117,10 +113,10 @@ export const useContainer = () => {
     handleSubmit,
     isEditPostModal,
     isGetUserLoading,
+    isLoadingCurrentPost,
     isLoadingEditPost,
     isOpenClosePostModal,
     onChangeCurrPhoto,
-    //onChangeHandler,
     openEditPostModal,
     postPhotos,
     t,

@@ -88,7 +88,7 @@ export const api = createApi({
     }
   },
   reducerPath: 'api',
-  tagTypes: ['Me', 'Profile', 'Post'],
+  tagTypes: ['Me', 'Profile', 'Post', 'EditPost'],
 })
 
 export const { getRunningQueriesThunk } = api.util

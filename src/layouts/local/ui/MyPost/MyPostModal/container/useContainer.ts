@@ -29,7 +29,6 @@ export const useContainer = () => {
     control,
     formState: { errors },
     handleSubmit,
-    reset,
     watch,
   } = useForm<myPostFormSchema>({
     defaultValues: {
@@ -50,7 +49,7 @@ export const useContainer = () => {
 
   // запрос и прокинуть пост фотос
   const postId = query?.postId as string | undefined
-  const { data: postPhotos, error, isLoading } = useGetCurrentPostQuery(Number(postId))
+  const { data: postPhotos } = useGetCurrentPostQuery(Number(postId))
 
   const commentPublish = () => {}
   const deletePostModalHandler = (id: number) => {
@@ -72,7 +71,6 @@ export const useContainer = () => {
     })
     dispatch(postActions.setIsEditPostModal(false))
     setIsOpenClosePostModal(false)
-    reset({ myPostDescription: '' })
   }
   const handleClosePostModal = () => {
     setIsOpenClosePostModal(false)
