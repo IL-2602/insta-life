@@ -13,15 +13,16 @@ export const useContainer = () => {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
   const router = useRouter()
-  const { isReady, pathname } = router
+  const { pathname } = router
 
   const [isOpen, setIsOpen] = useState(false)
 
   const email = useAppSelector(state => state.authReducer.email)
   const isCreatePostModal = useAppSelector(state => state.postReducer.isCreatePostModal)
 
-  const [logOut, { isLoading: isLoadingLogOut }] = useLogOutMutation()
+  const [logOut] = useLogOutMutation()
   const { data: me } = useGetMeQuery() as { data: UserType }
+
   const handleLogOut = () => {
     setIsOpen(false)
     logOut()
@@ -39,14 +40,11 @@ export const useContainer = () => {
     return pathname === path && !isCreatePostModal
   }
 
-  const isLoading = isLoadingLogOut || !isReady
-
   return {
     email,
     handleActiveLink,
     handleLogOut,
     isCreatePostModal,
-    isLoading,
     isOpen,
     me,
     pathname,

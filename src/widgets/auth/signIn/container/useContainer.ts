@@ -1,7 +1,11 @@
 import { useForm } from 'react-hook-form'
 
 import { useAppDispatch } from '@/app/store/hooks/useAppDispatch'
-import { useOAuthGoogleMutation, useSignInMutation } from '@/services/authService/authEndpoints'
+import {
+  useGetMeQuery,
+  useOAuthGoogleMutation,
+  useSignInMutation,
+} from '@/services/authService/authEndpoints'
 import { authActions } from '@/services/authService/store/slice/authEndpoints.slice'
 import { ROUTES } from '@/shared/constants/routes'
 import { useTranslation } from '@/shared/hooks/useTranslation'
@@ -34,6 +38,7 @@ export const useContainer = () => {
   })
   const [signIn, { isLoading: signIsLoading }] = useSignInMutation()
   const [oAuthGoogle, { isLoading: isLoadingGoogle }] = useOAuthGoogleMutation()
+
   const errorPassword = errors.password?.message
   const errorEmail = errors.email?.message
 
@@ -45,6 +50,7 @@ export const useContainer = () => {
 
   const { t } = useTranslation()
   const { push } = useRouter()
+
   const onSubmit = handleSubmit((data: signInFormSchema) => {
     signIn(data)
       .unwrap()
@@ -67,8 +73,6 @@ export const useContainer = () => {
       oAuthGoogle(data)
         .unwrap()
         .then(res => {
-          void push(ROUTES.PROFILE)
-          //cookie
           dispatch(authActions.setEmail(res.email!))
         })
         .catch(err => {

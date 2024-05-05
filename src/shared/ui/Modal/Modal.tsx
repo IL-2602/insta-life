@@ -14,6 +14,7 @@ type ModalPropsType = {
   className?: string
   customButtonsBlock?: ReactNode
   isPostModal?: boolean
+  lazy?: boolean
   logOut?: boolean
   modalHandler?: (isOpen: boolean) => void
   modalTrigger?: ReactNode
@@ -30,6 +31,7 @@ export const Modal = ({
   className,
   customButtonsBlock = false,
   isPostModal = false,
+  lazy = false,
   logOut,
   modalHandler,
   modalTrigger,
@@ -55,6 +57,10 @@ export const Modal = ({
       e.preventDefault()
       onPointerOutsideClickHandler()
     }
+  }
+
+  if (lazy) {
+    return null
   }
 
   return (

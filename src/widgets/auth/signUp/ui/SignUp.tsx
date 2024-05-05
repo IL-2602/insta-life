@@ -4,6 +4,7 @@ import { ROUTES } from '@/shared/constants/routes'
 import { Button } from '@/shared/ui/Button'
 import { Card } from '@/shared/ui/Card'
 import { Modal } from '@/shared/ui/Modal'
+import { Spinner } from '@/shared/ui/Spinner'
 import { Typography } from '@/shared/ui/Typography'
 import { ControlledCheckbox } from '@/shared/ui/controlledInsta/ControlledCheckbox/ControlledCheckbox'
 import { ControlledTextField } from '@/shared/ui/controlledInsta/ControlledTextField/ControlledTextField'
@@ -22,9 +23,11 @@ export const SignUp = memo(
     control,
     email,
     emailErrorMessage,
+    googleLogin,
     handleCloseModal,
     isFormValid,
     isLoading,
+    isLoadingGoogle,
     isOpen,
     onSubmit,
     passwordConfirmationErrorMessage,
@@ -33,6 +36,14 @@ export const SignUp = memo(
     t,
     userNameErrorMessage,
   }: SignUpProps) => {
+    if (isLoadingGoogle) {
+      return (
+        <div className={s.spinner}>
+          <Spinner />
+        </div>
+      )
+    }
+
     return (
       <>
         <Card className={s.card}>
@@ -40,12 +51,17 @@ export const SignUp = memo(
             {t.auth.signUpPage.title}
           </Typography>
           <div className={s.services}>
-            <Link href={'#google#'}>
+            <Button onClick={googleLogin} style={{ padding: '0' }} variant={'link'}>
               <Image alt={'SignIn with google service'} height={36} src={gLogo} width={36} />
-            </Link>
-            <Link href={'#github#'}>
+            </Button>
+            <Button
+              as={'a'}
+              href={'https://inctagram.work/api/v1/auth/github/login'}
+              style={{ padding: '0' }}
+              variant={'link'}
+            >
               <Image alt={'SignIn with github service'} height={36} src={gitLogo} width={36} />
-            </Link>
+            </Button>
           </div>
           <form className={clsx(s.form, allErrors ? s.errors : '')} onSubmit={onSubmit}>
             <ControlledTextField
