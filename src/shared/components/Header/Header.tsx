@@ -1,7 +1,5 @@
 import { memo } from 'react'
 
-import { HeaderProps } from '@/layouts/local/ui/Header/container'
-import { useGetMeQuery } from '@/services/authService/authEndpoints'
 import { Bell } from '@/shared/assets/icons/Bell'
 import { ROUTES } from '@/shared/constants/routes'
 import { useTranslation } from '@/shared/hooks/useTranslation'
