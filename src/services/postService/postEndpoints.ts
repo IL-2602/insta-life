@@ -20,7 +20,7 @@ export const postEndpoints = api.injectEndpoints({
     }),
 
     editPost: builder.mutation<void, EditPostParams>({
-      invalidatesTags: ['EditPost'],
+      invalidatesTags: ['Post'],
       query: ({ description, postId }) => {
         return {
           body: { description },
@@ -31,7 +31,7 @@ export const postEndpoints = api.injectEndpoints({
       },
     }),
     getCurrentPost: builder.query<any, number>({
-      providesTags: ['EditPost'],
+      providesTags: ['Post'],
       query: postId => {
         return {
           method: 'GET',
