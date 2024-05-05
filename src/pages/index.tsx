@@ -1,7 +1,10 @@
 import { wrapper } from '@/app/store'
-import { getBaseLayout } from '@/layouts/publ/BaseLayout/BaseLayout'
+import { AuthLayout } from '@/layouts/publ/AuthLayout'
+import { MainLayout } from '@/layouts/publ/MainLayout'
 import { getRunningQueriesThunk } from '@/services/api/api'
+import { useGetMeQuery } from '@/services/authService/authEndpoints'
 import { getAllPosts, getTotalCount } from '@/services/publicService/publicEndpoints'
+import { Spinner } from '@/shared/ui/Spinner'
 import { PublicPosts } from '@/widgets/root/publicPosts'
 import { GetStaticPropsResult } from 'next'
 import Head from 'next/head'
@@ -13,8 +16,8 @@ type Props = {
 
 export const getStaticProps = wrapper.getStaticProps(
   store => async (): Promise<GetStaticPropsResult<Props>> => {
-    const users = await store.dispatch(getTotalCount.initiate(undefined, { forceRefetch: true }))
-    const posts = await store.dispatch(getAllPosts.initiate({}, { forceRefetch: true }))
+    const users = await store.dispatch(getTotalCount.initiate(undefined))
+    const posts = await store.dispatch(getAllPosts.initiate({}))
 
     await Promise.all(store.dispatch(getRunningQueriesThunk()))
 
@@ -38,13 +41,34 @@ export const getStaticProps = wrapper.getStaticProps(
 
     return {
       props: {},
-      revalidate: 60,
     }
   }
 )
 
-const HomePage = () => {
-  return (
+const HomePage = ({}: Props) => {
+  const { data: me, isLoading } = useGetMeQuery()
+
+  // console.log('isUninitialized: ', isUninitialized)
+
+  if (isLoading) {
+    return (
+      <div
+        style={{
+          alignItems: 'center',
+          display: 'flex',
+          height: '100vh',
+          justifyContent: 'center',
+          minWidth: '100%',
+        }}
+      >
+        <Spinner />
+      </div>
+    )
+  }
+
+  // const me = true
+
+  const content = (
     <>
       <Head>
         <title>InstaLife</title>
@@ -52,12 +76,13 @@ const HomePage = () => {
         <meta content={'width=device-width, initial-scale=1'} name={'viewport'} />
         <link href={'/favicon.ico'} rel={'icon'} />
       </Head>
-      <main style={{ width: '100%' }}>
+      <div style={{ width: '100%' }}>
         <PublicPosts.widget />
-      </main>
+      </div>
     </>
   )
+
+  return me ? <MainLayout>{content}</MainLayout> : <AuthLayout>{content}</AuthLayout>
 }
 
-HomePage.getLayout = getBaseLayout
 export default HomePage

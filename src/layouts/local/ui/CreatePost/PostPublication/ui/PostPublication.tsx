@@ -35,15 +35,12 @@ export const PostPublication = memo(
     showModalSaveDraft,
     t,
   }: PostPublicationProps) => {
-    if (isGetUserLoading) {
-      return <Spinner />
-    }
-
     return (
       <>
         <Modal
           className={s.modal}
           customButtonsBlock={<></>}
+          lazy={!isCreatePostModal}
           modalHandler={showModalSaveDraft}
           nextStepBtn={
             <Button

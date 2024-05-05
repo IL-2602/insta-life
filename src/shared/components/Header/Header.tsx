@@ -1,17 +1,33 @@
 import { memo } from 'react'
 
-import { HeaderProps } from '@/layouts/local/ui/Header/container'
 import { Bell } from '@/shared/assets/icons/Bell'
 import { ROUTES } from '@/shared/constants/routes'
+import { useTranslation } from '@/shared/hooks/useTranslation'
 import { Button } from '@/shared/ui/Button'
 import { Container } from '@/shared/ui/Container'
 import { LangSwitcher } from '@/shared/ui/LangSwitcher'
 import { Typography } from '@/shared/ui/Typography'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 import s from './Header.module.scss'
 
-export const Header = memo(({ me, router, t, toSignIn, toSignUp }: HeaderProps) => {
+type Props = {
+  isAuth?: boolean
+}
+
+export const Header = memo(({ isAuth }: Props) => {
+  const { t } = useTranslation()
+  const router = useRouter()
+
+  const toSignUp = () => {
+    router.push(ROUTES.REGISTER)
+  }
+
+  const toSignIn = () => {
+    router.push(ROUTES.LOGIN)
+  }
+
   return (
     <header className={s.header}>
       <Container className={s.container}>
@@ -21,7 +37,7 @@ export const Header = memo(({ me, router, t, toSignIn, toSignUp }: HeaderProps) 
           </Typography>
         </Link>
         <div className={s.wrapper}>
-          {me ? (
+          {isAuth ? (
             <div className={s.meContainer}>
               <button className={s.bellButton}>
                 <Bell />

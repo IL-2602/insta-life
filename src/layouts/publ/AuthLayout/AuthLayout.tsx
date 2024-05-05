@@ -1,6 +1,6 @@
 import { PropsWithChildren } from 'react'
 
-import { Header } from '@/layouts/local/ui/Header'
+import { Header } from '@/shared/components/Header/Header'
 import { Container } from '@/shared/ui/Container'
 import { Wrapper } from '@/shared/ui/Wrapper'
 import { NextPage } from 'next'
@@ -12,7 +12,7 @@ export const AuthLayout: NextPage<PropsWithChildren> = props => {
 
   return (
     <Wrapper>
-      <Header.widget />
+      <Header />
       <main className={s.main}>
         <Container className={s.container}>{children}</Container>
       </main>
