@@ -1,4 +1,4 @@
-import { Fragment, memo } from 'react'
+import { memo } from 'react'
 
 import { DeletePostModal } from '@/layouts/local/ui/DeletePost/DeletePostModal'
 import { EditPostModal } from '@/layouts/local/ui/EditPost/EditPostModal'
@@ -13,6 +13,7 @@ import { Button } from '@/shared/ui/Button'
 import { Modal } from '@/shared/ui/Modal'
 import { CustomPopover } from '@/shared/ui/Popover/CustomPopover'
 import { PostOptions } from '@/shared/ui/PostOptions/PostOptions'
+import { Spinner } from '@/shared/ui/Spinner'
 import { Typography } from '@/shared/ui/Typography'
 import Image from 'next/image'
 
@@ -42,13 +43,38 @@ export const MyPostModal = memo(
     handleClosePostModal,
     handleSubmit,
     isGetUserLoading,
+    isLoading,
     isMyPostModal,
     isOpenClosePostModal,
+    isPostFetching,
     myPostDescription,
     onChangeCurrPhoto,
+    postId,
     postPhotos,
     t,
   }: MyPostModalProps) => {
+    if (!postId) {
+      return null
+    }
+    if (isLoading) {
+      return (
+        <div
+          style={{
+            alignItems: 'center',
+            display: 'flex',
+            height: '100vh',
+            justifyContent: 'center',
+            left: '0',
+            minWidth: '100%',
+            position: 'absolute',
+            top: '0',
+          }}
+        >
+          <Spinner />
+        </div>
+      )
+    }
+
     return (
       <>
         <Modal
@@ -70,73 +96,71 @@ export const MyPostModal = memo(
                   })}
               </PostPhotos>
             </div>
-            {!isGetUserLoading && (
-              <div className={s.descriptionWrapper}>
-                <div className={s.userWrapper}>
-                  <div className={s.userContainer}>
-                    <div className={s.userPhotoWrapper}>
-                      <div className={s.photo}>
-                        {getProfile?.avatars[0] === undefined ? (
-                          <Image alt={'noUserPhoto'} height={22} src={noPhoto} width={22} />
-                        ) : (
-                          <Image
-                            alt={'userPhoto'}
-                            height={36}
-                            src={postPhotos?.avatarOwner}
-                            width={36}
-                          />
-                        )}
-                      </div>
-                      <Typography variant={'h3'}>{postPhotos?.userName}</Typography>
-                    </div>
-                  </div>
-
-                  <div className={s.postOptions}>
-                    <CustomPopover
-                      contentChildren={
-                        <PostOptions
-                          deletePostModalHandler={deletePostModalHandler}
-                          // editModeHandler={editModeHandler}
-                          editPostModalHandler={editPostModalHandler}
-                          id={'123'}
+            <div className={s.descriptionWrapper}>
+              <div className={s.userWrapper}>
+                <div className={s.userContainer}>
+                  <div className={s.userPhotoWrapper}>
+                    <div className={s.photo}>
+                      {getProfile?.avatars[0] === undefined ? (
+                        <Image alt={'noUserPhoto'} height={22} src={noPhoto} width={22} />
+                      ) : (
+                        <Image
+                          alt={'userPhoto'}
+                          height={36}
+                          src={postPhotos?.avatarOwner}
+                          width={36}
                         />
-                      }
-                      icon={
-                        <div style={{ position: 'relative' }}>
-                          <HorizontalDots />
-                        </div>
-                      }
-                    />
-                  </div>
-                </div>
-                <div className={s.commentsBlock}>
-                  <TestComment />
-                  <TestComment />
-                  <TestComment />
-                </div>
-                <div className={s.likesBlock}>
-                  <div className={s.buttonIcons}>
-                    <div>
-                      <HeartOutline className={s.buttonIcon} />
-                      <PaperLine className={s.buttonIcon} />
+                      )}
                     </div>
-
-                    <Bookmark className={s.buttonIcon} />
+                    <Typography variant={'h3'}>{postPhotos?.userName}</Typography>
                   </div>
                 </div>
-                <div className={s.addCommentBlock}>
-                  <input placeholder={'Add comment...'} type={'text'} />
-                  <Button
-                    className={s.button}
-                    disabled={false}
-                    onClick={commentPublish}
-                    variant={'outlined'}
-                  >
-                    <Typography variant={'h3'}>{t.button.publish}</Typography>
-                  </Button>
+
+                <div className={s.postOptions}>
+                  <CustomPopover
+                    contentChildren={
+                      <PostOptions
+                        deletePostModalHandler={deletePostModalHandler}
+                        // editModeHandler={editModeHandler}
+                        editPostModalHandler={editPostModalHandler}
+                        id={'123'}
+                      />
+                    }
+                    icon={
+                      <div style={{ position: 'relative' }}>
+                        <HorizontalDots />
+                      </div>
+                    }
+                  />
                 </div>
               </div>
-            )}
+              <div className={s.commentsBlock}>
+                <TestComment />
+                <TestComment />
+                <TestComment />
+              </div>
+              <div className={s.likesBlock}>
+                <div className={s.buttonIcons}>
+                  <div>
+                    <HeartOutline className={s.buttonIcon} />
+                    <PaperLine className={s.buttonIcon} />
+                  </div>
+
+                  <Bookmark className={s.buttonIcon} />
+                </div>
+              </div>
+              <div className={s.addCommentBlock}>
+                <input placeholder={'Add comment...'} type={'text'} />
+                <Button
+                  className={s.button}
+                  disabled={false}
+                  onClick={commentPublish}
+                  variant={'outlined'}
+                >
+                  <Typography variant={'h3'}>{t.button.publish}</Typography>
+                </Button>
+              </div>
+            </div>
           </div>
         </Modal>
         <EditPostModal.widget />

@@ -16,7 +16,7 @@ export const useContainer = () => {
   const { t } = useTranslation()
   //const postPhotos = useAppSelector(state => state.postReducer.postPhotos)
   const { isMyPostModal } = useAppSelector(state => state.postReducer)
-  const { data: getProfile, isLoading: isGetUserLoading } = useGetProfileQuery()
+  const { data: getProfile, isFetching: isGetUserLoading } = useGetProfileQuery()
   const [isOpenClosePostModal, setIsOpenClosePostModal] = useState(false)
   const [currPhotoIndex, setCurrPhotoIndex] = useState(0)
   const onChangeCurrPhoto = (currPhoto: number) => setCurrPhotoIndex(currPhoto)
@@ -49,7 +49,9 @@ export const useContainer = () => {
 
   // запрос и прокинуть пост фотос
   const postId = query?.postId as string | undefined
-  const { data: postPhotos } = useGetCurrentPostQuery(Number(postId))
+  const { data: postPhotos, isFetching: isPostFetching } = useGetCurrentPostQuery(Number(postId), {
+    skip: !postId,
+  })
 
   const commentPublish = () => {}
   const deletePostModalHandler = (id: number) => {
@@ -79,6 +81,8 @@ export const useContainer = () => {
     })
   }
 
+  const isLoading = isGetUserLoading || isPostFetching
+
   return {
     closeModalWithRefresh,
     commentPublish,
@@ -92,11 +96,14 @@ export const useContainer = () => {
     handleClosePostModal,
     handleSubmit,
     isGetUserLoading,
+    isLoading,
     isMyPostModal,
     isOpenClosePostModal,
+    isPostFetching,
     myPostDescription,
     onChangeCurrPhoto,
     openEditPostModal,
+    postId,
     postPhotos,
     t,
   }
