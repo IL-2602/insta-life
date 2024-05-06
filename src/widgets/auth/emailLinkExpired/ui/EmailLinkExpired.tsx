@@ -12,7 +12,6 @@ import img from '../../../../../public/assets/expiredLink.svg'
 
 export const EmailLinkExpired = ({
   captchaRef,
-  email,
   handleCloseModal,
   handleSetToken,
   isDisabled,
@@ -21,6 +20,7 @@ export const EmailLinkExpired = ({
   locale,
   onRecentLink,
   publicKey,
+  query,
   setIsOpen,
   t,
 }: EmailLinkExpiredContainerProps) => {
@@ -59,7 +59,7 @@ export const EmailLinkExpired = ({
       >
         <Typography
           variant={'regular16'}
-        >{`We have sent a link to confirm your email to ${email}`}</Typography>
+        >{`We have sent a link to confirm your email to ${query.email}`}</Typography>
       </Modal>
     </div>
   )
