@@ -34,7 +34,7 @@ export const useContainer = () => {
 
   const {
     control,
-    formState: { errors, isDirty },
+    formState: { dirtyFields, errors },
     handleSubmit,
   } = useForm<FormType>({
     defaultValues: {
@@ -44,6 +44,8 @@ export const useContainer = () => {
     mode: 'onBlur',
     resolver: zodResolver(CreateNewPasswordSchema),
   })
+
+  const passwords = dirtyFields.password && dirtyFields.passwordConfirmation
 
   const errorPassword = errors.password?.message
   const errorPasswordConfirmation = errors.passwordConfirmation?.message
@@ -59,5 +61,5 @@ export const useContainer = () => {
     }
   })
 
-  return { control, errorPassword, errorPasswordConfirmation, handleFormSubmit, isDirty, t }
+  return { control, errorPassword, errorPasswordConfirmation, handleFormSubmit, passwords, t }
 }
