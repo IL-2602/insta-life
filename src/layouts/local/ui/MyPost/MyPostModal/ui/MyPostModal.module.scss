@@ -74,7 +74,7 @@
 }
 
 .commentLike {
-  align-items: start;
+  align-items: flex-start;
   margin-top: 17px;
 }
 
@@ -147,7 +147,7 @@
 
 .saveChangesBtnBlock {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .closeOpenModalontainer {

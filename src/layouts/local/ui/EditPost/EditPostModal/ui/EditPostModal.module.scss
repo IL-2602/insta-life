@@ -41,7 +41,7 @@
   }
 
   span {
-    align-self: end;
+    align-self: flex-end;
     font: var(--font-small);
   }
 }
@@ -80,7 +80,7 @@
 
 .saveChangesBtnBlock {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .closeOpenModalontainer {
