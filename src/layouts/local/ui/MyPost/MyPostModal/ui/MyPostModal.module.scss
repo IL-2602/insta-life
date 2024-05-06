@@ -1,17 +1,18 @@
 .modal {
   width: 100%;
   max-width: 972px;
-  padding: 25px;
 
-  & > *:first-child{
+  & > * {
+    padding: 0;
+  }
+
+  & > *:first-child {
     margin-bottom: 20px;
     background: transparent;
     border: none;
   }
 
-  & > * {
-    padding: 0;
-  }
+
 }
 
 .container {

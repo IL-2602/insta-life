@@ -71,9 +71,9 @@ export const MyPostModal = memo(
                 style={{
                   alignItems: 'center',
                   display: 'flex',
+                  height: '564px',
                   justifyContent: 'center',
                   width: '100%',
-                  height: '564px',
                 }}
               >
                 <Spinner />
