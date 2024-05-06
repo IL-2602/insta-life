@@ -20,6 +20,7 @@ import Image from 'next/image'
 import s from './MyPostModal.module.scss'
 
 import noPhoto from '../../../../../../../public/assets/noPhoto.svg'
+import { ScrollSelect } from '@/shared/ui/ScrollSelect/ScrollSelect'
 
 type PhotoType = {
   createdAt: string
@@ -133,10 +134,13 @@ export const MyPostModal = memo(
                       />
                     </div>
                   </div>
+
                   <div className={s.commentsBlock}>
-                    <TestComment />
-                    <TestComment />
-                    <TestComment />
+                    <ScrollSelect maxHeight={'300px'} type={'always'}>
+                      <TestComment />
+                      <TestComment />
+                      <TestComment />
+                    </ScrollSelect>
                   </div>
                   <div className={s.likesBlock}>
                     <div className={s.buttonIcons}>
