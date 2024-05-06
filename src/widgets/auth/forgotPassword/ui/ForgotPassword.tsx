@@ -40,6 +40,7 @@ export const ForgotPassword = ({
             errorMessage={emailError && t.auth.error[emailError]}
             label={t.auth.form.email}
             name={'email'}
+            placeholder={'Epam@epam.com'}
           />
           <Typography className={s.subtitle} variant={'regular14'}>
             {t.auth.forgotPasswordPage.enterYourEmailText}
