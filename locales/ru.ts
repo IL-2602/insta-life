@@ -42,6 +42,7 @@ export const ru: Local = {
       passwordRegex:
         'Пароль может содержать a-z, A-Z, 0-9, ! " # $ % & \' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _` { | } ~',
       passwordsDontMatch: 'Пароли не совпадают',
+      passwordsMustMatch: 'Пароли не совпадают',
       titlePostValueMax: 'Название поста не может быть больше 10 символов',
       titlePostValueMin: 'Название поста не может быть меньше 8 символов',
       uNameRegisteredError: 'Пользователь с этим логином уже зарегистрирован',
