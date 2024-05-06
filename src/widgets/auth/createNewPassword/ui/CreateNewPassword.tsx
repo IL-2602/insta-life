@@ -13,7 +13,7 @@ export const CreateNewPassword = ({
   errorPassword,
   errorPasswordConfirmation,
   handleFormSubmit,
-  passwords,
+  isValid,
   t,
 }: CreateNewPasswordProps) => {
   return (
@@ -42,12 +42,7 @@ export const CreateNewPassword = ({
             type={'password'}
           />
           <Typography as={'p'} variant={'regular14'} />
-          <Button
-            className={s.submitButton}
-            disabled={!!errorPassword || !!errorPasswordConfirmation || !passwords}
-            fullWidth
-            type={'submit'}
-          >
+          <Button className={s.submitButton} disabled={!isValid} fullWidth type={'submit'}>
             <Typography as={'span'} variant={'h3'}>
               {t.auth.button.createNewPassword}
             </Typography>
