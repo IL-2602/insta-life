@@ -1,4 +1,5 @@
 import { memo } from 'react'
+import { createPortal } from 'react-dom'
 
 import { DeletePostModal } from '@/layouts/local/ui/DeletePost/DeletePostModal'
 import { EditPostModal } from '@/layouts/local/ui/EditPost/EditPostModal'
@@ -21,7 +22,6 @@ import Image from 'next/image'
 import s from './MyPostModal.module.scss'
 
 import noPhoto from '../../../../../../../public/assets/noPhoto.svg'
-import { createPortal } from 'react-dom'
 
 type PhotoType = {
   createdAt: string
@@ -62,15 +62,15 @@ export const MyPostModal = memo(
       return (
         <div
           style={{
+            alignItems: 'center',
             background: 'rgba(0, 0, 0, 0.5)',
+            display: 'flex',
             height: '100%',
+            justifyContent: 'center',
+            left: '50%',
             position: 'fixed',
             top: '50%',
-            left: '50%',
             transform: 'translate(-50%, -50%)',
-            alignItems: 'center',
-            display: 'flex',
-            justifyContent: 'center',
             width: '100%',
           }}
         >
