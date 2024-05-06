@@ -1,6 +1,17 @@
 .modal {
   width: 100%;
   max-width: 972px;
+  padding: 25px;
+
+  & > *:first-child{
+    margin-bottom: 20px;
+    background: transparent;
+    border: none;
+  }
+
+  & > * {
+    padding: 0;
+  }
 }
 
 .container {
@@ -13,8 +24,11 @@
 .postPhotoWrapper {
   overflow: hidden;
   flex: 1;
+
   width: 490px;
   height: 562px;
+
+  border-right: 1px solid var(--color-dark-100);
 }
 
 .postPhoto {
