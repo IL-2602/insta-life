@@ -22,7 +22,7 @@ export const useContainer = () => {
       passwordConfirmation: z.string().trim().min(6, 'passwordMin').max(20, 'passwordMax'),
     })
     .refine(data => data.password === data.passwordConfirmation, {
-      message: 'passwordsDontMatch',
+      message: 'passwordsMustMatch',
       path: ['passwordConfirmation'],
     })
 
