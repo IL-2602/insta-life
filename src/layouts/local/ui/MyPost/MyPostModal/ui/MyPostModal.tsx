@@ -13,6 +13,7 @@ import { Button } from '@/shared/ui/Button'
 import { Modal } from '@/shared/ui/Modal'
 import { CustomPopover } from '@/shared/ui/Popover/CustomPopover'
 import { PostOptions } from '@/shared/ui/PostOptions/PostOptions'
+import { ScrollSelect } from '@/shared/ui/ScrollSelect/ScrollSelect'
 import { Spinner } from '@/shared/ui/Spinner'
 import { Typography } from '@/shared/ui/Typography'
 import Image from 'next/image'
@@ -20,7 +21,6 @@ import Image from 'next/image'
 import s from './MyPostModal.module.scss'
 
 import noPhoto from '../../../../../../../public/assets/noPhoto.svg'
-import { ScrollSelect } from '@/shared/ui/ScrollSelect/ScrollSelect'
 
 type PhotoType = {
   createdAt: string
