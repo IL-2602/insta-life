@@ -12,7 +12,7 @@ import { useRouter } from 'next/router'
 export const useContainer = () => {
   const [isOpen, setIsOpen] = useState(false)
   const { t } = useTranslation()
-  const { locale } = useRouter()
+  const { locale, query } = useRouter()
 
   const [passwordRecovery, { isLoading }] = usePasswordRecoveryMutation()
   const captchaRef = useRef<ReCAPTCHA | null>(null)
@@ -22,7 +22,6 @@ export const useContainer = () => {
   const publicKey = process.env.NEXT_PUBLIC_RECAPTCHA_API_KEY
 
   const token = useAppSelector(state => state.authReducer.recaptchaToken)
-  const email = useAppSelector(state => state.authReducer.email)
 
   const isDisabled = !token || isLoading
 
@@ -37,10 +36,10 @@ export const useContainer = () => {
   }
 
   const onRecentLink = () => {
-    if (email && token) {
+    if (query.email && token) {
       passwordRecovery({
         baseUrl: FRONTEND_URL,
-        email: email as string,
+        email: query.email as string,
         recaptcha: token,
       })
         .unwrap()
@@ -61,7 +60,6 @@ export const useContainer = () => {
 
   return {
     captchaRef,
-    email,
     handleCloseModal,
     handleSetToken,
     isDisabled,
@@ -70,6 +68,7 @@ export const useContainer = () => {
     locale,
     onRecentLink,
     publicKey,
+    query,
     setIsOpen,
     t,
   }

@@ -37,7 +37,7 @@ export const useContainer = () => {
 
   const {
     control,
-    formState: { errors },
+    formState: { errors, isValid },
     getValues,
     handleSubmit,
     setError,
@@ -54,7 +54,7 @@ export const useContainer = () => {
 
   const emailError = errors.email?.message
 
-  const isDisabled = !token || isLoadingPasswordRecovery || !email
+  const isDisabled = !token || isLoadingPasswordRecovery || !email || !isValid
 
   const onSubmit = handleSubmit(async data => {
     if (typeof token === 'string') {
@@ -106,5 +106,6 @@ export const useContainer = () => {
     publicKey,
     setIsOpen,
     t,
+    token,
   }
 }

@@ -13,6 +13,7 @@ export const CreateNewPassword = ({
   errorPassword,
   errorPasswordConfirmation,
   handleFormSubmit,
+  isValid,
   t,
 }: CreateNewPasswordProps) => {
   return (
@@ -41,7 +42,7 @@ export const CreateNewPassword = ({
             type={'password'}
           />
           <Typography as={'p'} variant={'regular14'} />
-          <Button className={s.submitButton} fullWidth type={'submit'}>
+          <Button className={s.submitButton} disabled={!isValid} fullWidth type={'submit'}>
             <Typography as={'span'} variant={'h3'}>
               {t.auth.button.createNewPassword}
             </Typography>
@@ -51,7 +52,3 @@ export const CreateNewPassword = ({
     </>
   )
 }
-
-// type Props = {
-//   onSubmit: (data: Omit<FormType, 'passwordConfirmation'>) => void
-// }

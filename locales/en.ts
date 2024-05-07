@@ -39,6 +39,7 @@ export const en = {
       passwordRegex:
         'Password must contain a-z, A-Z, 0-9, ! " # $ % & \' ( ) * + , - . / : ; < = > ? @ [ \\ ] ^ _` { | } ~',
       passwordsDontMatch: "Passwords don't match",
+      passwordsMustMatch: 'Passwords must match',
       titlePostValueMax: 'Title can not be longer than 30 characters',
       titlePostValueMin: 'Title must be at least 8 characters',
       uNameRegisteredError: 'User with this username is already registered',

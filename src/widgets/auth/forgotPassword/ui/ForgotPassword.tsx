@@ -27,6 +27,7 @@ export const ForgotPassword = ({
   publicKey,
   setIsOpen,
   t,
+  token,
 }: ForgotPasswordProps) => {
   return (
     <>
@@ -36,10 +37,10 @@ export const ForgotPassword = ({
           <ControlledTextField
             className={s.email}
             control={control}
-            //@ts-ignore
-            errorMessage={emailError && t.auth.error[emailError]}
+            errorMessage={emailError && t.auth.error.userNotExist}
             label={t.auth.form.email}
             name={'email'}
+            placeholder={'Epam@epam.com'}
           />
           <Typography className={s.subtitle} variant={'regular14'}>
             {t.auth.forgotPasswordPage.enterYourEmailText}
@@ -51,7 +52,7 @@ export const ForgotPassword = ({
           )}
           <Button
             className={s.registerBtn}
-            disabled={isDisabled}
+            disabled={isDisabled || !token}
             fullWidth
             isLoading={isLoadingPasswordRecovery}
             type={'submit'}
