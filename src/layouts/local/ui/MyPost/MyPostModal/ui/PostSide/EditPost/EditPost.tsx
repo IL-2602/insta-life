@@ -20,8 +20,6 @@ export const EditPost = ({
   editPostDescription,
   errorDescription,
   handleCloseEditPostDialog,
-  handleClosePostModal,
-  handleSubmit,
   isGetUserLoading,
   isLoadingEditPost,
   isOpenClosePostModal,
@@ -33,7 +31,7 @@ export const EditPost = ({
   return (
     !isGetUserLoading && (
       <>
-        <form className={s.descriptionWrapper} onSubmit={handleSubmit}>
+        <form className={s.descriptionWrapper} onSubmit={e => e.preventDefault()}>
           <div>
             <div className={s.userPhotoWrapper}>
               <div className={s.photo}>
@@ -47,12 +45,7 @@ export const EditPost = ({
             </div>
             <label>
               {t.auth.form.addPublicationDescription}
-              <ControlledTextAreaField
-                control={control}
-                defaultValue={postPhotos?.description}
-                name={'editPostDescription'}
-                rows={4}
-              />
+              <ControlledTextAreaField control={control} name={'myPostDescription'} rows={4} />
               <span className={s.charCount}>{editPostDescription?.length}/500</span>
             </label>
           </div>
@@ -62,8 +55,10 @@ export const EditPost = ({
               disabled={!!errorDescription || isLoadingEditPost}
               onClick={updatePost}
               variant={'primary'}
+              type={'button'}
+              isLoading={isLoadingEditPost}
             >
-              <Typography variant={'h3'}>{t.button.saveChanges}</Typography>
+              {!isLoadingEditPost && <Typography variant={'h3'}>{t.button.saveChanges}</Typography>}
             </Button>
           </div>
         </form>
@@ -102,11 +97,9 @@ export const EditPost = ({
 type Props = {
   closeModalWithRefresh: () => void
   control: any
-  editPostDescription: any
+  editPostDescription: string | null
   errorDescription: FieldError | undefined
   handleCloseEditPostDialog: () => void
-  handleClosePostModal: () => void
-  handleSubmit: () => void
   isGetUserLoading: boolean
   isLoadingEditPost: boolean
   isOpenClosePostModal: boolean

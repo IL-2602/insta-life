@@ -1,7 +1,6 @@
 import { memo } from 'react'
 
 import { DeletePostModal } from '@/layouts/local/ui/DeletePost/DeletePostModal'
-import { EditPostModal } from '@/layouts/local/ui/EditPost/EditPostModal'
 import { MyPostModalProps } from '@/layouts/local/ui/MyPost/MyPostModal/container'
 import { EditPost } from '@/layouts/local/ui/MyPost/MyPostModal/ui/PostSide/EditPost/EditPost'
 import { PostSide } from '@/layouts/local/ui/MyPost/MyPostModal/ui/PostSide/PostSide'
@@ -28,25 +27,23 @@ export const MyPostModal = memo(
     control,
     currPhotoIndex,
     deletePostModalHandler,
-    editPostModalHandler,
     errorDescription,
     getProfile,
     handleCloseEditPostDialog,
     handleCloseModal,
-    handleClosePostModal,
     handleOpenEditPostDialog,
-    handleSubmit,
     isEdit,
     isGetUserLoading,
     isLoading,
     isMyPostModal,
     isOpenClosePostModal,
-    isPostFetching,
     myPostDescription,
     onChangeCurrPhoto,
     postId,
     postPhotos,
+    updatePost,
     setIsEditPostHandler,
+    isLoadingEditPost,
     t,
   }: MyPostModalProps) => {
     if (!postId) {
@@ -87,9 +84,9 @@ export const MyPostModal = memo(
             <div className={s.postPhotoWrapper}>
               <PostPhotos currentPhoto={currPhotoIndex} onChangeCurrentPhoto={onChangeCurrPhoto}>
                 {postPhotos &&
-                  postPhotos.images.map((photo: PhotoType, i: number) => {
+                  postPhotos.images.map((photo: PhotoType) => {
                     return (
-                      <div className={s.postPhotoWrapper} key={i}>
+                      <div className={s.postPhotoWrapper} key={photo.uploadId}>
                         <Image alt={'photo'} className={s.postPhoto} fill src={photo.url} />
                       </div>
                     )
@@ -101,18 +98,16 @@ export const MyPostModal = memo(
                 <EditPost
                   closeModalWithRefresh={closeModalWithRefresh}
                   control={control}
-                  editPostDescription={() => {}}
+                  editPostDescription={myPostDescription}
                   errorDescription={errorDescription}
                   handleCloseEditPostDialog={handleCloseEditPostDialog}
-                  handleClosePostModal={handleClosePostModal}
-                  handleSubmit={() => {}}
                   isGetUserLoading={isGetUserLoading}
-                  isLoadingEditPost={false}
+                  isLoadingEditPost={isLoadingEditPost}
                   isOpenClosePostModal={isOpenClosePostModal}
                   postPhotos={postPhotos}
                   profile={getProfile}
                   t={t}
-                  updatePost={() => {}}
+                  updatePost={updatePost}
                 />
               ) : (
                 <PostSide
@@ -127,7 +122,6 @@ export const MyPostModal = memo(
             </div>
           </div>
         </Modal>
-        <EditPostModal.widget />
         <DeletePostModal.widget />
       </>
     )
