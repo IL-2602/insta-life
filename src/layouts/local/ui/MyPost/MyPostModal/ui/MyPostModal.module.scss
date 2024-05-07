@@ -7,8 +7,16 @@
   }
 
   & > *:first-child {
-    margin-bottom: 20px;
+    padding-bottom: 20px;
     background: transparent;
+    border: none;
+  }
+}
+
+.editModal {
+  & > *:first-child {
+    padding: 12px 24px;
+    background: var(--color-dark-300);
     border: none;
   }
 }
@@ -19,6 +27,7 @@
   flex-direction: row;
   margin: 0;
 }
+
 
 .postPhotoWrapper {
   overflow: hidden;
@@ -106,23 +115,6 @@
   margin: 15px;
 }
 
-.userPhotoWrapper {
-  display: flex;
-  gap: 12px;
-
-  .photo {
-    overflow: hidden;
-    display: grid;
-    place-items: center;
-
-    width: 36px;
-    height: 36px;
-
-    object-fit: cover;
-    background-color: var(--color-dark-700);
-    border-radius: 50%;
-  }
-}
 
 .commentsBlock {
   display: flex;

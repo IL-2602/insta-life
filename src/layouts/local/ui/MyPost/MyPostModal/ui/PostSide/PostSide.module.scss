@@ -1,0 +1,99 @@
+
+
+.userWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  height: 65px;
+
+  border-bottom: 1px solid var(--color-dark-100);
+}
+
+
+.userBlockWithPilot {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 15px;
+}
+
+.userPhotoWrapper {
+  display: flex;
+  gap: 12px;
+
+  .photo {
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+
+    width: 36px;
+    height: 36px;
+
+    object-fit: cover;
+    background-color: var(--color-dark-700);
+    border-radius: 50%;
+  }
+}
+
+.userContainer {
+  margin: 15px;
+}
+
+.postOptions {
+  cursor: pointer;
+  margin: 24px;
+}
+
+.commentsBlock {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid var(--color-dark-100);
+}
+
+.likesBlock {
+  border-bottom: 1px solid var(--color-dark-100);
+}
+
+.addCommentBlock {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 10px;
+}
+
+.buttonIcons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 0 12px;
+}
+
+.buttonIcon {
+  margin: 12px;
+}
+
+.button {
+  margin-left: 24px;
+}
+
+.userCommentContainer {
+  margin: 15px 15px 0;
+}
+
+.userCommentContainer:last-child {
+  margin-bottom: 15px;
+}
+
+.commentText {
+  width: 350px;
+}
+
+.commentLike {
+  align-items: flex-start;
+  margin-top: 17px;
+}
+
+.commentTime {
+  color: red;
+}

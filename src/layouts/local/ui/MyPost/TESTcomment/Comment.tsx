@@ -3,7 +3,7 @@ import { Heart } from '@/shared/assets/icons/Heart'
 import { Typography } from '@/shared/ui/Typography'
 import Image from 'next/image'
 
-import s from '@/layouts/local/ui/MyPost/MyPostModal/ui/MyPostModal.module.scss'
+import s from '@/layouts/local/ui/MyPost/MyPostModal/ui/PostSide/PostSide.module.scss'
 
 import noPhoto from '../../../../../../public/assets/noPhoto.svg'
 

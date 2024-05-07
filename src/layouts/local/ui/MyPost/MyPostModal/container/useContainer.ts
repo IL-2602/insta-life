@@ -19,6 +19,7 @@ export const useContainer = () => {
   const { data: getProfile, isFetching: isGetUserLoading } = useGetProfileQuery()
   const [isOpenClosePostModal, setIsOpenClosePostModal] = useState(false)
   const [currPhotoIndex, setCurrPhotoIndex] = useState(0)
+  const [isEdit, setIsEdit] = useState(false)
   const onChangeCurrPhoto = (currPhoto: number) => setCurrPhotoIndex(currPhoto)
   const { query, replace } = useRouter()
   const { myPostSchema } = useMyPostSchema()
@@ -56,6 +57,7 @@ export const useContainer = () => {
   const commentPublish = () => {}
   const deletePostModalHandler = (id: number) => {
     dispatch(postActions.setIsDeletePostModal(true))
+    setIsEdit(false)
   }
   const editPostModalHandler = () => {
     dispatch(postActions.setIsEditPostModal(true))
@@ -66,28 +68,39 @@ export const useContainer = () => {
       shallow: true,
     })
     dispatch(postActions.setIsMyPostModal(false))
+    setIsEdit(false)
   }
   const closeModalWithRefresh = () => {
-    void replace({ query: { id: query.id } }, undefined, {
-      shallow: true,
-    })
-    dispatch(postActions.setIsEditPostModal(false))
+    // void replace({ query: { id: query.id } }, undefined, {
+    //   shallow: true,
+    // })
+    // dispatch(postActions.setIsEditPostModal(false))
     setIsOpenClosePostModal(false)
+    setIsEdit(false)
   }
   const handleClosePostModal = () => {
     setIsOpenClosePostModal(false)
+    setIsEdit(false)
     void replace({ query: { id: query.id } }, undefined, {
       shallow: true,
     })
   }
+
+  const handleOpenEditPostDialog = () => setIsOpenClosePostModal(true)
+  const handleCloseEditPostDialog = () => setIsOpenClosePostModal(false)
+  const setIsEditPostHandler = () => setIsEdit(p => !p)
 
   const isLoading = isGetUserLoading || isPostFetching
 
   return {
+    isEdit,
     closeModalWithRefresh,
     commentPublish,
+    setIsEditPostHandler,
     control,
     currPhotoIndex,
+    handleOpenEditPostDialog,
+    handleCloseEditPostDialog,
     deletePostModalHandler,
     editPostModalHandler,
     errorDescription,

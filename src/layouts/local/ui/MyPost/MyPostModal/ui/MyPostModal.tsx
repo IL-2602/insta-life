@@ -1,27 +1,22 @@
 import { memo } from 'react'
-import { createPortal } from 'react-dom'
 
 import { DeletePostModal } from '@/layouts/local/ui/DeletePost/DeletePostModal'
 import { EditPostModal } from '@/layouts/local/ui/EditPost/EditPostModal'
 import { MyPostModalProps } from '@/layouts/local/ui/MyPost/MyPostModal/container'
-import { TestComment } from '@/layouts/local/ui/MyPost/TESTcomment/Comment'
-import { Bookmark } from '@/shared/assets/icons/Bookmark'
-import { HeartOutline } from '@/shared/assets/icons/Heart/HeartOutline'
-import { HorizontalDots } from '@/shared/assets/icons/HorizontalDots/HorizontalDots'
-import { PaperLine } from '@/shared/assets/icons/PaperLine'
+
 import { PostPhotos } from '@/shared/components/PostPhotos/PostPhotos'
-import { Button } from '@/shared/ui/Button'
+
 import { Modal } from '@/shared/ui/Modal'
-import { CustomPopover } from '@/shared/ui/Popover/CustomPopover'
-import { PostOptions } from '@/shared/ui/PostOptions/PostOptions'
-import { ScrollSelect } from '@/shared/ui/ScrollSelect/ScrollSelect'
+
 import { Spinner } from '@/shared/ui/Spinner'
-import { Typography } from '@/shared/ui/Typography'
+
 import Image from 'next/image'
 
 import s from './MyPostModal.module.scss'
 
-import noPhoto from '../../../../../../../public/assets/noPhoto.svg'
+import { PostSide } from '@/layouts/local/ui/MyPost/MyPostModal/ui/PostSide/PostSide'
+import { EditPost } from '@/layouts/local/ui/MyPost/MyPostModal/ui/PostSide/EditPost/EditPost'
+import { clsx } from 'clsx'
 
 type PhotoType = {
   createdAt: string
@@ -35,6 +30,7 @@ export const MyPostModal = memo(
   ({
     closeModalWithRefresh,
     commentPublish,
+    isEdit,
     control,
     currPhotoIndex,
     deletePostModalHandler,
@@ -48,6 +44,9 @@ export const MyPostModal = memo(
     isLoading,
     isMyPostModal,
     isOpenClosePostModal,
+    handleOpenEditPostDialog,
+    setIsEditPostHandler,
+    handleCloseEditPostDialog,
     isPostFetching,
     myPostDescription,
     onChangeCurrPhoto,
@@ -78,14 +77,15 @@ export const MyPostModal = memo(
         </div>
       )
     }
-
+    const headerStyle = clsx(s.modal, isEdit && s.editModal)
     return (
       <>
         <Modal
-          className={s.modal}
+          className={headerStyle}
           customButtonsBlock={<></>}
-          modalHandler={handleCloseModal}
+          modalHandler={!isEdit ? handleCloseModal : handleOpenEditPostDialog}
           open={isMyPostModal}
+          title={isEdit ? 'Edit Post' : undefined}
         >
           <div className={s.container}>
             <div className={s.postPhotoWrapper}>
@@ -101,72 +101,33 @@ export const MyPostModal = memo(
               </PostPhotos>
             </div>
             <div className={s.descriptionWrapper}>
-              <div className={s.userWrapper}>
-                <div className={s.userContainer}>
-                  <div className={s.userPhotoWrapper}>
-                    <div className={s.photo}>
-                      {getProfile?.avatars[0] === undefined ? (
-                        <Image alt={'noUserPhoto'} height={22} src={noPhoto} width={22} />
-                      ) : (
-                        <Image
-                          alt={'userPhoto'}
-                          height={36}
-                          src={postPhotos?.avatarOwner}
-                          width={36}
-                        />
-                      )}
-                    </div>
-                    <Typography variant={'h3'}>{postPhotos?.userName}</Typography>
-                  </div>
-                </div>
-
-                <div className={s.postOptions}>
-                  <CustomPopover
-                    contentChildren={
-                      <PostOptions
-                        deletePostModalHandler={deletePostModalHandler}
-                        // editModeHandler={editModeHandler}
-                        editPostModalHandler={editPostModalHandler}
-                        id={'123'}
-                      />
-                    }
-                    icon={
-                      <div style={{ position: 'relative' }}>
-                        <HorizontalDots />
-                      </div>
-                    }
-                  />
-                </div>
-              </div>
-
-              <div className={s.commentsBlock}>
-                <ScrollSelect maxHeight={'300px'} type={'always'}>
-                  <TestComment />
-                  <TestComment />
-                  <TestComment />
-                </ScrollSelect>
-              </div>
-              <div className={s.likesBlock}>
-                <div className={s.buttonIcons}>
-                  <div>
-                    <HeartOutline className={s.buttonIcon} />
-                    <PaperLine className={s.buttonIcon} />
-                  </div>
-
-                  <Bookmark className={s.buttonIcon} />
-                </div>
-              </div>
-              <div className={s.addCommentBlock}>
-                <input placeholder={'Add comment...'} type={'text'} />
-                <Button
-                  className={s.button}
-                  disabled={false}
-                  onClick={commentPublish}
-                  variant={'outlined'}
-                >
-                  <Typography variant={'h3'}>{t.button.publish}</Typography>
-                </Button>
-              </div>
+              {isEdit ? (
+                <EditPost
+                  isGetUserLoading={isGetUserLoading}
+                  handleSubmit={() => {}}
+                  isLoadingEditPost={false}
+                  profile={getProfile}
+                  editPostDescription={() => {}}
+                  updatePost={() => {}}
+                  postPhotos={postPhotos}
+                  t={t}
+                  errorDescription={errorDescription}
+                  control={control}
+                  closeModalWithRefresh={closeModalWithRefresh}
+                  handleClosePostModal={handleClosePostModal}
+                  handleCloseEditPostDialog={handleCloseEditPostDialog}
+                  isOpenClosePostModal={isOpenClosePostModal}
+                />
+              ) : (
+                <PostSide
+                  profile={getProfile}
+                  postPhotos={postPhotos}
+                  t={t}
+                  deletePostModalHandler={deletePostModalHandler}
+                  setIsEditPostHandler={setIsEditPostHandler}
+                  commentPublishHandler={commentPublish}
+                />
+              )}
             </div>
           </div>
         </Modal>

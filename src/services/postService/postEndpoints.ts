@@ -1,6 +1,7 @@
 import { api } from '@/services/api'
 import {
   EditPostParams,
+  GetCurrentPostResponse,
   PublishPostImageResponse,
   PublishPostParams,
   PublishPostResponse,
@@ -30,7 +31,7 @@ export const postEndpoints = api.injectEndpoints({
         }
       },
     }),
-    getCurrentPost: builder.query<any, number>({
+    getCurrentPost: builder.query<GetCurrentPostResponse, number>({
       providesTags: ['Post'],
       query: postId => {
         return {

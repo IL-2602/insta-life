@@ -74,3 +74,27 @@ export type getUserPostsResponse = {
   totalCount: number
   totalUsers: number
 }
+export type PostImage = {
+  url: string
+  width: number
+  height: number
+  fileSize: number
+  createdAt: string
+  uploadId: string
+}
+export type GetCurrentPostResponse = {
+  id: number
+  userName: string
+  description: string
+  location: string
+  images: PostImage[]
+  createdAt: string
+  updatedAt: string
+  ownerId: number
+  avatarOwner: string
+  owner: {
+    firstName: string
+    lastName: string
+  }
+  likesCount: number
+}
