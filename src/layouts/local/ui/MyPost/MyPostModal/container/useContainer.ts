@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 
@@ -48,8 +48,13 @@ export const useContainer = () => {
     mode: 'onTouched',
     resolver: zodResolver(myPostSchema),
   })
+
   const myPostDescription = watch('myPostDescription')
   const { myPostDescription: errorDescription } = errors
+
+  useEffect(() => {
+    reset({ myPostDescription: postPhotos?.description })
+  }, [reset, postPhotos?.description])
 
   const onChangeCurrPhoto = (currPhoto: number) => setCurrPhotoIndex(currPhoto)
   const commentPublish = () => {}
