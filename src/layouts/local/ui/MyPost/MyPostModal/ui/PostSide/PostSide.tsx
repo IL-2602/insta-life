@@ -61,9 +61,10 @@ export const PostSide = ({
 
       <div className={s.commentsBlock}>
         <ScrollSelect maxHeight={'300px'} type={'always'}>
+          <></>
+          {/*<TestComment />
           <TestComment />
-          <TestComment />
-          <TestComment />
+          <TestComment />*/}
         </ScrollSelect>
       </div>
       <div className={s.likesBlock}>

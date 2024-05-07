@@ -1,5 +1,4 @@
 import { memo } from 'react'
-import { ToastContainer } from 'react-toastify'
 
 import { Cross } from '@/shared/assets/icons/Cross'
 import { Button } from '@/shared/ui/Button'
@@ -12,8 +11,6 @@ import { ControlledTextField } from '@/shared/ui/controlledInsta/ControlledTextF
 import { TextFieldsProps } from '@/widgets/profile/profileSettings/ui/generalInformation/ui/textFields/container'
 import { clsx } from 'clsx'
 import Link from 'next/link'
-
-import 'react-toastify/dist/ReactToastify.css'
 
 import s from './TextFields.module.scss'
 
@@ -47,14 +44,6 @@ export const TextFields = memo(
 
     return (
       <form className={s.container}>
-        <ToastContainer
-          autoClose={3000}
-          closeButton={({ closeToast }) => (
-            <button className={s.closeBtn} onClick={closeToast} type={'button'}>
-              <Cross />
-            </button>
-          )}
-        />
         <div className={s.inputWrap}>
           <label className={s.label}>
             {t.profileSettings.tab.generalInformation.form.username}

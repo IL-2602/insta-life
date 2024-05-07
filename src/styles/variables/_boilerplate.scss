@@ -118,3 +118,20 @@ select:-webkit-autofill:focus {
   background: var(--color-dark-300);
   background-color: var(--color-dark-300);
 }
+
+.closeBtnToast {
+  cursor: pointer;
+
+  padding-top: 3px;
+  padding-right: 20px;
+
+  font-size: 16px;
+  color: var(--color-light-100);
+
+  background-color: transparent;
+  border: 0;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}

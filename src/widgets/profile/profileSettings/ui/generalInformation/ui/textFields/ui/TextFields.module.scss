@@ -102,20 +102,3 @@
   display: flex;
   margin: auto;
 }
-
-.closeBtn {
-  cursor: pointer;
-
-  padding-top: 3px;
-  padding-right: 20px;
-
-  font-size: 16px;
-  color: var(--color-light-100);
-
-  background-color: transparent;
-  border: 0;
-
-  &:hover {
-    opacity: 0.8;
-  }
-}
