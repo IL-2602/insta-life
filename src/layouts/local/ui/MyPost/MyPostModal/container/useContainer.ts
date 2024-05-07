@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { toast } from 'react-toastify'
 
 import { useAppDispatch } from '@/app/store/hooks/useAppDispatch'
 import { useAppSelector } from '@/app/store/hooks/useAppSelector'
@@ -11,7 +12,6 @@ import { useTranslation } from '@/shared/hooks/useTranslation'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/router'
 import { z } from 'zod'
-import { toast } from 'react-toastify'
 
 export const useContainer = () => {
   const { isMyPostModal } = useAppSelector(state => state.postReducer)
@@ -131,15 +131,15 @@ export const useContainer = () => {
     isEdit,
     isGetUserLoading,
     isLoading,
+    isLoadingEditPost,
     isMyPostModal,
     isOpenClosePostModal,
     myPostDescription,
     onChangeCurrPhoto,
-    isLoadingEditPost,
     postId,
     postPhotos,
     setIsEditPostHandler,
-    updatePost,
     t,
+    updatePost,
   }
 }

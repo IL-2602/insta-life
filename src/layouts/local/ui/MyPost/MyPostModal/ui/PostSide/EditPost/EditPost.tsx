@@ -53,10 +53,10 @@ export const EditPost = ({
           <div className={s.saveChangesBtnBlock}>
             <Button
               disabled={!!errorDescription || isLoadingEditPost}
-              onClick={updatePost}
-              variant={'primary'}
-              type={'button'}
               isLoading={isLoadingEditPost}
+              onClick={updatePost}
+              type={'button'}
+              variant={'primary'}
             >
               {!isLoadingEditPost && <Typography variant={'h3'}>{t.button.saveChanges}</Typography>}
             </Button>
@@ -97,7 +97,7 @@ export const EditPost = ({
 type Props = {
   closeModalWithRefresh: () => void
   control: any
-  editPostDescription: string | null
+  editPostDescription: null | string
   errorDescription: FieldError | undefined
   handleCloseEditPostDialog: () => void
   isGetUserLoading: boolean

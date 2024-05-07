@@ -35,16 +35,16 @@ export const MyPostModal = memo(
     isEdit,
     isGetUserLoading,
     isLoading,
+    isLoadingEditPost,
     isMyPostModal,
     isOpenClosePostModal,
     myPostDescription,
     onChangeCurrPhoto,
     postId,
     postPhotos,
-    updatePost,
     setIsEditPostHandler,
-    isLoadingEditPost,
     t,
+    updatePost,
   }: MyPostModalProps) => {
     if (!postId) {
       return null

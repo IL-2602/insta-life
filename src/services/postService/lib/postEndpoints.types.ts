@@ -31,7 +31,7 @@ export type PublishPostParams = {
 }
 
 export type EditPostParams = {
-  description: string | null
+  description: null | string
   postId: number
 }
 
