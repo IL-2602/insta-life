@@ -12,10 +12,19 @@ import s from './EditPostModal.module.scss'
 
 import noPhoto from '../../../../../../../public/assets/noPhoto.svg'
 
+type PhotoType = {
+  createdAt: string
+  fileSize: number
+  height: number
+  uploadId: string
+  url: string
+  width: number
+}
 export const EditPostModal = memo(
   ({
     closeModalWithRefresh,
     control,
+    currPhotoIndex,
     editPostDescription,
     errorDescription,
     getProfile,
@@ -26,6 +35,7 @@ export const EditPostModal = memo(
     isGetUserLoading,
     isLoadingEditPost,
     isOpenClosePostModal,
+    onChangeCurrPhoto,
     postPhotos,
     t,
     updatePost,
@@ -42,6 +52,16 @@ export const EditPostModal = memo(
           <div className={s.container}>
             <div className={s.postPhotoWrapper}>
               {/*<PostPhotos className={s.postPhoto} height={503} photos={postPhotos} width={490} />*/}
+              <PostPhotos currentPhoto={currPhotoIndex} onChangeCurrentPhoto={onChangeCurrPhoto}>
+                {postPhotos &&
+                  postPhotos.images.map((photo: PhotoType, i: number) => {
+                    return (
+                      <div className={s.postPhotoWrapper} key={i}>
+                        <Image alt={'photo'} className={s.postPhoto} fill src={photo.url} />
+                      </div>
+                    )
+                  })}
+              </PostPhotos>
             </div>
             {!isGetUserLoading && (
               <form className={s.descriptionWrapper} onSubmit={handleSubmit(() => {})}>
@@ -54,21 +74,22 @@ export const EditPostModal = memo(
                         <Image
                           alt={'userPhoto'}
                           height={36}
-                          src={getProfile?.avatars[0].url}
+                          src={postPhotos?.avatarOwner!}
                           width={36}
                         />
                       )}
                     </div>
-                    <Typography variant={'medium16'}>{getProfile?.userName}</Typography>
+                    <Typography variant={'medium16'}>{postPhotos?.userName}</Typography>
                   </div>
                   <label>
                     {t.auth.form.addPublicationDescription}
                     <ControlledTextAreaField
                       control={control}
+                      defaultValue={postPhotos?.description}
                       name={'editPostDescription'}
                       rows={4}
                     />
-                    <span className={s.charCount}>{editPostDescription?.length}/500</span>
+                    <span className={s.charCount}>{editPostDescription?.length || 0}/500</span>
                   </label>
                 </div>
 
@@ -108,7 +129,7 @@ export const EditPostModal = memo(
             title={t.modal.closeModalTitle}
           >
             <div className={s.closeOpenModalContent}>
-              {/*<Typography variant={'regular16'}>{t.modal.closeModalText}</Typography>*/}
+              <Typography variant={'regular16'}>{t.modal.closeModalTextTwo}</Typography>
             </div>
           </Modal>
         )}

@@ -65,7 +65,7 @@ export const PostPublication = memo(
           }
           title={t.modal.publicationTitle}
         >
-          <>
+          <div>
             <div className={clsx(s.container, isLoading ? s.opacity : '')}>
               {isLoading && (
                 <div className={s.spinner}>
@@ -110,7 +110,7 @@ export const PostPublication = memo(
                 </form>
               )}
             </div>
-          </>
+          </div>
         </Modal>
         <ClosePostModal />
       </>

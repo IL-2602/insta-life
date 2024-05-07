@@ -1,5 +1,6 @@
 import { forwardRef } from 'react'
 
+import { MyPostModal } from '@/layouts/local/ui/MyPost/MyPostModal'
 import { PublishPostResponse } from '@/services/postService/lib/postEndpoints.types'
 import { SpinnerThreePoints } from '@/shared/ui/SpinnerThreePoints'
 import { ProfilePhotosProps } from '@/widgets/profile/profilePhotos/container'
@@ -18,7 +19,9 @@ export const ProfilePhotos = forwardRef<HTMLDivElement, ProfilePhotosProps>(
                 <div
                   className={s.imageContainer}
                   key={item.id}
-                  onClick={() => handleReceivingPostId(item.id)}
+                  onClick={() => {
+                    handleReceivingPostId(item.id)
+                  }}
                 >
                   {item.images[0] && (
                     <Image alt={'photo'} height={228} src={item.images[0].url} width={234} />
@@ -34,6 +37,7 @@ export const ProfilePhotos = forwardRef<HTMLDivElement, ProfilePhotosProps>(
             <SpinnerThreePoints />
           </div>
         )}
+        <MyPostModal.widget />
       </>
     )
   }

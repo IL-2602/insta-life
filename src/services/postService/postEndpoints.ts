@@ -1,6 +1,7 @@
 import { api } from '@/services/api'
 import {
   EditPostParams,
+  GetCurrentPostResponse,
   PublishPostImageResponse,
   PublishPostParams,
   PublishPostResponse,
@@ -10,25 +11,32 @@ import { publicEndpoints } from '@/services/publicService/publicEndpoints'
 export const postEndpoints = api.injectEndpoints({
   endpoints: builder => ({
     deletePost: builder.mutation<void, number>({
-      invalidatesTags: [],
+      invalidatesTags: ['Post'],
       query: postId => {
         return {
           method: 'DELETE',
-          params: {
-            postId,
-          },
-          url: 'posts',
+          url: `posts/${postId}`,
         }
       },
     }),
+
     editPost: builder.mutation<void, EditPostParams>({
-      invalidatesTags: [],
+      invalidatesTags: ['Post'],
       query: ({ description, postId }) => {
         return {
           body: { description },
           method: 'PUT',
           params: { postId },
           url: `posts/${postId}`,
+        }
+      },
+    }),
+    getCurrentPost: builder.query<GetCurrentPostResponse, number>({
+      providesTags: ['Post'],
+      query: postId => {
+        return {
+          method: 'GET',
+          url: `public-posts/${postId}`,
         }
       },
     }),
@@ -73,6 +81,7 @@ export const postEndpoints = api.injectEndpoints({
 export const {
   useDeletePostMutation,
   useEditPostMutation,
+  useGetCurrentPostQuery,
   usePublishPostImageMutation,
   usePublishPostMutation,
 } = postEndpoints

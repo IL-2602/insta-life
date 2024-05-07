@@ -25,6 +25,7 @@ export const SideBar = ({
   isCreatePostModal,
   isOpen,
   me,
+  pathname,
   setIsOpen,
   t,
   uploadPostPhoto,
@@ -47,11 +48,7 @@ export const SideBar = ({
         </Typography>
       </button>
       <Link
-        className={
-          handleActiveLink(ROUTES.PROFILE_SETTINGS) || handleActiveLink(ROUTES.PROFILE)
-            ? s.activeLink
-            : ''
-        }
+        className={pathname.startsWith(ROUTES.PROFILE) ? s.activeLink : ''}
         href={`${ROUTES.PROFILE}/${me?.userId}`}
       >
         <ProfileIcon className={s.navIcon} />

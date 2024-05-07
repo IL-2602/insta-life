@@ -86,7 +86,6 @@ export const Modal = ({
               </Dialog.Close>
             )}
           </div>
-          <hr className={s.border} />
           <Dialog.Description asChild className={modalContentClassName}>
             {children}
           </Dialog.Description>
@@ -103,7 +102,11 @@ export const Modal = ({
             </div>
           ) : (
             <div
-              style={{ display: 'flex', justifyContent: 'flex-end', margin: '18px 24px 36px 0' }}
+              style={{
+                display: 'flex',
+                justifyContent: 'flex-end',
+                padding: '18px 24px 36px 0',
+              }}
             >
               {logOut ? (
                 <div>

@@ -7,6 +7,7 @@ export type PostSliceInitialState = {
   isCreatePostModal: boolean
   isDeletePostModal: boolean
   isEditPostModal: boolean
+  isMyPostModal: boolean
   modalSteps: ModalSteps
   postPhotos: PostPhoto[]
 }
@@ -30,7 +31,7 @@ export type PublishPostParams = {
 }
 
 export type EditPostParams = {
-  description: string
+  description: null | string
   postId: number
 }
 
@@ -72,4 +73,28 @@ export type getUserPostsResponse = {
   pageSize: number
   totalCount: number
   totalUsers: number
+}
+export type PostImage = {
+  createdAt: string
+  fileSize: number
+  height: number
+  uploadId: string
+  url: string
+  width: number
+}
+export type GetCurrentPostResponse = {
+  avatarOwner: string
+  createdAt: string
+  description: string
+  id: number
+  images: PostImage[]
+  likesCount: number
+  location: string
+  owner: {
+    firstName: string
+    lastName: string
+  }
+  ownerId: number
+  updatedAt: string
+  userName: string
 }
