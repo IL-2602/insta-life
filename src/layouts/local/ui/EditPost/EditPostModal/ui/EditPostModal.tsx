@@ -74,7 +74,7 @@ export const EditPostModal = memo(
                         <Image
                           alt={'userPhoto'}
                           height={36}
-                          src={postPhotos?.avatarOwner}
+                          src={postPhotos?.avatarOwner!}
                           width={36}
                         />
                       )}
@@ -89,7 +89,7 @@ export const EditPostModal = memo(
                       name={'editPostDescription'}
                       rows={4}
                     />
-                    <span className={s.charCount}>{editPostDescription?.length}/500</span>
+                    <span className={s.charCount}>{editPostDescription?.length || 0}/500</span>
                   </label>
                 </div>
 

@@ -110,6 +110,7 @@ export const useContainer = () => {
       setIsEdit(false)
     }
   }
+
   const handleOpenEditPostDialog = () => setIsOpenClosePostModal(true)
   const handleCloseEditPostDialog = () => setIsOpenClosePostModal(false)
   const setIsEditPostHandler = () => setIsEdit(p => !p)

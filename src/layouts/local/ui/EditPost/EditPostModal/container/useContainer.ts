@@ -88,7 +88,7 @@ export const useContainer = () => {
 
   const handleCloseModal = () => {
     setIsOpenClosePostModal(true)
-    reset({ editPostDescription: postPhotos.description })
+    reset({ editPostDescription: postPhotos?.description })
   }
 
   const closeModalWithRefresh = () => {
@@ -98,7 +98,7 @@ export const useContainer = () => {
 
   const handleClosePostModal = () => {
     setIsOpenClosePostModal(false)
-    reset({ editPostDescription: postPhotos.description })
+    reset({ editPostDescription: postPhotos?.description })
   }
 
   return {
