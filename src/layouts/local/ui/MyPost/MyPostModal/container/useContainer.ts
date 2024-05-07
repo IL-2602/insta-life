@@ -93,21 +93,20 @@ export const useContainer = () => {
   const isLoading = isGetUserLoading || isPostFetching
 
   return {
-    isEdit,
     closeModalWithRefresh,
     commentPublish,
-    setIsEditPostHandler,
     control,
     currPhotoIndex,
-    handleOpenEditPostDialog,
-    handleCloseEditPostDialog,
     deletePostModalHandler,
     editPostModalHandler,
     errorDescription,
     getProfile,
+    handleCloseEditPostDialog,
     handleCloseModal,
     handleClosePostModal,
+    handleOpenEditPostDialog,
     handleSubmit,
+    isEdit,
     isGetUserLoading,
     isLoading,
     isMyPostModal,
@@ -118,6 +117,7 @@ export const useContainer = () => {
     openEditPostModal,
     postId,
     postPhotos,
+    setIsEditPostHandler,
     t,
   }
 }

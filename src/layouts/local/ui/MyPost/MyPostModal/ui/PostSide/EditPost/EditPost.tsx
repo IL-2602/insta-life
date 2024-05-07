@@ -1,31 +1,34 @@
 import React from 'react'
-import s from './EditPost.module.scss'
-import Image from 'next/image'
-import noPhoto from '../../../../../../../../../public/assets/noPhoto.svg'
+import { FieldError } from 'react-hook-form'
+
+import { GetCurrentPostResponse } from '@/services/postService/lib/postEndpoints.types'
+import { Profile } from '@/shared/types/profile'
+import { Button } from '@/shared/ui/Button'
+import { Modal } from '@/shared/ui/Modal'
 import { Typography } from '@/shared/ui/Typography'
 import { ControlledTextAreaField } from '@/shared/ui/controlledInsta/ControlledTextArea/ControlledTextArea'
-import { Button } from '@/shared/ui/Button'
-import { Profile } from '@/shared/types/profile'
-import { GetCurrentPostResponse } from '@/services/postService/lib/postEndpoints.types'
+import Image from 'next/image'
+
+import s from './EditPost.module.scss'
+
 import { Local } from '../../../../../../../../../locales/en'
-import { FieldError } from 'react-hook-form'
-import { Modal } from '@/shared/ui/Modal'
+import noPhoto from '../../../../../../../../../public/assets/noPhoto.svg'
 
 export const EditPost = ({
-  isGetUserLoading,
-  postPhotos,
-  t,
-  errorDescription,
-  control,
-  profile,
-  handleSubmit,
-  isLoadingEditPost,
-  editPostDescription,
-  updatePost,
-  isOpenClosePostModal,
-  handleClosePostModal,
   closeModalWithRefresh,
+  control,
+  editPostDescription,
+  errorDescription,
   handleCloseEditPostDialog,
+  handleClosePostModal,
+  handleSubmit,
+  isGetUserLoading,
+  isLoadingEditPost,
+  isOpenClosePostModal,
+  postPhotos,
+  profile,
+  t,
+  updatePost,
 }: Props) => {
   return (
     !isGetUserLoading && (
@@ -97,18 +100,18 @@ export const EditPost = ({
 }
 
 type Props = {
-  isOpenClosePostModal: boolean
-  handleClosePostModal: () => void
   closeModalWithRefresh: () => void
-  isGetUserLoading: boolean
-  handleSubmit: () => void
-  isLoadingEditPost: boolean
-  profile: Profile | undefined
-  editPostDescription: any
-  updatePost: () => void
-  postPhotos: GetCurrentPostResponse | undefined
-  t: Local
-  errorDescription: FieldError | undefined
   control: any
+  editPostDescription: any
+  errorDescription: FieldError | undefined
   handleCloseEditPostDialog: () => void
+  handleClosePostModal: () => void
+  handleSubmit: () => void
+  isGetUserLoading: boolean
+  isLoadingEditPost: boolean
+  isOpenClosePostModal: boolean
+  postPhotos: GetCurrentPostResponse | undefined
+  profile: Profile | undefined
+  t: Local
+  updatePost: () => void
 }

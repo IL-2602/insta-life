@@ -1,25 +1,27 @@
-import s from './PostSide.module.scss'
-import Image from 'next/image'
-import noPhoto from '../../../../../../../../public/assets/noPhoto.svg'
-import { Typography } from '@/shared/ui/Typography'
+import { TestComment } from '@/layouts/local/ui/MyPost/TESTcomment/Comment'
+import { GetCurrentPostResponse } from '@/services/postService/lib/postEndpoints.types'
+import { Bookmark } from '@/shared/assets/icons/Bookmark'
+import { HeartOutline } from '@/shared/assets/icons/Heart/HeartOutline'
+import { HorizontalDots } from '@/shared/assets/icons/HorizontalDots/HorizontalDots'
+import { PaperLine } from '@/shared/assets/icons/PaperLine'
+import { Profile } from '@/shared/types/profile'
+import { Button } from '@/shared/ui/Button'
 import { CustomPopover } from '@/shared/ui/Popover/CustomPopover'
 import { PostOptions } from '@/shared/ui/PostOptions/PostOptions'
-import { HorizontalDots } from '@/shared/assets/icons/HorizontalDots/HorizontalDots'
 import { ScrollSelect } from '@/shared/ui/ScrollSelect/ScrollSelect'
-import { TestComment } from '@/layouts/local/ui/MyPost/TESTcomment/Comment'
-import { HeartOutline } from '@/shared/assets/icons/Heart/HeartOutline'
-import { PaperLine } from '@/shared/assets/icons/PaperLine'
-import { Bookmark } from '@/shared/assets/icons/Bookmark'
-import { Button } from '@/shared/ui/Button'
+import { Typography } from '@/shared/ui/Typography'
+import Image from 'next/image'
+
+import s from './PostSide.module.scss'
+
 import { Local } from '../../../../../../../../locales/en'
-import { Profile } from '@/shared/types/profile'
-import { GetCurrentPostResponse } from '@/services/postService/lib/postEndpoints.types'
+import noPhoto from '../../../../../../../../public/assets/noPhoto.svg'
 export const PostSide = ({
+  commentPublishHandler,
+  deletePostModalHandler,
   postPhotos,
   profile,
   setIsEditPostHandler,
-  deletePostModalHandler,
-  commentPublishHandler,
   t,
 }: Props) => {
   return (
@@ -90,10 +92,10 @@ export const PostSide = ({
 }
 
 type Props = {
-  profile: Profile | undefined
-  postPhotos: GetCurrentPostResponse | undefined
-  t: Local
-  deletePostModalHandler: (id: number) => void
-  setIsEditPostHandler: () => void
   commentPublishHandler: () => void
+  deletePostModalHandler: (id: number) => void
+  postPhotos: GetCurrentPostResponse | undefined
+  profile: Profile | undefined
+  setIsEditPostHandler: () => void
+  t: Local
 }

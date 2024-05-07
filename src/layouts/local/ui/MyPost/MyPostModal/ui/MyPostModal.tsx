@@ -3,20 +3,15 @@ import { memo } from 'react'
 import { DeletePostModal } from '@/layouts/local/ui/DeletePost/DeletePostModal'
 import { EditPostModal } from '@/layouts/local/ui/EditPost/EditPostModal'
 import { MyPostModalProps } from '@/layouts/local/ui/MyPost/MyPostModal/container'
-
+import { EditPost } from '@/layouts/local/ui/MyPost/MyPostModal/ui/PostSide/EditPost/EditPost'
+import { PostSide } from '@/layouts/local/ui/MyPost/MyPostModal/ui/PostSide/PostSide'
 import { PostPhotos } from '@/shared/components/PostPhotos/PostPhotos'
-
 import { Modal } from '@/shared/ui/Modal'
-
 import { Spinner } from '@/shared/ui/Spinner'
-
+import { clsx } from 'clsx'
 import Image from 'next/image'
 
 import s from './MyPostModal.module.scss'
-
-import { PostSide } from '@/layouts/local/ui/MyPost/MyPostModal/ui/PostSide/PostSide'
-import { EditPost } from '@/layouts/local/ui/MyPost/MyPostModal/ui/PostSide/EditPost/EditPost'
-import { clsx } from 'clsx'
 
 type PhotoType = {
   createdAt: string
@@ -30,28 +25,28 @@ export const MyPostModal = memo(
   ({
     closeModalWithRefresh,
     commentPublish,
-    isEdit,
     control,
     currPhotoIndex,
     deletePostModalHandler,
     editPostModalHandler,
     errorDescription,
     getProfile,
+    handleCloseEditPostDialog,
     handleCloseModal,
     handleClosePostModal,
+    handleOpenEditPostDialog,
     handleSubmit,
+    isEdit,
     isGetUserLoading,
     isLoading,
     isMyPostModal,
     isOpenClosePostModal,
-    handleOpenEditPostDialog,
-    setIsEditPostHandler,
-    handleCloseEditPostDialog,
     isPostFetching,
     myPostDescription,
     onChangeCurrPhoto,
     postId,
     postPhotos,
+    setIsEditPostHandler,
     t,
   }: MyPostModalProps) => {
     if (!postId) {
@@ -78,6 +73,7 @@ export const MyPostModal = memo(
       )
     }
     const headerStyle = clsx(s.modal, isEdit && s.editModal)
+
     return (
       <>
         <Modal
@@ -103,29 +99,29 @@ export const MyPostModal = memo(
             <div className={s.descriptionWrapper}>
               {isEdit ? (
                 <EditPost
-                  isGetUserLoading={isGetUserLoading}
-                  handleSubmit={() => {}}
-                  isLoadingEditPost={false}
-                  profile={getProfile}
-                  editPostDescription={() => {}}
-                  updatePost={() => {}}
-                  postPhotos={postPhotos}
-                  t={t}
-                  errorDescription={errorDescription}
-                  control={control}
                   closeModalWithRefresh={closeModalWithRefresh}
-                  handleClosePostModal={handleClosePostModal}
+                  control={control}
+                  editPostDescription={() => {}}
+                  errorDescription={errorDescription}
                   handleCloseEditPostDialog={handleCloseEditPostDialog}
+                  handleClosePostModal={handleClosePostModal}
+                  handleSubmit={() => {}}
+                  isGetUserLoading={isGetUserLoading}
+                  isLoadingEditPost={false}
                   isOpenClosePostModal={isOpenClosePostModal}
+                  postPhotos={postPhotos}
+                  profile={getProfile}
+                  t={t}
+                  updatePost={() => {}}
                 />
               ) : (
                 <PostSide
-                  profile={getProfile}
-                  postPhotos={postPhotos}
-                  t={t}
-                  deletePostModalHandler={deletePostModalHandler}
-                  setIsEditPostHandler={setIsEditPostHandler}
                   commentPublishHandler={commentPublish}
+                  deletePostModalHandler={deletePostModalHandler}
+                  postPhotos={postPhotos}
+                  profile={getProfile}
+                  setIsEditPostHandler={setIsEditPostHandler}
+                  t={t}
                 />
               )}
             </div>
