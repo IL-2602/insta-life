@@ -49,6 +49,7 @@
 .photoWrapper {
   display: flex;
   flex-direction: column;
+  color: var(--color-light-100);
 
   .photo {
     object-fit: cover;
