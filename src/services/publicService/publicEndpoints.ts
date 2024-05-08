@@ -39,7 +39,6 @@ export const publicEndpoints = api.injectEndpoints({
         }
       },
       providesTags: ['Post'],
-
       query: ({ endCursorPostId, pageSize, userId }) => {
         return {
           method: 'GET',
@@ -63,12 +62,5 @@ export const publicEndpoints = api.injectEndpoints({
   }),
 })
 
-export const { getAllPosts, getTotalCount, getUserProfile } = publicEndpoints.endpoints
-export const {
-  useGetAllPostsQuery,
-  useGetTotalCountQuery,
-  useGetUserPostsQuery,
-  useGetUserProfileQuery,
-} = publicEndpoints
-
-export const { getUserPosts } = publicEndpoints.endpoints
+export const { getAllPosts, getTotalCount, getUserPosts } = publicEndpoints.endpoints
+export const { useGetAllPostsQuery, useGetTotalCountQuery, useGetUserPostsQuery } = publicEndpoints

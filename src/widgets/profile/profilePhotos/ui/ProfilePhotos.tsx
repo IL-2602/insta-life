@@ -24,7 +24,13 @@ export const ProfilePhotos = forwardRef<HTMLDivElement, ProfilePhotosProps>(
                   }}
                 >
                   {item.images[0] && (
-                    <Image alt={'photo'} height={228} src={item.images[0].url} width={234} />
+                    <Image
+                      alt={'photo'}
+                      height={228}
+                      priority
+                      src={item.images[0].url}
+                      width={234}
+                    />
                   )}
                 </div>
               )
