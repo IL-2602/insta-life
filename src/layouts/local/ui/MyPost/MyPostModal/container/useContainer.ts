@@ -22,6 +22,12 @@ export const useContainer = () => {
   const { query, replace } = useRouter()
   const postId = query?.postId as string | undefined
 
+  useEffect(() => {
+    if (postId) {
+      dispatch(postActions.setIsMyPostModal(true))
+    }
+  }, [dispatch, postId])
+
   const { data: postPhotos, isFetching: isPostFetching } = useGetCurrentPostQuery(Number(postId), {
     skip: !postId,
   })
