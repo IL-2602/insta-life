@@ -4,11 +4,11 @@ import { MainLayout } from '@/layouts/publ/MainLayout'
 import { api } from '@/services/api'
 import { getMe } from '@/services/authService/authEndpoints'
 import { UserType } from '@/services/authService/lib/authEndpoints.types'
+import { getCurrentPost } from '@/services/postService/postEndpoints'
 import { getPublicUserProfile } from '@/services/publicProfileSerice/publicProfileEndpoints'
 import { getUserPosts } from '@/services/publicService/publicEndpoints'
 import { ProfileHeader } from '@/widgets/profile/profileHeader'
 import { ProfilePhotos } from '@/widgets/profile/profilePhotos'
-import { getCurrentPost } from '@/services/postService/postEndpoints'
 
 const PublicProfilePage = ({ isAuth }: Props) => {
   const content = (
@@ -31,6 +31,7 @@ export const getServerSideProps = wrapper.getServerSideProps(store => async cont
 
   if (postId) {
     const postResp = await store.dispatch(getCurrentPost.initiate(+postId))
+
     if (!postResp?.data) {
       return { notFound: true }
     }
@@ -39,6 +40,7 @@ export const getServerSideProps = wrapper.getServerSideProps(store => async cont
   const me = (await store.dispatch(getMe.initiate())) as { data: UserType }
 
   const profile = await store.dispatch(getPublicUserProfile.initiate({ profileId: +profileId }))
+
   if (!profile?.data) {
     return { notFound: true }
   }
