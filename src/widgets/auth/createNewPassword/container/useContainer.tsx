@@ -7,9 +7,12 @@ import { passwordRegExp } from '@/shared/regexps'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/router'
 import { z } from 'zod'
+import { useState } from 'react'
 
 export const useContainer = () => {
   const { t } = useTranslation()
+
+  const [codeError, setCodeError] = useState('')
 
   const CreateNewPasswordSchema = z
     .object({
@@ -29,6 +32,7 @@ export const useContainer = () => {
   type FormType = z.infer<typeof CreateNewPasswordSchema>
 
   const [createNewPassword] = useCreateNewPasswordMutation()
+
   const router = useRouter()
   const { code } = router.query
 
@@ -48,23 +52,25 @@ export const useContainer = () => {
   const errorPassword = errors.password?.message
   const errorPasswordConfirmation = errors.passwordConfirmation?.message
 
+  const isDisabled = !isValid || !code || !!codeError
+
   const handleFormSubmit = handleSubmit(async data => {
     if (code && !Array.isArray(code)) {
-      try {
-        await createNewPassword({ newPassword: data.password, recoveryCode: code })
-        await router.push(ROUTES.LOGIN)
-      } catch (e) {
-        console.log(e)
-      }
+      createNewPassword({ newPassword: data.password, recoveryCode: code })
+        .unwrap()
+        .then(() => void router.push(ROUTES.LOGIN))
+        .catch(e => setCodeError(e.data.messages?.[0]?.message))
     }
   })
 
   return {
+    code,
+    codeError,
     control,
     errorPassword,
     errorPasswordConfirmation,
     handleFormSubmit,
-    isValid,
+    isDisabled,
     t,
   }
 }

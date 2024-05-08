@@ -10,10 +10,12 @@ import s from './CreateNewPassword.module.scss'
 
 export const CreateNewPassword = ({
   control,
+  code,
+  codeError,
   errorPassword,
   errorPasswordConfirmation,
   handleFormSubmit,
-  isValid,
+  isDisabled,
   t,
 }: CreateNewPasswordProps) => {
   return (
@@ -42,9 +44,9 @@ export const CreateNewPassword = ({
             type={'password'}
           />
           <Typography as={'p'} variant={'regular14'} />
-          <Button className={s.submitButton} disabled={!isValid} fullWidth type={'submit'}>
-            <Typography as={'span'} variant={'h3'}>
-              {t.auth.button.createNewPassword}
+          <Button className={s.submitButton} disabled={isDisabled} fullWidth type={'submit'}>
+            <Typography as={'span'} variant={'h3'} color={!codeError ? 'inherit' : 'error'}>
+              {code && !codeError ? t.auth.button.createNewPassword : codeError || 'Invalid code'}
             </Typography>
           </Button>
         </form>
