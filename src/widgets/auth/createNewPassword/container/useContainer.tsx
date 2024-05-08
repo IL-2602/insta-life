@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { useCreateNewPasswordMutation } from '@/services/authService/authEndpoints'
@@ -7,7 +8,6 @@ import { passwordRegExp } from '@/shared/regexps'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/router'
 import { z } from 'zod'
-import { useState } from 'react'
 
 export const useContainer = () => {
   const { t } = useTranslation()

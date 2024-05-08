@@ -9,9 +9,9 @@ import { CreateNewPasswordProps } from '@/widgets/auth/createNewPassword/contain
 import s from './CreateNewPassword.module.scss'
 
 export const CreateNewPassword = ({
-  control,
   code,
   codeError,
+  control,
   errorPassword,
   errorPasswordConfirmation,
   handleFormSubmit,
@@ -45,7 +45,7 @@ export const CreateNewPassword = ({
           />
           <Typography as={'p'} variant={'regular14'} />
           <Button className={s.submitButton} disabled={isDisabled} fullWidth type={'submit'}>
-            <Typography as={'span'} variant={'h3'} color={!codeError ? 'inherit' : 'error'}>
+            <Typography as={'span'} color={!codeError ? 'inherit' : 'error'} variant={'h3'}>
               {code && !codeError ? t.auth.button.createNewPassword : codeError || 'Invalid code'}
             </Typography>
           </Button>
