@@ -16,9 +16,12 @@ import s from './PostSide.module.scss'
 
 import { Local } from '../../../../../../../../locales/en'
 import noPhoto from '../../../../../../../../public/assets/noPhoto.svg'
+
 export const PostSide = ({
   commentPublishHandler,
   deletePostModalHandler,
+  isMe,
+  postDescription,
   postPhotos,
   profile,
   setIsEditPostHandler,
@@ -30,7 +33,7 @@ export const PostSide = ({
         <div className={s.userContainer}>
           <div className={s.userPhotoWrapper}>
             <div className={s.photo}>
-              {profile?.avatars[0] === undefined ? (
+              {profile && profile?.avatars[0] === undefined ? (
                 <Image alt={'noUserPhoto'} height={22} src={noPhoto} width={22} />
               ) : (
                 <Image alt={'userPhoto'} height={36} src={postPhotos?.avatarOwner!} width={36} />
@@ -40,31 +43,39 @@ export const PostSide = ({
           </div>
         </div>
 
-        <div className={s.postOptions}>
-          <CustomPopover
-            contentChildren={
-              <PostOptions
-                deletePostModalHandler={deletePostModalHandler}
-                // editModeHandler={editModeHandler}
-                editPostModalHandler={setIsEditPostHandler}
-                id={'123'}
-              />
-            }
-            icon={
-              <div style={{ position: 'relative' }}>
-                <HorizontalDots />
-              </div>
-            }
-          />
-        </div>
+        {isMe && (
+          <div className={s.postOptions}>
+            <CustomPopover
+              contentChildren={
+                <PostOptions
+                  deletePostModalHandler={deletePostModalHandler}
+                  // editModeHandler={editModeHandler}
+                  editPostModalHandler={setIsEditPostHandler}
+                  id={'123'}
+                />
+              }
+              icon={
+                <div style={{ position: 'relative' }}>
+                  <HorizontalDots />
+                </div>
+              }
+            />
+          </div>
+        )}
       </div>
 
       <div className={s.commentsBlock}>
         <ScrollSelect maxHeight={'300px'} type={'always'}>
-          <></>
-          {/*<TestComment />
-          <TestComment />
-          <TestComment />*/}
+          {postDescription && (
+            <TestComment
+              photo={postPhotos?.avatarOwner!}
+              postDescription={postDescription}
+              profile={profile}
+            />
+          )}
+          <TestComment profile={profile} />
+          <TestComment profile={profile} />
+          <TestComment profile={profile} />
         </ScrollSelect>
       </div>
       <div className={s.likesBlock}>
@@ -77,17 +88,19 @@ export const PostSide = ({
           <Bookmark className={s.buttonIcon} />
         </div>
       </div>
-      <div className={s.addCommentBlock}>
-        <input placeholder={'Add comment...'} type={'text'} />
-        <Button
-          className={s.button}
-          disabled={false}
-          onClick={commentPublishHandler}
-          variant={'outlined'}
-        >
-          <Typography variant={'h3'}>{t.button.publish}</Typography>
-        </Button>
-      </div>
+      {isMe && (
+        <div className={s.addCommentBlock}>
+          <input placeholder={'Add comment...'} type={'text'} />
+          <Button
+            className={s.button}
+            disabled={false}
+            onClick={commentPublishHandler}
+            variant={'outlined'}
+          >
+            <Typography variant={'h3'}>{t.button.publish}</Typography>
+          </Button>
+        </div>
+      )}
     </>
   )
 }
@@ -95,6 +108,8 @@ export const PostSide = ({
 type Props = {
   commentPublishHandler: () => void
   deletePostModalHandler: (id: number) => void
+  isMe: boolean
+  postDescription: null | string
   postPhotos: GetCurrentPostResponse | undefined
   profile: Profile | undefined
   setIsEditPostHandler: () => void

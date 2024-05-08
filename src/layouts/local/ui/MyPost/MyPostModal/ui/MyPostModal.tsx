@@ -38,6 +38,7 @@ export const MyPostModal = memo(
     isLoadingEditPost,
     isMyPostModal,
     isOpenClosePostModal,
+    meError,
     myPostDescription,
     onChangeCurrPhoto,
     postId,
@@ -113,6 +114,8 @@ export const MyPostModal = memo(
                 <PostSide
                   commentPublishHandler={commentPublish}
                   deletePostModalHandler={deletePostModalHandler}
+                  isMe={!meError}
+                  postDescription={myPostDescription}
                   postPhotos={postPhotos}
                   profile={getProfile}
                   setIsEditPostHandler={setIsEditPostHandler}
