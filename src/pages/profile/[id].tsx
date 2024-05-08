@@ -8,6 +8,7 @@ import { getPublicUserProfile } from '@/services/publicProfileSerice/publicProfi
 import { getUserPosts } from '@/services/publicService/publicEndpoints'
 import { ProfileHeader } from '@/widgets/profile/profileHeader'
 import { ProfilePhotos } from '@/widgets/profile/profilePhotos'
+import { getCurrentPost } from '@/services/postService/postEndpoints'
 
 const PublicProfilePage = ({ isAuth }: Props) => {
   const content = (
@@ -22,14 +23,28 @@ const PublicProfilePage = ({ isAuth }: Props) => {
 
 export const getServerSideProps = wrapper.getServerSideProps(store => async context => {
   const profileId = context.params?.id as string | undefined
+  const postId = context.query?.postId as string | undefined
 
   if (!profileId) {
     return { notFound: true }
   }
+
+  if (postId) {
+    const postResp = await store.dispatch(getCurrentPost.initiate(+postId))
+    if (!postResp?.data) {
+      return { notFound: true }
+    }
+  }
+
   const me = (await store.dispatch(getMe.initiate())) as { data: UserType }
 
-  store.dispatch(getPublicUserProfile.initiate({ profileId: +profileId }))
+  const profile = await store.dispatch(getPublicUserProfile.initiate({ profileId: +profileId }))
+  if (!profile?.data) {
+    return { notFound: true }
+  }
+
   store.dispatch(getUserPosts.initiate({ pageSize: 12, userId: +profileId }))
+
   const allRes = await Promise.all(store.dispatch(api.util.getRunningQueriesThunk()))
 
   if (!allRes) {
