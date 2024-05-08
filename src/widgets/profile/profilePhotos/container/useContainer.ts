@@ -2,8 +2,6 @@ import { useEffect, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
 
 import { useAppDispatch } from '@/app/store/hooks/useAppDispatch'
-import { useGetMeQuery } from '@/services/authService/authEndpoints'
-import { UserType } from '@/services/authService/lib/authEndpoints.types'
 import { postActions } from '@/services/postService/store/slice/postEndpoints.slice'
 import { useGetUserPostsQuery } from '@/services/publicService/publicEndpoints'
 import { useRouter } from 'next/router'
@@ -18,7 +16,6 @@ export const useContainer = () => {
 
   const [lastPostId, setLastPostId] = useState<number | undefined>(undefined)
 
-  const { data: me } = useGetMeQuery() as { data: UserType }
   const { data: posts, isFetching } = useGetUserPostsQuery({
     endCursorPostId: lastPostId,
     pageSize: !lastPostId ? 12 : 8,

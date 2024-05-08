@@ -10,16 +10,33 @@ import { publicEndpoints } from '@/services/publicService/publicEndpoints'
 
 export const postEndpoints = api.injectEndpoints({
   endpoints: builder => ({
-    deletePost: builder.mutation<void, number>({
-      invalidatesTags: ['Post'],
-      query: postId => {
+    deletePost: builder.mutation<void, { postId: number; profileId: number }>({
+      onQueryStarted: async (args, { dispatch }) => {
+        try {
+          dispatch(
+            publicEndpoints.util.updateQueryData(
+              'getUserPosts',
+              { endCursorPostId: undefined, userId: args.profileId },
+              draft => {
+                const delIdx = draft.items.findIndex(item => item.id === args.postId)
+
+                if (delIdx > -1) {
+                  draft.items.splice(delIdx, 1)
+                }
+              }
+            )
+          )
+        } catch (e) {
+          console.log(e)
+        }
+      },
+      query: ({ postId }) => {
         return {
           method: 'DELETE',
           url: `posts/${postId}`,
         }
       },
     }),
-
     editPost: builder.mutation<void, EditPostParams>({
       invalidatesTags: ['Post'],
       query: ({ description, postId }) => {

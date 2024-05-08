@@ -5,7 +5,6 @@ import { useAppSelector } from '@/app/store/hooks/useAppSelector'
 import { useDeletePostMutation } from '@/services/postService/postEndpoints'
 import { postActions } from '@/services/postService/store/slice/postEndpoints.slice'
 import { useTranslation } from '@/shared/hooks/useTranslation'
-import { useParams } from 'next/navigation'
 import { useRouter } from 'next/router'
 
 export const useContainer = () => {
@@ -15,8 +14,10 @@ export const useContainer = () => {
   const { query, replace } = useRouter()
 
   const postId = query?.postId as string | undefined
+  const profileId = query?.profileId as string | undefined
+
   const removePostHandler = async () => {
-    deletePost(Number(postId))
+    deletePost({ postId: Number(postId), profileId: Number(profileId) })
       .unwrap()
       .then(
         (res: any) => {
