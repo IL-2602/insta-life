@@ -5,6 +5,7 @@ import { toast } from 'react-toastify'
 import { useAppDispatch } from '@/app/store/hooks/useAppDispatch'
 import { useAppSelector } from '@/app/store/hooks/useAppSelector'
 import { useMyPostSchema } from '@/layouts/local/ui/MyPost/MyPostModal/schema/myPostPublicationSchema'
+import { useGetMeQuery } from '@/services/authService/authEndpoints'
 import { useEditPostMutation, useGetCurrentPostQuery } from '@/services/postService/postEndpoints'
 import { postActions } from '@/services/postService/store/slice/postEndpoints.slice'
 import { useGetProfileQuery } from '@/services/profileService/profileEndpoints'
@@ -15,12 +16,19 @@ import { z } from 'zod'
 
 export const useContainer = () => {
   const { isMyPostModal } = useAppSelector(state => state.postReducer)
+  const { error: meError } = useGetMeQuery()
   const dispatch = useAppDispatch()
 
   const { t } = useTranslation()
 
   const { query, replace } = useRouter()
   const postId = query?.postId as string | undefined
+
+  useEffect(() => {
+    if (postId) {
+      dispatch(postActions.setIsMyPostModal(true))
+    }
+  }, [dispatch, postId])
 
   const { data: postPhotos, isFetching: isPostFetching } = useGetCurrentPostQuery(Number(postId), {
     skip: !postId,
@@ -140,6 +148,7 @@ export const useContainer = () => {
     isLoadingEditPost,
     isMyPostModal,
     isOpenClosePostModal,
+    meError,
     myPostDescription,
     onChangeCurrPhoto,
     postId,

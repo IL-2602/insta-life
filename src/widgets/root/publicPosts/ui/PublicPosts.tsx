@@ -8,6 +8,7 @@ import { Typography } from '@/shared/ui/Typography'
 import { PublicPostsProps } from '@/widgets/root/publicPosts/container'
 import { clsx } from 'clsx'
 import Image from 'next/image'
+import Link from 'next/link'
 
 import s from './PublicPosts.module.scss'
 
@@ -26,7 +27,11 @@ export const PublicPosts = memo(
         <section className={s.photosWrapper}>
           {posts?.items.slice(0, 4).map(item => {
             return (
-              <div className={s.photoWrapper} key={item.id}>
+              <Link
+                className={s.photoWrapper}
+                href={`profile/${item.ownerId}?postId=${item.id}`}
+                key={item.id}
+              >
                 <PublicPhotos
                   className={clsx(
                     s.photo,
@@ -57,7 +62,7 @@ export const PublicPosts = memo(
                   openPosts={openPosts}
                   setOpenPosts={setOpenPosts}
                 />
-              </div>
+              </Link>
             )
           })}
         </section>
