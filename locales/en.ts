@@ -31,7 +31,7 @@ export const en = {
       incorrectUsernameOrPasswordError: 'Incorrect username or password',
       incorrectValue: 'The password or email you entered is incorrect. Please try again',
       invalidEmailAddress: 'Invalid email address',
-      invalidEmailOrPass: 'Invalid email or pass',
+      invalidEmailOrPass: 'The email or password are incorrect. Please try again',
       invalidUsername: 'Invalid username or password',
       passwordIsRequiredError: 'Password is required',
       passwordMax: 'Password can not be longer than 20 characters',
