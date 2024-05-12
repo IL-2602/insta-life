@@ -3,7 +3,10 @@ import { ChangeEvent, useState } from 'react'
 import { usePostSubscriptionsMutation } from '@/services/subscriptionsService/subscriptionsEndpoints'
 import { FRONTEND_URL } from '@/shared/constants/frontendUrl'
 import { useTranslation } from '@/shared/hooks/useTranslation'
-import { useRouter } from 'next/router'
+import {
+  RadioInputsType,
+  SubscriptionsType,
+} from '@/widgets/profile/profileSettings/ui/accountManagement/types/accountManagement.types'
 
 export const useContainer = () => {
   const [accountType, setAccountType] = useState('personal')
@@ -11,9 +14,8 @@ export const useContainer = () => {
   const [isModalSubscription, setIsModalSubscription] = useState(false)
 
   const { t } = useTranslation()
-  const router = useRouter()
 
-  const accountTypes = [
+  const accountTypes: RadioInputsType[] = [
     {
       id: 'personal-account',
       name: 'personal-account',
@@ -28,7 +30,7 @@ export const useContainer = () => {
     },
   ]
 
-  const subscriptionCosts = [
+  const subscriptionCosts: RadioInputsType[] = [
     {
       id: 'dailySubscription',
       name: 'dailySubscription',
@@ -55,10 +57,6 @@ export const useContainer = () => {
 
   const subscriptionCostChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSubscriptionCost(event.target.value)
-  }
-
-  type SubscriptionsType = {
-    [key: string]: { amount: number; type: 'DAY' | 'MONTHLY' | 'WEEKLY' }
   }
 
   const subscriptions: SubscriptionsType = {
@@ -89,8 +87,7 @@ export const useContainer = () => {
     try {
       const { url } = await postSubscriptions(body).unwrap()
 
-      // window.open(url, '_blank')
-      await router.push(url)
+      window.open(url, '_blank')
     } catch (err) {
       console.log(err)
     } finally {

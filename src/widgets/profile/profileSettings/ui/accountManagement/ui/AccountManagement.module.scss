@@ -114,7 +114,7 @@
   position: fixed;
   z-index: 200;
   top: 50%;
-  left: calc(60%);
+  left: calc(50% + 130px);
   transform: translate(-50%, -50%);
 }
 
