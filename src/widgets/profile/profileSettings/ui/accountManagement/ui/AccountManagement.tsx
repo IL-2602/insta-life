@@ -11,6 +11,7 @@ import { SubscriptionCosts } from '@/widgets/profile/profileSettings/ui/accountM
 import { clsx } from 'clsx'
 
 import s from './AccountManagement.module.scss'
+import { CurrentSubscription } from '@/widgets/profile/profileSettings/ui/accountManagement/ui/CurrentSubscription'
 
 export const AccountManagement = memo(
   ({
@@ -35,6 +36,7 @@ export const AccountManagement = memo(
           </div>
         )}
         <div className={clsx(s.container, isLoading ? s.opacity : '')}>
+          <CurrentSubscription />
           <AccountType
             accountType={accountType}
             accountTypeChange={accountTypeChange}
