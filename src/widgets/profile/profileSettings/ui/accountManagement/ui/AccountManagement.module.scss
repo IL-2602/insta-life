@@ -110,6 +110,40 @@
   }
 }
 
+.currentSubscription {
+  margin-top: 30px;
+
+  .subscriptionWrapper {
+    display: flex;
+
+    margin-top: 8px;
+    padding: 12px 24px;
+
+    background-color: var(--color-dark-500);
+    border: 1px solid var(--color-dark-300);
+    border-radius: 2px;
+
+    & > *:not(:last-child) {
+      margin-right: 48px;
+    }
+
+    .subscriptionItem {
+      & > *:not(:last-child) {
+        margin-bottom: 12px;
+      }
+    }
+  }
+
+  .checkboxWrapper{
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: flex-end;
+
+    margin: 19px 0 0 -9px;
+  }
+}
+
 .spinner {
   position: fixed;
   z-index: 200;
