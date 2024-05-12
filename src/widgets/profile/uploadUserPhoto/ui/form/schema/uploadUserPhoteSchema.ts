@@ -5,6 +5,7 @@ export const uploadUserPhotoSchema = z.object({
     .custom<File>(v => v instanceof File)
     .refine(file => {
       debugger
+
       return file.size <= 10485760
     }, `imgLess10mb`)
     .refine(file => ['image/jpeg', 'image/jpg', 'image/png'].includes(file.type), 'imgFormat')
