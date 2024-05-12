@@ -6,12 +6,12 @@ import { Spinner } from '@/shared/ui/Spinner'
 import { Typography } from '@/shared/ui/Typography'
 import { AccountManagementProps } from '@/widgets/profile/profileSettings/ui/accountManagement/container'
 import { AccountType } from '@/widgets/profile/profileSettings/ui/accountManagement/ui/AccountType'
+import { CurrentSubscription } from '@/widgets/profile/profileSettings/ui/accountManagement/ui/CurrentSubscription'
 import { PaymentButtons } from '@/widgets/profile/profileSettings/ui/accountManagement/ui/PaymentButtons'
 import { SubscriptionCosts } from '@/widgets/profile/profileSettings/ui/accountManagement/ui/SubscriptionCosts'
 import { clsx } from 'clsx'
 
 import s from './AccountManagement.module.scss'
-import { CurrentSubscription } from '@/widgets/profile/profileSettings/ui/accountManagement/ui/CurrentSubscription'
 
 export const AccountManagement = memo(
   ({
