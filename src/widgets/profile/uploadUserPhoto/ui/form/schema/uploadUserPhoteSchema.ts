@@ -3,7 +3,10 @@ import { z } from 'zod'
 export const uploadUserPhotoSchema = z.object({
   userPhoto: z
     .custom<File>(v => v instanceof File)
-    .refine(file => file.size <= 10000000, `imgLess10mb`)
+    .refine(file => {
+      debugger
+      return file.size <= 10485760
+    }, `imgLess10mb`)
     .refine(file => ['image/jpeg', 'image/jpg', 'image/png'].includes(file.type), 'imgFormat')
     .refine(async file => {
       const image = new Image()
