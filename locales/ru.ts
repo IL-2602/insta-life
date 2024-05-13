@@ -112,7 +112,7 @@ export const ru: Local = {
       h1: 'Войти',
       meta_description:
         'С возвращением в INSTALIFE! Войдите, чтобы увидеть снимки и записи, сделанные вашими друзьями, родственниками и интересными вам людьми по всему миру',
-      question: 'У тебя еще нет аккаунта',
+      question: 'У тебя еще нет аккаунта?',
       title: 'Войти',
     },
     signUpPage: {
@@ -124,7 +124,7 @@ export const ru: Local = {
       privacyTermsPolicyLink: 'политикой конфиденциальности',
       privacyTermsServiceLink: 'условиями обслуживания',
       privacyTermsText: 'Я согласен с <1>link</1> и <2>link</2>',
-      question: 'У тебя есть аккаунт?',
+      question: 'У тебя уже есть аккаунт?',
       title: 'Зарегистрироваться',
     },
     termsOfServicePage: {
