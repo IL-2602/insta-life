@@ -7,6 +7,7 @@ import { Checkbox } from '@/shared/ui/Checkbox'
 import { Typography } from '@/shared/ui/Typography'
 
 import s from '@/widgets/profile/profileSettings/ui/accountManagement/ui/AccountManagement.module.scss'
+import { add, format } from 'date-fns'
 
 export const CurrentSubscription = (subscriptionsData: Props) => {
   const { data, hasAutoRenewal } = subscriptionsData
@@ -18,29 +19,33 @@ export const CurrentSubscription = (subscriptionsData: Props) => {
         {t.profileSettings.tab.accountManagement.currentSubscription}
       </Typography>
       <div className={s.subscriptionWrapper}>
-        <div className={s.subscriptionRow}>
-          <div>
-            <Typography color={'form'} variant={'regular14'}>
-              {t.profileSettings.tab.accountManagement.expireAt}
-            </Typography>
-            <Typography variant={'bold14'}>12.12.2022</Typography>
-          </div>
-          <div>
-            <Typography color={'form'} variant={'regular14'}>
-              {t.profileSettings.tab.accountManagement.nextPayment}
-            </Typography>
-            <Typography variant={'bold14'}>13.02.2023</Typography>
-          </div>
+        <div className={s.subscriptionHeader}>
+          <Typography color={'form'} variant={'regular14'}>
+            {t.profileSettings.tab.accountManagement.expireAt}
+          </Typography>
+          <Typography color={'form'} variant={'regular14'}>
+            {t.profileSettings.tab.accountManagement.nextPayment}
+          </Typography>
         </div>
+        {data?.map(sub => (
+          <div className={s.subscriptionRow} key={sub.subscriptionId}>
+            <Typography variant={'bold14'}>
+              {format(new Date(sub.endDateOfSubscription), 'dd.MM.yyyy')}
+            </Typography>
+            {sub.autoRenewal && (
+              <Typography variant={'bold14'}>
+                {format(add(sub.endDateOfSubscription, { days: 1 }), 'dd.MM.yyyy')}
+              </Typography>
+            )}
+          </div>
+        ))}
       </div>
       <div className={s.checkboxWrapper}>
-        {hasAutoRenewal && (
-          <Checkbox
-            checked={hasAutoRenewal}
-            label={t.profileSettings.tab.accountManagement.autoRenewal}
-            onChange={e => {}}
-          />
-        )}
+        <Checkbox
+          checked={hasAutoRenewal}
+          label={t.profileSettings.tab.accountManagement.autoRenewal}
+          onChange={e => {}}
+        />
       </div>
     </fieldset>
   )

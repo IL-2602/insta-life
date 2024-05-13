@@ -37,7 +37,7 @@ export const AccountManagement = memo(
           </div>
         )}
         <div className={clsx(s.container, isLoading ? s.opacity : '')}>
-          {!currentSubscriptionData?.data.length && (
+          {!!currentSubscriptionData?.data.length && (
             <CurrentSubscription {...currentSubscriptionData} />
           )}
           <AccountType

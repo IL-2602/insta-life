@@ -115,6 +115,7 @@
 
   .subscriptionWrapper {
     display: flex;
+    flex-direction: column;
 
     margin-top: 8px;
     padding: 12px 24px;
@@ -123,11 +124,29 @@
     border: 1px solid var(--color-dark-300);
     border-radius: 2px;
 
+    .subscriptionHeader {
+      display: flex;
+
+      & > *:first-child {
+        width: 105px;
+        margin-right: 20px;
+      }
+
+      & > *:last-child {
+        width: 175px;
+      }
+    }
+
     .subscriptionRow {
       display: flex;
 
-      & > *:not(:last-child) {
-        margin-right: 48px;
+      & > *:first-child {
+        width: 105px;
+        margin-right: 20px;
+      }
+
+      & > *:last-child {
+        width: 175px;
       }
     }
   }
@@ -138,7 +157,7 @@
     align-items: center;
     justify-content: flex-end;
 
-    margin: 19px 0 0 -9px;
+    margin: 19px 0 0 -7px;
   }
 }
 
