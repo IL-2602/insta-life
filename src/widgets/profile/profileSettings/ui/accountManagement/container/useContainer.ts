@@ -1,6 +1,9 @@
 import { ChangeEvent, useState } from 'react'
 
-import { usePostSubscriptionsMutation } from '@/services/subscriptionsService/subscriptionsEndpoints'
+import {
+  useGetSubscriptionsQuery,
+  usePostSubscriptionsMutation,
+} from '@/services/subscriptionsService/subscriptionsEndpoints'
 import { FRONTEND_URL } from '@/shared/constants/frontendUrl'
 import { useTranslation } from '@/shared/hooks/useTranslation'
 import {
@@ -75,7 +78,7 @@ export const useContainer = () => {
   }
 
   const [postSubscriptions, { isLoading, isSuccess }] = usePostSubscriptionsMutation()
-
+  const { data: currentSubscriptionData } = useGetSubscriptionsQuery()
   const handlePayment = async (typePayment: 'PAYPAL' | 'STRIPE') => {
     const body = {
       amount: subscriptions[subscriptionCost].amount,
@@ -107,6 +110,7 @@ export const useContainer = () => {
     subscriptionCost,
     subscriptionCostChange,
     subscriptionCosts,
+    currentSubscriptionData,
     t,
   }
 }

@@ -1,5 +1,6 @@
 import { api } from '@/services/api'
 import {
+  GetCurrentPaymentSubscriptionResponse,
   SubscriptionsPostParams,
   SubscriptionsPostResponse,
 } from '@/services/subscriptionsService/lib/subscriptionsEndpoints.types'
@@ -15,7 +16,16 @@ export const subscriptionsEndpoints = api.injectEndpoints({
         }
       },
     }),
+    getSubscriptions: builder.query<GetCurrentPaymentSubscriptionResponse, void>({
+      providesTags: ['Payment'],
+      query: () => {
+        return {
+          method: 'GET',
+          url: `subscriptions/current-payment-subscriptions`,
+        }
+      },
+    }),
   }),
 })
 
-export const { usePostSubscriptionsMutation } = subscriptionsEndpoints
+export const { usePostSubscriptionsMutation, useGetSubscriptionsQuery } = subscriptionsEndpoints

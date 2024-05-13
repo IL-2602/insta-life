@@ -123,15 +123,15 @@
     border: 1px solid var(--color-dark-300);
     border-radius: 2px;
 
-    & > *:not(:last-child) {
-      margin-right: 48px;
-    }
 
-    .subscriptionItem {
+    .subscriptionRow {
+      display: flex;
+
       & > *:not(:last-child) {
-        margin-bottom: 12px;
+        margin-right: 48px;
       }
     }
+
   }
 
   .checkboxWrapper {

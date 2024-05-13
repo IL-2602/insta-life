@@ -26,6 +26,7 @@ export const AccountManagement = memo(
     subscriptionCost,
     subscriptionCostChange,
     subscriptionCosts,
+    currentSubscriptionData,
     t,
   }: AccountManagementProps) => {
     return (
@@ -36,7 +37,9 @@ export const AccountManagement = memo(
           </div>
         )}
         <div className={clsx(s.container, isLoading ? s.opacity : '')}>
-          <CurrentSubscription />
+          {!currentSubscriptionData?.data.length && (
+            <CurrentSubscription {...currentSubscriptionData} />
+          )}
           <AccountType
             accountType={accountType}
             accountTypeChange={accountTypeChange}
