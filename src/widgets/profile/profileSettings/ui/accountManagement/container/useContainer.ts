@@ -107,6 +107,7 @@ export const useContainer = () => {
     accountType,
     accountTypeChange,
     accountTypes,
+    cancelAutoRenewalHandler,
     currentSubscriptionData,
     handlePayment,
     isLoading,
@@ -116,7 +117,6 @@ export const useContainer = () => {
     subscriptionCost,
     subscriptionCostChange,
     subscriptionCosts,
-    cancelAutoRenewalHandler,
     t,
   }
 }

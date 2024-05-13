@@ -1,13 +1,21 @@
 import { api } from '@/services/api'
+import { ErrorResponse } from '@/services/authService/lib/authEndpoints.types'
 import {
   GetCurrentPaymentSubscriptionResponse,
   SubscriptionsPostParams,
   SubscriptionsPostResponse,
 } from '@/services/subscriptionsService/lib/subscriptionsEndpoints.types'
-import { ErrorResponse } from '@/services/authService/lib/authEndpoints.types'
 
 export const subscriptionsEndpoints = api.injectEndpoints({
   endpoints: builder => ({
+    canceledAutoRenewal: builder.mutation<ErrorResponse | void, void>({
+      query: () => {
+        return {
+          method: 'POST',
+          url: `subscriptions/canceled-auto-renewal`,
+        }
+      },
+    }),
     getSubscriptions: builder.query<GetCurrentPaymentSubscriptionResponse, void>({
       providesTags: ['Payment'],
       query: () => {
@@ -26,19 +34,11 @@ export const subscriptionsEndpoints = api.injectEndpoints({
         }
       },
     }),
-    canceledAutoRenewal: builder.mutation<ErrorResponse | void, void>({
-      query: () => {
-        return {
-          method: 'POST',
-          url: `subscriptions/canceled-auto-renewal`,
-        }
-      },
-    }),
   }),
 })
 
 export const {
-  useGetSubscriptionsQuery,
   useCanceledAutoRenewalMutation,
+  useGetSubscriptionsQuery,
   usePostSubscriptionsMutation,
 } = subscriptionsEndpoints
