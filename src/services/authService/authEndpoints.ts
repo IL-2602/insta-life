@@ -15,7 +15,6 @@ import {
   SignUpConfirmationArgs,
   SignUpEmailResendingArgs,
 } from '@/services/authService/lib/authEndpoints.types'
-import { authActions, authSlice } from '@/services/authService/store/slice/authEndpoints.slice'
 import { deleteCookie, setCookie } from 'cookies-next'
 
 const authEndpoints = api.injectEndpoints({

@@ -9,20 +9,36 @@ import * as Tabs from '@radix-ui/react-tabs'
 
 import s from './ProfileSettings.module.scss'
 
-export const ProfileSettings = memo(({ t }: ProfileSettingsProps) => {
+export const ProfileSettings = memo(({ handleTabChange, selectedTab, t }: ProfileSettingsProps) => {
   return (
-    <Tabs.Root className={s.tabsRoot} defaultValue={'tab1'}>
+    <Tabs.Root className={s.tabsRoot} defaultValue={selectedTab}>
       <Tabs.List aria-label={'Profile Settings'} className={s.tabsList}>
-        <Tabs.Trigger className={s.tabsTrigger} value={'tab1'}>
+        <Tabs.Trigger
+          className={s.tabsTrigger}
+          onClick={() => handleTabChange('tab1')}
+          value={'tab1'}
+        >
           {t.profileSettings.tab.generalInformation.generalInformationTitle}
         </Tabs.Trigger>
-        <Tabs.Trigger className={s.tabsTrigger} value={'tab2'}>
+        <Tabs.Trigger
+          className={s.tabsTrigger}
+          onClick={() => handleTabChange('tab2')}
+          value={'tab2'}
+        >
           {t.profileSettings.tab.devices.devicesTitle}
         </Tabs.Trigger>
-        <Tabs.Trigger className={s.tabsTrigger} value={'tab3'}>
+        <Tabs.Trigger
+          className={s.tabsTrigger}
+          onClick={() => handleTabChange('tab3')}
+          value={'tab3'}
+        >
           {t.profileSettings.tab.accountManagement.accountManagementTitle}
         </Tabs.Trigger>
-        <Tabs.Trigger className={s.tabsTrigger} value={'tab4'}>
+        <Tabs.Trigger
+          className={s.tabsTrigger}
+          onClick={() => handleTabChange('tab4')}
+          value={'tab4'}
+        >
           {t.profileSettings.tab.myPayments.myPaymentsTitle}
         </Tabs.Trigger>
       </Tabs.List>
