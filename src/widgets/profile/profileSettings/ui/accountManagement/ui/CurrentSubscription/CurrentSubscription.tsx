@@ -1,12 +1,12 @@
+import {
+  GetCurrentPaymentSubscriptionResponse,
+  Payment,
+} from '@/services/subscriptionsService/lib/subscriptionsEndpoints.types'
 import { useTranslation } from '@/shared/hooks/useTranslation'
 import { Checkbox } from '@/shared/ui/Checkbox'
 import { Typography } from '@/shared/ui/Typography'
 
 import s from '@/widgets/profile/profileSettings/ui/accountManagement/ui/AccountManagement.module.scss'
-import {
-  GetCurrentPaymentSubscriptionResponse,
-  Payment,
-} from '@/services/subscriptionsService/lib/subscriptionsEndpoints.types'
 
 export const CurrentSubscription = (subscriptionsData: Props) => {
   const { data, hasAutoRenewal } = subscriptionsData
@@ -37,8 +37,8 @@ export const CurrentSubscription = (subscriptionsData: Props) => {
         {hasAutoRenewal && (
           <Checkbox
             checked={hasAutoRenewal}
-            onChange={e => {}}
             label={t.profileSettings.tab.accountManagement.autoRenewal}
+            onChange={e => {}}
           />
         )}
       </div>

@@ -18,6 +18,7 @@ export const AccountManagement = memo(
     accountType,
     accountTypeChange,
     accountTypes,
+    currentSubscriptionData,
     handlePayment,
     isLoading,
     isModalSubscription,
@@ -26,7 +27,6 @@ export const AccountManagement = memo(
     subscriptionCost,
     subscriptionCostChange,
     subscriptionCosts,
-    currentSubscriptionData,
     t,
   }: AccountManagementProps) => {
     return (

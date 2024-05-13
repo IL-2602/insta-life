@@ -11,11 +11,11 @@ export type SubscriptionsPostResponse = {
   url: string
 }
 export type Payment = {
-  userId: number
-  subscriptionId: string
+  autoRenewal: boolean
   dateOfPayment: string
   endDateOfSubscription: string
-  autoRenewal: boolean
+  subscriptionId: string
+  userId: number
 }
 
 export type GetCurrentPaymentSubscriptionResponse = {

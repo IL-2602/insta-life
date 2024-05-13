@@ -7,15 +7,6 @@ import {
 
 export const subscriptionsEndpoints = api.injectEndpoints({
   endpoints: builder => ({
-    postSubscriptions: builder.mutation<SubscriptionsPostResponse, SubscriptionsPostParams>({
-      query: params => {
-        return {
-          body: params,
-          method: 'POST',
-          url: `subscriptions`,
-        }
-      },
-    }),
     getSubscriptions: builder.query<GetCurrentPaymentSubscriptionResponse, void>({
       providesTags: ['Payment'],
       query: () => {
@@ -25,7 +16,16 @@ export const subscriptionsEndpoints = api.injectEndpoints({
         }
       },
     }),
+    postSubscriptions: builder.mutation<SubscriptionsPostResponse, SubscriptionsPostParams>({
+      query: params => {
+        return {
+          body: params,
+          method: 'POST',
+          url: `subscriptions`,
+        }
+      },
+    }),
   }),
 })
 
-export const { usePostSubscriptionsMutation, useGetSubscriptionsQuery } = subscriptionsEndpoints
+export const { useGetSubscriptionsQuery, usePostSubscriptionsMutation } = subscriptionsEndpoints

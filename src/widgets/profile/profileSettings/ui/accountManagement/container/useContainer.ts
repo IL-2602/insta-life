@@ -102,6 +102,7 @@ export const useContainer = () => {
     accountType,
     accountTypeChange,
     accountTypes,
+    currentSubscriptionData,
     handlePayment,
     isLoading,
     isModalSubscription,
@@ -110,7 +111,6 @@ export const useContainer = () => {
     subscriptionCost,
     subscriptionCostChange,
     subscriptionCosts,
-    currentSubscriptionData,
     t,
   }
 }
