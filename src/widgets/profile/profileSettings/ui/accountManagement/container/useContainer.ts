@@ -78,9 +78,10 @@ export const useContainer = () => {
     },
   }
 
-  const [postSubscriptions, { isLoading, isSuccess }] = usePostSubscriptionsMutation()
-  const { data: currentSubscriptionData } = useGetSubscriptionsQuery()
-  const [cancelAutoRenewal] = useCanceledAutoRenewalMutation()
+  const [postSubscriptions, { isLoading: isLoadingPostSubs, isSuccess }] =
+    usePostSubscriptionsMutation()
+  const { data: currentSubscriptionData, isLoading: isLoadingCurrSubs } = useGetSubscriptionsQuery()
+  const [cancelAutoRenewal, { isLoading: isLoadingAutoRenewal }] = useCanceledAutoRenewalMutation()
 
   const cancelAutoRenewalHandler = () => cancelAutoRenewal
 
@@ -102,7 +103,7 @@ export const useContainer = () => {
       setIsModalSubscription(true)
     }
   }
-
+  const isLoading = isLoadingPostSubs || isLoadingAutoRenewal || isLoadingCurrSubs
   return {
     accountType,
     accountTypeChange,

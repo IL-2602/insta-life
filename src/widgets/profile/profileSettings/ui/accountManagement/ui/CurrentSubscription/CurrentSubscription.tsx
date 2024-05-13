@@ -42,13 +42,14 @@ export const CurrentSubscription = (subscriptionsData: Props) => {
       </div>
       <div className={s.checkboxWrapper}>
         <Checkbox
-          checked={hasAutoRenewal}
+          checked={hasAutoRenewal || false}
           label={t.profileSettings.tab.accountManagement.autoRenewal}
           onChange={checked => checked && onCancelAutoRenewal}
+          disabled={!data?.length}
         />
       </div>
     </fieldset>
   )
 }
 
-type Props = GetCurrentPaymentSubscriptionResponse & { onCancelAutoRenewal: () => void }
+type Props = Partial<GetCurrentPaymentSubscriptionResponse> & { onCancelAutoRenewal: () => void }
