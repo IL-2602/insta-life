@@ -1,6 +1,7 @@
 import { ChangeEvent, useState } from 'react'
 
 import {
+  useCanceledAutoRenewalMutation,
   useGetSubscriptionsQuery,
   usePostSubscriptionsMutation,
 } from '@/services/subscriptionsService/subscriptionsEndpoints'
@@ -79,6 +80,10 @@ export const useContainer = () => {
 
   const [postSubscriptions, { isLoading, isSuccess }] = usePostSubscriptionsMutation()
   const { data: currentSubscriptionData } = useGetSubscriptionsQuery()
+  const [cancelAutoRenewal] = useCanceledAutoRenewalMutation()
+
+  const cancelAutoRenewalHandler = () => cancelAutoRenewal
+
   const handlePayment = async (typePayment: 'PAYPAL' | 'STRIPE') => {
     const body = {
       amount: subscriptions[subscriptionCost].amount,
@@ -111,6 +116,7 @@ export const useContainer = () => {
     subscriptionCost,
     subscriptionCostChange,
     subscriptionCosts,
+    cancelAutoRenewalHandler,
     t,
   }
 }

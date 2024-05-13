@@ -19,6 +19,7 @@ export const AccountManagement = memo(
     accountTypeChange,
     accountTypes,
     currentSubscriptionData,
+    cancelAutoRenewalHandler,
     handlePayment,
     isLoading,
     isModalSubscription,
@@ -38,7 +39,10 @@ export const AccountManagement = memo(
         )}
         <div className={clsx(s.container, isLoading ? s.opacity : '')}>
           {!!currentSubscriptionData?.data.length && (
-            <CurrentSubscription {...currentSubscriptionData} />
+            <CurrentSubscription
+              {...currentSubscriptionData}
+              onCancelAutoRenewal={cancelAutoRenewalHandler}
+            />
           )}
           <AccountType
             accountType={accountType}

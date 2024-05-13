@@ -4,6 +4,7 @@ import {
   SubscriptionsPostParams,
   SubscriptionsPostResponse,
 } from '@/services/subscriptionsService/lib/subscriptionsEndpoints.types'
+import { ErrorResponse } from '@/services/authService/lib/authEndpoints.types'
 
 export const subscriptionsEndpoints = api.injectEndpoints({
   endpoints: builder => ({
@@ -25,7 +26,19 @@ export const subscriptionsEndpoints = api.injectEndpoints({
         }
       },
     }),
+    canceledAutoRenewal: builder.mutation<ErrorResponse | void, void>({
+      query: () => {
+        return {
+          method: 'POST',
+          url: `subscriptions/canceled-auto-renewal`,
+        }
+      },
+    }),
   }),
 })
 
-export const { useGetSubscriptionsQuery, usePostSubscriptionsMutation } = subscriptionsEndpoints
+export const {
+  useGetSubscriptionsQuery,
+  useCanceledAutoRenewalMutation,
+  usePostSubscriptionsMutation,
+} = subscriptionsEndpoints

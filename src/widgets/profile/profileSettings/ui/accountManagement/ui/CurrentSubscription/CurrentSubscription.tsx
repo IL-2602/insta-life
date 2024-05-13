@@ -10,7 +10,7 @@ import { add, format } from 'date-fns'
 import s from '@/widgets/profile/profileSettings/ui/accountManagement/ui/AccountManagement.module.scss'
 
 export const CurrentSubscription = (subscriptionsData: Props) => {
-  const { data, hasAutoRenewal } = subscriptionsData
+  const { data, hasAutoRenewal, onCancelAutoRenewal } = subscriptionsData
   const { t } = useTranslation()
 
   return (
@@ -44,11 +44,11 @@ export const CurrentSubscription = (subscriptionsData: Props) => {
         <Checkbox
           checked={hasAutoRenewal}
           label={t.profileSettings.tab.accountManagement.autoRenewal}
-          onChange={e => {}}
+          onChange={checked => checked && onCancelAutoRenewal}
         />
       </div>
     </fieldset>
   )
 }
 
-type Props = GetCurrentPaymentSubscriptionResponse
+type Props = GetCurrentPaymentSubscriptionResponse & { onCancelAutoRenewal: () => void }
