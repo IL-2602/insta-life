@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from 'react'
+import { memo } from 'react'
 
 import { ProfileSettingsProps } from '@/widgets/profile/profileSettings/container'
 import { AccountManagement } from '@/widgets/profile/profileSettings/ui/accountManagement'

@@ -48,8 +48,6 @@ export const getStaticProps = wrapper.getStaticProps(
 const HomePage = ({}: Props) => {
   const { data: me, isLoading } = useGetMeQuery()
 
-  // console.log('isUninitialized: ', isUninitialized)
-
   if (isLoading) {
     return (
       <div
@@ -65,8 +63,6 @@ const HomePage = ({}: Props) => {
       </div>
     )
   }
-
-  // const me = true
 
   const content = (
     <>
