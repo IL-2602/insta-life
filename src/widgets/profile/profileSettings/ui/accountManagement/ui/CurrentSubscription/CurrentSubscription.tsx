@@ -5,9 +5,9 @@ import {
 import { useTranslation } from '@/shared/hooks/useTranslation'
 import { Checkbox } from '@/shared/ui/Checkbox'
 import { Typography } from '@/shared/ui/Typography'
+import { add, format } from 'date-fns'
 
 import s from '@/widgets/profile/profileSettings/ui/accountManagement/ui/AccountManagement.module.scss'
-import { add, format } from 'date-fns'
 
 export const CurrentSubscription = (subscriptionsData: Props) => {
   const { data, hasAutoRenewal } = subscriptionsData
