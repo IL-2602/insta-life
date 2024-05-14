@@ -19,12 +19,12 @@ export const AccountManagement = memo(
     accountTypeChange,
     accountTypes,
     cancelAutoRenewalHandler,
+    closeModalHandler,
     currentSubscriptionData,
     handlePayment,
     isLoading,
     isModalSubscription,
-    isSuccess,
-    setIsModalSubscription,
+    query,
     subscriptionCost,
     subscriptionCostChange,
     subscriptionCosts,
@@ -47,29 +47,37 @@ export const AccountManagement = memo(
             accountTypeChange={accountTypeChange}
             accountTypes={accountTypes}
           />
-          <SubscriptionCosts
-            subscriptionCost={subscriptionCost}
-            subscriptionCostChange={subscriptionCostChange}
-            subscriptionCosts={subscriptionCosts}
-          />
-          <PaymentButtons handlePayment={handlePayment} isLoading={isLoading} />
+          {accountType === 'business' && (
+            <>
+              <SubscriptionCosts
+                subscriptionCost={subscriptionCost}
+                subscriptionCostChange={subscriptionCostChange}
+                subscriptionCosts={subscriptionCosts}
+              />
+              <PaymentButtons handlePayment={handlePayment} isLoading={isLoading} />
+            </>
+          )}
         </div>
 
         <Modal
           customButtonsBlock={<></>}
-          modalHandler={() => setIsModalSubscription(false)}
+          modalHandler={closeModalHandler}
           open={isModalSubscription}
           title={
-            isSuccess ? t.modal.successTransactionModalTitle : t.modal.errorTransactionModalTitle
+            query.success
+              ? t.modal.successTransactionModalTitle
+              : t.modal.errorTransactionModalTitle
           }
         >
           <div className={s.modalContainer}>
             <Typography variant={'regular16'}>
-              {isSuccess
+              {query.success
                 ? t.modal.successTransactionModalDescription
                 : t.modal.errorTransactionModalDescription}
             </Typography>
-            <Button fullWidth>{isSuccess ? 'OK' : t.button.backToPayment}</Button>
+            <Button fullWidth onClick={closeModalHandler}>
+              {query.success ? 'OK' : t.button.backToPayment}
+            </Button>
           </div>
         </Modal>
       </>
