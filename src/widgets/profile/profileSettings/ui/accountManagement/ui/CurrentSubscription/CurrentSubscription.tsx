@@ -12,7 +12,7 @@ import s from '@/widgets/profile/profileSettings/ui/accountManagement/ui/Account
 export const CurrentSubscription = (subscriptionsData: Props) => {
   const { data, hasAutoRenewal, onCancelAutoRenewal } = subscriptionsData
   const { t } = useTranslation()
-
+  if (!data?.length) return null
   return (
     <fieldset className={s.currentSubscription}>
       <Typography as={'legend'} variant={'h3'}>
@@ -45,7 +45,7 @@ export const CurrentSubscription = (subscriptionsData: Props) => {
           checked={hasAutoRenewal || false}
           disabled={!data?.length}
           label={t.profileSettings.tab.accountManagement.autoRenewal}
-          onChange={checked => checked && onCancelAutoRenewal}
+          onChange={checked => !checked && onCancelAutoRenewal}
         />
       </div>
     </fieldset>
