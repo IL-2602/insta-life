@@ -41,6 +41,16 @@
       border-radius: 100%;
     }
 
+    input[type='radio']:disabled + label {
+      cursor: default;
+      color: var(--color-dark-100);
+    }
+
+    input[type='radio']:disabled + label::before {
+      cursor: default;
+      border: 2px solid var(--color-dark-100);
+    }
+
     input[type='radio'] + label::after {
       content: '';
       position: absolute;

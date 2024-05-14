@@ -26,6 +26,7 @@ export const subscriptionsEndpoints = api.injectEndpoints({
       },
     }),
     postSubscriptions: builder.mutation<SubscriptionsPostResponse, SubscriptionsPostParams>({
+      invalidatesTags: ['Payment'],
       query: params => {
         return {
           body: params,

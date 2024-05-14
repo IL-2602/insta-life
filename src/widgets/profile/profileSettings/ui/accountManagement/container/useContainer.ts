@@ -73,18 +73,25 @@ export const useContainer = () => {
     },
   }
 
-  const [postSubscriptions, { isLoading: isLoadingPostSubs, isSuccess }] =
-    usePostSubscriptionsMutation()
+  const [postSubscriptions, { isLoading: isLoadingPostSubs }] = usePostSubscriptionsMutation()
   const { data: currentSubscriptionData, isLoading: isLoadingCurrSubs } = useGetSubscriptionsQuery()
   const [cancelAutoRenewal, { isLoading: isLoadingAutoRenewal }] = useCanceledAutoRenewalMutation()
 
   const cancelAutoRenewalHandler = () => cancelAutoRenewal
+
+  const { data: isBusinessAccount } = useGetSubscriptionsQuery()
 
   useEffect(() => {
     if (query.success || query.error) {
       setIsModalSubscription(true)
     }
   }, [])
+
+  useEffect(() => {
+    if (isBusinessAccount) {
+      setAccountType('business')
+    }
+  }, [isBusinessAccount])
 
   const handlePayment = async (typePayment: 'PAYPAL' | 'STRIPE') => {
     const body = {
@@ -115,6 +122,7 @@ export const useContainer = () => {
     setIsModalSubscription(false)
     await replace(ROUTES.PROFILE_SETTINGS, undefined, { shallow: true })
   }
+
   const isLoading = isLoadingPostSubs || isLoadingAutoRenewal || isLoadingCurrSubs
 
   return {
@@ -125,6 +133,7 @@ export const useContainer = () => {
     closeModalHandler,
     currentSubscriptionData,
     handlePayment,
+    isBusinessAccount,
     isLoading,
     isModalSubscription,
     query,
