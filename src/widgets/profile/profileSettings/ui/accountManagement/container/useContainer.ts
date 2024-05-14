@@ -82,10 +82,10 @@ export const useContainer = () => {
   const { data: isBusinessAccount } = useGetSubscriptionsQuery()
 
   useEffect(() => {
-    if (query.success || query.error) {
+    if (!isLoadingCurrSubs && (query.success || query.error)) {
       setIsModalSubscription(true)
     }
-  }, [])
+  }, [query.success, query.error, isLoadingCurrSubs])
 
   useEffect(() => {
     if (isBusinessAccount) {
