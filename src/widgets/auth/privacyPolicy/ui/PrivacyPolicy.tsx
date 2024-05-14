@@ -1,6 +1,5 @@
 import ArrowBack from '@/shared/assets/icons/ArrowBack/ArrowBack'
 import { Button } from '@/shared/ui/Button'
-import { GoBack } from '@/shared/ui/GoBack'
 import { Typography } from '@/shared/ui/Typography'
 import { PrivacyPolicyProps } from '@/widgets/auth/privacyPolicy/container'
 
