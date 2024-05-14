@@ -25,6 +25,7 @@ export const useContainer = () => {
 
   const handleLogOut = () => {
     setIsOpen(false)
+    localStorage.clear()
     logOut()
       .unwrap()
       .then(() => router.push(ROUTES.LOGIN))

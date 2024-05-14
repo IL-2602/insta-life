@@ -20,7 +20,7 @@ export const useContainer = () => {
   const [isModalSubscription, setIsModalSubscription] = useState(false)
 
   const { t } = useTranslation()
-  const { query, replace } = useRouter()
+  const { push, query, replace } = useRouter()
 
   const accountTypes: RadioInputsType[] = [
     {
@@ -104,7 +104,7 @@ export const useContainer = () => {
     try {
       const { url } = await postSubscriptions(body).unwrap()
 
-      window.open(url, '_blank')
+      await push(url)
     } catch (err) {
       console.log(err)
     }
