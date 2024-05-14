@@ -145,6 +145,7 @@ export const ru: Local = {
   button: {
     addAProfilePhoto: 'Добавить фото',
     backToPayment: 'Вернуться к оплате',
+    backToProfileSettings: 'Вернуться к настройкам профиля',
     banInTheSystem: 'Булочка в системе :)',
     copyLink: 'Копировать ссылку',
     delete: 'Удалить',

@@ -1,5 +1,4 @@
 import { memo } from 'react'
-import { ReactCrop } from 'react-image-crop'
 
 import { Props } from '@/layouts/local/ui/CreatePost/PostCropping/container'
 import { AddMoreImages } from '@/layouts/local/ui/CreatePost/PostCropping/ui/addMoreImages/addMoreImages'

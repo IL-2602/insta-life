@@ -1,6 +1,6 @@
 import { memo } from 'react'
 
-import { Cross } from '@/shared/assets/icons/Cross'
+import { ROUTES } from '@/shared/constants/routes'
 import { Button } from '@/shared/ui/Button'
 import { Calendar } from '@/shared/ui/Calendar/Calendar'
 import { Spinner } from '@/shared/ui/Spinner'
@@ -76,8 +76,8 @@ export const TextFields = memo(
             <Calendar
               control={control}
               errorLink={
-                !customErrorMap(errorDateOfBirth!) && (
-                  <Link className={s.errorLink} href={'/auth/privacy-policy'}>
+                customErrorMap(errorDateOfBirth!) && (
+                  <Link className={s.errorLink} href={ROUTES.PRIVACY_POLICY}>
                     {t.auth.privacyPolicyPage.title}
                   </Link>
                 )

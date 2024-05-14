@@ -1,5 +1,6 @@
 export const ROUTES = {
   AUTH: '/auth',
+  AUTH_PRIVACY_POLICY: '/auth/privacy-policy',
   CONFIRMATION_LINK_EXPIRED: '/auth/sign-up/confirmation-link-expired',
   CONGRATULATION: '/auth/congratulation',
   CREATE: '/create',
@@ -10,7 +11,7 @@ export const ROUTES = {
   HOME: '/home',
   LOGIN: '/auth/sign-in',
   MESSENGER: '/messenger',
-  PRIVACY_POLICY: '/auth/privacy-policy',
+  PRIVACY_POLICY: '/privacy-policy',
   PROFILE: '/profile',
   PROFILE_SETTINGS: '/profile/settings',
   REGISTER: '/auth/sign-up',
