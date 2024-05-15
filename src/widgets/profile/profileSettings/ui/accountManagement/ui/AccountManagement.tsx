@@ -6,6 +6,7 @@ import { Spinner } from '@/shared/ui/Spinner'
 import { Typography } from '@/shared/ui/Typography'
 import { AccountManagementProps } from '@/widgets/profile/profileSettings/ui/accountManagement/container'
 import { AccountType } from '@/widgets/profile/profileSettings/ui/accountManagement/ui/AccountType'
+import { CurrentSubscription } from '@/widgets/profile/profileSettings/ui/accountManagement/ui/CurrentSubscription'
 import { PaymentButtons } from '@/widgets/profile/profileSettings/ui/accountManagement/ui/PaymentButtons'
 import { SubscriptionCosts } from '@/widgets/profile/profileSettings/ui/accountManagement/ui/SubscriptionCosts'
 import { clsx } from 'clsx'
@@ -17,8 +18,11 @@ export const AccountManagement = memo(
     accountType,
     accountTypeChange,
     accountTypes,
+    cancelAutoRenewalHandler,
     closeModalHandler,
+    currentSubscriptionData,
     handlePayment,
+    isBusinessAccount,
     isLoading,
     isModalSubscription,
     query,
@@ -35,10 +39,15 @@ export const AccountManagement = memo(
           </div>
         )}
         <div className={clsx(s.container, isLoading ? s.opacity : '')}>
+          <CurrentSubscription
+            {...currentSubscriptionData}
+            onCancelAutoRenewal={cancelAutoRenewalHandler}
+          />
           <AccountType
             accountType={accountType}
             accountTypeChange={accountTypeChange}
             accountTypes={accountTypes}
+            isBusinessAccount={!!isBusinessAccount}
           />
           {accountType === 'business' && (
             <>

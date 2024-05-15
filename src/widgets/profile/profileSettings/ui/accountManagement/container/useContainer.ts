@@ -1,6 +1,10 @@
 import { ChangeEvent, useEffect, useState } from 'react'
 
-import { usePostSubscriptionsMutation } from '@/services/subscriptionsService/subscriptionsEndpoints'
+import {
+  useCanceledAutoRenewalMutation,
+  useGetSubscriptionsQuery,
+  usePostSubscriptionsMutation,
+} from '@/services/subscriptionsService/subscriptionsEndpoints'
 import { FRONTEND_URL } from '@/shared/constants/frontendUrl'
 import { ROUTES } from '@/shared/constants/routes'
 import { useTranslation } from '@/shared/hooks/useTranslation'
@@ -16,9 +20,7 @@ export const useContainer = () => {
   const [isModalSubscription, setIsModalSubscription] = useState(false)
 
   const { t } = useTranslation()
-  const { query, replace } = useRouter()
-
-  const [postSubscriptions, { isLoading }] = usePostSubscriptionsMutation()
+  const { push, query, replace } = useRouter()
 
   const accountTypes: RadioInputsType[] = [
     {
@@ -71,11 +73,25 @@ export const useContainer = () => {
     },
   }
 
+  const [postSubscriptions, { isLoading: isLoadingPostSubs }] = usePostSubscriptionsMutation()
+  const { data: currentSubscriptionData, isLoading: isLoadingCurrSubs } = useGetSubscriptionsQuery()
+  const [cancelAutoRenewal, { isLoading: isLoadingAutoRenewal }] = useCanceledAutoRenewalMutation()
+
+  const cancelAutoRenewalHandler = () => cancelAutoRenewal
+
+  const { data: isBusinessAccount } = useGetSubscriptionsQuery()
+
   useEffect(() => {
-    if (query.success || query.error) {
+    if (!isLoadingCurrSubs && (query.success || query.error)) {
       setIsModalSubscription(true)
     }
-  }, [])
+  }, [query.success, query.error, isLoadingCurrSubs])
+
+  useEffect(() => {
+    if (isBusinessAccount) {
+      setAccountType('business')
+    }
+  }, [isBusinessAccount])
 
   const handlePayment = async (typePayment: 'PAYPAL' | 'STRIPE') => {
     const body = {
@@ -88,7 +104,7 @@ export const useContainer = () => {
     try {
       const { url } = await postSubscriptions(body).unwrap()
 
-      window.open(url, '_blank')
+      await push(url)
     } catch (err) {
       console.log(err)
     }
@@ -107,12 +123,17 @@ export const useContainer = () => {
     await replace(ROUTES.PROFILE_SETTINGS, undefined, { shallow: true })
   }
 
+  const isLoading = isLoadingPostSubs || isLoadingAutoRenewal || isLoadingCurrSubs
+
   return {
     accountType,
     accountTypeChange,
     accountTypes,
+    cancelAutoRenewalHandler,
     closeModalHandler,
+    currentSubscriptionData,
     handlePayment,
+    isBusinessAccount,
     isLoading,
     isModalSubscription,
     query,

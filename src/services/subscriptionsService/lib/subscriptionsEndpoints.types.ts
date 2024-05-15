@@ -10,3 +10,15 @@ export type SubscriptionsPostParams = {
 export type SubscriptionsPostResponse = {
   url: string
 }
+export type Payment = {
+  autoRenewal: boolean
+  dateOfPayment: string
+  endDateOfSubscription: string
+  subscriptionId: string
+  userId: number
+}
+
+export type GetCurrentPaymentSubscriptionResponse = {
+  data: Payment[]
+  hasAutoRenewal: boolean
+}

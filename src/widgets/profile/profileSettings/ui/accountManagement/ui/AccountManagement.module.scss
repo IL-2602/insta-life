@@ -41,6 +41,16 @@
       border-radius: 100%;
     }
 
+    input[type='radio']:disabled + label {
+      cursor: default;
+      color: var(--color-dark-100);
+    }
+
+    input[type='radio']:disabled + label::before {
+      cursor: default;
+      border: 2px solid var(--color-dark-100);
+    }
+
     input[type='radio'] + label::after {
       content: '';
       position: absolute;
@@ -84,6 +94,7 @@
     justify-content: flex-end;
 
     margin-top: 24px;
+    margin-bottom: 24px;
 
     .paymentBtn {
       cursor: pointer;
@@ -107,6 +118,57 @@
         background-color: var(--color-dark-500);
       }
     }
+  }
+}
+
+.currentSubscription {
+  margin-top: 30px;
+
+  .subscriptionWrapper {
+    display: flex;
+    flex-direction: column;
+
+    margin-top: 8px;
+    padding: 12px 24px;
+
+    background-color: var(--color-dark-500);
+    border: 1px solid var(--color-dark-300);
+    border-radius: 2px;
+
+    .subscriptionHeader {
+      display: flex;
+
+      & > *:first-child {
+        width: 105px;
+        margin-right: 20px;
+      }
+
+      & > *:last-child {
+        width: 175px;
+      }
+    }
+
+    .subscriptionRow {
+      display: flex;
+
+      & > *:first-child {
+        width: 105px;
+        margin-right: 20px;
+      }
+
+      & > *:last-child {
+        width: 175px;
+      }
+    }
+  }
+
+  .checkboxWrapper {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: flex-end;
+
+    margin: 19px 0 0 -7px;
   }
 }
 
