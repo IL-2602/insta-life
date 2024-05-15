@@ -58,6 +58,7 @@ export const AddMoreImages = ({
             extraActions={extraAction}
             name={'postPhoto'}
             variant={'outlined'}
+            key={photos?.length}
           >
             +
           </ControlledFileUploader>

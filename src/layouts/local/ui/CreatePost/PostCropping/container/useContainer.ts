@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { useAppDispatch } from '@/app/store/hooks/useAppDispatch'
@@ -17,7 +17,6 @@ export const useContainer = () => {
   const { t } = useTranslation()
 
   const [currPhotoIndex, setCurrPhotoIndex] = useState<number | undefined>(0)
-  const [isImageLoading, setIsImageLoading] = useState(false)
   const {
     control,
     formState: { errors },
@@ -39,6 +38,7 @@ export const useContainer = () => {
   const imgRef = useRef<HTMLImageElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
+  console.log(postPhoto, currPhotoIndex)
   const setCurrentPhotoZoom = (zoom: number) => {
     if (postPhoto) {
       dispatch(postActions.updatePostPhoto({ img: postPhoto.img, zoom }))
@@ -79,9 +79,6 @@ export const useContainer = () => {
     }
   }
 
-  const onImageLoaded = () => {
-    setIsImageLoading(true)
-  }
   const onNext = () => dispatch(postActions.setModalSteps('filters'))
   const onPrev = () => dispatch(postActions.setModalSteps('upload'))
   const onChangeCurrPhoto = (currPhoto: number) => setCurrPhotoIndex(currPhoto)
@@ -104,8 +101,8 @@ export const useContainer = () => {
   }
   const showSaveDraft = () => dispatch(postActions.setIsClosePostModal(true))
 
-  useLayoutEffect(() => {
-    if (postPhoto && imgRef.current && canvasRef.current && !isImageLoading) {
+  useEffect(() => {
+    if (postPhoto?.zoom && postPhoto?.aspect && imgRef.current && canvasRef.current) {
       canvasPreviewWithOutCrop(
         imgRef.current,
         canvasRef.current,
@@ -114,7 +111,11 @@ export const useContainer = () => {
       )
       saveCropImg({ img: postPhoto?.img })
     }
-  }, [postPhoto?.aspect, isImageLoading, postPhoto?.zoom, saveCropImg])
+  }, [postPhoto?.zoom, postPhoto?.aspect])
+
+  useEffect(() => {
+    if (!isCreatePostModal) setCurrPhotoIndex(0)
+  }, [isCreatePostModal])
 
   return {
     canvasRef,
@@ -124,10 +125,8 @@ export const useContainer = () => {
     extraActionsPostPhoto,
     imgRef,
     isCreatePostModal,
-    isImageLoading,
     modalStep,
     onChangeCurrPhoto,
-    onImageLoaded,
     onNext,
     onPrev,
     postPhoto,
