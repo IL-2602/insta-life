@@ -9,7 +9,7 @@ import { useRouter } from 'next/router'
 
 export const AuthDefender = (Page: NextPageWithLayout) => {
   const Component = ({ pageProps }: AppProps) => {
-    const { isReady, pathname, push } = useRouter()
+    const { isReady, push } = useRouter()
 
     const { data, isError, isFetching } = useGetMeQuery()
 

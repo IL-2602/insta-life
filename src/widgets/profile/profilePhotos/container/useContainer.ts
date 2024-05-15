@@ -21,6 +21,7 @@ export const useContainer = () => {
     pageSize: !lastPostId ? 12 : 8,
     userId: +profileId,
   })
+
   const dispatch = useAppDispatch()
 
   useEffect(() => {

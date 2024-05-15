@@ -139,6 +139,7 @@ export const en = {
   button: {
     addAProfilePhoto: 'Add a Profile Photo',
     backToPayment: 'Back to payment',
+    backToProfileSettings: 'Back to Profile Settings',
     banInTheSystem: 'Ban in the system',
     copyLink: 'Copy Link',
     delete: 'Delete',
@@ -265,7 +266,7 @@ export const en = {
           lastNameDescription: 'Last Name must contain A-Z, a-z, А-Я, а-я',
           lastNameMax: 'Lastname can not be longer than 50 characters',
           lastNameMin: 'Last name is required',
-          userNameDescription: 'Username must contain a-z, A-Z, 0-9, _, -',
+          userNameDescription: 'Username is required',
           userNameMax: 'Username can not be longer than 30 characters',
           userNameMin: 'Username must be at least 6 characters',
         },

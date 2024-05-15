@@ -20,12 +20,12 @@ export const Header = memo(({ isAuth }: Props) => {
   const { t } = useTranslation()
   const router = useRouter()
 
-  const toSignUp = () => {
-    router.push(ROUTES.REGISTER)
+  const toSignUp = async () => {
+    await router.push(ROUTES.REGISTER)
   }
 
-  const toSignIn = () => {
-    router.push(ROUTES.LOGIN)
+  const toSignIn = async () => {
+    await router.push(ROUTES.LOGIN)
   }
 
   return (
@@ -50,18 +50,12 @@ export const Header = memo(({ isAuth }: Props) => {
           ) : (
             <div className={s.notMeContainer}>
               <LangSwitcher />
-              {router.pathname === ROUTES.LOGIN || router.pathname === ROUTES.REGISTER ? (
-                ''
-              ) : (
-                <>
-                  <Button className={s.btnLogIn} onClick={toSignIn} variant={'link'}>
-                    <Typography variant={'h3'}>{t.auth.button.signInButton}</Typography>
-                  </Button>
-                  <Button className={s.btnSignUp} onClick={toSignUp} variant={'primary'}>
-                    <Typography variant={'h3'}>{t.auth.button.signUpButton}</Typography>
-                  </Button>
-                </>
-              )}
+              <Button className={s.btnLogIn} onClick={toSignIn} variant={'link'}>
+                <Typography variant={'h3'}>{t.auth.button.signInButton}</Typography>
+              </Button>
+              <Button className={s.btnSignUp} onClick={toSignUp} variant={'primary'}>
+                <Typography variant={'h3'}>{t.auth.button.signUpButton}</Typography>
+              </Button>
             </div>
           )}
         </div>

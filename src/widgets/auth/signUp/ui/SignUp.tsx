@@ -109,7 +109,7 @@ export const SignUp = memo(
                   </Typography>
                 </Link>
                 &nbsp;and&nbsp;
-                <Link href={ROUTES.PRIVACY_POLICY}>
+                <Link href={ROUTES.AUTH_PRIVACY_POLICY}>
                   <Typography as={'span'} color={'primary'} variant={'link-small'}>
                     {t.auth.privacyPolicyPage.title}
                   </Typography>

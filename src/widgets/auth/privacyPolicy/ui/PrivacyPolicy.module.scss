@@ -1,10 +1,21 @@
-.link {
-  padding: 0;
-}
-
 .title,
 .text {
   margin-top: 20px;
   padding: 0 97px;
   text-align: center;
+}
+
+.goBackBtn {
+  padding: 0;
+  color: var(--color-light-100);
+
+  .goBackWrapper {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  &:hover {
+    color: var(--color-primary-500);
+  }
 }

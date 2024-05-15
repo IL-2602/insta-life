@@ -1,13 +1,21 @@
-import { GoBack } from '@/shared/ui/GoBack'
+import ArrowBack from '@/shared/assets/icons/ArrowBack/ArrowBack'
+import { Button } from '@/shared/ui/Button'
 import { Typography } from '@/shared/ui/Typography'
 import { PrivacyPolicyProps } from '@/widgets/auth/privacyPolicy/container'
 
 import s from './PrivacyPolicy.module.scss'
 
-export const PrivacyPolicy = ({ t }: PrivacyPolicyProps) => {
+export const PrivacyPolicy = ({ isAuthPrivacyPolicy, onBack, t }: PrivacyPolicyProps) => {
   return (
     <div>
-      <GoBack className={s.link} title={t.auth.button.backToSignUp}></GoBack>
+      <Button className={s.goBackBtn} onClick={onBack} variant={'link'}>
+        <div className={s.goBackWrapper}>
+          <ArrowBack />
+          <Typography variant={'regular14'}>
+            {isAuthPrivacyPolicy ? t.auth.button.backToSignUp : t.button.backToProfileSettings}
+          </Typography>
+        </div>
+      </Button>
 
       <Typography className={s.title} variant={'h1'}>
         {t.auth.privacyPolicyPage.title}
