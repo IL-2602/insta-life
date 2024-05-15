@@ -56,6 +56,7 @@ export const AddMoreImages = ({
             className={s.fileBtn}
             control={control}
             extraActions={extraAction}
+            key={photos?.length}
             name={'postPhoto'}
             variant={'outlined'}
           >

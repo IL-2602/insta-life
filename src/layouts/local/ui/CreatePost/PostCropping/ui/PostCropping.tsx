@@ -24,10 +24,10 @@ export const PostCropping = memo(
     extraActionsPostPhoto,
     imgRef,
     isCreatePostModal,
-    isImageLoading,
+
     modalStep,
     onChangeCurrPhoto,
-    onImageLoaded,
+
     onNext,
     onPrev,
     postPhoto,
@@ -75,11 +75,10 @@ export const PostCropping = memo(
           >
             {postPhotos &&
               postPhotos.map((photo, idx) => (
-                <div className={s.imgWrapper} key={idx}>
+                <div className={s.imgWrapper} key={photo.img}>
                   <Image
                     alt={`Original Img`}
                     fill
-                    onLoad={onImageLoaded}
                     ref={imgRef}
                     src={photo.img}
                     style={{
@@ -105,18 +104,15 @@ export const PostCropping = memo(
               />
             </div>
           </div>
-
-          {isImageLoading && (
-            <canvas
-              ref={canvasRef}
-              style={{
-                display: 'none',
-                height: '100%',
-                objectFit: 'contain',
-                width: '100%',
-              }}
-            />
-          )}
+          <canvas
+            ref={canvasRef}
+            style={{
+              display: 'none',
+              height: '100%',
+              objectFit: 'contain',
+              width: '100%',
+            }}
+          />
         </div>
       </Modal>
     )
