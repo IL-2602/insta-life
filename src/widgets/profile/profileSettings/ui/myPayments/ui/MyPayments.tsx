@@ -26,7 +26,7 @@ export const MyPayments = memo(({ myPayments }: MyPaymentsProps) => {
                 <Table.Row key={el.subscriptionId}>
                   <Table.Cell>{new Date(el.dateOfPayment).toLocaleDateString()}</Table.Cell>
                   <Table.Cell>{new Date(el.endDateOfSubscription).toLocaleDateString()}</Table.Cell>
-                  <Table.Cell>{el.price}$</Table.Cell>
+                  <Table.Cell>${el.price}</Table.Cell>
                   <Table.Cell>{paymentsValidity(el.subscriptionType)}</Table.Cell>
                   <Table.Cell>{el.paymentType}</Table.Cell>
                 </Table.Row>
