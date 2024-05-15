@@ -114,7 +114,9 @@ export const useContainer = () => {
   }, [postPhoto?.zoom, postPhoto?.aspect])
 
   useEffect(() => {
-    if (!isCreatePostModal) setCurrPhotoIndex(0)
+    if (!isCreatePostModal) {
+      setCurrPhotoIndex(0)
+    }
   }, [isCreatePostModal])
 
   return {
