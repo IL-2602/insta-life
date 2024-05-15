@@ -15,6 +15,7 @@ export const subscriptionsEndpoints = api.injectEndpoints({
           url: `subscriptions/canceled-auto-renewal`,
         }
       },
+      invalidatesTags: ['Payment'],
     }),
     getSubscriptions: builder.query<GetCurrentPaymentSubscriptionResponse, void>({
       providesTags: ['Payment'],
