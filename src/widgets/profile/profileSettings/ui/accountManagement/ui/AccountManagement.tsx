@@ -22,7 +22,6 @@ export const AccountManagement = memo(
     closeModalHandler,
     currentSubscriptionData,
     handlePayment,
-    isBusinessAccount,
     isLoading,
     isModalSubscription,
     query,
@@ -47,7 +46,6 @@ export const AccountManagement = memo(
             accountType={accountType}
             accountTypeChange={accountTypeChange}
             accountTypes={accountTypes}
-            isBusinessAccount={!!isBusinessAccount}
           />
           {accountType === 'business' && (
             <>

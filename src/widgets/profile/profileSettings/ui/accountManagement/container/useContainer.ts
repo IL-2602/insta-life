@@ -79,19 +79,11 @@ export const useContainer = () => {
 
   const cancelAutoRenewalHandler = () => cancelAutoRenewal()
 
-  const { data: isBusinessAccount } = useGetSubscriptionsQuery()
-
   useEffect(() => {
     if (!isLoadingCurrSubs && (query.success || query.error)) {
       setIsModalSubscription(true)
     }
   }, [query.success, query.error, isLoadingCurrSubs])
-
-  useEffect(() => {
-    if (isBusinessAccount) {
-      setAccountType('business')
-    }
-  }, [isBusinessAccount])
 
   const handlePayment = async (typePayment: 'PAYPAL' | 'STRIPE') => {
     const body = {
@@ -133,7 +125,6 @@ export const useContainer = () => {
     closeModalHandler,
     currentSubscriptionData,
     handlePayment,
-    isBusinessAccount,
     isLoading,
     isModalSubscription,
     query,
