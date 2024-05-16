@@ -77,7 +77,7 @@ export const useContainer = () => {
   const { data: currentSubscriptionData, isLoading: isLoadingCurrSubs } = useGetSubscriptionsQuery()
   const [cancelAutoRenewal, { isLoading: isLoadingAutoRenewal }] = useCanceledAutoRenewalMutation()
 
-  const cancelAutoRenewalHandler = () => cancelAutoRenewal
+  const cancelAutoRenewalHandler = () => cancelAutoRenewal()
 
   const { data: isBusinessAccount } = useGetSubscriptionsQuery()
 

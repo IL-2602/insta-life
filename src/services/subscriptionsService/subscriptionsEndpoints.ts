@@ -9,6 +9,7 @@ import {
 export const subscriptionsEndpoints = api.injectEndpoints({
   endpoints: builder => ({
     canceledAutoRenewal: builder.mutation<ErrorResponse | void, void>({
+      invalidatesTags: ['Payment'],
       query: () => {
         return {
           method: 'POST',
