@@ -10,15 +10,9 @@ type Props = {
   accountType: string
   accountTypeChange: (event: ChangeEvent<HTMLInputElement>) => void
   accountTypes: RadioInputsType[]
-  isBusinessAccount: boolean
 }
 
-export const AccountType = ({
-  accountType,
-  accountTypeChange,
-  accountTypes,
-  isBusinessAccount,
-}: Props) => {
+export const AccountType = ({ accountType, accountTypeChange, accountTypes }: Props) => {
   const { t } = useTranslation()
 
   return (
@@ -30,10 +24,7 @@ export const AccountType = ({
         {accountTypes.map((account, index) => (
           <div key={index}>
             <input
-              checked={
-                isBusinessAccount ? account.value === 'business' : accountType === account.value
-              }
-              disabled={isBusinessAccount && account.id === 'personal-account'}
+              checked={accountType === account.value}
               id={account.id}
               name={account.name}
               onChange={accountTypeChange}
