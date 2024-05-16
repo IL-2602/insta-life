@@ -38,7 +38,6 @@ export const useContainer = () => {
   const imgRef = useRef<HTMLImageElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
-  console.log(postPhoto, currPhotoIndex)
   const setCurrentPhotoZoom = (zoom: number) => {
     if (postPhoto) {
       dispatch(postActions.updatePostPhoto({ img: postPhoto.img, zoom }))

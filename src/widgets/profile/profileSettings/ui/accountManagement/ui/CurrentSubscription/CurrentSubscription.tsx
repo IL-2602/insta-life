@@ -49,7 +49,7 @@ export const CurrentSubscription = (subscriptionsData: Props) => {
           checked={hasAutoRenewal || false}
           disabled={!data?.length}
           label={t.profileSettings.tab.accountManagement.autoRenewal}
-          onChange={checked => !checked && onCancelAutoRenewal}
+          onChange={checked => !checked && onCancelAutoRenewal()}
         />
       </div>
     </fieldset>
