@@ -1,3 +1,7 @@
+import { useGetMyPaymentsQuery } from '@/services/profileService/profileEndpoints'
+
 export const useContainer = () => {
-  return {}
+  const { data: myPayments } = useGetMyPaymentsQuery()
+
+  return { myPayments }
 }

@@ -15,3 +15,13 @@ export type Avatar = {
   url: string
   width: number
 }
+
+export type MyPayment = {
+  dateOfPayment: string
+  endDateOfSubscription: string
+  paymentType: string
+  price: number
+  subscriptionId: string
+  subscriptionType: 'DAY' | 'MONTHLY' | 'WEEKLY'
+  userId: number
+}

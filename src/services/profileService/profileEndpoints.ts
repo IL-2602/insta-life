@@ -1,6 +1,7 @@
 import { api } from '@/services/api'
 import { ErrorResponse } from '@/services/authService/lib/authEndpoints.types'
 import { Avatar, Profile } from '@/shared/types/profile'
+import { MyPayment } from '@/shared/types/profile/profile'
 
 import { UpdateProfileParams } from './lib/profileEnpoints.types'
 
@@ -32,6 +33,9 @@ const profileEndpoints = api.injectEndpoints({
           url: 'users/profile/avatar',
         }
       },
+    }),
+    getMyPayments: builder.query<MyPayment[], void>({
+      query: _ => `subscriptions/my-payments`,
     }),
     getProfile: builder.query<Profile, void>({
       providesTags: ['Profile'],
@@ -86,6 +90,7 @@ const profileEndpoints = api.injectEndpoints({
 
 export const {
   useDeleteAvatarMutation,
+  useGetMyPaymentsQuery,
   useGetProfileQuery,
   useUpdateProfileMutation,
   useUploadAvatarMutation,

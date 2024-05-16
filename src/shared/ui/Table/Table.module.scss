@@ -1,0 +1,40 @@
+.table {
+  border-collapse: collapse;
+
+  width: 100%;
+  max-width: 62.875rem;
+
+  color: var(--color-light-100);
+
+  background-color: var(--color-dark-900);
+  border: 1px solid var(--color-dark-500);
+
+  & tr {
+    border-bottom: 1px solid var(--color-dark-500);
+  }
+}
+
+.headCell,
+.tableCell {
+  padding: 11px 25px;
+}
+
+.headCell {
+  text-align: left;
+  background-color: var(--color-dark-500);
+
+  > span.sortLabel {
+    cursor: pointer;
+    user-select: none;
+
+    display: flex;
+    gap: 0.25rem;
+    align-items: center;
+  }
+}
+
+.empty {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
