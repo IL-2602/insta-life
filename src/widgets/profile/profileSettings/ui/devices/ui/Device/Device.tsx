@@ -35,6 +35,7 @@ export const Device = ({ current = false, session, t }: Props) => {
     Chrome: <ChromeIcon />,
     Yandex: <YandexIcon />,
   }
+
   return (
     <div className={s.container}>
       <div className={s.descWrapper}>
