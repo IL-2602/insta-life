@@ -3,7 +3,10 @@ import { ReactElement } from 'react'
 import { Session } from '@/services/devicesService/lib/devicesEndpoints.types'
 import { ChromeIcon } from '@/shared/assets/icons/Chrome'
 import { DesktopIcon } from '@/shared/assets/icons/Desktop'
+import { FireFoxIcon } from '@/shared/assets/icons/FireFox'
 import { MobileIcon } from '@/shared/assets/icons/Mobile'
+import { OperaIcon } from '@/shared/assets/icons/Opera'
+import { UnknownIcon } from '@/shared/assets/icons/Unknown'
 import { YandexIcon } from '@/shared/assets/icons/Yandex/Yandex'
 import { LogOutIcon } from '@/shared/assets/icons/asideIcons/logOutIcon'
 import { Button } from '@/shared/ui/Button'
@@ -15,11 +18,23 @@ import s from './Device.module.scss'
 import { Local } from '../../../../../../../../locales/en'
 
 export const Device = ({ current = false, session, t }: Props) => {
-  let browserIcon = <YandexIcon />
+  let browserIcon = <UnknownIcon />
 
   switch (session?.browserName) {
     case 'Chrome': {
       browserIcon = <ChromeIcon />
+      break
+    }
+    case 'Opera': {
+      browserIcon = <OperaIcon />
+      break
+    }
+    case 'Firefox': {
+      browserIcon = <FireFoxIcon />
+      break
+    }
+    case 'Yandex': {
+      browserIcon = <YandexIcon />
       break
     }
     default: {

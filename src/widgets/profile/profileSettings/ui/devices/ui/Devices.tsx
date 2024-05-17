@@ -8,7 +8,7 @@ import { Device } from '@/widgets/profile/profileSettings/ui/devices/ui/Device/D
 
 import s from './Devices.module.scss'
 
-export const Devices = memo(({ isLoading, sessions, t }: DevicesProps) => {
+export const Devices = memo(({ browser, ip, isLoading, sessions, t }: DevicesProps) => {
   if (isLoading) {
     return (
       <div className={s.spinner}>
@@ -21,7 +21,7 @@ export const Devices = memo(({ isLoading, sessions, t }: DevicesProps) => {
     <div className={s.container}>
       <div className={s.currDevice}>
         <Typography variant={'h3'}>{t.profileSettings.tab.devices.thisDevices}</Typography>
-        <Device current session={sessions?.[0]} t={t} />
+        <Device current session={{ browserName: browser, ip }} t={t} />
       </div>
       <div className={s.closeSessions}>
         <Button variant={'outlined'}>
