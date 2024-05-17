@@ -6,8 +6,17 @@ import { DevicesProps } from '@/widgets/profile/profileSettings/ui/devices/conta
 import { Device } from '@/widgets/profile/profileSettings/ui/devices/ui/Device/Device'
 
 import s from './Devices.module.scss'
+import { Spinner } from '@/shared/ui/Spinner'
 
-export const Devices = memo(({ sessions, t }: DevicesProps) => {
+export const Devices = memo(({ sessions, t, isLoading }: DevicesProps) => {
+  if (isLoading) {
+    return (
+      <div className={s.spinner}>
+        <Spinner />
+      </div>
+    )
+  }
+
   return (
     <div className={s.container}>
       <div className={s.currDevice}>

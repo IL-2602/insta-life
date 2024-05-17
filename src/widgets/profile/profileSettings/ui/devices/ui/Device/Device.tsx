@@ -28,6 +28,7 @@ export const Device = ({ current = false, session, t }: Props) => {
   }
 
   let sessionsIcon = <DesktopIcon />
+
   switch (session?.deviceType) {
     case 'mobile': {
       sessionsIcon = <MobileIcon />

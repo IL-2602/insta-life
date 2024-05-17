@@ -4,9 +4,7 @@ import { useTranslation } from '@/shared/hooks/useTranslation'
 export const useContainer = () => {
   const { t } = useTranslation()
 
-  const { data: sessions } = useGetSessionsQuery()
-
-  console.log(sessions)
-
-  return { sessions, t }
+  const { data: sessions, isLoading: isLoadingSessions } = useGetSessionsQuery()
+  const isLoading = isLoadingSessions
+  return { sessions, t, isLoading }
 }
