@@ -1,14 +1,14 @@
 import { memo } from 'react'
 
 import { Button } from '@/shared/ui/Button'
+import { Spinner } from '@/shared/ui/Spinner'
 import { Typography } from '@/shared/ui/Typography'
 import { DevicesProps } from '@/widgets/profile/profileSettings/ui/devices/container'
 import { Device } from '@/widgets/profile/profileSettings/ui/devices/ui/Device/Device'
 
 import s from './Devices.module.scss'
-import { Spinner } from '@/shared/ui/Spinner'
 
-export const Devices = memo(({ sessions, t, isLoading }: DevicesProps) => {
+export const Devices = memo(({ isLoading, sessions, t }: DevicesProps) => {
   if (isLoading) {
     return (
       <div className={s.spinner}>

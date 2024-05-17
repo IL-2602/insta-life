@@ -6,5 +6,6 @@ export const useContainer = () => {
 
   const { data: sessions, isLoading: isLoadingSessions } = useGetSessionsQuery()
   const isLoading = isLoadingSessions
-  return { sessions, t, isLoading }
+
+  return { isLoading, sessions, t }
 }
