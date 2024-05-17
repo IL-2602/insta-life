@@ -1,0 +1,1 @@
+export { FireFoxIcon } from './FireFox'

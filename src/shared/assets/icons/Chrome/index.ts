@@ -1,0 +1,1 @@
+export { ChromeIcon } from './Chrome'

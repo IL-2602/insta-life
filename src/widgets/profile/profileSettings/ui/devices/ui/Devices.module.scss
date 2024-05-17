@@ -1,3 +1,37 @@
 .container {
   display: flex;
+  flex-direction: column;
+
+  .currDevice {
+    width: 100%;
+    margin-top: 30px;
+    margin-bottom: 6px;
+  }
+
+  .closeSessions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 18px 0;
+  }
+
+  .activeDevice {
+    margin-top: 18px;
+
+    & > * {
+      margin-top: 6px;
+    }
+
+    & > *:last-child {
+      margin-bottom: 15px;
+    }
+  }
+}
+
+.spinner {
+  position: fixed;
+  z-index: 200;
+  top: 50%;
+  left: calc(50% + 130px);
+  transform: translate(-50%, -50%);
 }
