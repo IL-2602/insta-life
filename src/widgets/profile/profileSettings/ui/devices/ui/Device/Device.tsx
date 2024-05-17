@@ -14,36 +14,34 @@ import s from './Device.module.scss'
 
 import { Local } from '../../../../../../../../locales/en'
 
-type SessionIcon = {
-  desktop: ReactElement
-  mobile: ReactElement
-}
-type BrowserIcon = {
-  Chrome: ReactElement
-  Yandex: ReactElement
-}
-
 export const Device = ({ current = false, session, t }: Props) => {
-  const currentSessionIcon = session?.deviceType || 'desktop'
-  const currentBrowserIcon = session?.browserName || 'Chrome'
+  let browserIcon = <YandexIcon />
 
-  const SessionIcon: SessionIcon = {
-    desktop: <DesktopIcon />,
-    mobile: <MobileIcon />,
+  switch (session?.browserName) {
+    case 'Chrome': {
+      browserIcon = <ChromeIcon />
+      break
+    }
+    default: {
+      break
+    }
   }
-  const BrowserIcon: BrowserIcon = {
-    Chrome: <ChromeIcon />,
-    Yandex: <YandexIcon />,
+
+  let sessionsIcon = <DesktopIcon />
+  switch (session?.deviceType) {
+    case 'mobile': {
+      sessionsIcon = <MobileIcon />
+      break
+    }
+    default: {
+      break
+    }
   }
 
   return (
     <div className={s.container}>
       <div className={s.descWrapper}>
-        <div className={s.icon}>
-          {current
-            ? BrowserIcon[currentBrowserIcon as keyof BrowserIcon]
-            : SessionIcon[currentSessionIcon as keyof SessionIcon]}
-        </div>
+        <div className={s.icon}>{current ? browserIcon : sessionsIcon}</div>
         <div className={s.desc}>
           <Typography variant={'bold16'}>{session?.browserName}</Typography>
           <Typography variant={'regular14'}>IP: {session?.ip}</Typography>
