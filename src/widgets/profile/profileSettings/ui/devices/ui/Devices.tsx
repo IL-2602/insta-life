@@ -1,18 +1,18 @@
 import { memo } from 'react'
 
+import { Button } from '@/shared/ui/Button'
+import { Typography } from '@/shared/ui/Typography'
 import { DevicesProps } from '@/widgets/profile/profileSettings/ui/devices/container'
+import { Device } from '@/widgets/profile/profileSettings/ui/devices/ui/Device/Device'
 
 import s from './Devices.module.scss'
-import { Typography } from '@/shared/ui/Typography'
-import { Device } from '@/widgets/profile/profileSettings/ui/devices/ui/Device/Device'
-import { Button } from '@/shared/ui/Button'
 
-export const Devices = memo(({ t, sessions }: DevicesProps) => {
+export const Devices = memo(({ sessions, t }: DevicesProps) => {
   return (
     <div className={s.container}>
       <div className={s.currDevice}>
         <Typography variant={'h3'}>{t.profileSettings.tab.devices.thisDevices}</Typography>
-        <Device t={t} session={sessions?.[0]} current />
+        <Device current session={sessions?.[0]} t={t} />
       </div>
       <div className={s.closeSessions}>
         <Button variant={'outlined'}>
@@ -21,7 +21,7 @@ export const Devices = memo(({ t, sessions }: DevicesProps) => {
       </div>
       <div className={s.activeDevice}>
         <Typography variant={'h3'}>{t.profileSettings.tab.devices.activeSessions}</Typography>
-        {sessions?.map(s => <Device key={s.deviceId} t={t} session={s} />)}
+        {sessions?.map(s => <Device key={s.deviceId} session={s} t={t} />)}
       </div>
     </div>
   )
