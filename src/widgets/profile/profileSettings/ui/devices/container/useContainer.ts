@@ -37,6 +37,8 @@ export const useContainer = () => {
         if (res?.ip) {
           setIp(res.ip)
         }
+      } catch {
+        console.log('')
       } finally {
         setIsLoadingIp(false)
       }
