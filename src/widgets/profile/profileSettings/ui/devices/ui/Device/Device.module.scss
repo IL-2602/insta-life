@@ -7,7 +7,6 @@
   background: var(--color-dark-300);
   border: 1px solid var(--color-dark-100);
 
-
   .descWrapper {
     display: flex;
 
@@ -27,14 +26,12 @@
     align-items: center;
     justify-content: flex-end;
 
-    &:hover  {
-      color: var(--color-primary-500)
-
+    &:hover {
+      color: var(--color-primary-500);
     }
 
     & > *:first-child {
       margin-right: 6px;
-      
     }
   }
 }

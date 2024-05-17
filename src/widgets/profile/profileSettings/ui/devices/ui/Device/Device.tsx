@@ -1,38 +1,54 @@
-import s from './Device.module.scss'
-import { Typography } from '@/shared/ui/Typography'
-import { Button } from '@/shared/ui/Button'
-import { Local } from '../../../../../../../../locales/en'
-import { LogOutIcon } from '@/shared/assets/icons/asideIcons/logOutIcon'
-import { MobileIcon } from '@/shared/assets/icons/Mobile'
-import { Session } from '@/services/devicesService/lib/devicesEndpoints.types'
-import { DesktopIcon } from '@/shared/assets/icons/Desktop'
 import { ReactElement } from 'react'
+
+import { Session } from '@/services/devicesService/lib/devicesEndpoints.types'
+import { ChromeIcon } from '@/shared/assets/icons/Chrome'
+import { DesktopIcon } from '@/shared/assets/icons/Desktop'
+import { MobileIcon } from '@/shared/assets/icons/Mobile'
+import { YandexIcon } from '@/shared/assets/icons/Yandex/Yandex'
+import { LogOutIcon } from '@/shared/assets/icons/asideIcons/logOutIcon'
+import { Button } from '@/shared/ui/Button'
+import { Typography } from '@/shared/ui/Typography'
 import { format } from 'date-fns'
-import { Simulate } from 'react-dom/test-utils'
-import seeked = Simulate.seeked
 
-type SessionIconType = {
-  mobile: ReactElement
+import s from './Device.module.scss'
+
+import { Local } from '../../../../../../../../locales/en'
+
+type SessionIcon = {
   desktop: ReactElement
+  mobile: ReactElement
+}
+type BrowserIcon = {
+  Chrome: ReactElement
+  Yandex: ReactElement
 }
 
-const SessionIcon: SessionIconType = {
-  mobile: <MobileIcon />,
-  desktop: <DesktopIcon />,
-}
+export const Device = ({ current = false, session, t }: Props) => {
+  const currentSessionIcon = session?.deviceType || 'desktop'
+  const currentBrowserIcon = session?.browserName || 'Chrome'
 
-export const Device = ({ current = false, t, session }: Props) => {
-  const currentIcon = session?.deviceType || 'desktop'
+  const SessionIcon: SessionIcon = {
+    desktop: <DesktopIcon />,
+    mobile: <MobileIcon />,
+  }
+  const BrowserIcon: BrowserIcon = {
+    Chrome: <ChromeIcon />,
+    Yandex: <YandexIcon />,
+  }
   return (
     <div className={s.container}>
       <div className={s.descWrapper}>
-        <div className={s.icon}>{SessionIcon[currentIcon as keyof SessionIconType]}</div>
+        <div className={s.icon}>
+          {current
+            ? BrowserIcon[currentBrowserIcon as keyof BrowserIcon]
+            : SessionIcon[currentSessionIcon as keyof SessionIcon]}
+        </div>
         <div className={s.desc}>
           <Typography variant={'bold16'}>{session?.browserName}</Typography>
           <Typography variant={'regular14'}>IP: {session?.ip}</Typography>
           {!current && session?.lastActive && (
             <Typography variant={'small'}>
-              {t.profileSettings.tab.devices.lastVisit}:{' '}
+              {t.profileSettings.tab.devices.lastVisit}:
               {format(new Date(session?.lastActive), 'dd.MM.yyyy')}
             </Typography>
           )}
@@ -50,6 +66,6 @@ export const Device = ({ current = false, t, session }: Props) => {
 
 type Props = {
   current?: boolean
-  t: Local
   session?: Partial<Session>
+  t: Local
 }

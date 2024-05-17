@@ -1,1 +1,0 @@
-export { BrowserIcon } from './Browser'
