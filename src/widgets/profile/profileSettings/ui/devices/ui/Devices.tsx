@@ -39,7 +39,11 @@ export const Devices = memo(
             current
             handleDeleteSession={handleDeleteSession}
             handleLogOut={handleLogOut}
+            isLoadingLogOut={isLoadingLogOut}
+            isOpen={isOpen}
+            key={s.deviceId}
             session={{ browserName: browser, ip }}
+            sessionLoadingState={sessionLoadingState}
             setIsOpen={setIsOpen}
             t={t}
           />
@@ -59,7 +63,7 @@ export const Devices = memo(
               isLoadingLogOut={isLoadingLogOut}
               isOpen={isOpen}
               key={s.deviceId}
-              session={s}
+              session={{ browserName: browser, ip }}
               sessionLoadingState={sessionLoadingState}
               setIsOpen={setIsOpen}
               t={t}

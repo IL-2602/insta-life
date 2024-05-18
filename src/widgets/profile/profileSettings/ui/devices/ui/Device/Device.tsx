@@ -72,7 +72,7 @@ export const Device = ({
 
   const trackMyBrowser = (browserName: string) => {
     if (browser === browserName) {
-      return setIsOpen(true)
+      setIsOpen(true)
     } else {
       return handleDeleteSession(session?.deviceId)
     }
@@ -148,7 +148,7 @@ type Props = {
   handleDeleteSession: (deviceId: number | undefined) => Promise<null | void>
   handleLogOut: () => void
   isLoadingLogOut?: boolean
-  isOpen?: boolean
+  isOpen: boolean
   session?: Partial<Session>
   sessionLoadingState?: { [key: number]: boolean }
   setIsOpen: (isOpen: boolean) => void
