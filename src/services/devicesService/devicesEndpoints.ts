@@ -3,6 +3,15 @@ import { Session } from '@/services/devicesService/lib/devicesEndpoints.types'
 
 export const devicesEndpoints = api.injectEndpoints({
   endpoints: builder => ({
+    deleteSession: builder.mutation<void, { deviceId: number }>({
+      invalidatesTags: ['Sessions'],
+      query: ({ deviceId }) => {
+        return {
+          method: 'DELETE',
+          url: `sessions/${deviceId}`,
+        }
+      },
+    }),
     getSessions: builder.query<Session[], void>({
       providesTags: ['Sessions'],
       query: () => {
@@ -15,4 +24,4 @@ export const devicesEndpoints = api.injectEndpoints({
   }),
 })
 
-export const { useGetSessionsQuery } = devicesEndpoints
+export const { useDeleteSessionMutation, useGetSessionsQuery } = devicesEndpoints

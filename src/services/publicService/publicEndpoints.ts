@@ -19,6 +19,15 @@ export const publicEndpoints = api.injectEndpoints({
         }
       },
     }),
+    getPublicUserProfile: builder.query<getUserProfileResponse, { profileId: number }>({
+      query: ({ profileId }) => {
+        return {
+          method: 'GET',
+          params: { profileId },
+          url: `public-user/profile/${profileId}`,
+        }
+      },
+    }),
     getTotalCount: builder.query<{ totalCount: number }, void>({
       query: () => {
         return {
@@ -50,17 +59,14 @@ export const publicEndpoints = api.injectEndpoints({
         return endpointName
       },
     }),
-    getUserProfile: builder.query<getUserProfileResponse, { profileId: number }>({
-      query: ({ profileId }) => {
-        return {
-          method: 'GET',
-          params: { profileId },
-          url: `public-user/profile/${profileId}`,
-        }
-      },
-    }),
   }),
 })
 
-export const { getAllPosts, getTotalCount, getUserPosts } = publicEndpoints.endpoints
-export const { useGetAllPostsQuery, useGetTotalCountQuery, useGetUserPostsQuery } = publicEndpoints
+export const { getAllPosts, getPublicUserProfile, getTotalCount, getUserPosts } =
+  publicEndpoints.endpoints
+export const {
+  useGetAllPostsQuery,
+  useGetPublicUserProfileQuery,
+  useGetTotalCountQuery,
+  useGetUserPostsQuery,
+} = publicEndpoints

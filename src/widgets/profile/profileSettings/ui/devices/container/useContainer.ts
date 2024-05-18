@@ -1,15 +1,26 @@
 import { useEffect, useState } from 'react'
 
-import { useGetSessionsQuery } from '@/services/devicesService/devicesEndpoints'
+import { useLogOutMutation } from '@/services/authService/authEndpoints'
+import {
+  useDeleteSessionMutation,
+  useGetSessionsQuery,
+} from '@/services/devicesService/devicesEndpoints'
+import { ROUTES } from '@/shared/constants/routes'
 import { useTranslation } from '@/shared/hooks/useTranslation'
+import { useRouter } from 'next/router'
 
 export const useContainer = () => {
   const { t } = useTranslation()
+  const router = useRouter()
 
   const [ip, setIp] = useState('')
   const [isLoadingIp, setIsLoadingIp] = useState(false)
+  const [isOpen, setIsOpen] = useState(false)
+  const [sessionLoadingState, setSessionLoadingState] = useState<{ [key: number]: boolean }>({})
 
   const { data: sessions, isLoading: isLoadingSessions } = useGetSessionsQuery()
+  const [deleteSession] = useDeleteSessionMutation()
+  const [logOut, { isLoading: isLoadingLogOut }] = useLogOutMutation()
 
   let browser = 'Unknown'
 
@@ -49,5 +60,46 @@ export const useContainer = () => {
     return () => abortController.abort()
   }, [])
 
-  return { browser, ip, isLoading, sessions, t }
+  const handleDeleteSession = async (deviceId: number | undefined) => {
+    if (!deviceId) {
+      return null
+    }
+
+    try {
+      setSessionLoadingState({ ...sessionLoadingState, [deviceId]: true })
+
+      return await deleteSession({ deviceId }).unwrap()
+    } catch (err) {
+      console.log(err)
+    } finally {
+      setSessionLoadingState({ ...sessionLoadingState, [deviceId]: false })
+    }
+  }
+
+  const handleLogOut = async () => {
+    try {
+      await logOut().unwrap()
+
+      void router.push(ROUTES.LOGIN)
+      localStorage.clear()
+    } catch (e) {
+      console.error(e)
+    } finally {
+      setIsOpen(false)
+    }
+  }
+
+  return {
+    browser,
+    handleDeleteSession,
+    handleLogOut,
+    ip,
+    isLoading,
+    isLoadingLogOut,
+    isOpen,
+    sessionLoadingState,
+    sessions,
+    setIsOpen,
+    t,
+  }
 }
