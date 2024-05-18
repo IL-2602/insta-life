@@ -256,8 +256,8 @@ export const ru: Local = {
       devices: {
         activeSessions: 'Активные сеансы',
         devicesTitle: 'Устройство',
-        thisDevices: 'Текущее устройство',
         lastVisit: 'Последняя активность',
+        thisDevices: 'Текущее устройство',
       },
       generalInformation: {
         error: {

@@ -8,30 +8,69 @@ import { Device } from '@/widgets/profile/profileSettings/ui/devices/ui/Device/D
 
 import s from './Devices.module.scss'
 
-export const Devices = memo(({ browser, ip, isLoading, sessions, t }: DevicesProps) => {
-  if (isLoading) {
+export const Devices = memo(
+  ({
+    browser,
+    handleDeleteSession,
+    handleLogOut,
+    ip,
+    isLoading,
+    isLoadingLogOut,
+    isOpen,
+    sessionLoadingState,
+    sessions,
+    setIsOpen,
+    t,
+  }: DevicesProps) => {
+    if (isLoading) {
+      return (
+        <div className={s.spinner}>
+          <Spinner />
+        </div>
+      )
+    }
+
     return (
-      <div className={s.spinner}>
-        <Spinner />
+      <div className={s.container}>
+        <div className={s.currDevice}>
+          <Typography variant={'h3'}>{t.profileSettings.tab.devices.thisDevices}</Typography>
+          <Device
+            browser={browser}
+            current
+            handleDeleteSession={handleDeleteSession}
+            handleLogOut={handleLogOut}
+            isLoadingLogOut={isLoadingLogOut}
+            isOpen={isOpen}
+            key={s.deviceId}
+            session={{ browserName: browser, ip }}
+            sessionLoadingState={sessionLoadingState}
+            setIsOpen={setIsOpen}
+            t={t}
+          />
+        </div>
+        <div className={s.closeSessions}>
+          <Button variant={'outlined'}>
+            <Typography variant={'h3'}>{t.button.terminateAllOtherSession}</Typography>
+          </Button>
+        </div>
+        <div className={s.activeDevice}>
+          <Typography variant={'h3'}>{t.profileSettings.tab.devices.activeSessions}</Typography>
+          {sessions?.map(s => (
+            <Device
+              browser={browser}
+              handleDeleteSession={handleDeleteSession}
+              handleLogOut={handleLogOut}
+              isLoadingLogOut={isLoadingLogOut}
+              isOpen={isOpen}
+              key={s.deviceId}
+              session={s}
+              sessionLoadingState={sessionLoadingState}
+              setIsOpen={setIsOpen}
+              t={t}
+            />
+          ))}
+        </div>
       </div>
     )
   }
-
-  return (
-    <div className={s.container}>
-      <div className={s.currDevice}>
-        <Typography variant={'h3'}>{t.profileSettings.tab.devices.thisDevices}</Typography>
-        <Device current session={{ browserName: browser, ip }} t={t} />
-      </div>
-      <div className={s.closeSessions}>
-        <Button variant={'outlined'}>
-          <Typography variant={'h3'}>{t.button.terminateAllOtherSession}</Typography>{' '}
-        </Button>
-      </div>
-      <div className={s.activeDevice}>
-        <Typography variant={'h3'}>{t.profileSettings.tab.devices.activeSessions}</Typography>
-        {sessions?.map(s => <Device key={s.deviceId} session={s} t={t} />)}
-      </div>
-    </div>
-  )
-})
+)

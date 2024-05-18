@@ -249,8 +249,8 @@ export const en = {
       devices: {
         activeSessions: 'Active sessions',
         devicesTitle: 'Devices',
+        lastVisit: 'Последняя активность',
         thisDevices: 'Current device',
-        lastVisit: 'Last visit',
       },
       generalInformation: {
         error: {
