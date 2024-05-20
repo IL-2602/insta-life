@@ -13,6 +13,7 @@ export const Devices = memo(
     browser,
     handleDeleteSession,
     handleLogOut,
+    handleTerminateAllOtherSessions,
     ip,
     isLoading,
     isLoadingLogOut,
@@ -49,7 +50,7 @@ export const Devices = memo(
           />
         </div>
         <div className={s.closeSessions}>
-          <Button variant={'outlined'}>
+          <Button onClick={() => handleTerminateAllOtherSessions()} variant={'outlined'}>
             <Typography variant={'h3'}>{t.button.terminateAllOtherSession}</Typography>
           </Button>
         </div>
