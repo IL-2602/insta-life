@@ -3,14 +3,8 @@ import { z } from 'zod'
 export const createPostModalSchema = z.object({
   postPhoto: z
     .custom<File>(v => v instanceof File)
-    .refine(
-      file => file.size <= 20000000,
-      `The photo must be less than 20Mb and have JPEG or PNG format`
-    )
-    .refine(
-      file => ['image/jpeg', 'image/jpg', 'image/png'].includes(file.type),
-      'The photo must be less than 20Mb and have JPEG or PNG format'
-    )
+    .refine(file => file.size <= 20971520, `imgLess10mb`)
+    .refine(file => ['image/jpeg', 'image/jpg', 'image/png'].includes(file.type), 'imgFormat')
     .refine(async file => {
       const image = new Image()
 

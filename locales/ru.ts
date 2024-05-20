@@ -167,7 +167,7 @@ export const ru: Local = {
     save: 'Сохранить',
     saveChanges: 'Сохранить',
     saveDraft: 'Сохранить черновик',
-    selectFromComputer: 'Выбрать фаил',
+    selectFromComputer: 'Выбрать файл',
     sendMessage: 'Отправить сообщение',
     showMore: 'Показать больше',
     terminateAllOtherSession: 'Завершите все остальные сеансы',
@@ -212,7 +212,8 @@ export const ru: Local = {
     error: {
       imgFormat: 'Только .jpg, .jpeg, .png  форматы поддерживаются',
       imgLarger332: 'Изображение должно быть больше 332х332',
-      imgLess10mb: 'Максиамльный размер изображения 10мб',
+      imgLess10mb: 'Максимальный размер изображения 10мб',
+      imgLess20mb: 'Максимальный размер изображения 20мб',
       imgMoreThen10: 'Максимум 10 картинок',
     },
     followers: 'Подписчики',
