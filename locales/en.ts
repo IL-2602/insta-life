@@ -206,6 +206,7 @@ export const en = {
       imgFormat: 'Only .jpg, .jpeg, .png  formats are supported',
       imgLarger332: 'Image should be larger than 332x332',
       imgLess10mb: 'Max image size is 10MB',
+      imgLess20mb: 'Max image size is 20MB',
       imgMoreThen10: 'Max image count 10',
     },
     followers: 'Followers',
@@ -249,7 +250,7 @@ export const en = {
       devices: {
         activeSessions: 'Active sessions',
         devicesTitle: 'Devices',
-        lastVisit: 'Последняя активность',
+        lastVisit: 'Last visit',
         thisDevices: 'Current device',
       },
       generalInformation: {
