@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 
 import { useLogOutMutation } from '@/services/authService/authEndpoints'
 import {
+  useDeleteAllOtherSessionsMutation,
   useDeleteSessionMutation,
   useGetSessionsQuery,
 } from '@/services/devicesService/devicesEndpoints'
@@ -20,6 +22,7 @@ export const useContainer = () => {
 
   const { data: sessions, isLoading: isLoadingSessions } = useGetSessionsQuery()
   const [deleteSession] = useDeleteSessionMutation()
+  const [deleteAllOtherSessions] = useDeleteAllOtherSessionsMutation()
   const [logOut, { isLoading: isLoadingLogOut }] = useLogOutMutation()
 
   let browser = 'Unknown'
@@ -76,6 +79,13 @@ export const useContainer = () => {
     }
   }
 
+  const handleTerminateAllOtherSessions = () => {
+    deleteAllOtherSessions()
+      .unwrap()
+      .then(() => toast.success('All other sessions have been deleted.'))
+      .catch(err => toast.error(err.message))
+  }
+
   const handleLogOut = async () => {
     try {
       await logOut().unwrap()
@@ -93,6 +103,7 @@ export const useContainer = () => {
     browser,
     handleDeleteSession,
     handleLogOut,
+    handleTerminateAllOtherSessions,
     ip,
     isLoading,
     isLoadingLogOut,
