@@ -101,11 +101,11 @@ export const useContainer = () => {
   const showSaveDraft = () => dispatch(postActions.setIsClosePostModal(true))
 
   useEffect(() => {
-    if (postPhoto?.zoom && postPhoto?.aspect && imgRef.current && canvasRef.current) {
+    if (imgRef.current && canvasRef.current) {
       canvasPreviewWithOutCrop(
         imgRef.current,
         canvasRef.current,
-        postPhoto?.aspect,
+        postPhoto?.aspect || 0,
         postPhoto?.zoom
       )
       saveCropImg({ img: postPhoto?.img })
