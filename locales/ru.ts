@@ -320,6 +320,8 @@ export const ru: Local = {
     minutes: 'мин назад',
   },
   toast: {
+    deletePost: 'Пост был удалён',
+    noDeletePost: 'Ошибка: Пост не был удалён',
     profileError: 'Ошибка! Сервер недоступен',
     profileSaveChanges: 'Ваши настройки сохранены!',
   },

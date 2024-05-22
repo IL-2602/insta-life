@@ -313,6 +313,8 @@ export const en = {
     minutes: 'min ago',
   },
   toast: {
+    deletePost: 'The post has been deleted',
+    noDeletePost: 'Error: The post has not been deleted',
     profileError: 'Error! Server is not available!',
     profileSaveChanges: 'Your settings are saved!',
   },

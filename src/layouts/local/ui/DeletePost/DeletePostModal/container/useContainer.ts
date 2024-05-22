@@ -20,10 +20,10 @@ export const useContainer = () => {
     deletePost({ postId: Number(postId), profileId: Number(profileId) })
       .unwrap()
       .then(
-        (res: any) => {
+        () => {
           dispatch(postActions.setIsDeletePostModal(false))
           dispatch(postActions.setIsMyPostModal(false))
-          toast.success('The post has been deleted', {
+          toast.success(t.toast.deletePost, {
             pauseOnHover: false,
             style: {
               background: '#0A6638',
@@ -37,8 +37,8 @@ export const useContainer = () => {
           shallow: true,
         })
       )
-      .catch((err: any) => {
-        toast.error('Error: The post has not been deleted ', {
+      .catch(() => {
+        toast.error(t.toast.noDeletePost, {
           pauseOnHover: false,
           style: {
             background: '#660A1D',
@@ -58,9 +58,6 @@ export const useContainer = () => {
 
   const handleCloseModal = () => {
     dispatch(postActions.setIsDeletePostModal(false))
-    void replace({ query: { id: query.id } }, undefined, {
-      shallow: true,
-    })
   }
 
   return {
