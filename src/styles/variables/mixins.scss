@@ -3,7 +3,7 @@
   max-width: 1280px;
   height: 100%;
   margin: 0 auto;
-  padding: 0 60px;
+  padding: 0 clamp(1rem, -0.0563rem + 4.5070vw, 4rem);
 }
 
 @mixin typography(
@@ -19,6 +19,38 @@
   font-weight: $fw;
   line-height: $lh;
   color: $color;
+}
+
+
+$breakpoints: (
+        'mobilesm': 576px,
+        'mobile': 768px,
+        'tablet': 992px,
+        'pc': 1280px,
+);
+
+@mixin mobile-small {
+  @media (max-width: map-get($breakpoints, 'mobilesm')) {
+    @content;
+  }
+}
+
+@mixin mobile {
+  @media (max-width: map-get($breakpoints, 'mobile')) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (max-width: map-get($breakpoints, 'tablet')) {
+    @content;
+  }
+}
+
+@mixin pc {
+  @media (max-width: map-get($breakpoints, 'pc')) {
+    @content;
+  }
 }
 
 @mixin button($color: var(--color-light-100), $bgColor: var(--color-primary-500)) {

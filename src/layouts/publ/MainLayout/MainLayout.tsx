@@ -7,6 +7,7 @@ import { Wrapper } from '@/shared/ui/Wrapper'
 import { NextPage } from 'next'
 
 import s from './MainLayout.module.scss'
+import { MobileSideBar } from '@/layouts/local/ui/MobileSideBar'
 
 export const MainLayout: NextPage<PropsWithChildren> = props => {
   const { children } = props
@@ -21,6 +22,7 @@ export const MainLayout: NextPage<PropsWithChildren> = props => {
         <Container className={s.wrapper}>
           <SideBar.widget />
           <main className={s.main}>{children}</main>
+          <MobileSideBar.widget />
         </Container>
       </>
     )
@@ -32,6 +34,7 @@ export const MainLayout: NextPage<PropsWithChildren> = props => {
       <Container className={s.wrapper}>
         <SideBar.widget />
         <main className={s.main}>{children}</main>
+        <MobileSideBar.widget />
       </Container>
     </Wrapper>
   )
