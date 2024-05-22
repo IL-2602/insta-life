@@ -15,7 +15,7 @@ export const ru: Local = {
       signUpButton: 'Зарегистрироваться',
     },
     congratulationPage: {
-      congratulationText: 'Ваше сообщение было подтверждено',
+      congratulationText: 'Ваш адрес электронной почты подтверждён',
       h1: 'Поздравляем!',
       meta_description: '',
       title: 'Поздравляем!',
