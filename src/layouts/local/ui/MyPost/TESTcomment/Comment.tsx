@@ -27,11 +27,9 @@ export const TestComment = ({ photo, postDescription, profile }: Props) => {
             />
           )}
         </div>
-        {/*<Typography variant={'bold14'}>{`${getProfile?.userName}  ${comment}`}comment</Typography>*/}
-
         <div className={s.commentText}>
-          <Typography variant={'regular14'}>
-            <b>{profile?.userName}</b>
+          <Typography as={'b'} variant={'bold14'}>
+            {profile?.userName}
             <Typography variant={'regular14'}>
               {postDescription ? postDescription : comment}
             </Typography>
