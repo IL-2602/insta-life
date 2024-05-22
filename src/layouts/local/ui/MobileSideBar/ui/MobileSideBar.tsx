@@ -42,12 +42,6 @@ export const MobileSideBar = ({
         <CreateIcon className={s.navIcon} />
       </button>
       <Link
-        className={pathname.startsWith(ROUTES.PROFILE) ? s.activeLink : ''}
-        href={`${ROUTES.PROFILE}/${me?.userId}`}
-      >
-        <ProfileIcon className={s.navIcon} />
-      </Link>
-      <Link
         className={handleActiveLink(ROUTES.MESSENGER) ? s.activeLink : ''}
         href={ROUTES.MESSENGER}
       >
@@ -55,6 +49,12 @@ export const MobileSideBar = ({
       </Link>
       <Link className={handleActiveLink(ROUTES.SEARCH) ? s.activeLink : ''} href={ROUTES.SEARCH}>
         <SearchIcon className={s.navIcon} />
+      </Link>
+      <Link
+        className={pathname.startsWith(ROUTES.PROFILE) ? s.activeLink : ''}
+        href={`${ROUTES.PROFILE}/${me?.userId}`}
+      >
+        <ProfileIcon className={s.navIcon} />
       </Link>
       <Modal
         logOut
