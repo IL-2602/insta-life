@@ -24,6 +24,7 @@
     overflow: hidden;
     display: grid;
     place-items: center;
+    align-self: baseline;
 
     width: 36px;
     height: 36px;
@@ -84,6 +85,8 @@
 }
 
 .commentText {
+  display: flex;
+  flex-direction: column;
   width: 350px;
 }
 
