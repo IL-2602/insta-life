@@ -1,4 +1,4 @@
-@import "@/styles/variables/mixins";
+@import '@/styles/variables/mixins';
 
 .header {
   flex-shrink: 0;
@@ -38,7 +38,7 @@
 }
 
 .bellButton {
-  @include mobile{
+  @include mobile {
     display: none;
   }
 
