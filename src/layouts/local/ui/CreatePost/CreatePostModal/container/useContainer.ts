@@ -19,9 +19,11 @@ export const useContainer = () => {
   const modalSteps = useAppSelector(state => state.postReducer.modalSteps)
 
   const {
+    clearErrors,
     control,
     formState: { errors },
     handleSubmit,
+    resetField,
     trigger,
     watch,
   } = useForm<createPostModalFormSchema>({
@@ -47,6 +49,8 @@ export const useContainer = () => {
 
   const handleCloseModal = () => {
     dispatch(postActions.setIsCreatePostModal(false))
+    resetField('postPhoto')
+    clearErrors()
   }
 
   return {
