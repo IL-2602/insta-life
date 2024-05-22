@@ -1,4 +1,4 @@
-@import "@/styles/variables/mixins";
+@import '@/styles/variables/mixins';
 
 .wrapper {
   position: relative;
@@ -7,7 +7,7 @@
 }
 
 .main {
-  @include mobile{
+  @include mobile {
     margin-left: 0;
   }
 

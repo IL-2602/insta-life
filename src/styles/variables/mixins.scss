@@ -3,7 +3,7 @@
   max-width: 1280px;
   height: 100%;
   margin: 0 auto;
-  padding: 0 clamp(1rem, -0.0563rem + 4.5070vw, 4rem);
+  padding: 0 clamp(1rem, -0.0563rem + 4.507vw, 4rem);
 }
 
 @mixin typography(
@@ -21,12 +21,11 @@
   color: $color;
 }
 
-
 $breakpoints: (
-        'mobilesm': 576px,
-        'mobile': 768px,
-        'tablet': 992px,
-        'pc': 1280px,
+  'mobilesm': 576px,
+  'mobile': 768px,
+  'tablet': 992px,
+  'pc': 1280px,
 );
 
 @mixin mobile-small {
