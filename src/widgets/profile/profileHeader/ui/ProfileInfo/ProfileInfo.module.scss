@@ -1,39 +1,25 @@
-.profileInfo {
-  display: flex;
-  flex: 1;
-}
+@import "@/styles/variables/mixins";
 
-.mainWrapper {
-  display: flex;
-  flex: 1;
-  flex-wrap: wrap;
-  gap: 20px;
-  align-items: flex-start;
-  justify-content: space-between;
-}
-
-.titleAndStat {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  width: 100%;
-
-  .titleAndStatHeader {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-  }
+.name {
+  grid-area: name;
 }
 
 .stat {
+  @include mobile{
+
+  }
+
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  max-width: 400px;
+  grid-area: subscriber;
+  width: 100%;
 }
 
 .button {
+  @include mobile{
+    display: none;
+  }
+
   display: inline-block;
+  grid-area: settings;
   height: 35px;
 }

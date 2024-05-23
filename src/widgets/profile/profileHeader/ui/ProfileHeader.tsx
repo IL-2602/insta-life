@@ -1,5 +1,4 @@
 import { Avatar } from '@/shared/ui/Avatar'
-import { Button } from '@/shared/ui/Button'
 import { Spinner } from '@/shared/ui/Spinner'
 import { ProfileHeaderProps } from '@/widgets/profile/profileHeader/container'
 import { ProfileInfo } from '@/widgets/profile/profileHeader/ui/ProfileInfo/ProfileInfo'

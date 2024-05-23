@@ -16,11 +16,10 @@ export const Avatar = ({ height = 192, userAvatar, width = 192 }: Props) => {
     <Image
       alt={'User Avatar'}
       className={classNames.img}
-      height={height}
+      fill
       onError={() => setIsError(true)}
       priority
       src={userAvatar}
-      width={width}
     />
   ) : (
     <NoCover />
