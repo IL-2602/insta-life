@@ -1,12 +1,11 @@
-@import "@/styles/variables/mixins";
+@import '@/styles/variables/mixins';
 
 .name {
   grid-area: name;
 }
 
 .stat {
-  @include mobile{
-
+  @include mobile {
   }
 
   display: flex;
@@ -15,7 +14,7 @@
 }
 
 .button {
-  @include mobile{
+  @include mobile {
     display: none;
   }
 
