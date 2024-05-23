@@ -21,7 +21,6 @@ import s from './Device.module.scss'
 import { Local } from '../../../../../../../../locales/en'
 
 export const Device = ({
-  browser,
   current = false,
   handleDeleteSession,
   handleLogOut,
@@ -70,14 +69,6 @@ export const Device = ({
     }
   }
 
-  const trackMyBrowser = (browserName: string) => {
-    if (browser === browserName) {
-      setIsOpen(true)
-    } else {
-      return handleDeleteSession(session?.deviceId)
-    }
-  }
-
   if (!sessionLoadingState) {
     return null
   }
@@ -113,7 +104,7 @@ export const Device = ({
         {!current && (
           <Button
             className={s.logoutBtn}
-            onClick={() => trackMyBrowser(session?.browserName!)}
+            onClick={() => handleDeleteSession(session?.deviceId)}
             variant={'noStyle'}
           >
             <LogOutIcon />
@@ -143,7 +134,6 @@ export const Device = ({
 }
 
 type Props = {
-  browser: string
   current?: boolean
   handleDeleteSession: (deviceId: number | undefined) => Promise<null | void>
   handleLogOut: () => void

@@ -35,7 +35,6 @@ export const Devices = memo(
         <div className={s.currDevice}>
           <Typography variant={'h3'}>{t.profileSettings.tab.devices.thisDevices}</Typography>
           <Device
-            browser={browser}
             current
             handleDeleteSession={handleDeleteSession}
             handleLogOut={handleLogOut}
@@ -57,7 +56,6 @@ export const Devices = memo(
           <Typography variant={'h3'}>{t.profileSettings.tab.devices.activeSessions}</Typography>
           {sessions?.map(s => (
             <Device
-              browser={browser}
               handleDeleteSession={handleDeleteSession}
               handleLogOut={handleLogOut}
               isLoadingLogOut={isLoadingLogOut}

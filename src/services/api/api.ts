@@ -18,9 +18,8 @@ const isNotServer = typeof window !== 'undefined'
 export const baseQuery = fetchBaseQuery({
   baseUrl,
   credentials: 'include',
-  prepareHeaders: (headers, { extra, getState }) => {
+  prepareHeaders: (headers, { extra }) => {
     if (isNotServer) {
-      // const token = (getState() as RootState).authReducer?.accessToken
       const accessTokenFront = getCookie('accessToken')
 
       if (accessTokenFront) {
