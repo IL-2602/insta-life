@@ -1,7 +1,7 @@
-@import "@/styles/variables/mixins";
+@import '@/styles/variables/mixins';
 
 .container {
-  @include mobile{
+  @include mobile {
     overflow: hidden;
     width: 100%;
     height: calc(100% - 120px);
@@ -37,8 +37,8 @@
   }
 
   .imgWrapper {
-    @include mobile{
-        width: 100%;
+    @include mobile {
+      width: 100%;
     }
 
     position: absolute;
