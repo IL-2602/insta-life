@@ -5,10 +5,11 @@
     overflow: hidden;
     width: 100%;
     height: calc(100% - 120px);
+    background: transparent;
   }
 
   width: 490px;
-  
+
   .croppingWrapper {
     position: relative;
     padding: 0;
