@@ -69,9 +69,7 @@ export const PostCropping = memo(
           <PostPhotos
             cropping
             currentPhoto={currPhotoIndex}
-            height={490}
             onChangeCurrentPhoto={onChangeCurrPhoto}
-            width={490}
           >
             {postPhotos &&
               postPhotos.map((photo, idx) => (

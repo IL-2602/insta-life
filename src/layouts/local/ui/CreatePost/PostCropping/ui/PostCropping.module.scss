@@ -1,4 +1,12 @@
+@import "@/styles/variables/mixins";
+
 .container {
+  @include mobile{
+    overflow: hidden;
+    width: 100%;
+    height: calc(100% - 120px);
+  }
+
   width: 490px;
 
   .croppingWrapper {
@@ -29,6 +37,10 @@
   }
 
   .imgWrapper {
+    @include mobile{
+        width: 100%;
+    }
+
     position: absolute;
     z-index: var(--zindex-crop);
     top: 0;
