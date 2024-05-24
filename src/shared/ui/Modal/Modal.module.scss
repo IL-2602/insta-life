@@ -49,7 +49,7 @@
 }
 
 .DialogOverlay {
-  @include mobile{
+  @include mobile {
     background: transparent;
     animation: none;
   }
@@ -103,8 +103,7 @@
 }
 
 .DialogDescription {
-
-  @include mobile{
+  @include mobile {
     background: var(--color-dark-900);
   }
 
@@ -161,7 +160,7 @@
 }
 
 .modalHeader {
-  @include mobile{
+  @include mobile {
     background: var(--color-dark-900);
   }
 
