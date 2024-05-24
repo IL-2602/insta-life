@@ -1,4 +1,8 @@
 @mixin container {
+  @include mobile{
+    padding: 0 clamp(0.2rem, 0.1296rem + 0.3005vw, 0.4rem);
+  }
+
   width: 100%;
   max-width: 1280px;
   height: 100%;
