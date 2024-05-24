@@ -49,6 +49,11 @@
 }
 
 .DialogOverlay {
+  @include mobile{
+    background: transparent;
+    animation: none;
+  }
+
   position: fixed;
   inset: 0;
 
@@ -98,6 +103,11 @@
 }
 
 .DialogDescription {
+
+  @include mobile{
+    background: var(--color-dark-900);
+  }
+
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -151,6 +161,10 @@
 }
 
 .modalHeader {
+  @include mobile{
+    background: var(--color-dark-900);
+  }
+
   display: flex;
   justify-content: space-between;
 
