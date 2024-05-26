@@ -8,9 +8,15 @@ import s from '@/layouts/local/ui/MyPost/MyPostModal/ui/PostSide/PostSide.module
 
 import noPhoto from '../../../../../../public/assets/noPhoto.svg'
 
-export const TestComment = ({ photo, postDescription, profile }: Props) => {
-  const comment =
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod temporincididunt ut labore et dolore magna aliqua.'
+export const TestComment = ({
+  photo,
+  postDescription,
+  profile,
+  uAvatar,
+  uComment,
+  uName,
+}: Props) => {
+  const comment = uComment
 
   return (
     <div className={s.userCommentContainer}>
@@ -22,16 +28,16 @@ export const TestComment = ({ photo, postDescription, profile }: Props) => {
             <Image
               alt={'userPhoto'}
               height={36}
-              src={profile?.avatars[0].url! ?? photo}
+              src={profile?.avatars[0].url! ?? uAvatar}
               width={36}
             />
           )}
         </div>
         <div className={s.commentText}>
           <Typography as={'b'} variant={'bold14'}>
-            {profile?.userName}
+            {profile?.userName ? profile.userName : uName}
             <Typography variant={'regular14'}>
-              {postDescription ? postDescription : comment}
+              {postDescription ? postDescription : uComment}
             </Typography>
           </Typography>
           <Typography className={'commentTime'} color={'tertiary'} variant={'small'}>
@@ -50,4 +56,7 @@ type Props = {
   photo?: string
   postDescription?: null | string
   profile?: Profile
+  uAvatar?: string
+  uComment?: string
+  uName?: string
 }

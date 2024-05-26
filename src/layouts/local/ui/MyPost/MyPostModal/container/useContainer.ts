@@ -6,7 +6,12 @@ import { useAppDispatch } from '@/app/store/hooks/useAppDispatch'
 import { useAppSelector } from '@/app/store/hooks/useAppSelector'
 import { useMyPostSchema } from '@/layouts/local/ui/MyPost/MyPostModal/schema/myPostPublicationSchema'
 import { useGetMeQuery } from '@/services/authService/authEndpoints'
-import { useEditPostMutation, useGetCurrentPostQuery } from '@/services/postService/postEndpoints'
+import {
+  useCreateCommentMutation,
+  useEditPostMutation,
+  useGetCurrentPostQuery,
+  useGetPostCommentsQuery,
+} from '@/services/postService/postEndpoints'
 import { postActions } from '@/services/postService/store/slice/postEndpoints.slice'
 import { useGetProfileQuery } from '@/services/profileService/profileEndpoints'
 import { useTranslation } from '@/shared/hooks/useTranslation'
@@ -33,17 +38,22 @@ export const useContainer = () => {
   const { data: postPhotos, isFetching: isPostFetching } = useGetCurrentPostQuery(Number(postId), {
     skip: !postId,
   })
+
+  const { data: comments } = useGetPostCommentsQuery(Number(postId))
   const { data: getProfile, isFetching: isGetUserLoading } = useGetProfileQuery()
   const [editPost, { isLoading: isLoadingEditPost }] = useEditPostMutation()
-
+  const [createComment] = useCreateCommentMutation()
   const [isOpenClosePostModal, setIsOpenClosePostModal] = useState(false)
   const [currPhotoIndex, setCurrPhotoIndex] = useState(0)
   const [isEdit, setIsEdit] = useState(false)
+  const [commentText, setCommentText] = useState('')
 
   const { myPostSchema } = useMyPostSchema()
 
   type myPostFormSchema = z.infer<typeof myPostSchema>
+  const postComments = comments?.items
 
+  console.log('comments: ', comments?.items)
   const {
     control,
     formState: { errors },
@@ -65,7 +75,15 @@ export const useContainer = () => {
   }, [reset, postPhotos?.description])
 
   const onChangeCurrPhoto = (currPhoto: number) => setCurrPhotoIndex(currPhoto)
-  const commentPublish = () => {}
+  const commentTextHandler = (comment: string) => {
+    setCommentText(comment)
+  }
+  const commentPublish = () => {
+    if (commentText !== '' && postId !== 'undefined') {
+      createComment({ comment: commentText, postId: Number(postId) })
+      setCommentText('')
+    }
+  }
   const deletePostModalHandler = (id: number) => {
     dispatch(postActions.setIsDeletePostModal(true))
     setIsEdit(false)
@@ -133,6 +151,8 @@ export const useContainer = () => {
   return {
     closeModalWithRefresh,
     commentPublish,
+    commentText,
+    commentTextHandler,
     control,
     currPhotoIndex,
     deletePostModalHandler,
@@ -151,6 +171,7 @@ export const useContainer = () => {
     meError,
     myPostDescription,
     onChangeCurrPhoto,
+    postComments,
     postId,
     postPhotos,
     setIsEditPostHandler,

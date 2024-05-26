@@ -19,8 +19,11 @@ import noPhoto from '../../../../../../../../public/assets/noPhoto.svg'
 
 export const PostSide = ({
   commentPublishHandler,
+  commentText,
+  commentTextHandler,
   deletePostModalHandler,
   isMe,
+  postComments,
   postDescription,
   postPhotos,
   profile,
@@ -73,9 +76,19 @@ export const PostSide = ({
               profile={profile}
             />
           )}
-          <TestComment profile={profile} />
-          <TestComment profile={profile} />
-          <TestComment profile={profile} />
+          {postDescription &&
+            postComments?.map((el: any) => {
+              return (
+                <>
+                  <TestComment
+                    key={el.id}
+                    uAvatar={el.from.avatars[0].url}
+                    uComment={el.content}
+                    uName={el.from.username}
+                  />
+                </>
+              )
+            })}
         </ScrollSelect>
       </div>
       <div className={s.likesBlock}>
@@ -90,7 +103,11 @@ export const PostSide = ({
       </div>
       {isMe && (
         <div className={s.addCommentBlock}>
-          <input placeholder={'Add comment...'} type={'text'} />
+          <input
+            onChange={(e: any) => commentTextHandler(e.currentTarget.value)}
+            placeholder={'Add comment...'}
+            type={'text'}
+          />
           <Button
             className={s.button}
             disabled={false}
@@ -107,8 +124,11 @@ export const PostSide = ({
 
 type Props = {
   commentPublishHandler: () => void
+  commentText: string
+  commentTextHandler: (comment: string) => void
   deletePostModalHandler: (id: number) => void
   isMe: boolean
+  postComments: any
   postDescription: null | string
   postPhotos: GetCurrentPostResponse | undefined
   profile: Profile | undefined

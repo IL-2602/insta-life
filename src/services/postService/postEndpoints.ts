@@ -10,6 +10,16 @@ import { publicEndpoints } from '@/services/publicService/publicEndpoints'
 
 export const postEndpoints = api.injectEndpoints({
   endpoints: builder => ({
+    createComment: builder.mutation<any, { comment: string; postId: number }>({
+      invalidatesTags: ['Post'],
+      query: ({ comment, postId }) => {
+        return {
+          body: { content: comment },
+          method: 'POST',
+          url: `posts/${postId}/comments`,
+        }
+      },
+    }),
     deletePost: builder.mutation<void, { postId: number; profileId: number }>({
       onQueryStarted: async (args, { dispatch }) => {
         try {
@@ -57,6 +67,15 @@ export const postEndpoints = api.injectEndpoints({
         }
       },
     }),
+    getPostComments: builder.query<any, number>({
+      providesTags: ['Post'],
+      query: postId => {
+        return {
+          method: 'GET',
+          url: `posts/${postId}/comments`,
+        }
+      },
+    }),
     publishPost: builder.mutation<PublishPostResponse, PublishPostParams>({
       onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
         try {
@@ -96,9 +115,11 @@ export const postEndpoints = api.injectEndpoints({
 })
 
 export const {
+  useCreateCommentMutation,
   useDeletePostMutation,
   useEditPostMutation,
   useGetCurrentPostQuery,
+  useGetPostCommentsQuery,
   usePublishPostImageMutation,
   usePublishPostMutation,
 } = postEndpoints
