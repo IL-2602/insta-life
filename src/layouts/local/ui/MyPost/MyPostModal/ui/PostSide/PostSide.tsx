@@ -1,4 +1,4 @@
-import { TestComment } from '@/layouts/local/ui/MyPost/TESTcomment/Comment'
+import { Comment } from '@/layouts/local/ui/MyPost/Comment/Comment'
 import { GetCurrentPostResponse } from '@/services/postService/lib/postEndpoints.types'
 import { Bookmark } from '@/shared/assets/icons/Bookmark'
 import { HeartOutline } from '@/shared/assets/icons/Heart/HeartOutline'
@@ -70,7 +70,8 @@ export const PostSide = ({
       <div className={s.commentsBlock}>
         <ScrollSelect maxHeight={'300px'} type={'always'}>
           {postDescription && (
-            <TestComment
+            <Comment
+              createdAt={postPhotos?.createdAt}
               photo={postPhotos?.avatarOwner!}
               postDescription={postDescription}
               profile={profile}
@@ -80,7 +81,8 @@ export const PostSide = ({
             postComments?.map((el: any) => {
               return (
                 <>
-                  <TestComment
+                  <Comment
+                    createdAt={el.createdAt}
                     key={el.id}
                     uAvatar={el.from.avatars[0].url}
                     uComment={el.content}

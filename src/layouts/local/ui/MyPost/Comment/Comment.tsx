@@ -1,5 +1,6 @@
 import { useGetProfileQuery } from '@/services/profileService/profileEndpoints'
 import { Heart } from '@/shared/assets/icons/Heart'
+import { TimeDifference } from '@/shared/components/TimeDifference/TimeDifference'
 import { Profile } from '@/shared/types/profile'
 import { Typography } from '@/shared/ui/Typography'
 import Image from 'next/image'
@@ -8,7 +9,8 @@ import s from '@/layouts/local/ui/MyPost/MyPostModal/ui/PostSide/PostSide.module
 
 import noPhoto from '../../../../../../public/assets/noPhoto.svg'
 
-export const TestComment = ({
+export const Comment = ({
+  createdAt,
   photo,
   postDescription,
   profile,
@@ -41,7 +43,7 @@ export const TestComment = ({
             </Typography>
           </Typography>
           <Typography className={'commentTime'} color={'tertiary'} variant={'small'}>
-            2 Hours ago
+            {createdAt ? <TimeDifference postTime={createdAt} /> : '2 hours ago'}
           </Typography>
         </div>
         <div className={s.commentLike}>
@@ -53,6 +55,7 @@ export const TestComment = ({
 }
 
 type Props = {
+  createdAt?: string
   photo?: string
   postDescription?: null | string
   profile?: Profile

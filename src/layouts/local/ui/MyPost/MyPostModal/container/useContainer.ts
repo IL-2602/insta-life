@@ -51,9 +51,9 @@ export const useContainer = () => {
   const { myPostSchema } = useMyPostSchema()
 
   type myPostFormSchema = z.infer<typeof myPostSchema>
+
   const postComments = comments?.items
 
-  console.log('comments: ', comments?.items)
   const {
     control,
     formState: { errors },
@@ -83,6 +83,7 @@ export const useContainer = () => {
       createComment({ comment: commentText, postId: Number(postId) })
       setCommentText('')
     }
+    setCommentText('')
   }
   const deletePostModalHandler = (id: number) => {
     dispatch(postActions.setIsDeletePostModal(true))
