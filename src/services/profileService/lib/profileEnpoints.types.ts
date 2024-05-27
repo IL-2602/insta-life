@@ -6,3 +6,7 @@ export type UpdateProfileParams = {
   lastName?: null | string
   userName: string
 }
+
+export type ProfileSliceInitialState = {
+  isPrivacyPolicy: boolean
+}

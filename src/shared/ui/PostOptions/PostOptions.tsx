@@ -1,6 +1,5 @@
-import React, { ReactNode, useEffect } from 'react'
+import React, { ReactNode } from 'react'
 
-import { useDeletePostMutation } from '@/services/postService/postEndpoints'
 import { DeleteIcon } from '@/shared/assets/icons/Delete'
 import { EditIcon } from '@/shared/assets/icons/EditPost'
 import { useTranslation } from '@/shared/hooks/useTranslation'
@@ -19,19 +18,19 @@ type MyPostOptionsType = {
   onClick?: () => void
   title: string
 }
+
 export const PostOptions = (props: Props) => {
-  const t = useTranslation()
-  const [deletePost, { isSuccess }] = useDeletePostMutation()
+  const { t } = useTranslation()
   const myPostOptions: MyPostOptionsType[] = [
     {
       icon: <EditIcon />,
       onClick: () => (props.editPostModalHandler ? props.editPostModalHandler(true) : null),
-      title: 'edit post',
+      title: t.button.editPost,
     },
     {
       icon: <DeleteIcon />,
       onClick: () => (props.deletePostModalHandler ? props.deletePostModalHandler(123) : null),
-      title: 'delete post',
+      title: t.button.deletePost,
     },
   ]
 
@@ -40,7 +39,7 @@ export const PostOptions = (props: Props) => {
       {myPostOptions.map(option => (
         <div className={s.option} key={option.title} onClick={option.onClick}>
           <div className={s.icon}>{option.icon}</div>
-          <div>{option.title}</div>
+          <div className={s.title}>{option.title}</div>
         </div>
       ))}
     </div>

@@ -32,6 +32,7 @@ export const useContainer = () => {
   const isCreatePostModal = useAppSelector(state => state.postReducer?.isCreatePostModal)
   const postPhotos = useAppSelector(state => state.postReducer?.postPhotos)
   const modalStep = useAppSelector(state => state.postReducer?.modalSteps)
+
   const postPhoto = postPhotos.find((_, idx) => idx === currPhotoIndex)
   const dispatch = useAppDispatch()
 
@@ -79,7 +80,11 @@ export const useContainer = () => {
   }
 
   const onNext = () => dispatch(postActions.setModalSteps('filters'))
-  const onPrev = () => dispatch(postActions.setModalSteps('upload'))
+  const onPrev = () => {
+    dispatch(postActions.setClearPostPhotos())
+    dispatch(postActions.setModalSteps('upload'))
+  }
+
   const onChangeCurrPhoto = (currPhoto: number) => setCurrPhotoIndex(currPhoto)
   const saveCropImg = ({ img }: Partial<Pick<PostPhoto, 'aspect' | 'img' | 'zoom'>>) => {
     canvasRef?.current?.toBlob(blob => {

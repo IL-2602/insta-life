@@ -10,7 +10,6 @@ import { ControlledTextAreaField } from '@/shared/ui/controlledInsta/ControlledT
 import { ControlledTextField } from '@/shared/ui/controlledInsta/ControlledTextField/ControlledTextField'
 import { TextFieldsProps } from '@/widgets/profile/profileSettings/ui/generalInformation/ui/textFields/container'
 import { clsx } from 'clsx'
-import Link from 'next/link'
 
 import s from './TextFields.module.scss'
 
@@ -31,6 +30,7 @@ export const TextFields = memo(
     isDisabled,
     isGetProfileLoading,
     isLoading,
+    onPrivacyPolicy,
     t,
     updateProfileHandler,
   }: TextFieldsProps) => {
@@ -77,9 +77,9 @@ export const TextFields = memo(
               control={control}
               errorLink={
                 customErrorMap(errorDateOfBirth!) && (
-                  <Link className={s.errorLink} href={ROUTES.PRIVACY_POLICY}>
+                  <Button className={s.errorLink} onClick={onPrivacyPolicy} variant={'noStyle'}>
                     {t.auth.privacyPolicyPage.title}
-                  </Link>
+                  </Button>
                 )
               }
               errorMessage={customErrorMap(errorDateOfBirth!)}

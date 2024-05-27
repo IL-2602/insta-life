@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 
+import { useAppSelector } from '@/app/store/hooks/useAppSelector'
 import { useTranslation } from '@/shared/hooks/useTranslation'
 import getFromLocalStorage from '@/shared/utils/localStorage/getFromLocalStorage'
 import saveToLocalStorage from '@/shared/utils/localStorage/saveToLocalStorage'
@@ -14,6 +15,8 @@ export const useContainer = () => {
     saveToLocalStorage('selectedTab', value)
   }
 
+  const isPrivacyPolicy = useAppSelector(state => state.profileReducer.isPrivacyPolicy)
+
   useEffect(() => {
     const storedTab = getFromLocalStorage('selectedTab', 'tab1')
 
@@ -22,5 +25,5 @@ export const useContainer = () => {
     }
   }, [])
 
-  return { handleTabChange, selectedTab, t }
+  return { handleTabChange, isPrivacyPolicy, selectedTab, t }
 }
