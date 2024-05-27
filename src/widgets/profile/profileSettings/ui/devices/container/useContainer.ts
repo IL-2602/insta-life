@@ -71,7 +71,7 @@ export const useContainer = () => {
     try {
       setSessionLoadingState({ ...sessionLoadingState, [deviceId]: true })
 
-      return await deleteSession({ deviceId }).unwrap()
+      await deleteSession({ deviceId }).unwrap()
     } catch (err) {
       console.log(err)
     } finally {
