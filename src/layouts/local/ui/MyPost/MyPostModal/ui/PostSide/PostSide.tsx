@@ -18,6 +18,7 @@ import { Local } from '../../../../../../../../locales/en'
 import noPhoto from '../../../../../../../../public/assets/noPhoto.svg'
 
 export const PostSide = ({
+  changeIsLikedStatus,
   commentPublishHandler,
   commentText,
   commentTextHandler,
@@ -71,6 +72,7 @@ export const PostSide = ({
         <ScrollSelect maxHeight={'300px'} type={'always'}>
           {postDescription && (
             <Comment
+              changeIsLikedStatus={changeIsLikedStatus}
               createdAt={postPhotos?.createdAt}
               photo={postPhotos?.avatarOwner!}
               postDescription={postDescription}
@@ -82,10 +84,14 @@ export const PostSide = ({
               return (
                 <>
                   <Comment
+                    changeIsLikedStatus={changeIsLikedStatus}
                     createdAt={el.createdAt}
                     key={el.id}
+                    postId={el.postId}
                     uAvatar={el.from.avatars[0].url}
                     uComment={el.content}
+                    uId={el.id}
+                    uIsLiked={el.isLiked}
                     uName={el.from.username}
                   />
                 </>
@@ -125,6 +131,7 @@ export const PostSide = ({
 }
 
 type Props = {
+  changeIsLikedStatus: (commentId: number, isLiked: boolean, postId: number) => void
   commentPublishHandler: () => void
   commentText: string
   commentTextHandler: (comment: string) => void

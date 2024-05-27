@@ -11,6 +11,7 @@ import {
   useEditPostMutation,
   useGetCurrentPostQuery,
   useGetPostCommentsQuery,
+  useUpdateLikeStatusCommentMutation,
 } from '@/services/postService/postEndpoints'
 import { postActions } from '@/services/postService/store/slice/postEndpoints.slice'
 import { useGetProfileQuery } from '@/services/profileService/profileEndpoints'
@@ -38,7 +39,7 @@ export const useContainer = () => {
   const { data: postPhotos, isFetching: isPostFetching } = useGetCurrentPostQuery(Number(postId), {
     skip: !postId,
   })
-
+  const [updateLikeStatus] = useUpdateLikeStatusCommentMutation()
   const { data: comments } = useGetPostCommentsQuery(Number(postId))
   const { data: getProfile, isFetching: isGetUserLoading } = useGetProfileQuery()
   const [editPost, { isLoading: isLoadingEditPost }] = useEditPostMutation()
@@ -83,7 +84,9 @@ export const useContainer = () => {
       createComment({ comment: commentText, postId: Number(postId) })
       setCommentText('')
     }
-    setCommentText('')
+  }
+  const changeIsLikedStatus = (commentId: number, likeStatus: boolean, postId: number) => {
+    updateLikeStatus({ commentId, likeStatus, postId })
   }
   const deletePostModalHandler = (id: number) => {
     dispatch(postActions.setIsDeletePostModal(true))
@@ -150,6 +153,7 @@ export const useContainer = () => {
   const isLoading = isGetUserLoading || isPostFetching
 
   return {
+    changeIsLikedStatus,
     closeModalWithRefresh,
     commentPublish,
     commentText,

@@ -111,6 +111,20 @@ export const postEndpoints = api.injectEndpoints({
         }
       },
     }),
+    updateLikeStatusComment: builder.mutation<
+      void,
+      { commentId: number; likeStatus: boolean; postId: number }
+    >({
+      invalidatesTags: ['Post'],
+      query: ({ commentId, likeStatus, postId }) => {
+        return {
+          body: { likeStatus: likeStatus },
+          method: 'PUT',
+          params: { commentId, postId },
+          url: `posts/${postId}/comments/${commentId}/like-status`,
+        }
+      },
+    }),
   }),
 })
 
@@ -122,6 +136,7 @@ export const {
   useGetPostCommentsQuery,
   usePublishPostImageMutation,
   usePublishPostMutation,
+  useUpdateLikeStatusCommentMutation,
 } = postEndpoints
 
 export const { getCurrentPost } = postEndpoints.endpoints

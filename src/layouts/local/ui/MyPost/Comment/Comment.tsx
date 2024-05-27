@@ -10,12 +10,16 @@ import s from '@/layouts/local/ui/MyPost/MyPostModal/ui/PostSide/PostSide.module
 import noPhoto from '../../../../../../public/assets/noPhoto.svg'
 
 export const Comment = ({
+  changeIsLikedStatus,
   createdAt,
   photo,
   postDescription,
+  postId,
   profile,
   uAvatar,
   uComment,
+  uId,
+  uIsLiked,
   uName,
 }: Props) => {
   const comment = uComment
@@ -47,7 +51,12 @@ export const Comment = ({
           </Typography>
         </div>
         <div className={s.commentLike}>
-          <Heart />
+          <Heart
+            changeIsLikedStatus={changeIsLikedStatus}
+            commentId={Number(uId)}
+            isLiked={uIsLiked}
+            postId={postId}
+          />
         </div>
       </div>
     </div>
@@ -55,11 +64,15 @@ export const Comment = ({
 }
 
 type Props = {
+  changeIsLikedStatus: (commentId: number, isLiked: boolean, postId: number) => void
   createdAt?: string
   photo?: string
   postDescription?: null | string
+  postId?: number
   profile?: Profile
   uAvatar?: string
   uComment?: string
-  uName?: string
+  uId?: string
+  uIsLiked?: boolean
+  uName?: number
 }
