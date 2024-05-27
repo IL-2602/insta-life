@@ -85,7 +85,7 @@ export const useContainer = () => {
       setCommentText('')
     }
   }
-  const changeIsLikedStatus = (commentId: number, likeStatus: boolean, postId: number) => {
+  const changeIsLikedStatus = (commentId: number, likeStatus: string, postId: number) => {
     updateLikeStatus({ commentId, likeStatus, postId })
   }
   const deletePostModalHandler = (id: number) => {

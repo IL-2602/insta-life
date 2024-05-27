@@ -64,7 +64,7 @@ export const Comment = ({
 }
 
 type Props = {
-  changeIsLikedStatus: (commentId: number, isLiked: boolean, postId: number) => void
+  changeIsLikedStatus: (commentId: number, isLiked: string, postId: number) => void
   createdAt?: string
   photo?: string
   postDescription?: null | string

@@ -113,7 +113,7 @@ export const postEndpoints = api.injectEndpoints({
     }),
     updateLikeStatusComment: builder.mutation<
       void,
-      { commentId: number; likeStatus: boolean; postId: number }
+      { commentId: number; likeStatus: string; postId: number }
     >({
       invalidatesTags: ['Post'],
       query: ({ commentId, likeStatus, postId }) => {

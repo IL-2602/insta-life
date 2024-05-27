@@ -131,7 +131,7 @@ export const PostSide = ({
 }
 
 type Props = {
-  changeIsLikedStatus: (commentId: number, isLiked: boolean, postId: number) => void
+  changeIsLikedStatus: (commentId: number, isLiked: string, postId: number) => void
   commentPublishHandler: () => void
   commentText: string
   commentTextHandler: (comment: string) => void
