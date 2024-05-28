@@ -39,25 +39,7 @@ export const PostCropping = memo(
     t,
   }: Props) => {
     return (
-      <Modal
-        className={s.container}
-        customButtonsBlock={<></>}
-        modalHandler={showSaveDraft}
-        nextStepBtn={
-          <Button onClick={onNext} variant={'link'}>
-            <Typography color={'primary'} variant={'h3'}>
-              {t.button.next}
-            </Typography>
-          </Button>
-        }
-        open={isCreatePostModal && modalStep === 'cropping'}
-        previousStepBtn={
-          <Button className={s.prevBtn} onClick={onPrev} variant={'link'}>
-            <ArrowIosBack />
-          </Button>
-        }
-        title={t.post.cropping}
-      >
+      <div className={s.container}>
         <div className={s.croppingWrapper}>
           <div className={s.errorWrapper}>
             {postPhotoError && (
@@ -112,7 +94,7 @@ export const PostCropping = memo(
             }}
           />
         </div>
-      </Modal>
+      </div>
     )
   }
 )

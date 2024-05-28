@@ -18,6 +18,7 @@ import { clsx } from 'clsx'
 import Link from 'next/link'
 
 import s from './SideBar.module.scss'
+import { CreatePost } from '@/layouts/local/ui/CreatePost/CreatePost'
 
 export const SideBar = ({
   handleActiveLink,
@@ -106,10 +107,8 @@ export const SideBar = ({
           {t.auth.modal.modalLogOutText.getEmail(me?.email)}
         </Typography>
       </Modal>
-      <CreatePostModal.widget />
+      <CreatePost />
       <PostPublication.widget />
-      <PostCropping.widget />
-      <PostFilter.widget />
     </aside>
   )
 }

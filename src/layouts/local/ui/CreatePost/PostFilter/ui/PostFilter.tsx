@@ -31,23 +31,7 @@ export const PostFilter = forwardRef(
     if (modalIsOpen && currentImage) {
       return (
         <>
-          <Modal
-            className={s.container}
-            customButtonsBlock={<></>}
-            nextStepBtn={
-              <Button onClick={onNext} variant={'link'}>
-                <Typography color={'primary'} variant={'h3'}>
-                  {t.button.next}
-                </Typography>
-              </Button>
-            }
-            open={modalIsOpen}
-            previousStepBtn={
-              <Button className={s.prevBtn} onClick={onPrev} variant={'link'}>
-                <ArrowIosBack />
-              </Button>
-            }
-          >
+          <div className={s.container}>
             <div
               style={{
                 display: 'flex',
@@ -95,7 +79,7 @@ export const PostFilter = forwardRef(
                 ))}
               </div>
             </div>
-          </Modal>
+          </div>
         </>
       )
     }
