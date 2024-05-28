@@ -33,7 +33,7 @@ export const Header = memo(({ isAuth }: Props) => {
       <Container className={s.container}>
         <Link href={ROUTES.DEFAULT}>
           <Typography color={'light'} variant={'h1'}>
-            InstaLife
+            Insta Life
           </Typography>
         </Link>
         <div className={s.wrapper}>
