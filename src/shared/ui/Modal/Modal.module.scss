@@ -162,6 +162,7 @@
 .modalHeader {
   @include mobile {
     background: var(--color-dark-900);
+    border: none;
   }
 
   display: flex;
