@@ -1,14 +1,15 @@
 import React from 'react'
-import { Modal } from '@/shared/ui/Modal/v2'
+
+import { useAppDispatch } from '@/app/store/hooks/useAppDispatch'
 import { useAppSelector } from '@/app/store/hooks/useAppSelector'
 import { CreatePostModal } from '@/layouts/local/ui/CreatePost/CreatePostModal'
-import { useTranslation } from '@/shared/hooks/useTranslation'
-import { useAppDispatch } from '@/app/store/hooks/useAppDispatch'
-import { postActions } from '@/services/postService/store/slice/postEndpoints.slice'
 import { PostCropping } from '@/layouts/local/ui/CreatePost/PostCropping'
-import { CreatePostModalHeader } from '@/layouts/local/ui/CreatePost/createPostModalHeader'
 import { PostFilter } from '@/layouts/local/ui/CreatePost/PostFilter'
+import { CreatePostModalHeader } from '@/layouts/local/ui/CreatePost/createPostModalHeader'
+import { postActions } from '@/services/postService/store/slice/postEndpoints.slice'
 import { ClosePostModal } from '@/shared/components/ClosePostModal/ClosePostModal'
+import { useTranslation } from '@/shared/hooks/useTranslation'
+import { Modal } from '@/shared/ui/Modal/v2'
 
 export const CreatePost = () => {
   const { t } = useTranslation()
@@ -35,34 +36,34 @@ export const CreatePost = () => {
   }
 
   const customHeader = {
-    upload: null,
     cropping: (
       <CreatePostModalHeader
-        title={t.post.cropping}
         btnTitle={'Next'}
-        prevStep={'upload'}
         nextStep={'filters'}
+        prevStep={'upload'}
+        title={t.post.cropping}
       />
     ),
     filters: (
       <CreatePostModalHeader
-        title={t.post.filters}
         btnTitle={'Next'}
-        prevStep={'cropping'}
         nextStep={'publication'}
+        prevStep={'cropping'}
+        title={t.post.filters}
       />
     ),
     publication: <div>Header Publication</div>,
+    upload: null,
   }
 
   return (
     <>
       <ClosePostModal />
       <Modal
-        open={isCreatePostModal}
-        onOpen={modalSteps === 'upload' ? closePostModalHandler : showModalSaveDraftHandler}
-        title={title[modalSteps]}
         customHeader={customHeader[modalSteps]}
+        onOpen={modalSteps === 'upload' ? closePostModalHandler : showModalSaveDraftHandler}
+        open={isCreatePostModal}
+        title={title[modalSteps]}
       >
         {content[modalSteps]}
       </Modal>

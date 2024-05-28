@@ -1,3 +1,4 @@
+import { CreatePost } from '@/layouts/local/ui/CreatePost/CreatePost'
 import { CreatePostModal } from '@/layouts/local/ui/CreatePost/CreatePostModal'
 import { PostCropping } from '@/layouts/local/ui/CreatePost/PostCropping'
 import { PostFilter } from '@/layouts/local/ui/CreatePost/PostFilter'
@@ -18,7 +19,6 @@ import { clsx } from 'clsx'
 import Link from 'next/link'
 
 import s from './SideBar.module.scss'
-import { CreatePost } from '@/layouts/local/ui/CreatePost/CreatePost'
 
 export const SideBar = ({
   handleActiveLink,

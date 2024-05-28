@@ -1,37 +1,40 @@
-import * as Dialog from '@radix-ui/react-dialog'
 import { ReactNode } from 'react'
-import s from './Modal.module.scss'
-import { Typography } from '@/shared/ui/Typography'
+
 import { Button } from '@/shared/ui/Button'
-import { CloseIcon } from 'next/dist/client/components/react-dev-overlay/internal/icons/CloseIcon'
+import { Typography } from '@/shared/ui/Typography'
+import * as Dialog from '@radix-ui/react-dialog'
 import { clsx } from 'clsx'
+import { CloseIcon } from 'next/dist/client/components/react-dev-overlay/internal/icons/CloseIcon'
+
+import s from './Modal.module.scss'
 
 type Props = {
-  trigger?: ReactNode
-  title?: string
-  open: boolean
-  onOpen: () => void
-  customHeader?: ReactNode
+  bodyClassName?: string
   children: ReactNode
   contentClassName?: string
-  bodyClassName?: string
+  customHeader?: ReactNode
+  onOpen: () => void
+  open: boolean
+  title?: string
+  trigger?: ReactNode
 }
 export const Modal = ({
-  trigger,
-  title,
-  onOpen,
-  open,
-  customHeader,
+  bodyClassName,
   children,
   contentClassName,
-  bodyClassName,
+  customHeader,
+  onOpen,
+  open,
+  title,
+  trigger,
 }: Props) => {
   const classNames = {
-    content: clsx(s.content, contentClassName),
     body: clsx(bodyClassName),
+    content: clsx(s.content, contentClassName),
   }
+
   return (
-    <Dialog.Root open={open} onOpenChange={onOpen}>
+    <Dialog.Root onOpenChange={onOpen} open={open}>
       {trigger && <Dialog.Trigger asChild>{trigger}</Dialog.Trigger>}
       <Dialog.Portal>
         <Dialog.Overlay className={s.overlay} />
@@ -43,7 +46,7 @@ export const Modal = ({
               <Dialog.Title className={s.title}>
                 <Typography variant={'h1'}>{title}</Typography>
               </Dialog.Title>
-              <Button variant={'noStyle'} className={s.closebtn} onClick={onOpen}>
+              <Button className={s.closebtn} onClick={onOpen} variant={'noStyle'}>
                 <CloseIcon />
               </Button>
             </div>
