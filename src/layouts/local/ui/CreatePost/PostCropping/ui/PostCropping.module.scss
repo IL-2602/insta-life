@@ -2,9 +2,7 @@
 
 .container {
   @include mobile {
-    overflow: hidden;
     width: 100%;
-    height: calc(100% - 120px);
   }
 
   width: 490px;
@@ -38,6 +36,7 @@
   .imgWrapper {
     @include mobile {
       width: 100%;
+      height: calc(100dvh - 120px - 61px);
     }
 
     width: 490px;

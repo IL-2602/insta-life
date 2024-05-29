@@ -3,14 +3,11 @@ import { PostCropping } from '@/layouts/local/ui/CreatePost/PostCropping'
 import { PostFilter } from '@/layouts/local/ui/CreatePost/PostFilter'
 import { PostPublication } from '@/layouts/local/ui/CreatePost/PostPublication'
 import { SideBarProps } from '@/layouts/local/ui/SideBar/container'
-import { BookMark } from '@/shared/assets/icons/asideIcons/bookmarkIcon/BookmarkIcon'
 import { CreateIcon } from '@/shared/assets/icons/asideIcons/createIcon/CreateIcon'
 import { HomeIcon } from '@/shared/assets/icons/asideIcons/homeIcon'
-import { LogOutIcon } from '@/shared/assets/icons/asideIcons/logOutIcon'
 import { MessengerIcon } from '@/shared/assets/icons/asideIcons/messengerIcon'
 import { ProfileIcon } from '@/shared/assets/icons/asideIcons/profileIcon'
 import { SearchIcon } from '@/shared/assets/icons/asideIcons/searchIcon'
-import { StatisticsIcon } from '@/shared/assets/icons/asideIcons/statisticsIcon'
 import { ROUTES } from '@/shared/constants/routes'
 import { Modal } from '@/shared/ui/Modal'
 import { Typography } from '@/shared/ui/Typography'
@@ -18,6 +15,7 @@ import { clsx } from 'clsx'
 import Link from 'next/link'
 
 import s from './MobileSideBar.module.scss'
+import { CreatePost } from '@/layouts/local/ui/CreatePost/CreatePost'
 
 export const MobileSideBar = ({
   handleActiveLink,
@@ -67,10 +65,7 @@ export const MobileSideBar = ({
           {t.auth.modal.modalLogOutText.getEmail(me?.email)}
         </Typography>
       </Modal>
-      <CreatePostModal.widget />
-      <PostPublication.widget />
-      <PostCropping.widget />
-      <PostFilter.widget />
+      <CreatePost />
     </aside>
   )
 }

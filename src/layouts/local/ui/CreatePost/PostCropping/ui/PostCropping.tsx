@@ -23,19 +23,12 @@ export const PostCropping = memo(
     delPostPhoto,
     extraActionsPostPhoto,
     imgRef,
-    isCreatePostModal,
-
-    modalStep,
     onChangeCurrPhoto,
-
-    onNext,
-    onPrev,
     postPhoto,
     postPhotoError,
     postPhotos,
     setCurrentPhotoAspect,
     setCurrentPhotoZoom,
-    showSaveDraft,
     t,
   }: Props) => {
     return (

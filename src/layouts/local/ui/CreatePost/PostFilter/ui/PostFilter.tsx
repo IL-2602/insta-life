@@ -12,6 +12,7 @@ import { Typography } from '@/shared/ui/Typography'
 import Image from 'next/image'
 
 import s from './PostFilter.module.scss'
+import { ScrollSelect } from '@/shared/ui/ScrollSelect/ScrollSelect'
 
 export const PostFilter = forwardRef(
   (
@@ -32,22 +33,10 @@ export const PostFilter = forwardRef(
       return (
         <>
           <div className={s.container}>
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                gap: '50px',
-                justifyContent: 'space-between',
-                width: '100%',
-              }}
-            >
+            <div className={s.wrapper}>
               <PostPhotos currentPhoto={currPhotoIndex} onChangeCurrentPhoto={onChangeCurrentImage}>
                 {postPhotos.map((_, i) => (
-                  <div
-                    className={s.imgWrapper}
-                    key={i}
-                    style={{ alignItems: 'center', display: 'flex', flexShrink: '1' }}
-                  >
+                  <div className={s.imgWrapper} key={i}>
                     <Image
                       alt={'current image'}
                       className={s.croppingImage}
@@ -67,17 +56,19 @@ export const PostFilter = forwardRef(
                 }}
               />
 
-              <div className={s.filterPrevBtnContainer}>
-                {photoFilters.map(filter => (
-                  <FilterPreviewButton
-                    applyFilter={applyFilter}
-                    filter={filter}
-                    imageUrl={currentImage.cropImg}
-                    key={filter}
-                    label={capitalizeFirstLetter(filter)}
-                  />
-                ))}
-              </div>
+              <ScrollSelect type={'always'}>
+                <div className={s.filterPrevBtnContainer}>
+                  {photoFilters.map(filter => (
+                    <FilterPreviewButton
+                      applyFilter={applyFilter}
+                      filter={filter}
+                      imageUrl={currentImage.cropImg}
+                      key={filter}
+                      label={capitalizeFirstLetter(filter)}
+                    />
+                  ))}
+                </div>
+              </ScrollSelect>
             </div>
           </div>
         </>
