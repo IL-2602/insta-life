@@ -22,6 +22,8 @@
 
   @include mobile-small {
     background: var(--color-dark-900);
+    border-right: none;
+    border-left: none;
   }
 
   position: fixed;

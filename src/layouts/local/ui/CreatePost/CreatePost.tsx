@@ -10,6 +10,7 @@ import { postActions } from '@/services/postService/store/slice/postEndpoints.sl
 import { ClosePostModal } from '@/shared/components/ClosePostModal/ClosePostModal'
 import { useTranslation } from '@/shared/hooks/useTranslation'
 import { Modal } from '@/shared/ui/Modal/v2'
+import { PostPublication } from '@/layouts/local/ui/CreatePost/PostPublication'
 
 export const CreatePost = () => {
   const { t } = useTranslation()
@@ -25,7 +26,7 @@ export const CreatePost = () => {
   const content = {
     cropping: <PostCropping.widget />,
     filters: <PostFilter.widget />,
-    publication: <div>publication</div>,
+    publication: <PostPublication.widget />,
     upload: <CreatePostModal.widget />,
   }
   const title = {
@@ -38,7 +39,7 @@ export const CreatePost = () => {
   const customHeader = {
     cropping: (
       <CreatePostModalHeader
-        btnTitle={'Next'}
+        btnTitle={t.button.next}
         nextStep={'filters'}
         prevStep={'upload'}
         title={t.post.cropping}
@@ -46,13 +47,21 @@ export const CreatePost = () => {
     ),
     filters: (
       <CreatePostModalHeader
-        btnTitle={'Next'}
+        btnTitle={t.button.next}
         nextStep={'publication'}
         prevStep={'cropping'}
         title={t.post.filters}
       />
     ),
-    publication: <div>Header Publication</div>,
+    publication: (
+      <CreatePostModalHeader
+        btnTitle={t.post.publication}
+        nextStep={'filters'}
+        onNext={() => alert('publication')}
+        prevStep={'filters'}
+        title={t.modal.publicationTitle}
+      />
+    ),
     upload: null,
   }
 

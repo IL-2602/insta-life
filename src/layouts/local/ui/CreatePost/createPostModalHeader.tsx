@@ -8,18 +8,18 @@ import { Button } from '@/shared/ui/Button'
 import { Typography } from '@/shared/ui/Typography'
 
 import s from './createPostModalHeader.module.scss'
-export const CreatePostModalHeader = ({ btnTitle, nextStep, prevStep, title }: Props) => {
+export const CreatePostModalHeader = ({ btnTitle, nextStep, prevStep, title, onNext }: Props) => {
   const dispatch = useAppDispatch()
-  const onPrev = () => dispatch(postActions.setModalSteps(prevStep))
-  const onNext = () => dispatch(postActions.setModalSteps(nextStep))
+  const onPrevHandler = () => dispatch(postActions.setModalSteps(prevStep))
+  const onNextHandler = () => (onNext ? onNext() : dispatch(postActions.setModalSteps(nextStep)))
 
   return (
     <div className={s.container}>
-      <Button onClick={onPrev} variant={'noStyle'}>
+      <Button onClick={onPrevHandler} variant={'noStyle'}>
         <ArrowIosBack />
       </Button>
       <Typography variant={'h1'}>{title}</Typography>
-      <Button className={s.nextbtn} onClick={onNext} variant={'noStyle'}>
+      <Button className={s.nextbtn} onClick={onNextHandler} variant={'noStyle'}>
         <Typography variant={'h3'}>{btnTitle}</Typography>
       </Button>
     </div>
@@ -31,4 +31,5 @@ type Props = {
   nextStep: ModalSteps
   prevStep: ModalSteps
   title: string
+  onNext?: () => void
 }

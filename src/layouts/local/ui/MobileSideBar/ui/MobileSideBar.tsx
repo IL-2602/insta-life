@@ -65,7 +65,6 @@ export const MobileSideBar = ({
           {t.auth.modal.modalLogOutText.getEmail(me?.email)}
         </Typography>
       </Modal>
-      <CreatePost />
     </aside>
   )
 }
