@@ -10,16 +10,7 @@ import { ControlledFileUploader } from '@/shared/ui/controlledInsta/ControlledFi
 import s from './CreatePostModal.module.scss'
 
 export const CreatePostModal = memo(
-  ({
-    control,
-    extraActionsPostPhoto,
-    handleCloseModal,
-    handleSubmit,
-    isCreatePostModal,
-    modalSteps,
-    postPhotoError,
-    t,
-  }: CreatePostModalProps) => {
+  ({ control, extraActionsPostPhoto, handleSubmit, postPhotoError, t }: CreatePostModalProps) => {
     return (
       <div className={s.content}>
         <div className={postPhotoError ? s.photoError : ''}>

@@ -67,7 +67,7 @@ export const Modal = ({
     <Dialog.Root onOpenChange={modalHandler} open={open}>
       {modalTrigger && <Dialog.Trigger asChild>{modalTrigger}</Dialog.Trigger>}
       <Dialog.Portal>
-        <Dialog.Overlay className={s.DialogOverlay} />
+        {/*<Dialog.Overlay className={s.DialogOverlay} />*/}
         <Dialog.Content
           className={modalClassName.root}
           onOpenAutoFocus={e => e.preventDefault()}

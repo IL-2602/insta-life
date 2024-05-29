@@ -108,7 +108,6 @@ export const SideBar = ({
         </Typography>
       </Modal>
       <CreatePost />
-      <PostPublication.widget />
     </aside>
   )
 }
