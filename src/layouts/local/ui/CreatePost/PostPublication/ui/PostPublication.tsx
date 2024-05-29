@@ -43,12 +43,12 @@ export const PostPublication = memo(
                 {postPhotos &&
                   postPhotos.map((photo, i) => {
                     return (
-                      <div key={i} className={s.postPhoto}>
+                      <div className={s.postPhoto} key={i}>
                         <Image
                           alt={'photo'}
-                          style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-                          src={photo.filterImg}
                           fill
+                          src={photo.filterImg}
+                          style={{ height: '100%', objectFit: 'contain', width: '100%' }}
                         />
                       </div>
                     )

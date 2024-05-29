@@ -5,12 +5,12 @@ import { useAppSelector } from '@/app/store/hooks/useAppSelector'
 import { CreatePostModal } from '@/layouts/local/ui/CreatePost/CreatePostModal'
 import { PostCropping } from '@/layouts/local/ui/CreatePost/PostCropping'
 import { PostFilter } from '@/layouts/local/ui/CreatePost/PostFilter'
+import { PostPublication } from '@/layouts/local/ui/CreatePost/PostPublication'
 import { CreatePostModalHeader } from '@/layouts/local/ui/CreatePost/createPostModalHeader'
 import { postActions } from '@/services/postService/store/slice/postEndpoints.slice'
 import { ClosePostModal } from '@/shared/components/ClosePostModal/ClosePostModal'
 import { useTranslation } from '@/shared/hooks/useTranslation'
 import { Modal } from '@/shared/ui/Modal/v2'
-import { PostPublication } from '@/layouts/local/ui/CreatePost/PostPublication'
 
 export const CreatePost = () => {
   const { t } = useTranslation()

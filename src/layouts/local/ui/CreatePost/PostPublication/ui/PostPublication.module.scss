@@ -1,11 +1,11 @@
-@import "@/styles/variables/mixins";
+@import '@/styles/variables/mixins';
 
 .modal {
-  @include tablet{
+  @include tablet {
     width: 800px;
   }
 
-  @include mobile{
+  @include mobile {
     width: 100%;
   }
 
@@ -31,7 +31,7 @@
 }
 
 .container {
-  @include mobile{
+  @include mobile {
     flex-direction: column;
     height: calc(100dvh - 120px - 61px);
   }
@@ -46,7 +46,6 @@
 }
 
 .postPhotoWrapper {
-
 }
 
 .postPhoto {
@@ -73,21 +72,17 @@
   }
 
   span {
-    @include mobile{
-      color: var(--color-light-100)
+    @include mobile {
+      color: var(--color-light-100);
     }
 
     align-self: end;
     font: var(--font-small);
   }
-
-
 }
 
-
-
 .userPhotoWrapper {
-  @include mobile{
+  @include mobile {
     margin-bottom: 0;
   }
 

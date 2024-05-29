@@ -8,7 +8,7 @@ import { Button } from '@/shared/ui/Button'
 import { Typography } from '@/shared/ui/Typography'
 
 import s from './createPostModalHeader.module.scss'
-export const CreatePostModalHeader = ({ btnTitle, nextStep, prevStep, title, onNext }: Props) => {
+export const CreatePostModalHeader = ({ btnTitle, nextStep, onNext, prevStep, title }: Props) => {
   const dispatch = useAppDispatch()
   const onPrevHandler = () => dispatch(postActions.setModalSteps(prevStep))
   const onNextHandler = () => (onNext ? onNext() : dispatch(postActions.setModalSteps(nextStep)))
@@ -29,7 +29,7 @@ export const CreatePostModalHeader = ({ btnTitle, nextStep, prevStep, title, onN
 type Props = {
   btnTitle: string
   nextStep: ModalSteps
+  onNext?: () => void
   prevStep: ModalSteps
   title: string
-  onNext?: () => void
 }
