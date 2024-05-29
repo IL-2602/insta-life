@@ -32,6 +32,7 @@ export const Modal = ({
     body: clsx(bodyClassName),
     content: clsx(s.content, contentClassName),
   }
+
   return (
     <Dialog.Root onOpenChange={onOpen} open={open}>
       {trigger && <Dialog.Trigger asChild>{trigger}</Dialog.Trigger>}
