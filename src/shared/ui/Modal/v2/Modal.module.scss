@@ -1,7 +1,7 @@
 @import '@/styles/variables/mixins';
 
 .overlay {
-  @include mobile{
+  @include mobile {
     display: none;
   }
 
@@ -15,18 +15,14 @@
 }
 
 .content {
-  @include mobile{
+  @include mobile {
     width: 100%;
     height: calc(100dvh - 120px);
   }
 
-  @include mobile-small{
+  @include mobile-small {
     background: var(--color-dark-900);
   }
-
-
-
-
 
   position: fixed;
   z-index: var(--zindex-modal);
@@ -36,7 +32,7 @@
 
   display: flex;
   flex-direction: column;
-  
+
   min-width: 378px;
   min-height: 228px;
 

@@ -1,19 +1,18 @@
-@import "@/styles/variables/mixins";
+@import '@/styles/variables/mixins';
 
 .container {
-  
-  @include tablet{
+  @include tablet {
     width: 700px;
   }
 
-  @include mobile{
+  @include mobile {
     width: 100%;
   }
 
   width: 900px;
 
   .wrapper {
-    @include mobile{
+    @include mobile {
       flex-direction: column;
       gap: 0;
     }
@@ -33,7 +32,7 @@
 }
 
 .imgWrapper {
-  @include mobile{
+  @include mobile {
     width: 100%;
     height: calc(100vh - 120px - 61px - 130px);
   }
@@ -51,14 +50,14 @@
 }
 
 .filterPrevBtnContainer {
-  @include mobile{
+  @include mobile {
     display: flex;
     flex-wrap: nowrap;
     height: 124px;
     margin-bottom: 10px;
   }
 
-  @include tablet{
+  @include tablet {
     height: 500px;
   }
 

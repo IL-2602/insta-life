@@ -8,11 +8,11 @@ import { ArrowIosBack } from '@/shared/assets/icons/ArrowIosBack/ArrowIosBack'
 import { PostPhotos } from '@/shared/components/PostPhotos/PostPhotos'
 import { Button } from '@/shared/ui/Button'
 import { Modal } from '@/shared/ui/Modal'
+import { ScrollSelect } from '@/shared/ui/ScrollSelect/ScrollSelect'
 import { Typography } from '@/shared/ui/Typography'
 import Image from 'next/image'
 
 import s from './PostFilter.module.scss'
-import { ScrollSelect } from '@/shared/ui/ScrollSelect/ScrollSelect'
 
 export const PostFilter = forwardRef(
   (
