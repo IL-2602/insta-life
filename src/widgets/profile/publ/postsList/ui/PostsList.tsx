@@ -3,12 +3,13 @@ import { forwardRef } from 'react'
 import { MyPostModal } from '@/layouts/local/ui/MyPost/MyPostModal'
 import { PublishPostResponse } from '@/services/postService/lib/postEndpoints.types'
 import { SpinnerThreePoints } from '@/shared/ui/SpinnerThreePoints'
-import { ProfilePhotosProps } from '@/widgets/profile/profilePhotos/container'
 import Image from 'next/image'
 
-import s from './ProfilePhotos.module.scss'
+import s from 'src/widgets/profile/publ/postsList/ui/PostsList.module.scss'
 
-export const ProfilePhotos = forwardRef<HTMLDivElement, ProfilePhotosProps>(
+import { PostsListProps } from '../container'
+
+export const PostsList = forwardRef<HTMLDivElement, PostsListProps>(
   ({ handleReceivingPostId, isFetching, posts }, ref) => {
     return (
       <>
