@@ -7,13 +7,13 @@ import { UserType } from '@/services/authService/lib/authEndpoints.types'
 import { getCurrentPost } from '@/services/postService/postEndpoints'
 import { getPublicUserProfile, getUserPosts } from '@/services/publicService/publicEndpoints'
 import { ProfileHeader } from '@/widgets/profile/profileHeader'
-import { ProfilePhotos } from '@/widgets/profile/profilePhotos'
+import { PostsList } from '@/widgets/profile/publ/postsList'
 
 const PublicProfilePage = ({ isAuth }: Props) => {
   const content = (
     <div style={{ width: '100%' }}>
       <ProfileHeader.widget />
-      <ProfilePhotos.widget />
+      <PostsList.widget />
     </div>
   )
 

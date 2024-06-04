@@ -1,5 +1,5 @@
 import { Container } from './container'
 
-export const ProfilePhotos = {
+export const PostsList = {
   widget: Container,
 }
