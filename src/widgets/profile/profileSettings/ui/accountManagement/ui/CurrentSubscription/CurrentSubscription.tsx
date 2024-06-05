@@ -1,7 +1,4 @@
-import {
-  GetCurrentPaymentSubscriptionResponse,
-  Payment,
-} from '@/services/subscriptionsService/lib/subscriptionsEndpoints.types'
+import { GetCurrentPaymentSubscriptionResponse } from '@/services/subscriptionsService/lib/subscriptionsEndpoints.types'
 import { useTranslation } from '@/shared/hooks/useTranslation'
 import { Checkbox } from '@/shared/ui/Checkbox'
 import { Typography } from '@/shared/ui/Typography'
@@ -56,4 +53,4 @@ export const CurrentSubscription = (subscriptionsData: Props) => {
   )
 }
 
-type Props = Partial<GetCurrentPaymentSubscriptionResponse> & { onCancelAutoRenewal: () => void }
+type Props = { onCancelAutoRenewal: () => void } & Partial<GetCurrentPaymentSubscriptionResponse>

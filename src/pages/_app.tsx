@@ -16,13 +16,13 @@ import 'react-toastify/dist/ReactToastify.css'
 
 import s from '@/widgets/profile/profileSettings/ui/generalInformation/ui/textFields/ui/TextFields.module.scss'
 
-export type NextPageWithLayout<P = {}> = NextPage<P> & {
+export type NextPageWithLayout<P = {}> = {
   getLayout?: (page: ReactElement) => ReactNode
-}
+} & NextPage<P>
 
-type AppPropsWithLayout = AppProps & {
+type AppPropsWithLayout = {
   Component: NextPageWithLayout
-}
+} & AppProps
 
 function App({ Component, pageProps }: AppPropsWithLayout) {
   const { props, store } = wrapper.useWrappedStore(pageProps)

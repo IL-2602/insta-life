@@ -9,10 +9,7 @@ import { PublicPosts } from '@/widgets/root/publicPosts'
 import { GetStaticPropsResult } from 'next'
 import Head from 'next/head'
 
-type Props = {
-  isPostsError?: boolean
-  isUsersError?: boolean
-}
+type Props = {}
 
 export const getStaticProps = wrapper.getStaticProps(
   store => async (): Promise<GetStaticPropsResult<Props>> => {
@@ -21,26 +18,9 @@ export const getStaticProps = wrapper.getStaticProps(
 
     await Promise.all(store.dispatch(getRunningQueriesThunk()))
 
-    if (!posts) {
-      return {
-        props: {
-          isPostsError: true,
-        },
-        revalidate: 60,
-      }
-    }
-
-    if (!users) {
-      return {
-        props: {
-          isUsersError: true,
-        },
-        revalidate: 60,
-      }
-    }
-
     return {
-      props: {},
+      props: { posts, users },
+      revalidate: 60,
     }
   }
 )
