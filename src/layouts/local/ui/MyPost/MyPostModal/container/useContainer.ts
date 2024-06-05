@@ -36,6 +36,7 @@ export const useContainer = () => {
     }
   }, [dispatch, postId])
 
+  console.log('postId : ', postId)
   const { data: postPhotos, isFetching: isPostFetching } = useGetCurrentPostQuery(Number(postId), {
     skip: !postId,
   })
