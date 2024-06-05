@@ -70,6 +70,7 @@ export const MyPostModal = memo(
         </div>
       )
     }
+
     const headerStyle = clsx(s.modal, isEdit && s.editModal)
 
     return (
