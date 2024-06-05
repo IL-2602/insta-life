@@ -18,6 +18,9 @@ import { Local } from '../../../../../../../../locales/en'
 import noPhoto from '../../../../../../../../public/assets/noPhoto.svg'
 
 export const PostSide = ({
+  answerCommentSend,
+  answerCommentText,
+  answerCommentTextHandler,
   changeIsLikedStatus,
   commentPublishHandler,
   commentText,
@@ -84,6 +87,9 @@ export const PostSide = ({
               return (
                 <>
                   <Comment
+                    answerCommentSend={answerCommentSend}
+                    answerCommentText={answerCommentText}
+                    answerCommentTextHandler={answerCommentTextHandler}
                     changeIsLikedStatus={changeIsLikedStatus}
                     createdAt={el.createdAt}
                     key={el.id}
@@ -92,6 +98,7 @@ export const PostSide = ({
                     uComment={el.content}
                     uId={el.id}
                     uIsLiked={el.isLiked}
+                    uLikesCount={el.likeCount}
                     uName={el.from.username}
                   />
                 </>
@@ -115,6 +122,7 @@ export const PostSide = ({
             onChange={(e: any) => commentTextHandler(e.currentTarget.value)}
             placeholder={'Add comment...'}
             type={'text'}
+            value={commentText}
           />
           <Button
             className={s.button}
@@ -131,6 +139,9 @@ export const PostSide = ({
 }
 
 type Props = {
+  answerCommentSend: () => void
+  answerCommentText: string
+  answerCommentTextHandler: (answerText: string) => void
   changeIsLikedStatus: (commentId: number, isLiked: string, postId: number) => void
   commentPublishHandler: () => void
   commentText: string

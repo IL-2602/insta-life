@@ -36,7 +36,6 @@ export const useContainer = () => {
     }
   }, [dispatch, postId])
 
-  console.log('postId : ', postId)
   const { data: postPhotos, isFetching: isPostFetching } = useGetCurrentPostQuery(Number(postId), {
     skip: !postId,
   })
@@ -49,6 +48,7 @@ export const useContainer = () => {
   const [currPhotoIndex, setCurrPhotoIndex] = useState(0)
   const [isEdit, setIsEdit] = useState(false)
   const [commentText, setCommentText] = useState('')
+  const [answerCommentText, setAnswerCommentText] = useState('')
 
   const { myPostSchema } = useMyPostSchema()
 
@@ -80,11 +80,18 @@ export const useContainer = () => {
   const commentTextHandler = (comment: string) => {
     setCommentText(comment)
   }
+  const answerCommentTextHandler = (answerText: string) => {
+    setAnswerCommentText(answerText)
+  }
   const commentPublish = () => {
     if (commentText !== '' && postId !== 'undefined') {
       createComment({ comment: commentText, postId: Number(postId) })
       setCommentText('')
     }
+  }
+  const answerCommentSend = () => {
+    console.log('AnswerCommentText: ', answerCommentText)
+    setAnswerCommentText('')
   }
   const changeIsLikedStatus = (commentId: number, likeStatus: string, postId: number) => {
     updateLikeStatus({ commentId, likeStatus, postId })
@@ -154,6 +161,9 @@ export const useContainer = () => {
   const isLoading = isGetUserLoading || isPostFetching
 
   return {
+    answerCommentSend,
+    answerCommentText,
+    answerCommentTextHandler,
     changeIsLikedStatus,
     closeModalWithRefresh,
     commentPublish,
@@ -180,6 +190,7 @@ export const useContainer = () => {
     postComments,
     postId,
     postPhotos,
+    setAnswerCommentText,
     setIsEditPostHandler,
     t,
     updatePost,

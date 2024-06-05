@@ -22,6 +22,9 @@ type PhotoType = {
 }
 export const MyPostModal = memo(
   ({
+    answerCommentSend,
+    answerCommentText,
+    answerCommentTextHandler,
     changeIsLikedStatus,
     closeModalWithRefresh,
     commentPublish,
@@ -116,6 +119,9 @@ export const MyPostModal = memo(
                 />
               ) : (
                 <PostSide
+                  answerCommentSend={answerCommentSend}
+                  answerCommentText={answerCommentText}
+                  answerCommentTextHandler={answerCommentTextHandler}
                   changeIsLikedStatus={changeIsLikedStatus}
                   commentPublishHandler={commentPublish}
                   commentText={commentText}

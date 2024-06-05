@@ -1,7 +1,9 @@
-import { useGetProfileQuery } from '@/services/profileService/profileEndpoints'
-import { Heart } from '@/shared/assets/icons/Heart'
+import { useState } from 'react'
+
 import { TimeDifference } from '@/shared/components/TimeDifference/TimeDifference'
 import { Profile } from '@/shared/types/profile'
+import { Button } from '@/shared/ui/Button'
+import { Like } from '@/shared/ui/Like'
 import { Typography } from '@/shared/ui/Typography'
 import Image from 'next/image'
 
@@ -10,25 +12,30 @@ import s from '@/layouts/local/ui/MyPost/MyPostModal/ui/PostSide/PostSide.module
 import noPhoto from '../../../../../../public/assets/noPhoto.svg'
 
 export const Comment = ({
+  answerCommentSend,
+  answerCommentText,
+  answerCommentTextHandler,
   changeIsLikedStatus,
   createdAt,
   photo,
   postDescription,
-  postId,
+  postId = 0,
   profile,
   uAvatar,
   uComment,
   uId,
-  uIsLiked,
+  uIsLiked = false,
+  uLikesCount,
   uName,
 }: Props) => {
   const comment = uComment
+  const [createAnswer, setCreateAnswer] = useState(false)
 
   return (
     <div className={s.userCommentContainer}>
       <div className={s.userPhotoWrapper}>
         <div className={s.photo}>
-          {(profile && profile?.avatars[0] === undefined) || !photo ? (
+          {(profile && profile?.avatars[0].url === undefined) || !photo ? (
             <Image alt={'noUserPhoto'} height={22} src={noPhoto} width={22} />
           ) : (
             <Image
@@ -46,33 +53,79 @@ export const Comment = ({
               {postDescription ? postDescription : uComment}
             </Typography>
           </Typography>
-          <Typography className={'commentTime'} color={'tertiary'} variant={'small'}>
-            {createdAt ? <TimeDifference postTime={createdAt} /> : '2 hours ago'}
-          </Typography>
+          <div className={s.commentInfo}>
+            <Typography className={s.createCommentTime} color={'tertiary'} variant={'small'}>
+              {createdAt ? <TimeDifference postTime={createdAt} /> : '2 hours ago'}
+            </Typography>
+            <Typography className={s.commentLikes} color={'tertiary'} variant={'small'}>
+              {uLikesCount ? `Like:${uLikesCount}` : ''}
+            </Typography>
+            <Typography
+              as={'button'}
+              className={s.commentAnswer}
+              color={'tertiary'}
+              onClick={() => setCreateAnswer(true)}
+              variant={'small'}
+            >
+              Answer
+            </Typography>
+          </div>
         </div>
         <div className={s.commentLike}>
-          <Heart
-            changeIsLikedStatus={changeIsLikedStatus}
-            commentId={Number(uId)}
-            isLiked={uIsLiked}
-            postId={postId}
+          <Like
+            onClick={() => changeIsLikedStatus(Number(uId), uIsLiked ? 'DISLIKE' : 'LIKE', postId)}
+            uIsLiked={uIsLiked}
           />
         </div>
       </div>
+      {createAnswer && (
+        <div className={s.addCommentAnswer}>
+          <Typography
+            as={'button'}
+            className={s.answerButtonHide}
+            onClick={() => setCreateAnswer(false)}
+            variant={'small'}
+          >
+            {' '}
+            --- Hide Answers
+          </Typography>
+
+          <textarea
+            onChange={(e: any) => answerCommentTextHandler!(e.currentTarget.value)}
+            placeholder={'Add answer...'}
+            rows={3}
+            style={{ backgroundColor: 'var(--color-dark-500)', padding: '5px' }}
+            value={answerCommentText}
+          />
+          <Button
+            className={s.sendAnswerButton}
+            //disabled={false}
+            onClick={answerCommentSend}
+            variant={'secondary'}
+          >
+            <Typography variant={'h3'}>send</Typography>
+          </Button>
+        </div>
+      )}
     </div>
   )
 }
 
 type Props = {
+  answerCommentSend?: () => void
+  answerCommentText?: string
+  answerCommentTextHandler: (answerText: string) => void
   changeIsLikedStatus: (commentId: number, isLiked: string, postId: number) => void
   createdAt?: string
   photo?: string
   postDescription?: null | string
   postId?: number
   profile?: Profile
+  setAnswerCommentText?: (answerText: string) => void
   uAvatar?: string
   uComment?: string
   uId?: string
   uIsLiked?: boolean
+  uLikesCount?: number
   uName?: number
 }

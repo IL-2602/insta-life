@@ -93,8 +93,47 @@
 .commentLike {
   align-items: flex-start;
   margin-top: 17px;
+
+  & :hover {
+    cursor: pointer;
+  }
 }
 
-.commentTime {
-  color: red;
+.createCommentTime {
+  color: var(--color-light-900);
+}
+
+.commentAnswer {
+  cursor: pointer;
+  margin-left: 12px;
+
+  &:hover {
+    color: var(--color-light-100);
+    transition-duration: 0.3s;
+  }
+}
+
+.commentLikes {
+  margin-left: 12px;
+}
+
+.commentInfo {
+  display: flex;
+  flex-direction: row;
+  color: var(--color-light-900);
+}
+
+.addCommentAnswer {
+  display: flex;
+  flex-direction: column;
+
+  & .answerButtonHide {
+    margin: 8px 0 15px;
+    color: var(--color-light-900);
+  }
+
+  & .sendAnswerButton {
+    display: flex;
+    text-align: end;
+  }
 }
