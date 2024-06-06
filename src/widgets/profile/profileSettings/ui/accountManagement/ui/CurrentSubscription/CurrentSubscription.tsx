@@ -56,4 +56,4 @@ export const CurrentSubscription = (subscriptionsData: Props) => {
   )
 }
 
-type Props = Partial<GetCurrentPaymentSubscriptionResponse> & { onCancelAutoRenewal: () => void }
+type Props = { onCancelAutoRenewal: () => void } & Partial<GetCurrentPaymentSubscriptionResponse>
