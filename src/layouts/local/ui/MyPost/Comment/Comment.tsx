@@ -17,6 +17,7 @@ export const Comment = ({
   answerCommentTextHandler,
   answers,
   changeIsLikedStatus,
+  commentId = 0,
   createdAt,
   photo,
   postDescription,
@@ -102,7 +103,7 @@ export const Comment = ({
           <Button
             className={s.sendAnswerButton}
             //disabled={false}
-            onClick={answerCommentSend}
+            onClick={() => answerCommentSend!(postId, commentId)}
             variant={'secondary'}
           >
             <Typography variant={'h3'}>send</Typography>
@@ -114,11 +115,12 @@ export const Comment = ({
 }
 
 type Props = {
-  answerCommentSend?: () => void
+  answerCommentSend?: (postId: number, commentId: number) => void
   answerCommentText?: string
   answerCommentTextHandler: (answerText: string) => void
   answers?: string
   changeIsLikedStatus: (commentId: number, isLiked: string, postId: number) => void
+  commentId?: number
   createdAt?: string
   photo?: string
   postDescription?: null | string

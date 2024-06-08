@@ -7,6 +7,7 @@ import { useAppSelector } from '@/app/store/hooks/useAppSelector'
 import { useMyPostSchema } from '@/layouts/local/ui/MyPost/MyPostModal/schema/myPostPublicationSchema'
 import { useGetMeQuery } from '@/services/authService/authEndpoints'
 import {
+  useCreateAnswerCommentMutation,
   useCreateCommentMutation,
   useEditPostMutation,
   useGetCurrentPostQuery,
@@ -44,6 +45,7 @@ export const useContainer = () => {
   const { data: getProfile, isFetching: isGetUserLoading } = useGetProfileQuery()
   const [editPost, { isLoading: isLoadingEditPost }] = useEditPostMutation()
   const [createComment] = useCreateCommentMutation()
+  const [createAnswerComment] = useCreateAnswerCommentMutation()
   const [isOpenClosePostModal, setIsOpenClosePostModal] = useState(false)
   const [currPhotoIndex, setCurrPhotoIndex] = useState(0)
   const [isEdit, setIsEdit] = useState(false)
@@ -89,8 +91,8 @@ export const useContainer = () => {
       setCommentText('')
     }
   }
-  const answerCommentSend = () => {
-    console.log('AnswerCommentText: ', answerCommentText)
+  const answerCommentSend = (postId: number, commentId: number) => {
+    createAnswerComment({ answerComment: answerCommentText, commentId, postId })
     setAnswerCommentText('')
   }
   const changeIsLikedStatus = (commentId: number, likeStatus: string, postId: number) => {

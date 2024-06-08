@@ -75,6 +75,7 @@ export const PostSide = ({
         <ScrollSelect maxHeight={'300px'} type={'always'}>
           {postDescription && (
             <Comment
+              answerCommentSend={answerCommentSend}
               answerCommentTextHandler={answerCommentTextHandler}
               changeIsLikedStatus={changeIsLikedStatus}
               createdAt={postPhotos?.createdAt}
@@ -92,12 +93,13 @@ export const PostSide = ({
                     answerCommentText={answerCommentText}
                     answerCommentTextHandler={answerCommentTextHandler}
                     changeIsLikedStatus={changeIsLikedStatus}
+                    commentId={el.id}
                     createdAt={el.createdAt}
                     key={el.id}
                     postId={el.postId}
                     uAvatar={el.from.avatars[0].url}
                     uComment={el.content}
-                    uId={el.id}
+                    uId={el.from.id}
                     uIsLiked={el.isLiked}
                     uLikesCount={el.likeCount}
                     uName={el.from.username}
@@ -140,7 +142,7 @@ export const PostSide = ({
 }
 
 type Props = {
-  answerCommentSend: () => void
+  answerCommentSend: (postId: number, commentId: number) => void
   answerCommentText: string
   answerCommentTextHandler: (answerText: string) => void
   changeIsLikedStatus: (commentId: number, isLiked: string, postId: number) => void
