@@ -75,6 +75,7 @@ export const PostSide = ({
         <ScrollSelect maxHeight={'300px'} type={'always'}>
           {postDescription && (
             <Comment
+              answerCommentTextHandler={answerCommentTextHandler}
               changeIsLikedStatus={changeIsLikedStatus}
               createdAt={postPhotos?.createdAt}
               photo={postPhotos?.avatarOwner!}

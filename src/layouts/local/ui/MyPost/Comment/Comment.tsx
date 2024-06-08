@@ -15,6 +15,7 @@ export const Comment = ({
   answerCommentSend,
   answerCommentText,
   answerCommentTextHandler,
+  answers,
   changeIsLikedStatus,
   createdAt,
   photo,
@@ -78,6 +79,7 @@ export const Comment = ({
           />
         </div>
       </div>
+
       {createAnswer && (
         <div className={s.addCommentAnswer}>
           <Typography
@@ -115,6 +117,7 @@ type Props = {
   answerCommentSend?: () => void
   answerCommentText?: string
   answerCommentTextHandler: (answerText: string) => void
+  answers?: string
   changeIsLikedStatus: (commentId: number, isLiked: string, postId: number) => void
   createdAt?: string
   photo?: string
