@@ -1,19 +1,20 @@
 import { api } from '@/services/api'
 import {
+  CreateAnswerCommentParams,
+  CreateCommentParams,
   EditPostParams,
   GetCurrentPostResponse,
+  GetPostAnswerCommentsParams,
   PublishPostImageResponse,
   PublishPostParams,
   PublishPostResponse,
+  UpdateLikeStatusCommentParams,
 } from '@/services/postService/lib/postEndpoints.types'
 import { publicEndpoints } from '@/services/publicService/publicEndpoints'
 
 export const postEndpoints = api.injectEndpoints({
   endpoints: builder => ({
-    createAnswerComment: builder.mutation<
-      any,
-      { answerComment: string; commentId: number; postId: number }
-    >({
+    createAnswerComment: builder.mutation<any, CreateAnswerCommentParams>({
       invalidatesTags: ['Post'],
       query: ({ answerComment, commentId, postId }) => {
         return {
@@ -23,7 +24,7 @@ export const postEndpoints = api.injectEndpoints({
         }
       },
     }),
-    createComment: builder.mutation<any, { comment: string; postId: number }>({
+    createComment: builder.mutation<any, CreateCommentParams>({
       invalidatesTags: ['Post'],
       query: ({ comment, postId }) => {
         return {
@@ -80,6 +81,17 @@ export const postEndpoints = api.injectEndpoints({
         }
       },
     }),
+    getPostAnswersComments: builder.query<any, GetPostAnswerCommentsParams>({
+      providesTags: ['Post'],
+      query: ({ commentId, postId }) => {
+        return {
+          method: 'GET',
+          params: { commentId, postId },
+          url: `posts/${882}/comments/${258}/answers`,
+          // url: `posts/${postId}/comments/${commentId}/answers`,
+        }
+      },
+    }),
     getPostComments: builder.query<any, number>({
       providesTags: ['Post'],
       query: postId => {
@@ -124,10 +136,7 @@ export const postEndpoints = api.injectEndpoints({
         }
       },
     }),
-    updateLikeStatusComment: builder.mutation<
-      void,
-      { commentId: number; likeStatus: string; postId: number }
-    >({
+    updateLikeStatusComment: builder.mutation<void, UpdateLikeStatusCommentParams>({
       invalidatesTags: ['Post'],
       query: ({ commentId, likeStatus, postId }) => {
         return {
@@ -147,6 +156,7 @@ export const {
   useDeletePostMutation,
   useEditPostMutation,
   useGetCurrentPostQuery,
+  useGetPostAnswersCommentsQuery,
   useGetPostCommentsQuery,
   usePublishPostImageMutation,
   usePublishPostMutation,

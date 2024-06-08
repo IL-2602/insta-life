@@ -1,5 +1,4 @@
-import { useState } from 'react'
-
+import { Answer } from '@/layouts/local/ui/MyPost/Answer/Answer'
 import { TimeDifference } from '@/shared/components/TimeDifference/TimeDifference'
 import { Profile } from '@/shared/types/profile'
 import { Button } from '@/shared/ui/Button'
@@ -19,10 +18,12 @@ export const Comment = ({
   changeIsLikedStatus,
   commentId = 0,
   createdAt,
+  isAnswers,
   photo,
   postDescription,
   postId = 0,
   profile,
+  setCreateAnswer,
   uAvatar,
   uComment,
   uId,
@@ -31,7 +32,7 @@ export const Comment = ({
   uName,
 }: Props) => {
   const comment = uComment
-  const [createAnswer, setCreateAnswer] = useState(false)
+  //const [createAnswer, setCreateAnswer] = useState(false)
 
   return (
     <div className={s.userCommentContainer}>
@@ -66,7 +67,7 @@ export const Comment = ({
               as={'button'}
               className={s.commentAnswer}
               color={'tertiary'}
-              onClick={() => setCreateAnswer(true)}
+              onClick={() => setCreateAnswer!(true, commentId)}
               variant={'small'}
             >
               Answer
@@ -81,16 +82,24 @@ export const Comment = ({
         </div>
       </div>
 
-      {createAnswer && (
+      {isAnswers && (
         <div className={s.addCommentAnswer}>
           <Typography
-            as={'button'}
+            as={'p'}
             className={s.answerButtonHide}
-            onClick={() => setCreateAnswer(false)}
+            onClick={() => setCreateAnswer(false, commentId)}
             variant={'small'}
           >
-            {' '}
-            --- Hide Answers
+            <Typography className={s.buttonHide} variant={'small'}>
+              --- Hide Answers
+            </Typography>
+            <Answer
+              answerCommentTextHandler={answerCommentTextHandler}
+              answers={answers}
+              changeIsLikedStatus={changeIsLikedStatus}
+              sendAnswerComment={answerCommentSend}
+              setCreateAnswer={setCreateAnswer}
+            />
           </Typography>
 
           <textarea
@@ -118,15 +127,17 @@ type Props = {
   answerCommentSend?: (postId: number, commentId: number) => void
   answerCommentText?: string
   answerCommentTextHandler: (answerText: string) => void
-  answers?: string
+  answers?: any
   changeIsLikedStatus: (commentId: number, isLiked: string, postId: number) => void
   commentId?: number
   createdAt?: string
+  isAnswers?: boolean
   photo?: string
   postDescription?: null | string
   postId?: number
   profile?: Profile
   setAnswerCommentText?: (answerText: string) => void
+  setCreateAnswer: (value: boolean, commentId: number) => void
   uAvatar?: string
   uComment?: string
   uId?: string

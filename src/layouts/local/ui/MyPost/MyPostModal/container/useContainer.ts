@@ -11,6 +11,7 @@ import {
   useCreateCommentMutation,
   useEditPostMutation,
   useGetCurrentPostQuery,
+  useGetPostAnswersCommentsQuery,
   useGetPostCommentsQuery,
   useUpdateLikeStatusCommentMutation,
 } from '@/services/postService/postEndpoints'
@@ -25,6 +26,7 @@ export const useContainer = () => {
   const { isMyPostModal } = useAppSelector(state => state.postReducer)
   const { error: meError } = useGetMeQuery()
   const dispatch = useAppDispatch()
+  const [commentId, setCommentId] = useState<number | undefined>(undefined)
 
   const { t } = useTranslation()
 
@@ -43,6 +45,10 @@ export const useContainer = () => {
   const [updateLikeStatus] = useUpdateLikeStatusCommentMutation()
   const { data: comments } = useGetPostCommentsQuery(Number(postId))
   const { data: getProfile, isFetching: isGetUserLoading } = useGetProfileQuery()
+  const { data: answersComments } = useGetPostAnswersCommentsQuery(
+    { commentId, postId },
+    { skip: !commentId && !postId }
+  )
   const [editPost, { isLoading: isLoadingEditPost }] = useEditPostMutation()
   const [createComment] = useCreateCommentMutation()
   const [createAnswerComment] = useCreateAnswerCommentMutation()
@@ -51,13 +57,24 @@ export const useContainer = () => {
   const [isEdit, setIsEdit] = useState(false)
   const [commentText, setCommentText] = useState('')
   const [answerCommentText, setAnswerCommentText] = useState('')
+  const [isAnswers, setIsAnswers] = useState(false)
 
   const { myPostSchema } = useMyPostSchema()
 
   type myPostFormSchema = z.infer<typeof myPostSchema>
 
   const postComments = comments?.items
+  const answers = answersComments?.items
 
+  const setCreateAnswer = (value: boolean, commentId: number) => {
+    setIsAnswers(value)
+    if (value) {
+      setCommentId(commentId)
+    }
+    setCommentId(undefined)
+  }
+
+  // console.log('ANSWERS : ', answers)
   const {
     control,
     formState: { errors },
@@ -166,6 +183,7 @@ export const useContainer = () => {
     answerCommentSend,
     answerCommentText,
     answerCommentTextHandler,
+    answers,
     changeIsLikedStatus,
     closeModalWithRefresh,
     commentPublish,
@@ -180,6 +198,7 @@ export const useContainer = () => {
     handleCloseModal,
     handleClosePostModal,
     handleOpenEditPostDialog,
+    isAnswers,
     isEdit,
     isGetUserLoading,
     isLoading,
@@ -193,6 +212,7 @@ export const useContainer = () => {
     postId,
     postPhotos,
     setAnswerCommentText,
+    setCreateAnswer,
     setIsEditPostHandler,
     t,
     updatePost,

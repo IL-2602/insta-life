@@ -21,16 +21,19 @@ export const PostSide = ({
   answerCommentSend,
   answerCommentText,
   answerCommentTextHandler,
+  answers,
   changeIsLikedStatus,
   commentPublishHandler,
   commentText,
   commentTextHandler,
   deletePostModalHandler,
+  isAnswers,
   isMe,
   postComments,
   postDescription,
   postPhotos,
   profile,
+  setCreateAnswer,
   setIsEditPostHandler,
   t,
 }: Props) => {
@@ -77,11 +80,13 @@ export const PostSide = ({
             <Comment
               answerCommentSend={answerCommentSend}
               answerCommentTextHandler={answerCommentTextHandler}
+              answers={answers}
               changeIsLikedStatus={changeIsLikedStatus}
               createdAt={postPhotos?.createdAt}
               photo={postPhotos?.avatarOwner!}
               postDescription={postDescription}
               profile={profile}
+              setCreateAnswer={setCreateAnswer}
             />
           )}
           {postDescription &&
@@ -92,11 +97,14 @@ export const PostSide = ({
                     answerCommentSend={answerCommentSend}
                     answerCommentText={answerCommentText}
                     answerCommentTextHandler={answerCommentTextHandler}
+                    answers={answers}
                     changeIsLikedStatus={changeIsLikedStatus}
                     commentId={el.id}
                     createdAt={el.createdAt}
+                    isAnswers={isAnswers}
                     key={el.id}
                     postId={el.postId}
+                    setCreateAnswer={setCreateAnswer}
                     uAvatar={el.from.avatars[0].url}
                     uComment={el.content}
                     uId={el.from.id}
@@ -145,16 +153,19 @@ type Props = {
   answerCommentSend: (postId: number, commentId: number) => void
   answerCommentText: string
   answerCommentTextHandler: (answerText: string) => void
+  answers: any
   changeIsLikedStatus: (commentId: number, isLiked: string, postId: number) => void
   commentPublishHandler: () => void
   commentText: string
   commentTextHandler: (comment: string) => void
   deletePostModalHandler: (id: number) => void
+  isAnswers?: boolean
   isMe: boolean
   postComments: any
   postDescription: null | string
   postPhotos: GetCurrentPostResponse | undefined
   profile: Profile | undefined
+  setCreateAnswer: (value: boolean, commentId: number) => void
   setIsEditPostHandler: () => void
   t: Local
 }

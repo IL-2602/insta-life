@@ -25,6 +25,7 @@ export const MyPostModal = memo(
     answerCommentSend,
     answerCommentText,
     answerCommentTextHandler,
+    answers,
     changeIsLikedStatus,
     closeModalWithRefresh,
     commentPublish,
@@ -38,6 +39,7 @@ export const MyPostModal = memo(
     handleCloseEditPostDialog,
     handleCloseModal,
     handleOpenEditPostDialog,
+    isAnswers,
     isEdit,
     isGetUserLoading,
     isLoading,
@@ -50,6 +52,7 @@ export const MyPostModal = memo(
     postComments,
     postId,
     postPhotos,
+    setCreateAnswer,
     setIsEditPostHandler,
     t,
     updatePost,
@@ -122,16 +125,19 @@ export const MyPostModal = memo(
                   answerCommentSend={answerCommentSend}
                   answerCommentText={answerCommentText}
                   answerCommentTextHandler={answerCommentTextHandler}
+                  answers={answers}
                   changeIsLikedStatus={changeIsLikedStatus}
                   commentPublishHandler={commentPublish}
                   commentText={commentText}
                   commentTextHandler={commentTextHandler}
                   deletePostModalHandler={deletePostModalHandler}
+                  isAnswers={isAnswers}
                   isMe={!meError}
                   postComments={postComments}
                   postDescription={myPostDescription}
                   postPhotos={postPhotos}
                   profile={getProfile}
+                  setCreateAnswer={setCreateAnswer}
                   setIsEditPostHandler={setIsEditPostHandler}
                   t={t}
                 />

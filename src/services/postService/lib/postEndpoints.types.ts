@@ -34,6 +34,17 @@ export type EditPostParams = {
   description: null | string
   postId: number
 }
+export type CreateCommentParams = { comment: string; postId: number }
+export type CreateAnswerCommentParams = { answerComment: string; commentId: number; postId: number }
+export type UpdateLikeStatusCommentParams = {
+  commentId: number
+  likeStatus: string
+  postId: number
+}
+export type GetPostAnswerCommentsParams = {
+  commentId: number | undefined
+  postId: number | undefined
+}
 
 export type getUserPostsParams = {
   endCursorPostId?: number | undefined
