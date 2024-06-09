@@ -29,6 +29,7 @@ export const PostSide = ({
   deletePostModalHandler,
   isAnswers,
   isMe,
+  openedComment,
   postComments,
   postDescription,
   postPhotos,
@@ -103,6 +104,7 @@ export const PostSide = ({
                     createdAt={el.createdAt}
                     isAnswers={isAnswers}
                     key={el.id}
+                    openedComment={openedComment}
                     postId={el.postId}
                     setCreateAnswer={setCreateAnswer}
                     uAvatar={el.from.avatars[0].url}
@@ -161,6 +163,7 @@ type Props = {
   deletePostModalHandler: (id: number) => void
   isAnswers?: boolean
   isMe: boolean
+  openedComment?: number | undefined
   postComments: any
   postDescription: null | string
   postPhotos: GetCurrentPostResponse | undefined

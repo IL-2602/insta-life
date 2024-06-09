@@ -19,6 +19,7 @@ export const Comment = ({
   commentId = 0,
   createdAt,
   isAnswers,
+  openedComment,
   photo,
   postDescription,
   postId = 0,
@@ -31,9 +32,6 @@ export const Comment = ({
   uLikesCount,
   uName,
 }: Props) => {
-  const comment = uComment
-  //const [createAnswer, setCreateAnswer] = useState(false)
-
   return (
     <div className={s.userCommentContainer}>
       <div className={s.userPhotoWrapper}>
@@ -132,6 +130,7 @@ type Props = {
   commentId?: number
   createdAt?: string
   isAnswers?: boolean
+  openedComment?: number | undefined
   photo?: string
   postDescription?: null | string
   postId?: number

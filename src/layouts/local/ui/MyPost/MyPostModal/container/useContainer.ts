@@ -74,7 +74,8 @@ export const useContainer = () => {
     setCommentId(undefined)
   }
 
-  // console.log('ANSWERS : ', answers)
+  const openedComment = commentId
+
   const {
     control,
     formState: { errors },
@@ -208,6 +209,7 @@ export const useContainer = () => {
     meError,
     myPostDescription,
     onChangeCurrPhoto,
+    openedComment,
     postComments,
     postId,
     postPhotos,

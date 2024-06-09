@@ -49,6 +49,7 @@ export const MyPostModal = memo(
     meError,
     myPostDescription,
     onChangeCurrPhoto,
+    openedComment,
     postComments,
     postId,
     postPhotos,
@@ -133,6 +134,7 @@ export const MyPostModal = memo(
                   deletePostModalHandler={deletePostModalHandler}
                   isAnswers={isAnswers}
                   isMe={!meError}
+                  openedComment={openedComment}
                   postComments={postComments}
                   postDescription={myPostDescription}
                   postPhotos={postPhotos}

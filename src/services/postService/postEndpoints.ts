@@ -88,7 +88,7 @@ export const postEndpoints = api.injectEndpoints({
           method: 'GET',
           params: { commentId, postId },
           url: `posts/${882}/comments/${258}/answers`,
-          // url: `posts/${postId}/comments/${commentId}/answers`,
+          //url: `posts/${postId}/comments/${commentId}/answers`,
         }
       },
     }),
