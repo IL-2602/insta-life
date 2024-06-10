@@ -80,7 +80,7 @@ export const Comment = ({
         </div>
       </div>
 
-      {isAnswers && (
+      {isAnswers && openedComment === commentId && (
         <div className={s.addCommentAnswer}>
           <Typography
             as={'p'}

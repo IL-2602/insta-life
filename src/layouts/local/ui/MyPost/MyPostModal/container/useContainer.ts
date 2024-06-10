@@ -26,7 +26,7 @@ export const useContainer = () => {
   const { isMyPostModal } = useAppSelector(state => state.postReducer)
   const { error: meError } = useGetMeQuery()
   const dispatch = useAppDispatch()
-  const [commentId, setCommentId] = useState<number | undefined>(undefined)
+  const [commentId, setCommentId] = useState<number | undefined>(0)
 
   const { t } = useTranslation()
 
@@ -46,7 +46,7 @@ export const useContainer = () => {
   const { data: comments } = useGetPostCommentsQuery(Number(postId))
   const { data: getProfile, isFetching: isGetUserLoading } = useGetProfileQuery()
   const { data: answersComments } = useGetPostAnswersCommentsQuery(
-    { commentId, postId },
+    { commentId, postId: Number(postId) },
     { skip: !commentId && !postId }
   )
   const [editPost, { isLoading: isLoadingEditPost }] = useEditPostMutation()
@@ -71,7 +71,6 @@ export const useContainer = () => {
     if (value) {
       setCommentId(commentId)
     }
-    setCommentId(undefined)
   }
 
   const openedComment = commentId
