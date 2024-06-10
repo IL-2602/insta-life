@@ -37,11 +37,13 @@ export type EditPostParams = {
 export type CreateCommentParams = { comment: string; postId: number }
 export type CreateAnswerCommentParams = { answerComment: string; commentId: number; postId: number }
 export type UpdateLikeStatusCommentParams = {
+  answerId?: number | undefined
   commentId: number
   likeStatus: string
   postId: number
 }
 export type GetPostAnswerCommentsParams = {
+  answerId?: number | undefined
   commentId: number | undefined
   postId: number | undefined
 }

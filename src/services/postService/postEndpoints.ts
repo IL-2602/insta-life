@@ -87,8 +87,17 @@ export const postEndpoints = api.injectEndpoints({
         return {
           method: 'GET',
           params: { commentId, postId },
-          //url: `posts/${882}/comments/${258}/answers`,
           url: `posts/${postId}/comments/${commentId}/answers`,
+        }
+      },
+    }),
+    getPostAnswersLikeComments: builder.query<any, GetPostAnswerCommentsParams>({
+      providesTags: ['Post'],
+      query: ({ answerId, commentId, postId }) => {
+        return {
+          method: 'GET',
+          params: { answerId, commentId, postId },
+          url: `posts/${postId}/comments/${commentId}/answers/${answerId}/likes`,
         }
       },
     }),
@@ -136,6 +145,17 @@ export const postEndpoints = api.injectEndpoints({
         }
       },
     }),
+    updateLikeAnswerStatusComment: builder.mutation<void, UpdateLikeStatusCommentParams>({
+      invalidatesTags: ['Post'],
+      query: ({ answerId, commentId, likeStatus, postId }) => {
+        return {
+          body: { likeStatus: likeStatus },
+          method: 'PUT',
+          params: { answerId, commentId, postId },
+          url: `posts/${postId}/comments/${commentId}/answers/${answerId}/like-status`,
+        }
+      },
+    }),
     updateLikeStatusComment: builder.mutation<void, UpdateLikeStatusCommentParams>({
       invalidatesTags: ['Post'],
       query: ({ commentId, likeStatus, postId }) => {
@@ -160,6 +180,7 @@ export const {
   useGetPostCommentsQuery,
   usePublishPostImageMutation,
   usePublishPostMutation,
+  useUpdateLikeAnswerStatusCommentMutation,
   useUpdateLikeStatusCommentMutation,
 } = postEndpoints
 

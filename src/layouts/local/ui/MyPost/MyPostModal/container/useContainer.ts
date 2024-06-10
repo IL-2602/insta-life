@@ -13,6 +13,7 @@ import {
   useGetCurrentPostQuery,
   useGetPostAnswersCommentsQuery,
   useGetPostCommentsQuery,
+  useUpdateLikeAnswerStatusCommentMutation,
   useUpdateLikeStatusCommentMutation,
 } from '@/services/postService/postEndpoints'
 import { postActions } from '@/services/postService/store/slice/postEndpoints.slice'
@@ -43,6 +44,7 @@ export const useContainer = () => {
     skip: !postId,
   })
   const [updateLikeStatus] = useUpdateLikeStatusCommentMutation()
+  const [updateLikeAnswerStatus] = useUpdateLikeAnswerStatusCommentMutation()
   const { data: comments } = useGetPostCommentsQuery(Number(postId))
   const { data: getProfile, isFetching: isGetUserLoading } = useGetProfileQuery()
   const { data: answersComments } = useGetPostAnswersCommentsQuery(
@@ -112,8 +114,27 @@ export const useContainer = () => {
     createAnswerComment({ answerComment: answerCommentText, commentId, postId })
     setAnswerCommentText('')
   }
-  const changeIsLikedStatus = (commentId: number, likeStatus: string, postId: number) => {
-    updateLikeStatus({ commentId, likeStatus, postId })
+  const changeIsLikedStatus = (
+    commentId: number,
+    likeStatus: string,
+    postId: number,
+    answerId?: number
+  ) => {
+    if (answerId) {
+      updateLikeAnswerStatus({ answerId, commentId, likeStatus, postId })
+    } else {
+      updateLikeStatus({ commentId, likeStatus, postId })
+    }
+    console.log(
+      'POSTID: ',
+      postId,
+      'COMMENTID: ',
+      commentId,
+      'LIKESTATUS: ',
+      likeStatus,
+      'AnSWERID: ',
+      answerId
+    )
   }
   const deletePostModalHandler = (id: number) => {
     dispatch(postActions.setIsDeletePostModal(true))

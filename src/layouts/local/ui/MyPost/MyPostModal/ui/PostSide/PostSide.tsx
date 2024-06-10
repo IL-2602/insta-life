@@ -156,7 +156,12 @@ type Props = {
   answerCommentText: string
   answerCommentTextHandler: (answerText: string) => void
   answers: any
-  changeIsLikedStatus: (commentId: number, isLiked: string, postId: number) => void
+  changeIsLikedStatus: (
+    commentId: number,
+    isLiked: string,
+    postId: number,
+    answerId?: number
+  ) => void
   commentPublishHandler: () => void
   commentText: string
   commentTextHandler: (comment: string) => void

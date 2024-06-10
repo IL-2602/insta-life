@@ -14,6 +14,7 @@ export const Comment = ({
   answerCommentSend,
   answerCommentText,
   answerCommentTextHandler,
+  answerId,
   answers,
   changeIsLikedStatus,
   commentId = 0,
@@ -32,6 +33,8 @@ export const Comment = ({
   uLikesCount,
   uName,
 }: Props) => {
+  console.log('ANSWERID !!!! : ', answerId)
+
   return (
     <div className={s.userCommentContainer}>
       <div className={s.userPhotoWrapper}>
@@ -74,7 +77,12 @@ export const Comment = ({
         </div>
         <div className={s.commentLike}>
           <Like
-            onClick={() => changeIsLikedStatus(Number(uId), uIsLiked ? 'DISLIKE' : 'LIKE', postId)}
+            onClick={() => {
+              debugger
+              !answerId
+                ? changeIsLikedStatus(commentId, uIsLiked ? 'DISLIKE' : 'LIKE', postId)
+                : changeIsLikedStatus(commentId, uIsLiked ? 'DISLIKE' : 'LIKE', postId, answerId)
+            }}
             uIsLiked={uIsLiked}
           />
         </div>
@@ -95,6 +103,7 @@ export const Comment = ({
               answerCommentTextHandler={answerCommentTextHandler}
               answers={answers}
               changeIsLikedStatus={changeIsLikedStatus}
+              postId={postId}
               sendAnswerComment={answerCommentSend}
               setCreateAnswer={setCreateAnswer}
             />
@@ -125,8 +134,14 @@ type Props = {
   answerCommentSend?: (postId: number, commentId: number) => void
   answerCommentText?: string
   answerCommentTextHandler: (answerText: string) => void
+  answerId?: number
   answers?: any
-  changeIsLikedStatus: (commentId: number, isLiked: string, postId: number) => void
+  changeIsLikedStatus: (
+    commentId: number,
+    isLiked: string,
+    postId: number,
+    answerId?: number
+  ) => void
   commentId?: number
   createdAt?: string
   isAnswers?: boolean

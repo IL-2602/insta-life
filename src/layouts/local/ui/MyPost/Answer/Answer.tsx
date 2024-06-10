@@ -4,6 +4,7 @@ export const Answer = ({
   answerCommentTextHandler,
   answers,
   changeIsLikedStatus,
+  postId,
   sendAnswerComment,
   setCreateAnswer,
 }: Props) => {
@@ -14,12 +15,13 @@ export const Answer = ({
           <Comment
             answerCommentSend={sendAnswerComment}
             answerCommentTextHandler={answerCommentTextHandler}
+            answerId={answer.id}
             answers={answers}
             changeIsLikedStatus={changeIsLikedStatus}
             commentId={answer.commentId}
             createdAt={answer.createdAt}
             key={answer.id}
-            postId={answer.postId}
+            postId={postId}
             setCreateAnswer={setCreateAnswer}
             uAvatar={answer.from.avatars[0].url}
             uComment={answer.content}
@@ -37,7 +39,13 @@ export const Answer = ({
 type Props = {
   answerCommentTextHandler: (answerText: string) => void
   answers?: any
-  changeIsLikedStatus: (commentId: number, isLiked: string, postId: number) => void
-  sendAnswerComment?: (postId: number, commentId: number) => void
+  changeIsLikedStatus: (
+    commentId: number,
+    isLiked: string,
+    postId: number,
+    answerId?: number
+  ) => void
+  postId: number
+  sendAnswerComment?: (postId: number, commentId: number, answerId?: number) => void
   setCreateAnswer: (value: boolean, commentId: number) => void
 }
