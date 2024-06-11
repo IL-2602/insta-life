@@ -1,5 +1,6 @@
 import { memo } from 'react'
 
+import { useSubscribeToNotificationsMutation } from '@/services/notificationService/notificationEndpoints'
 import { Bell } from '@/shared/assets/icons/Bell'
 import { ROUTES } from '@/shared/constants/routes'
 import { useTranslation } from '@/shared/hooks/useTranslation'
@@ -27,6 +28,9 @@ export const Header = memo(({ isAuth }: Props) => {
   const toSignIn = async () => {
     await router.push(ROUTES.LOGIN)
   }
+  //const [data] = useSubscribeToNotificationsMutation()
+
+  //console.log(data)
 
   return (
     <header className={s.header}>
