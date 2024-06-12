@@ -1,6 +1,6 @@
-import { memo } from 'react'
+import { memo, useEffect } from 'react'
 
-import { useSubscribeToNotificationsMutation } from '@/services/notificationService/notificationEndpoints'
+import { WS_EVENT_PATH } from '@/services/authService/lib/wsConstants'
 import { Bell } from '@/shared/assets/icons/Bell'
 import { ROUTES } from '@/shared/constants/routes'
 import { useTranslation } from '@/shared/hooks/useTranslation'
@@ -8,8 +8,10 @@ import { Button } from '@/shared/ui/Button'
 import { Container } from '@/shared/ui/Container'
 import { LangSwitcher } from '@/shared/ui/LangSwitcher'
 import { Typography } from '@/shared/ui/Typography'
+import { getCookie } from 'cookies-next'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { io } from 'socket.io-client'
 
 import s from './Header.module.scss'
 
@@ -28,9 +30,27 @@ export const Header = memo(({ isAuth }: Props) => {
   const toSignIn = async () => {
     await router.push(ROUTES.LOGIN)
   }
-  //const [data] = useSubscribeToNotificationsMutation()
+  //const [subscribeToNotifications] = useSubscribeToNotificationsMutation()
 
-  //console.log(data)
+  useEffect(() => {
+    const accessToken = getCookie('accessToken')
+    const socket = io('https://inctagram.work', {
+      query: {
+        accessToken,
+      },
+    })
+
+    socket.on(WS_EVENT_PATH.ERROR, () => console.log('WS Error'))
+
+    socket.on(WS_EVENT_PATH.NOTIFICATIONS, data => {
+      console.log(data, 'NOTIFICATION')
+    })
+
+    return () => {
+      socket.disconnect()
+      console.log('WS DISC')
+    }
+  }, [])
 
   return (
     <header className={s.header}>

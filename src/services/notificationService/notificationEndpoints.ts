@@ -6,25 +6,32 @@ import { io } from 'socket.io-client'
 
 export const notificationEndpoints = api.injectEndpoints({
   endpoints: builder => ({
-    subscribeToNotifications: builder.mutation<NotificationResponse, string>({
-      queryFn: () => {
-        return new Promise((resolve, reject) => {
-          const accessToken = getCookie('accessToken')
+    subscribeToNotifications: builder.mutation<NotificationResponse, void>({
+      queryFn: async () => {
+        const accessToken = getCookie('accessToken')
+
+        return new Promise<{ data: NotificationResponse }>((resolve, reject) => {
           const socket = io('https://inctagram.work', {
             query: {
               accessToken,
             },
           })
 
-          socket.on(WS_EVENT_PATH.NOTIFICATIONS, (data: NotificationResponse) => {
+          const handleNotification = (data: NotificationResponse) => {
             resolve({ data })
-          })
+          }
 
-          socket.on(WS_EVENT_PATH.ERROR, (err: Error) => {
+          const handleError = (err: Error) => {
             reject({ error: err.message })
-          })
+          }
 
+          socket.on(WS_EVENT_PATH.NOTIFICATIONS, handleNotification)
+          socket.on(WS_EVENT_PATH.ERROR, handleError)
+
+          // Возвращаем функцию для отключения WebSocket соединения
           return () => {
+            socket.off(WS_EVENT_PATH.NOTIFICATIONS, handleNotification)
+            socket.off(WS_EVENT_PATH.ERROR, handleError)
             socket.disconnect()
           }
         })
