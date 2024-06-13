@@ -59,7 +59,7 @@ export const useContainer = () => {
     if (editPostDescription) {
       editPost({ description: editPostDescription, postId: Number(postId) })
         .unwrap()
-        .then((res: any) => {
+        .then(() => {
           reset({ editPostDescription })
           dispatch(postActions.setIsEditPostModal(false))
           toast.success('The post has been edit', {
@@ -72,7 +72,7 @@ export const useContainer = () => {
             },
           })
         })
-        .catch((err: any) => {
+        .catch(() => {
           toast.error('Error: The post has not been edit ', {
             pauseOnHover: false,
             style: {
