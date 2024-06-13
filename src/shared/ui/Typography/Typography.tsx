@@ -37,7 +37,7 @@ export type TypographyProps<T extends ElementType = 'p'> = {
 // которые уже есть в наших кастомных пропсах, тем самым избегая коллизий.
 
 export const Typography = <T extends ElementType = 'p'>(
-  props: TypographyProps<T> & Omit<ComponentPropsWithoutRef<T>, keyof TypographyProps<T>>
+  props: Omit<ComponentPropsWithoutRef<T>, keyof TypographyProps<T>> & TypographyProps<T>
 ) => {
   const { as: Component = 'p', className, color = 'inherit', variant = 'body1', ...rest } = props
 
