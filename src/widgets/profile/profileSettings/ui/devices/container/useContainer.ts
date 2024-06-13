@@ -22,7 +22,8 @@ export const useContainer = () => {
 
   const { data: sessions, isLoading: isLoadingSessions } = useGetSessionsQuery()
   const [deleteSession] = useDeleteSessionMutation()
-  const [deleteAllOtherSessions] = useDeleteAllOtherSessionsMutation()
+  const [deleteAllOtherSessions, { isLoading: isLoadingAllSessions }] =
+    useDeleteAllOtherSessionsMutation()
   const [logOut, { isLoading: isLoadingLogOut }] = useLogOutMutation()
 
   let browser = 'Unknown'
@@ -37,7 +38,7 @@ export const useContainer = () => {
     browser = 'Chrome'
   }
 
-  const isLoading = isLoadingSessions || isLoadingIp
+  const isLoading = isLoadingSessions || isLoadingIp || isLoadingAllSessions
 
   useEffect(() => {
     const abortController = new AbortController()

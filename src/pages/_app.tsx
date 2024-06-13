@@ -14,8 +14,6 @@ import '@/styles/nprogress.scss'
 import '@/styles/variables/index.scss'
 import 'react-toastify/dist/ReactToastify.css'
 
-import s from '@/widgets/profile/profileSettings/ui/generalInformation/ui/textFields/ui/TextFields.module.scss'
-
 export type NextPageWithLayout<P = {}> = {
   getLayout?: (page: ReactElement) => ReactNode
 } & NextPage<P>
