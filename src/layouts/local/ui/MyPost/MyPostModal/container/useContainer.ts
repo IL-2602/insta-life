@@ -108,7 +108,7 @@ export const useContainer = () => {
             },
           })
         })
-        .catch((err: any) => {
+        .catch(() => {
           toast.error('Error: The post has not been edit ', {
             pauseOnHover: false,
             style: {
