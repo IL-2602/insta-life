@@ -1,12 +1,13 @@
-import { memo, useEffect } from 'react'
+import { memo, useEffect, useState } from 'react'
 
 import { WS_EVENT_PATH } from '@/services/authService/lib/wsConstants'
-import { Bell } from '@/shared/assets/icons/Bell'
+import { NotificationResponse } from '@/services/notificationService/lib/notificationEndpoints.types'
 import { ROUTES } from '@/shared/constants/routes'
 import { useTranslation } from '@/shared/hooks/useTranslation'
 import { Button } from '@/shared/ui/Button'
 import { Container } from '@/shared/ui/Container'
 import { LangSwitcher } from '@/shared/ui/LangSwitcher'
+import { Notification } from '@/shared/ui/Notification'
 import { Typography } from '@/shared/ui/Typography'
 import { getCookie } from 'cookies-next'
 import Link from 'next/link'
@@ -31,6 +32,7 @@ export const Header = memo(({ isAuth }: Props) => {
     await router.push(ROUTES.LOGIN)
   }
   //const [subscribeToNotifications] = useSubscribeToNotificationsMutation()
+  const [notificationData, setNotificationData] = useState<NotificationResponse[]>([])
 
   useEffect(() => {
     const accessToken = getCookie('accessToken')
@@ -44,6 +46,9 @@ export const Header = memo(({ isAuth }: Props) => {
 
     socket.on(WS_EVENT_PATH.NOTIFICATIONS, data => {
       console.log(data, 'NOTIFICATION')
+      if (data) {
+        setNotificationData(notificationData => [...notificationData, data])
+      }
     })
 
     return () => {
@@ -63,12 +68,7 @@ export const Header = memo(({ isAuth }: Props) => {
         <div className={s.wrapper}>
           {isAuth ? (
             <div className={s.meContainer}>
-              <button className={s.bellButton}>
-                <Bell />
-                <Typography as={'span'} className={s.span}>
-                  3
-                </Typography>
-              </button>
+              <Notification notifications={notificationData} />
               <LangSwitcher />
             </div>
           ) : (
