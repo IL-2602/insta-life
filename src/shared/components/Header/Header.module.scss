@@ -1,6 +1,14 @@
+@import '@/styles/variables/mixins';
+
 .header {
-  flex-shrink: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 100%;
   height: var(--header-height);
+
+  background: var(--color-dark-900);
   border-bottom: 1px solid var(--color-dark-300);
 }
 
@@ -19,11 +27,19 @@
     display: flex;
 
     .btnLogIn {
+      @include mobile {
+        display: none;
+      }
+
       margin-right: 34px;
       margin-left: 46px;
     }
 
     .btnSignUp {
+      @include mobile {
+        display: none;
+      }
+
       height: 35px;
       margin-top: 2px;
     }
@@ -36,6 +52,10 @@
 }
 
 .bellButton {
+  @include mobile {
+    display: none;
+  }
+
   position: relative;
   display: inline-block;
   padding-top: 8px;

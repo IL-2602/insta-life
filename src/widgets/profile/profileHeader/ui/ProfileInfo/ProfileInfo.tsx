@@ -11,34 +11,23 @@ export const ProfileInfo = ({ aboutMe, isMe = false, userName }: Props) => {
   const { t } = useTranslation()
 
   return (
-    <div className={s.profileInfo}>
-      <div className={s.mainWrapper}>
-        <div className={s.titleAndStat}>
-          <div className={s.titleAndStatHeader}>
-            <Typography variant={'h1'}>{userName}</Typography>
-            {isMe && (
-              <Button
-                as={'a'}
-                className={s.button}
-                href={'/profile/settings'}
-                variant={'secondary'}
-              >
-                {t.button.profileSettings}
-              </Button>
-            )}
-          </div>
-
-          <div className={s.stat}>
-            <UserStat count={2218} title={'Following'} />
-            <UserStat count={2218} title={'Followers'} />
-            <UserStat count={2218} title={'Publications'} />
-          </div>
-
-          <Description text={aboutMe} />
-        </div>
+    <>
+      <Typography className={s.name} variant={'h1'}>
+        {userName}
+      </Typography>
+      {isMe && (
+        <Button as={'a'} className={s.button} href={'/profile/settings'} variant={'secondary'}>
+          {t.button.profileSettings}
+        </Button>
+      )}
+      <div className={s.stat}>
+        <UserStat count={2218} title={'Following'} />
+        <UserStat count={2218} title={'Followers'} />
+        <UserStat count={2218} title={'Publications'} />
       </div>
-    </div>
+      <Description text={aboutMe} />
+    </>
   )
 }
 
-type Props = Pick<Profile, 'aboutMe' | 'userName'> & { isMe?: boolean }
+type Props = { isMe?: boolean } & Pick<Profile, 'aboutMe' | 'userName'>

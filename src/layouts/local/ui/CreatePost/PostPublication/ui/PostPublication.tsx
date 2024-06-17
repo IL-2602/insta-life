@@ -18,102 +18,70 @@ import noPhoto from '../../../../../../../public/assets/noPhoto.svg'
 
 export const PostPublication = memo(
   ({
-    backToFilter,
     control,
     currPhotoIndex,
-    errorDescription,
     getProfile,
-    handlePublishPhotos,
     handleSubmit,
-    isCreatePostModal,
     isGetUserLoading,
     isLoading,
-    modalSteps,
     onChangeCurrPhoto,
     postDescription,
     postPhotos,
-    showModalSaveDraft,
     t,
   }: PostPublicationProps) => {
     return (
-      <>
-        <Modal
-          className={s.modal}
-          customButtonsBlock={<></>}
-          lazy={!isCreatePostModal}
-          modalHandler={showModalSaveDraft}
-          nextStepBtn={
-            <Button
-              className={s.nextBtn}
-              disabled={!!errorDescription || isLoading}
-              onClick={handlePublishPhotos}
-              variant={'link'}
-            >
-              {t.button.publish}
-            </Button>
-          }
-          open={isCreatePostModal && modalSteps === 'publication'}
-          previousStepBtn={
-            <Button
-              className={s.prevBtn}
-              disabled={isLoading}
-              onClick={backToFilter}
-              variant={'link'}
-            >
-              <ArrowIosBack />
-            </Button>
-          }
-          title={t.modal.publicationTitle}
-        >
-          <div>
-            <div className={clsx(s.container, isLoading ? s.opacity : '')}>
-              {isLoading && (
-                <div className={s.spinner}>
-                  <Spinner />
-                </div>
-              )}
-              <div className={clsx(s.postPhotoWrapper, isLoading ? s.opacity : '')}>
-                <PostPhotos currentPhoto={currPhotoIndex} onChangeCurrentPhoto={onChangeCurrPhoto}>
-                  {postPhotos &&
-                    postPhotos.map((photo, i) => {
-                      return (
-                        <div key={i}>
-                          <img alt={'photo'} className={s.postPhoto} src={photo.filterImg} />
-                        </div>
-                      )
-                    })}
-                </PostPhotos>
+      <div className={s.modal}>
+        <div>
+          <div className={clsx(s.container, isLoading ? s.opacity : '')}>
+            {isLoading && (
+              <div className={s.spinner}>
+                <Spinner />
               </div>
-              {!isGetUserLoading && (
-                <form className={s.descriptionWrapper} onSubmit={handleSubmit(() => {})}>
-                  <div className={s.userPhotoWrapper}>
-                    <div className={s.photo}>
-                      {getProfile?.avatars[0] === undefined ? (
-                        <Image alt={'noUserPhoto'} height={22} src={noPhoto} width={22} />
-                      ) : (
+            )}
+            <div className={clsx(s.postPhotoWrapper, isLoading ? s.opacity : '')}>
+              <PostPhotos currentPhoto={currPhotoIndex} onChangeCurrentPhoto={onChangeCurrPhoto}>
+                {postPhotos &&
+                  postPhotos.map((photo, i) => {
+                    return (
+                      <div className={s.postPhoto} key={i}>
                         <Image
-                          alt={'userPhoto'}
-                          height={36}
-                          src={getProfile?.avatars[0].url}
-                          width={36}
+                          alt={'photo'}
+                          fill
+                          src={photo.filterImg}
+                          style={{ height: '100%', objectFit: 'contain', width: '100%' }}
                         />
-                      )}
-                    </div>
-                    <Typography variant={'medium16'}>{getProfile?.userName}</Typography>
-                  </div>
-                  <label>
-                    {t.auth.form.addPublicationDescription}
-                    <ControlledTextAreaField control={control} name={'postDescription'} rows={4} />
-                    <span className={s.charCount}>{postDescription?.length}/500</span>
-                  </label>
-                  <hr className={s.line}></hr>
-                </form>
-              )}
+                      </div>
+                    )
+                  })}
+              </PostPhotos>
             </div>
+            {!isGetUserLoading && (
+              <form className={s.descriptionWrapper} onSubmit={handleSubmit(() => {})}>
+                <div className={s.userPhotoWrapper}>
+                  <div className={s.photo}>
+                    {getProfile?.avatars[0] === undefined ? (
+                      <Image alt={'noUserPhoto'} height={22} src={noPhoto} width={22} />
+                    ) : (
+                      <Image
+                        alt={'userPhoto'}
+                        height={36}
+                        src={getProfile?.avatars[0].url}
+                        width={36}
+                      />
+                    )}
+                  </div>
+                  <Typography variant={'medium16'}>{getProfile?.userName}</Typography>
+                </div>
+                <label>
+                  {t.auth.form.addPublicationDescription}
+                  <ControlledTextAreaField control={control} name={'postDescription'} rows={4} />
+                  <span className={s.charCount}>{postDescription?.length}/500</span>
+                </label>
+              </form>
+            )}
           </div>
-        </Modal>
-        <ClosePostModal />
-      </>
+        </div>
+      </div>
     )
   }
 )

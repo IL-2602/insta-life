@@ -33,10 +33,10 @@ export const PostSide = ({
         <div className={s.userContainer}>
           <div className={s.userPhotoWrapper}>
             <div className={s.photo}>
-              {profile && profile?.avatars[0] === undefined ? (
-                <Image alt={'noUserPhoto'} height={22} src={noPhoto} width={22} />
-              ) : (
+              {postPhotos && Object.hasOwnProperty.call(postPhotos, 'avatarOwner') ? (
                 <Image alt={'userPhoto'} height={36} src={postPhotos?.avatarOwner!} width={36} />
+              ) : (
+                <Image alt={'noUserPhoto'} height={22} src={noPhoto} width={22} />
               )}
             </div>
             <Typography variant={'h3'}>{postPhotos?.userName}</Typography>
@@ -49,7 +49,6 @@ export const PostSide = ({
               contentChildren={
                 <PostOptions
                   deletePostModalHandler={deletePostModalHandler}
-                  // editModeHandler={editModeHandler}
                   editPostModalHandler={setIsEditPostHandler}
                   id={'123'}
                 />

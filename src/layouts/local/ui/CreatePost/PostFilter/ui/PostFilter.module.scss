@@ -1,5 +1,29 @@
+@import '@/styles/variables/mixins';
+
 .container {
-  width: 972px;
+  @include tablet {
+    width: 700px;
+  }
+
+  @include mobile {
+    width: 100%;
+  }
+
+  width: 900px;
+
+  .wrapper {
+    @include mobile {
+      flex-direction: column;
+      gap: 0;
+    }
+
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+    justify-content: space-between;
+
+    width: 100%;
+  }
 }
 
 .prevBtn {
@@ -8,6 +32,11 @@
 }
 
 .imgWrapper {
+  @include mobile {
+    width: 100%;
+    height: calc(100vh - 120px - 61px - 130px);
+  }
+
   display: flex;
   flex-shrink: 1;
   align-items: center;
@@ -21,5 +50,16 @@
 }
 
 .filterPrevBtnContainer {
+  @include mobile {
+    display: flex;
+    flex-wrap: nowrap;
+    height: 124px;
+    margin-bottom: 10px;
+  }
+
+  @include tablet {
+    height: 500px;
+  }
+
   margin: auto 0;
 }

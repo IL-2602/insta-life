@@ -1,4 +1,12 @@
+@import '@/styles/variables/mixins';
+
 .container {
+  @include mobile-small {
+    max-width: 100%;
+    padding: 15px;
+    background: transparent;
+  }
+
   display: flex;
   flex-direction: column;
   max-width: 378px;

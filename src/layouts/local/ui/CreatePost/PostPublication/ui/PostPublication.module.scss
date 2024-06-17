@@ -1,6 +1,15 @@
+@import '@/styles/variables/mixins';
+
 .modal {
-  width: 100%;
-  max-width: 972px;
+  @include tablet {
+    width: 800px;
+  }
+
+  @include mobile {
+    width: 100%;
+  }
+
+  width: 900px;
 }
 
 .nextBtn {
@@ -22,9 +31,13 @@
 }
 
 .container {
+  @include mobile {
+    flex-direction: column;
+    height: calc(100dvh - 120px - 61px);
+  }
+
   position: relative;
   display: flex;
-  flex-direction: row;
   margin: 0;
 }
 
@@ -33,19 +46,22 @@
 }
 
 .postPhotoWrapper {
-  overflow: hidden;
-  flex: 1;
-  height: auto;
 }
 
 .postPhoto {
-  width: 100%;
+  width: 490px;
   height: 490px;
-  object-fit: contain;
 }
 
 .descriptionWrapper {
-  width: 50%;
+  @include mobile {
+    max-width: none;
+    height: 100%;
+    margin: 0;
+  }
+
+  width: 100%;
+  max-width: 500px;
   margin: 24px;
 
   label {
@@ -56,12 +72,20 @@
   }
 
   span {
+    @include mobile {
+      color: var(--color-light-100);
+    }
+
     align-self: end;
     font: var(--font-small);
   }
 }
 
 .userPhotoWrapper {
+  @include mobile {
+    margin-bottom: 0;
+  }
+
   display: flex;
   gap: 12px;
   align-items: center;

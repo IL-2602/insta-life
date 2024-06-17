@@ -1,11 +1,7 @@
 import { useForm } from 'react-hook-form'
 
 import { useAppDispatch } from '@/app/store/hooks/useAppDispatch'
-import {
-  useGetMeQuery,
-  useOAuthGoogleMutation,
-  useSignInMutation,
-} from '@/services/authService/authEndpoints'
+import { useOAuthGoogleMutation, useSignInMutation } from '@/services/authService/authEndpoints'
 import { authActions } from '@/services/authService/store/slice/authEndpoints.slice'
 import { ROUTES } from '@/shared/constants/routes'
 import { useTranslation } from '@/shared/hooks/useTranslation'

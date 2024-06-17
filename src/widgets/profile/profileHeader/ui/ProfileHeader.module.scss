@@ -1,25 +1,33 @@
+@import '@/styles/variables/mixins';
+
 .wrapper {
-  display: flex;
-  gap: 28px;
-
-  @media (width <= 1024px) {
-    flex-wrap: wrap;
-
-    & > *:first-child {
-      margin: 0 auto;
-    }
-
-    & > *:last-child {
-      flex-grow: 1;
-      text-align: center;
-    }
+  @include mobile {
+    grid-template-areas:
+      'avatar subscriber'
+      'name .'
+      'aboutMe aboutMe';
+    place-items: center center;
   }
+
+  display: grid;
+  grid-gap: 20px;
+  grid-template: auto / auto 1fr;
+  grid-template-areas:
+    'avatar name settings'
+    'avatar subscriber subscriber'
+    'avatar aboutMe aboutMe';
 }
 
 .avatarWrapper {
+  @include mobile {
+    width: 72px;
+    height: 72px;
+  }
+
   position: relative;
 
   display: flex;
+  grid-area: avatar;
   flex-shrink: 0;
   align-items: center;
   justify-content: center;

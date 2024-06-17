@@ -51,7 +51,7 @@ export const Cell: FC<CellProps> = ({ className, ...rest }) => {
   return <td className={classNames.cell} {...rest} />
 }
 
-export const Empty: FC<ComponentProps<'div'> & { mb?: string; mt?: string }> = ({
+export const Empty: FC<{ mb?: string; mt?: string } & ComponentProps<'div'>> = ({
   className,
   mb,
   mt = '89px',
