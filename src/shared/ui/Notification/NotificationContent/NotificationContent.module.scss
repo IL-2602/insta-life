@@ -1,0 +1,38 @@
+.content {
+  min-width: 300px;
+
+  .title {
+    padding: 12px 0;
+  }
+
+  .mainTitle::after {
+    content: '';
+
+    display: block;
+
+    width: 100%;
+    height: 2px;
+
+    background-color: var(--color-dark-100);
+  }
+
+  .element {
+    padding-bottom: 12px;
+  }
+
+  .element::before {
+    content: '';
+
+    display: block;
+
+    width: 100%;
+    height: 2px;
+
+    background-color: var(--color-dark-100);
+  }
+
+  .not {
+    padding: 24px 0;
+    text-align: center;
+  }
+}
