@@ -34,9 +34,10 @@ export const Devices = memo(
     return (
       <div className={s.container}>
         <div className={s.currDevice}>
-          <Typography variant={'h3'}>{t.profileSettings.tab.devices.thisDevices}</Typography>
+          <Typography className={s.currDeviceTitle} variant={'h3'}>
+            {t.profileSettings.tab.devices.thisDevices}
+          </Typography>
           <Device
-            browser={browser}
             current
             handleDeleteSession={handleDeleteSession}
             handleLogOut={handleLogOut}
@@ -49,16 +50,18 @@ export const Devices = memo(
             t={t}
           />
         </div>
-        <div className={s.closeSessions}>
-          <Button onClick={() => handleTerminateAllOtherSessions()} variant={'outlined'}>
-            <Typography variant={'h3'}>{t.button.terminateAllOtherSession}</Typography>
-          </Button>
-        </div>
+        {sessions && sessions.length > 1 && (
+          <div className={s.closeSessions}>
+            <Button onClick={() => handleTerminateAllOtherSessions()} variant={'outlined'}>
+              <Typography variant={'h3'}>{t.button.terminateAllOtherSession}</Typography>
+            </Button>
+          </div>
+        )}
+
         <div className={s.activeDevice}>
           <Typography variant={'h3'}>{t.profileSettings.tab.devices.activeSessions}</Typography>
           {sessions?.map(s => (
             <Device
-              browser={browser}
               handleDeleteSession={handleDeleteSession}
               handleLogOut={handleLogOut}
               isLoadingLogOut={isLoadingLogOut}
@@ -75,3 +78,5 @@ export const Devices = memo(
     )
   }
 )
+
+Devices.displayName = 'Devices'

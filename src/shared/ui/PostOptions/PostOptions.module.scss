@@ -8,8 +8,14 @@
   cursor: pointer;
   display: flex;
   align-items: center;
-}
 
-.icon {
-  margin-right: 10px;
+  .icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+  }
+
+  &:hover {
+    opacity: 0.75;
+  }
 }

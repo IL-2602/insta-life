@@ -1,7 +1,9 @@
 import { SetStateAction, useEffect, useMemo, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
 
 import { useUpdateProfileMutation } from '@/services/profileService/profileEndpoints'
+import { profileActions } from '@/services/profileService/store/slice/profileEndpoints.slice'
 import { useTranslation } from '@/shared/hooks/useTranslation'
 import { useProfileSettingsForm } from '@/widgets/profile/profileSettings/ui/generalInformation/ui/textFields/hooks/useProfileSettingsForm'
 import { parse } from 'date-fns'
@@ -9,6 +11,7 @@ import debounce from 'debounce'
 
 export const useContainer = () => {
   const { t } = useTranslation()
+  const dispatch = useDispatch()
   const { control, errors, handleSubmit, isGetProfileLoading, profile, register, reset, watch } =
     useProfileSettingsForm()
 
@@ -68,6 +71,11 @@ export const useContainer = () => {
       }, 300),
     []
   )
+
+  const onPrivacyPolicy = (evt: any) => {
+    evt.preventDefault()
+    dispatch(profileActions.setIsPrivacyPolicy(true))
+  }
 
   const handleCityChange = (text: string) => {
     debouncedSearch(text)
@@ -164,6 +172,7 @@ export const useContainer = () => {
     isDisabled,
     isGetProfileLoading,
     isLoading,
+    onPrivacyPolicy,
     profile,
     register,
     t,

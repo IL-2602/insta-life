@@ -6,7 +6,7 @@ import { UploadUserPhoto } from '@/widgets/profile/uploadUserPhoto'
 
 import s from './GeneralInformation.module.scss'
 
-export const GeneralInformation = memo(({ t }: GeneralInformationProps) => {
+export const GeneralInformation = memo(({}: GeneralInformationProps) => {
   return (
     <section className={s.section}>
       <div className={s.container}>
@@ -16,3 +16,5 @@ export const GeneralInformation = memo(({ t }: GeneralInformationProps) => {
     </section>
   )
 })
+
+GeneralInformation.displayName = 'GeneralInformation'

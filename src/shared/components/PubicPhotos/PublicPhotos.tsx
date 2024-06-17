@@ -1,12 +1,11 @@
 import { useState } from 'react'
 
-import { NextPhotoArrow } from '@/shared/assets/icons/NextPhotoArrow/NextPhotoArrow'
 import { NextPublicPhotoArrow } from '@/shared/assets/icons/NextPublicPhotoArrow/NextPublicPhotoArrow'
-import { PrevPhotoArrow } from '@/shared/assets/icons/PrevPhotoArrow/PrevPhotoArrow'
 import { PrevPublicPhotoArrow } from '@/shared/assets/icons/PrevPublicPhotoArrow/PrevPublicPhotoArrow'
 import { Button } from '@/shared/ui/Button'
 import { clsx } from 'clsx'
 import Image from 'next/image'
+import Link from 'next/link'
 
 import s from './PublicPhotos.module.scss'
 
@@ -14,11 +13,13 @@ type Props = {
   className?: string
   cropping?: boolean
   height: number
+  id: number
+  ownerId: number
   photos: Array<string>
   width: number
 }
 
-export const PublicPhotos = ({ height, photos, width, ...rest }: Props) => {
+export const PublicPhotos = ({ height, id, ownerId, photos, width, ...rest }: Props) => {
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0)
 
   const goToNextPhoto = () => {
@@ -34,13 +35,15 @@ export const PublicPhotos = ({ height, photos, width, ...rest }: Props) => {
 
   return (
     <div className={s.photosWrapper}>
-      <Image
-        alt={'photo'}
-        height={height}
-        src={photos[currentPhotoIndex]}
-        width={width}
-        {...rest}
-      />
+      <Link href={`profile/${ownerId}?postId=${id}`} key={id}>
+        <Image
+          alt={'photo'}
+          height={height}
+          src={photos[currentPhotoIndex]}
+          width={width}
+          {...rest}
+        />
+      </Link>
       {photos.length > 1 && (
         <>
           <Button

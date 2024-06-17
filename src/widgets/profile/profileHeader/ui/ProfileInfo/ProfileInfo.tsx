@@ -30,4 +30,4 @@ export const ProfileInfo = ({ aboutMe, isMe = false, userName }: Props) => {
   )
 }
 
-type Props = Pick<Profile, 'aboutMe' | 'userName'> & { isMe?: boolean }
+type Props = { isMe?: boolean } & Pick<Profile, 'aboutMe' | 'userName'>
