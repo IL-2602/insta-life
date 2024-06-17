@@ -38,7 +38,7 @@ export const AddMoreImages = ({
                 {photos?.map((photo, idx) => (
                   <div className={s.imgWrapper} key={idx}>
                     <div onClick={() => onChangeCurrPhoto(idx)}>
-                      <Image alt={'Photo Preview'} height={80} src={photo.img} width={80} />
+                      <Image alt={'Photo Preview'} fill src={photo.img} />
                     </div>
                     <Button
                       className={s.delbtn}

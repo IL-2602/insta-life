@@ -33,7 +33,7 @@ export const PostSide = ({
         <div className={s.userContainer}>
           <div className={s.userPhotoWrapper}>
             <div className={s.photo}>
-              {postPhotos?.hasOwnProperty('avatarOwner') ? (
+              {postPhotos && Object.hasOwnProperty.call(postPhotos, 'avatarOwner') ? (
                 <Image alt={'userPhoto'} height={36} src={postPhotos?.avatarOwner!} width={36} />
               ) : (
                 <Image alt={'noUserPhoto'} height={22} src={noPhoto} width={22} />

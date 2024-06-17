@@ -1,10 +1,17 @@
+@import '@/styles/variables/mixins';
+
 .main {
-  flex-grow: 1;
+  @include mobile-small {
+    margin-top: 60px;
+  }
+
+  display: flex;
+  flex-grow: 0;
+  margin-top: 84px;
 }
 
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 40px;
 }

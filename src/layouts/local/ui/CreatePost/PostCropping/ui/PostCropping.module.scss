@@ -1,9 +1,14 @@
+@import '@/styles/variables/mixins';
+
 .container {
+  @include mobile {
+    width: 100%;
+  }
+
   width: 490px;
 
   .croppingWrapper {
     position: relative;
-    height: 490px;
     padding: 0;
   }
 
@@ -29,10 +34,10 @@
   }
 
   .imgWrapper {
-    position: absolute;
-    z-index: var(--zindex-crop);
-    top: 0;
-    left: 0;
+    @include mobile {
+      width: 100%;
+      height: calc(100dvh - 120px - 61px);
+    }
 
     width: 490px;
     height: 490px;
