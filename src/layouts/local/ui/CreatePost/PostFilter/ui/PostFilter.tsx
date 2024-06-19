@@ -19,14 +19,12 @@ export const PostFilter = forwardRef(
       currentImage,
       modalIsOpen,
       onChangeCurrentImage,
-      onNext,
-      onPrev,
       postPhotos,
       t,
     }: PostFilterProps,
     ref: LegacyRef<HTMLCanvasElement>
   ) => {
-    if (modalIsOpen && currentImage) {
+    if (modalIsOpen && currentImage?.filterImg && currentImage?.cropImg) {
       return (
         <>
           <CreatePostModalHeader
