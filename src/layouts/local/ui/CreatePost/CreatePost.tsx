@@ -6,7 +6,6 @@ import { CreatePostModal } from '@/layouts/local/ui/CreatePost/CreatePostModal'
 import { PostCropping } from '@/layouts/local/ui/CreatePost/PostCropping'
 import { PostFilter } from '@/layouts/local/ui/CreatePost/PostFilter'
 import { PostPublication } from '@/layouts/local/ui/CreatePost/PostPublication'
-import { CreatePostModalHeader } from '@/layouts/local/ui/CreatePost/createPostModalHeader'
 import { postActions } from '@/services/postService/store/slice/postEndpoints.slice'
 import { ClosePostModal } from '@/shared/components/ClosePostModal/ClosePostModal'
 import { useTranslation } from '@/shared/hooks/useTranslation'
@@ -37,32 +36,10 @@ export const CreatePost = () => {
   }
 
   const customHeader = {
-    cropping: (
-      <CreatePostModalHeader
-        btnTitle={t.button.next}
-        nextStep={'filters'}
-        prevStep={'upload'}
-        title={t.post.cropping}
-      />
-    ),
-    filters: (
-      <CreatePostModalHeader
-        btnTitle={t.button.next}
-        nextStep={'publication'}
-        prevStep={'cropping'}
-        title={t.post.filters}
-      />
-    ),
-    publication: (
-      <CreatePostModalHeader
-        btnTitle={t.post.publication}
-        nextStep={'filters'}
-        onNext={() => alert('publication')}
-        prevStep={'filters'}
-        title={t.modal.publicationTitle}
-      />
-    ),
-    upload: null,
+    cropping: true,
+    filters: true,
+    publication: true,
+    upload: false,
   }
 
   return (

@@ -12,7 +12,7 @@ type Props = {
   bodyClassName?: string
   children: ReactNode
   contentClassName?: string
-  customHeader?: ReactNode
+  customHeader?: boolean
   onOpen: () => void
   open: boolean
   title?: string
@@ -39,9 +39,7 @@ export const Modal = ({
       <Dialog.Portal>
         <Dialog.Overlay className={s.overlay} />
         <Dialog.Content className={classNames.content} onOpenAutoFocus={e => e.preventDefault()}>
-          {customHeader ? (
-            customHeader
-          ) : (
+          {customHeader ? null : (
             <div className={s.header}>
               <Dialog.Title className={s.title}>
                 <Typography variant={'h1'}>{title}</Typography>
