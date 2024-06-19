@@ -14,14 +14,13 @@ export const useContainer = () => {
   const modalStep = useAppSelector(state => state.postReducer?.modalSteps)
   const currentImage = postPhotos.find((_, idx) => idx === currPhotoIndex)
 
+  console.log('cuurrImg', currentImage?.filterImg)
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   const [currentFilter, setCurrentFilter] = useState<PhotoFilterTitle>('normal')
   const [imageURL, setImageURL] = useState('')
   const modalIsOpen = isCreatePostModal && modalStep === 'filters'
   const dispatch = useAppDispatch()
-  const onNext = () => dispatch(postActions.setModalSteps('publication'))
-  const onPrev = () => dispatch(postActions.setModalSteps('cropping'))
   const onChangeCurrentImage = (currPhoto: number) => setCurrPhotoIndex(currPhoto)
 
   useEffect(() => {
@@ -81,8 +80,6 @@ export const useContainer = () => {
     imageURL,
     modalIsOpen,
     onChangeCurrentImage,
-    onNext,
-    onPrev,
     postPhotos,
     ref: canvasRef,
     setCurrentFilter,
