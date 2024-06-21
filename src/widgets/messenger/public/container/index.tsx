@@ -1,8 +1,7 @@
 import { FC } from 'react'
 
-import { useContainer } from '@/widgets/auth/signIn/container/useContainer'
-
-import { Messenger } from '../ui/Messenger'
+import {useContainer} from "@/widgets/messenger/public/container/useContainer";
+import { Messenger } from '@/widgets/messenger/public/ui/Messenger'
 
 export const Container: FC = () => <Messenger {...useContainer()} />
 
