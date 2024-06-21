@@ -29,12 +29,23 @@ export type TextAreaFieldProps = {
   readonly?: boolean
   required?: boolean
   rows?: number
+  textAreaClassName?: string
   value?: string
 } & ComponentPropsWithoutRef<'textarea'>
 
 export const TextArea: FC<TextAreaFieldProps> = forwardRef<HTMLInputElement, TextAreaFieldProps>(
   (
-    { className, disabled, errorMessage, label, maxLength = 501, onKeyDown, value, ...rest },
+    {
+      className,
+      disabled,
+      errorMessage,
+      label,
+      maxLength = 501,
+      onKeyDown,
+      textAreaClassName,
+      value,
+      ...rest
+    },
     ref
   ) => {
     const showError = errorMessage && errorMessage.length > 0
@@ -43,7 +54,7 @@ export const TextArea: FC<TextAreaFieldProps> = forwardRef<HTMLInputElement, Tex
       iconButton: clsx(s.iconButton, disabled && s.disabled),
       iconStart: clsx(s.iconStart),
       root: clsx(s.root, className),
-      textarea: clsx(s.textarea, showError && s.error),
+      textarea: clsx(s.textarea, showError && s.error, textAreaClassName),
     }
 
     return (
