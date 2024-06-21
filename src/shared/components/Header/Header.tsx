@@ -2,6 +2,7 @@ import { memo, useEffect, useState } from 'react'
 
 import { WS_EVENT_PATH } from '@/services/authService/lib/wsConstants'
 import { NotificationResponse } from '@/services/notificationService/lib/notificationEndpoints.types'
+import { useGetNotificationsQuery } from '@/services/notificationService/notificationEndpoints'
 import { ROUTES } from '@/shared/constants/routes'
 import { useTranslation } from '@/shared/hooks/useTranslation'
 import { Button } from '@/shared/ui/Button'
@@ -31,31 +32,33 @@ export const Header = memo(({ isAuth }: Props) => {
   const toSignIn = async () => {
     await router.push(ROUTES.LOGIN)
   }
-  //const [subscribeToNotifications] = useSubscribeToNotificationsMutation()
-  const [notificationData, setNotificationData] = useState<NotificationResponse[]>([])
+  const { data: notificationData } = useGetNotificationsQuery()
 
-  useEffect(() => {
-    const accessToken = getCookie('accessToken')
-    const socket = io('https://inctagram.work', {
-      query: {
-        accessToken,
-      },
-    })
-
-    socket.on(WS_EVENT_PATH.ERROR, () => console.log('WS Error'))
-
-    socket.on(WS_EVENT_PATH.NOTIFICATIONS, data => {
-      console.log(data, 'NOTIFICATION')
-      if (data) {
-        setNotificationData(notificationData => [...notificationData, data])
-      }
-    })
-
-    return () => {
-      socket.disconnect()
-      console.log('WS DISC')
-    }
-  }, [])
+  // useEffect(() => {
+  //   const accessToken = getCookie('accessToken')
+  //   const socket = io('https://inctagram.work', {
+  //     query: {
+  //       accessToken,
+  //     },
+  //   })
+  //
+  //   socket.on(WS_EVENT_PATH.ERROR, () => console.log('WS Error'))
+  //
+  //   socket.on(WS_EVENT_PATH.NOTIFICATIONS, data => {
+  //     console.log(data, 'NOTIFICATION')
+  //     if (data) {
+  //       setNotificationData(notificationData => [...notificationData, data])
+  //     }
+  //   })
+  //
+  //   return () => {
+  //     socket.disconnect()
+  //     console.log('WS DISC')
+  //   }
+  // }, [])
+  if (!notificationData) {
+    return null
+  }
 
   return (
     <header className={s.header}>

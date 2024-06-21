@@ -5,39 +5,52 @@ import { getCookie } from 'cookies-next'
 import { io } from 'socket.io-client'
 
 export const notificationEndpoints = api.injectEndpoints({
-  endpoints: builder => ({
-    subscribeToNotifications: builder.mutation<NotificationResponse, void>({
-      queryFn: async () => {
+  endpoints: build => ({
+    getNotifications: build.query<NotificationResponse[], void>({
+      async onCacheEntryAdded(arg, { cacheDataLoaded, cacheEntryRemoved, updateCachedData }) {
         const accessToken = getCookie('accessToken')
 
-        return new Promise<{ data: NotificationResponse }>((resolve, reject) => {
-          const socket = io('https://inctagram.work', {
-            query: {
-              accessToken,
-            },
-          })
+        console.log('Access Token:', accessToken) // Логируем токен для проверки
 
-          const handleNotification = (data: NotificationResponse) => {
-            resolve({ data })
-          }
-
-          const handleError = (err: Error) => {
-            reject({ error: err.message })
-          }
-
-          socket.on(WS_EVENT_PATH.NOTIFICATIONS, handleNotification)
-          socket.on(WS_EVENT_PATH.ERROR, handleError)
-
-          // Возвращаем функцию для отключения WebSocket соединения
-          return () => {
-            socket.off(WS_EVENT_PATH.NOTIFICATIONS, handleNotification)
-            socket.off(WS_EVENT_PATH.ERROR, handleError)
-            socket.disconnect()
-          }
+        const socket = io('https://inctagram.work', {
+          query: { accessToken },
+          transports: ['websocket'], // Убедитесь, что используются правильные транспорты
         })
+
+        socket.on('connect', () => {
+          console.log('WebSocket connected')
+        })
+
+        socket.on('connect_error', err => {
+          console.error('WebSocket connection error:', err)
+        })
+
+        try {
+          await cacheDataLoaded
+
+          const errorListener = () => console.log('WS Error')
+          const notificationListener = (data: NotificationResponse) => {
+            console.log(data, 'NOTIFICATION')
+            if (data) {
+              updateCachedData(draft => {
+                draft.push(data)
+              })
+            }
+          }
+
+          socket.on(WS_EVENT_PATH.ERROR, errorListener) // Исправляем пути событий
+          socket.on(WS_EVENT_PATH.NOTIFICATIONS, notificationListener)
+        } catch (e) {
+          console.error('Error in cacheDataLoaded:', e)
+        }
+
+        await cacheEntryRemoved
+        socket.disconnect()
+        console.log('WebSocket disconnected')
       },
+      queryFn: () => ({ data: [] }), // начальное значение
     }),
   }),
 })
 
-export const { useSubscribeToNotificationsMutation } = notificationEndpoints
+export const { useGetNotificationsQuery } = notificationEndpoints
