@@ -42,11 +42,10 @@ export const messengerEndpoints = api.injectEndpoints({
 
           socket.on(MESSENGER_WS_EVENT.MESSAGE_SENT, (message: Message, cb) => {
             updateCachedData(draft => {
-              const currMsgIdx = draft?.items?.findIndex(msg => msg.id === message.id)
+              draft.items = draft?.items?.map(msg =>
+                msg.id === message.id ? Object.assign(msg, message) : msg
+              )
 
-              if (currMsgIdx) {
-                draft?.items.splice(currMsgIdx, 1, message)
-              }
               cb({ messageId: message.id, status: 'RECEIVED' })
             })
           })
