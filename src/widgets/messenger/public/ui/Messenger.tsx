@@ -1,5 +1,6 @@
 import {memo} from 'react'
 
+import { Button } from "@/shared/ui/Button";
 import {TextField} from '@/shared/ui/Textfield'
 import {Typography} from '@/shared/ui/Typography'
 import {ChatBody} from "@/widgets/messenger/local/chatBody/ChatBody";
@@ -9,7 +10,9 @@ import {MessengerProps} from '@/widgets/messenger/public/container'
 
 import s from './Messenger.module.scss'
 
-export const Messenger = memo(({dialogMessages,lastMessages, onClickUserOpenChatHandler, receiver}: MessengerProps) => {
+export const Messenger = memo(({dialogMessages, dialogPartner, lastMessages, onClickUserOpenChatHandler, test, userId}: MessengerProps) => {
+   if(!userId) {return null}
+
     return (
         <div className={s.root}>
             <Typography variant={'h1'}>Messenger</Typography>
@@ -19,16 +22,17 @@ export const Messenger = memo(({dialogMessages,lastMessages, onClickUserOpenChat
                 </div>
                 <div className={s.usersList}>
                     <ul>
-                        {lastMessages?.map(msg => <li key={msg.id}><UsersListItem lastUserMsg={msg}
-                                                                                  onClickOpenChat={onClickUserOpenChatHandler}/>
+                        {lastMessages?.map(msg => <li key={msg.id}><UsersListItem lastUserMsg={msg} onClickOpenChat={onClickUserOpenChatHandler}
+                                                                                  userId={userId}/>
                         </li>)}
+                        <Button fullWidth onClick={test}>SEND</Button>
                     </ul>
                 </div>
                 <div className={s.chatHead}>
-                    <ChatHead user={receiver}/>
+                    <ChatHead dialogPartner={dialogPartner}/>
                 </div>
                 <div className={s.chatBody}>
-                    <ChatBody messages={dialogMessages} user={receiver}/>
+                    <ChatBody messages={dialogMessages} userId={userId}/>
                 </div>
             </div>
         </div>

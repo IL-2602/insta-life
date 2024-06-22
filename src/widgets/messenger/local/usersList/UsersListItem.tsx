@@ -24,12 +24,17 @@ const timeConversion = (dateTime: string, locale: string) => {
   }
 }
 
-export const UsersListItem = ({ lastUserMsg, onClickOpenChat }: Props) => {
-  const { createdAt, messageText, receiverId, userName } = lastUserMsg
+export const UsersListItem = ({ lastUserMsg, onClickOpenChat, userId }: Props) => {
+  const { createdAt, messageText, ownerId, receiverId, userName } = lastUserMsg
   const { locale } = useRouter()
+  const partnerId = userId === ownerId ? receiverId : ownerId
+
+  if (!userId) {
+    return null
+  }
 
   return (
-    <div className={s.root} onClick={() => onClickOpenChat(receiverId)}>
+    <div className={s.root} onClick={() => onClickOpenChat(partnerId)}>
       <div className={s.avatar}></div>
       <div className={s.description}>
         <div className={s.desc_head}>
@@ -49,4 +54,5 @@ export const UsersListItem = ({ lastUserMsg, onClickOpenChat }: Props) => {
 type Props = {
   lastUserMsg: Message
   onClickOpenChat: (chatId: number) => void
+  userId?: number
 }

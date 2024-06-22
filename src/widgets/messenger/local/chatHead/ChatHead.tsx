@@ -2,19 +2,19 @@ import { Message } from '@/services/messengerService/lib/messengerEndpoints.type
 import { Typography } from '@/shared/ui/Typography'
 
 import s from './ChatHead.module.scss'
-export const ChatHead = ({ user }: Props) => {
-  if (!user?.userName) {
+export const ChatHead = ({ dialogPartner }: Props) => {
+  if (!dialogPartner?.userName) {
     return null
   }
 
   return (
     <div className={s.root}>
       <div className={s.avatar}></div>
-      <Typography variant={'regular16'}>{user?.userName}</Typography>
+      <Typography variant={'regular16'}>{dialogPartner?.userName}</Typography>
     </div>
   )
 }
 
 type Props = {
-  user?: Pick<Message, 'avatars' | 'userName'>
+  dialogPartner?: Pick<Message, 'avatars' | 'userName'>
 }

@@ -10,8 +10,8 @@ import { ReceiverMessage } from '@/widgets/messenger/local/messages/receiverMess
 import s from './ChatBody.module.scss'
 
 //** Переключение между типами и кнопка отправить **//
-export const ChatBody = ({ messages, user }: Props) => {
-  if (!user?.receiverId) {
+export const ChatBody = ({ messages, userId }: Props) => {
+  if (!userId) {
     return (
       <div className={s.noMsg}>
         <Typography variant={'medium14'}>Choose who you would like to talk to</Typography>
@@ -22,12 +22,13 @@ export const ChatBody = ({ messages, user }: Props) => {
   return (
     <div className={s.root}>
       <div className={s.body}>
-        <ReceiverMessage />
-        <OwnerMessage />
-        <ReceiverMessage />
-        <OwnerMessage />
-        <ReceiverMessage />
-        <OwnerMessage />
+        {messages?.map(msg =>
+          msg.ownerId === userId ? (
+            <OwnerMessage key={msg.id} message={msg} />
+          ) : (
+            <ReceiverMessage key={msg.id} message={msg} />
+          )
+        )}
       </div>
       <div className={s.footer}>
         <TextArea placeholder={'Type Message'} textAreaClassName={s.textArea} />
@@ -46,5 +47,5 @@ export const ChatBody = ({ messages, user }: Props) => {
 
 type Props = {
   messages?: Omit<Message, 'avatars' | 'userName'>[]
-  user?: Pick<Message, 'receiverId' | 'userName'>
+  userId?: number
 }
