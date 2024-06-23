@@ -1,4 +1,8 @@
-import { GetNotificationsResponse } from '@/services/notificationService/lib/notificationEndpoints.types'
+import {
+  GetNotificationsResponse,
+  NotificationItem,
+} from '@/services/notificationService/lib/notificationEndpoints.types'
+import { useChangeNotificationMutation } from '@/services/notificationService/notificationEndpoints'
 import { Typography } from '@/shared/ui/Typography'
 
 import s from './NotificationContent.module.scss'
@@ -22,6 +26,12 @@ export const NotificationContent = ({ notifications }: Props) => {
       notifyAt: '2024-06-17T15:21:57.395Z',
     },
   ]
+  const [changeNotification] = useChangeNotificationMutation()
+  const readingNotification = (notification: NotificationItem) => {
+    if (!notification.isRead) {
+      changeNotification({ ids: [notification.id] })
+    }
+  }
 
   return (
     <div className={s.content}>
@@ -37,7 +47,7 @@ export const NotificationContent = ({ notifications }: Props) => {
           }
 
           return (
-            <div className={s.element} key={n.id}>
+            <div className={s.element} key={n.id} onClick={() => readingNotification(n)}>
               <div className={s.newNotificationContainer}>
                 <Typography as={'h4'} className={s.title} variant={'medium16'}>
                   Новое уведомление!

@@ -26,3 +26,17 @@ export type GetNotificationsRequest = {
   pageSize?: number
   sortDirection?: 'asc' | 'desc'
 }
+
+export type ChangeNotificationsRequest = {
+  ids: number[]
+}
+export type Messages = {
+  field: string
+  message: string
+}
+
+export type ChangeNotificationsResponse = {
+  error: string
+  messages: Messages[]
+  statusCode: number
+}

@@ -1,6 +1,8 @@
 import { api } from '@/services/api'
 import { WS_EVENT_PATH } from '@/services/authService/lib/wsConstants'
 import {
+  ChangeNotificationsRequest,
+  ChangeNotificationsResponse,
   GetNotificationsRequest,
   GetNotificationsResponse,
   NotificationObjectResponse,
@@ -10,14 +12,23 @@ import { io } from 'socket.io-client'
 
 export const notificationEndpoints = api.injectEndpoints({
   endpoints: build => ({
+    changeNotification: build.mutation<ChangeNotificationsResponse, ChangeNotificationsRequest>({
+      invalidatesTags: ['Notification'],
+      query: body => ({
+        body,
+        method: 'PUT',
+        url: `notifications/mark-as-read`,
+      }),
+    }),
     getNotification: build.query<GetNotificationsResponse, GetNotificationsRequest>({
-      query: ({ cursor = '', pageSize = 12, sortDirection = 'asc' }) => {
+      providesTags: ['Notification'],
+      query: ({ cursor = '', pageSize = 12, sortDirection = 'desc' }) => {
         return {
           params: {
             pageSize,
             sortDirection,
           },
-          url: `notifications${cursor}`,
+          url: `notifications/${cursor}`,
         }
       },
     }),
@@ -73,4 +84,8 @@ export const notificationEndpoints = api.injectEndpoints({
   }),
 })
 
-export const { useGetNotificationQuery, useSubscribeToNotificationsQuery } = notificationEndpoints
+export const {
+  useChangeNotificationMutation,
+  useGetNotificationQuery,
+  useSubscribeToNotificationsQuery,
+} = notificationEndpoints
