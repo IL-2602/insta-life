@@ -8,7 +8,7 @@ type MessageAvatar = {
   width: number
 }
 type MessageType = 'TEXT'
-type MessageStatus = 'SENT'
+export type MessageStatus = 'READ' | 'RECEIVED' | 'SENT'
 
 export type Message = {
   avatars: MessageAvatar[]

@@ -33,7 +33,7 @@ export const messengerEndpoints = api.injectEndpoints({
       GetMessengerArrayOfLatestMsgResponse,
       GetMessengerArrayOfLatestMsgParams
     >({
-      async onCacheEntryAdded(photoId, { cacheDataLoaded, cacheEntryRemoved, updateCachedData }) {
+      async onCacheEntryAdded(_, { cacheDataLoaded, cacheEntryRemoved, updateCachedData }) {
         try {
           await cacheDataLoaded
           // the /chat-messages endpoint responded already
@@ -43,13 +43,13 @@ export const messengerEndpoints = api.injectEndpoints({
           socket.on(MESSENGER_WS_EVENT.MESSAGE_SENT, (message: Message, cb) => {
             updateCachedData(draft => {
               draft.items = draft?.items?.map(msg =>
-                msg.id === message.id ? Object.assign(msg, message) : msg
+                msg.ownerId === message.ownerId && msg.receiverId === message.receiverId
+                  ? Object.assign(msg, message)
+                  : msg
               )
-
               cb({ messageId: message.id, status: 'RECEIVED' })
             })
           })
-
           await cacheEntryRemoved
           socket.off(MESSENGER_WS_EVENT.MESSAGE_SENT)
         } catch {
@@ -67,6 +67,61 @@ export const messengerEndpoints = api.injectEndpoints({
       },
     }),
     getDialogMessages: builder.query<GetDialogMessagesResponse, GetDialogMessagesParams>({
+      async onCacheEntryAdded(
+        _,
+        { cacheDataLoaded, cacheEntryRemoved, dispatch, updateCachedData }
+      ) {
+        try {
+          await cacheDataLoaded
+          // the /chat-messages endpoint responded already
+
+          const socket = getSocket()
+
+          socket.on(MESSENGER_WS_EVENT.MESSAGE_SENT, (message: Message, cb) => {
+            updateCachedData(draft => {
+              draft.items?.unshift(message)
+              cb({ messageId: message.id, status: 'RECEIVED' })
+            })
+            // dispatch(
+            //   messengerEndpoints.endpoints.updateMessagesStatus.initiate({ ids: [message.id] })
+            // )
+          })
+          socket.on(MESSENGER_WS_EVENT.RECEIVE_MESSAGE, (message: Message) => {
+            console.log('RECEIVE_MESSAGE ', message)
+            console.log('RECEIVE_MESSAGE Array ', Array.isArray(message))
+
+            if (Array.isArray(message)) {
+              updateCachedData(draft => {
+                const hasMsg = draft?.items?.find(msg => msg.id === message[0].id)
+
+                console.log('RECEIVE_MESSAGE hasMsg', hasMsg?.id)
+                if (hasMsg) {
+                  hasMsg.status = message.status
+                } else {
+                  draft.items.unshift(message)
+                }
+              })
+            } else {
+              updateCachedData(draft => {
+                const hasMsg = draft?.items?.find(msg => msg.id === message.id)
+
+                console.log('RECEIVE_MESSAGE hasMsg', hasMsg?.id)
+                if (hasMsg) {
+                  hasMsg.status = message.status
+                } else {
+                  draft.items.unshift(message)
+                }
+              })
+            }
+          })
+          await cacheEntryRemoved
+          socket.off(MESSENGER_WS_EVENT.MESSAGE_SENT)
+          socket.off(MESSENGER_WS_EVENT.RECEIVE_MESSAGE)
+        } catch {
+          // if cacheEntryRemoved resolved before cacheDataLoaded,
+          // cacheDataLoaded throws
+        }
+      },
       providesTags: ['Dialogs'],
       query: ({ dialogPartnerId, ...rest }) => {
         return {
@@ -76,7 +131,7 @@ export const messengerEndpoints = api.injectEndpoints({
         }
       },
     }),
-    sendMessage: builder.mutation<any, { message: string; receiverId: number }>({
+    sendMessage: builder.mutation<Message, { message: string; receiverId: number }>({
       queryFn: params => {
         const socket = getSocket()
 
@@ -87,8 +142,21 @@ export const messengerEndpoints = api.injectEndpoints({
         })
       },
     }),
+    updateMessagesStatus: builder.mutation<any, { ids: number[] }>({
+      query: params => {
+        return {
+          body: params,
+          method: 'PUT',
+          url: 'messanger',
+        }
+      },
+    }),
   }),
 })
 
-export const { useGetArrayOfLastMsgQuery, useGetDialogMessagesQuery, useSendMessageMutation } =
-  messengerEndpoints
+export const {
+  useGetArrayOfLastMsgQuery,
+  useGetDialogMessagesQuery,
+  useSendMessageMutation,
+  useUpdateMessagesStatusMutation,
+} = messengerEndpoints

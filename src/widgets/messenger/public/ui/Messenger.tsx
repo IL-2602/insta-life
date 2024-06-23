@@ -10,7 +10,7 @@ import {MessengerProps} from '@/widgets/messenger/public/container'
 
 import s from './Messenger.module.scss'
 
-export const Messenger = memo(({dialogMessages, dialogPartner, lastMessages, onClickUserOpenChatHandler, test, userId}: MessengerProps) => {
+export const Messenger = memo(({dialogMessages, dialogPartner, lastMessages,onClickUserOpenChatHandler, test, test2, userId}: MessengerProps) => {
    if(!userId) {return null}
 
     return (
@@ -26,6 +26,7 @@ export const Messenger = memo(({dialogMessages, dialogPartner, lastMessages, onC
                                                                                   userId={userId}/>
                         </li>)}
                         <Button fullWidth onClick={test}>SEND</Button>
+                        <Button fullWidth onClick={test2}>READ</Button>
                     </ul>
                 </div>
                 <div className={s.chatHead}>
