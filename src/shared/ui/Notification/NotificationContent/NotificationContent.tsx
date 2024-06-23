@@ -32,12 +32,24 @@ export const NotificationContent = ({ notifications }: Props) => {
       </div>
       {notifications.items.length ? (
         notifications.items.map(n => {
+          const notifyAtUtil = (date: string) => {
+            return new Date(date).toLocaleDateString()
+          }
+
           return (
             <div className={s.element} key={n.id}>
-              <Typography as={'h4'} className={s.title} variant={'medium16'}>
-                Новое уведомление!
-              </Typography>
+              <div className={s.newNotificationContainer}>
+                <Typography as={'h4'} className={s.title} variant={'medium16'}>
+                  Новое уведомление!
+                </Typography>
+                {!n.isRead && (
+                  <Typography className={s.new} variant={'regular14'}>
+                    Новое
+                  </Typography>
+                )}
+              </div>
               <Typography>{n.message}</Typography>
+              <Typography className={s.notifyAt}>{notifyAtUtil(n.notifyAt)}</Typography>
             </div>
           )
         })

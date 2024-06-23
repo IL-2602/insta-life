@@ -1,8 +1,10 @@
 .content {
+  overflow: auto;
   min-width: 300px;
+  max-height: 500px;
 
   .title {
-    padding: 12px 0;
+    padding: 10px 0;
   }
 
   .mainTitle::after {
@@ -17,7 +19,21 @@
   }
 
   .element {
-    padding-bottom: 12px;
+    padding-bottom: 10px;
+
+    .newNotificationContainer {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+
+      .new {
+        color: var(--color-primary-500);
+      }
+    }
+
+    .notifyAt {
+      color: var(--color-light-900);
+    }
   }
 
   .element::before {

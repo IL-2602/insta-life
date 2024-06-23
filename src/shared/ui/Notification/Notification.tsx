@@ -17,19 +17,21 @@ export const Notification = ({ notifications }: Props) => {
   return (
     <button className={s.bellButton}>
       <CustomPopover
-        contentChildren={<NotificationContent notifications={notifications} />}
+        contentChildren={notifications && <NotificationContent notifications={notifications} />}
         icon={
           <div style={{ position: 'relative' }}>
             <Bell />
           </div>
         }
       />
-      <Typography as={'span'} className={s.span}>
-        {getNewNotifications(notifications.items).length}
-      </Typography>
+      {notifications && (
+        <Typography as={'span'} className={s.span}>
+          {getNewNotifications(notifications.items).length}
+        </Typography>
+      )}
     </button>
   )
 }
 type Props = {
-  notifications: GetNotificationsResponse
+  notifications?: GetNotificationsResponse
 }

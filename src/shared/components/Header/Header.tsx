@@ -38,31 +38,6 @@ export const Header = memo(({ isAuth }: Props) => {
 
   console.log('HEADER ', notification)
   console.log('HEADER notificationsData ', notificationsData)
-  // useEffect(() => {
-  //   const accessToken = getCookie('accessToken')
-  //   const socket = io('https://inctagram.work', {
-  //     query: {
-  //       accessToken,
-  //     },
-  //   })
-  //
-  //   socket.on(WS_EVENT_PATH.ERROR, () => console.log('WS Error'))
-  //
-  //   socket.on(WS_EVENT_PATH.NOTIFICATIONS, data => {
-  //     console.log(data, 'NOTIFICATION')
-  //     if (data) {
-  //       setNotificationData(notificationData => [...notificationData, data])
-  //     }
-  //   })
-  //
-  //   return () => {
-  //     socket.disconnect()
-  //     console.log('WS DISC')
-  //   }
-  // }, [])
-  if (!notificationsData) {
-    return null
-  }
 
   return (
     <header className={s.header}>
