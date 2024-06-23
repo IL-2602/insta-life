@@ -4,12 +4,9 @@ import { FilterPreviewButton } from '@/layouts/local/ui/CreatePost/PostFilter/Fi
 import { photoFilters } from '@/layouts/local/ui/CreatePost/PostFilter/FilterPreviewButton/FilterPreviewButtonData'
 import { PostFilterProps } from '@/layouts/local/ui/CreatePost/PostFilter/container'
 import { capitalizeFirstLetter } from '@/layouts/local/ui/CreatePost/PostFilter/utils/capitalizeFirstLetter'
-import { ArrowIosBack } from '@/shared/assets/icons/ArrowIosBack/ArrowIosBack'
+import { CreatePostModalHeader } from '@/layouts/local/ui/CreatePost/createPostModalHeader'
 import { PostPhotos } from '@/shared/components/PostPhotos/PostPhotos'
-import { Button } from '@/shared/ui/Button'
-import { Modal } from '@/shared/ui/Modal'
 import { ScrollSelect } from '@/shared/ui/ScrollSelect/ScrollSelect'
-import { Typography } from '@/shared/ui/Typography'
 import Image from 'next/image'
 
 import s from './PostFilter.module.scss'
@@ -22,16 +19,21 @@ export const PostFilter = forwardRef(
       currentImage,
       modalIsOpen,
       onChangeCurrentImage,
-      onNext,
-      onPrev,
       postPhotos,
       t,
     }: PostFilterProps,
     ref: LegacyRef<HTMLCanvasElement>
   ) => {
-    if (modalIsOpen && currentImage) {
+    if (modalIsOpen && currentImage?.filterImg && currentImage?.cropImg) {
       return (
         <>
+          <CreatePostModalHeader
+            btnTitle={t.button.next}
+            nextStep={'publication'}
+            prevStep={'cropping'}
+            title={t.post.filters}
+          />
+
           <div className={s.container}>
             <div className={s.wrapper}>
               <PostPhotos currentPhoto={currPhotoIndex} onChangeCurrentPhoto={onChangeCurrentImage}>
