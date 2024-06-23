@@ -1,8 +1,9 @@
-import { memo, useEffect, useState } from 'react'
+import { memo } from 'react'
 
-import { WS_EVENT_PATH } from '@/services/authService/lib/wsConstants'
-import { NotificationResponse } from '@/services/notificationService/lib/notificationEndpoints.types'
-import { useGetNotificationsQuery } from '@/services/notificationService/notificationEndpoints'
+import {
+  useGetNotificationQuery,
+  useSubscribeToNotificationsQuery,
+} from '@/services/notificationService/notificationEndpoints'
 import { ROUTES } from '@/shared/constants/routes'
 import { useTranslation } from '@/shared/hooks/useTranslation'
 import { Button } from '@/shared/ui/Button'
@@ -10,10 +11,8 @@ import { Container } from '@/shared/ui/Container'
 import { LangSwitcher } from '@/shared/ui/LangSwitcher'
 import { Notification } from '@/shared/ui/Notification'
 import { Typography } from '@/shared/ui/Typography'
-import { getCookie } from 'cookies-next'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { io } from 'socket.io-client'
 
 import s from './Header.module.scss'
 
@@ -32,8 +31,13 @@ export const Header = memo(({ isAuth }: Props) => {
   const toSignIn = async () => {
     await router.push(ROUTES.LOGIN)
   }
-  const { data: notificationData } = useGetNotificationsQuery()
+  const { data: notification } = useSubscribeToNotificationsQuery()
+  const { data: notificationsData } = useGetNotificationQuery({
+    cursor: notification && notification.id ? notification.id.toString() : '',
+  })
 
+  console.log('HEADER ', notification)
+  console.log('HEADER notificationsData ', notificationsData)
   // useEffect(() => {
   //   const accessToken = getCookie('accessToken')
   //   const socket = io('https://inctagram.work', {
@@ -56,7 +60,7 @@ export const Header = memo(({ isAuth }: Props) => {
   //     console.log('WS DISC')
   //   }
   // }, [])
-  if (!notificationData) {
+  if (!notificationsData) {
     return null
   }
 
@@ -71,7 +75,7 @@ export const Header = memo(({ isAuth }: Props) => {
         <div className={s.wrapper}>
           {isAuth ? (
             <div className={s.meContainer}>
-              <Notification notifications={notificationData} />
+              <Notification notifications={notificationsData} />
               <LangSwitcher />
             </div>
           ) : (

@@ -1,12 +1,27 @@
 import { api } from '@/services/api'
 import { WS_EVENT_PATH } from '@/services/authService/lib/wsConstants'
-import { NotificationResponse } from '@/services/notificationService/lib/notificationEndpoints.types'
+import {
+  GetNotificationsRequest,
+  GetNotificationsResponse,
+  NotificationObjectResponse,
+} from '@/services/notificationService/lib/notificationEndpoints.types'
 import { getCookie } from 'cookies-next'
 import { io } from 'socket.io-client'
 
 export const notificationEndpoints = api.injectEndpoints({
   endpoints: build => ({
-    getNotifications: build.query<NotificationResponse[], void>({
+    getNotification: build.query<GetNotificationsResponse, GetNotificationsRequest>({
+      query: ({ cursor = '', pageSize = 12, sortDirection = 'asc' }) => {
+        return {
+          params: {
+            pageSize,
+            sortDirection,
+          },
+          url: `notifications${cursor}`,
+        }
+      },
+    }),
+    subscribeToNotifications: build.query<NotificationObjectResponse, void>({
       async onCacheEntryAdded(arg, { cacheDataLoaded, cacheEntryRemoved, updateCachedData }) {
         const accessToken = getCookie('accessToken')
 
@@ -28,12 +43,14 @@ export const notificationEndpoints = api.injectEndpoints({
         try {
           await cacheDataLoaded
 
-          const errorListener = () => console.log('WS Error')
-          const notificationListener = (data: NotificationResponse) => {
+          const errorListener = () => {
+            console.log('WS Error')
+          }
+          const notificationListener = (data: NotificationObjectResponse) => {
             console.log(data, 'NOTIFICATION')
             if (data) {
               updateCachedData(draft => {
-                draft.push(data)
+                Object.assign(draft, data)
               })
             }
           }
@@ -45,12 +62,15 @@ export const notificationEndpoints = api.injectEndpoints({
         }
 
         await cacheEntryRemoved
-        socket.disconnect()
+        socket.off()
+        socket.close()
         console.log('WebSocket disconnected')
       },
-      queryFn: () => ({ data: [] }), // начальное значение
+      queryFn: () => {
+        return { data: {} as NotificationObjectResponse } // Возвращаем пустой объект как начальное состояние
+      },
     }),
   }),
 })
 
-export const { useGetNotificationsQuery } = notificationEndpoints
+export const { useGetNotificationQuery, useSubscribeToNotificationsQuery } = notificationEndpoints

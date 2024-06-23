@@ -1,4 +1,4 @@
-import { NotificationResponse } from '@/services/notificationService/lib/notificationEndpoints.types'
+import { GetNotificationsResponse } from '@/services/notificationService/lib/notificationEndpoints.types'
 import { Typography } from '@/shared/ui/Typography'
 
 import s from './NotificationContent.module.scss'
@@ -25,13 +25,13 @@ export const NotificationContent = ({ notifications }: Props) => {
 
   return (
     <div className={s.content}>
-      <div className={!notifications.length ? s.mainTitle : ''}>
+      <div className={!notifications.items.length ? s.mainTitle : ''}>
         <Typography as={'h3'} className={s.title} variant={'medium16'}>
           Уведомления
         </Typography>
       </div>
-      {notifications.length ? (
-        notifications.map(n => {
+      {notifications.items.length ? (
+        notifications.items.map(n => {
           return (
             <div className={s.element} key={n.id}>
               <Typography as={'h4'} className={s.title} variant={'medium16'}>
@@ -50,5 +50,5 @@ export const NotificationContent = ({ notifications }: Props) => {
   )
 }
 type Props = {
-  notifications: NotificationResponse[]
+  notifications: GetNotificationsResponse
 }
