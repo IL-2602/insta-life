@@ -7,8 +7,8 @@ import {
   GetMessengerArrayOfLatestMsgResponse,
   Message,
 } from '@/services/messengerService/lib/messengerEndpoints.types'
-import { getCookie } from 'cookies-next'
-import { markAssetError } from 'next/dist/client/route-loader'
+import { deleteCookie, getCookie } from 'cookies-next'
+import { has } from 'immutable'
 import { Socket, io } from 'socket.io-client'
 
 const queryParams = {
@@ -80,32 +80,23 @@ export const messengerEndpoints = api.injectEndpoints({
           socket.on(MESSENGER_WS_EVENT.MESSAGE_SENT, (message: Message, cb) => {
             updateCachedData(draft => {
               draft.items?.unshift(message)
-              cb({ messageId: message.id, status: 'RECEIVED' })
+              cb({ messageId: message.id, status: 'READ' })
             })
-            // dispatch(
-            //   messengerEndpoints.endpoints.updateMessagesStatus.initiate({ ids: [message.id] })
-            // )
+            dispatch(api.util?.invalidateTags(['LastMessages']))
           })
           socket.on(MESSENGER_WS_EVENT.RECEIVE_MESSAGE, (message: Message) => {
-            console.log('RECEIVE_MESSAGE ', message)
-            console.log('RECEIVE_MESSAGE Array ', Array.isArray(message))
-
             if (Array.isArray(message)) {
               updateCachedData(draft => {
-                const hasMsg = draft?.items?.find(msg => msg.id === message[0].id)
+                draft.items = draft?.items?.map(draftMsg => {
+                  const hasMsg = message.find(msg => msg.id === draftMsg.id)
 
-                console.log('RECEIVE_MESSAGE hasMsg', hasMsg?.id)
-                if (hasMsg) {
-                  hasMsg.status = message.status
-                } else {
-                  draft.items.unshift(message)
-                }
+                  return hasMsg ? { ...draftMsg, status: hasMsg.status } : draftMsg
+                })
               })
             } else {
               updateCachedData(draft => {
                 const hasMsg = draft?.items?.find(msg => msg.id === message.id)
 
-                console.log('RECEIVE_MESSAGE hasMsg', hasMsg?.id)
                 if (hasMsg) {
                   hasMsg.status = message.status
                 } else {
@@ -120,6 +111,33 @@ export const messengerEndpoints = api.injectEndpoints({
         } catch {
           // if cacheEntryRemoved resolved before cacheDataLoaded,
           // cacheDataLoaded throws
+        }
+      },
+      onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
+        try {
+          const result = await queryFulfilled
+
+          if (result?.data) {
+            const unreadMsgs =
+              result.data.items?.reduce((acc, curr) => {
+                if (curr.status !== 'READ') {
+                  acc.push(curr.id)
+                }
+
+                return acc
+              }, [] as number[]) || []
+
+            if (unreadMsgs?.length) {
+              dispatch(
+                messengerEndpoints.endpoints.updateMessagesStatus.initiate({ ids: unreadMsgs })
+              )
+            }
+          }
+          // setTimeout(() => {
+          //   dispatch(api.util.invalidateTags(['Me']))
+          // }, 50)
+        } catch (e) {
+          console.log(e)
         }
       },
       providesTags: ['Dialogs'],
@@ -143,6 +161,7 @@ export const messengerEndpoints = api.injectEndpoints({
       },
     }),
     updateMessagesStatus: builder.mutation<any, { ids: number[] }>({
+      invalidatesTags: ['LastMessages'],
       query: params => {
         return {
           body: params,

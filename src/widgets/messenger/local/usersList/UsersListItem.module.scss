@@ -1,6 +1,8 @@
 .root {
   cursor: pointer;
 
+  position: relative;
+
   display: flex;
   gap: 12px;
 
@@ -38,5 +40,36 @@
       align-items: center;
       justify-content: space-between;
     }
+
+    .text {
+      padding: 5px 0;
+    }
+
+    .unread {
+      background: var(--color-dark-900);
+      border-radius: 5px;
+    }
+  }
+
+  .email {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+
+    width: 24px;
+    height: 24px;
+
+    & > svg {
+      animation-name: blink;
+      animation-duration: 3s;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+    }
+  }
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
   }
 }

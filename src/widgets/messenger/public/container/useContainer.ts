@@ -1,17 +1,29 @@
-import { useEffect } from "react";
+import { useForm } from "react-hook-form";
 
 import { useGetMeQuery } from "@/services/authService/authEndpoints";
 import { UserType } from "@/services/authService/lib/authEndpoints.types";
 import {
   useGetArrayOfLastMsgQuery,
-  useGetDialogMessagesQuery, useSendMessageMutation, useUpdateMessagesStatusMutation
+  useGetDialogMessagesQuery, useSendMessageMutation
 } from "@/services/messengerService/messengerEndpoints";
+import { MessengerFormSchema, messengerSchema } from "@/widgets/messenger/local/messengerSchema/messengerSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/router";
 
 export const useContainer = () => {
+  const {
+    control,
+    setValue,
+    watch,
+  } = useForm<MessengerFormSchema>({
+    defaultValues: {
+      message: ""
+    },
+    mode: "onChange",
+    resolver: zodResolver(messengerSchema)
+  });
 
   const { query, replace } = useRouter();
-
   const sent = query?.sent as string || "";
 
   const { data, isLoading } = useGetArrayOfLastMsgQuery({
@@ -19,23 +31,19 @@ export const useContainer = () => {
     pageSize: undefined,
     searchName: undefined
   });
-
   const { data: me } = useGetMeQuery() as { data: UserType };
-  const { data: dialogData } = useGetDialogMessagesQuery({ cursor: undefined, dialogPartnerId: +sent, pageSize: 5, searchName: undefined }, { skip: !sent });
+  const { data: dialogData } = useGetDialogMessagesQuery({
+    cursor: undefined,
+    dialogPartnerId: +sent,
+    pageSize: 5,
+    searchName: undefined
+  }, { skip: !sent });
   const [sendMessage] = useSendMessageMutation();
-  const [updateMessagesStatus] = useUpdateMessagesStatusMutation();
+
+  const message = watch('message')
   const lastMessages = data?.items;
   const dialogPartner = lastMessages?.find(msg => msg.ownerId === +sent || msg.receiverId === +sent);
   const dialogMessages = dialogData?.items;
-  const unreadMessages = dialogMessages?.reduce((acc, curr) => {
-    if (curr.status !== "READ") {
-      acc.push(curr.id);
-    }
-
-    return acc;
-  }, [] as number[]) || [];
-
-
   const { userId } = me;
 
 
@@ -43,9 +51,22 @@ export const useContainer = () => {
     void replace({ query: { sent } }, undefined, {
       shallow: true
     });
-  const test = () => sendMessage({ message: "64 сообщение, оно такое!!!", receiverId: 538 });
-  const test2 = () => updateMessagesStatus({ ids: unreadMessages });
+  const onSendMsgHandler = () => {
+    if(sent){
+      sendMessage({ message, receiverId: +sent })
+      setValue('message','')
+    }
+  }
 
 
-  return { dialogMessages, dialogPartner, lastMessages, me, onClickUserOpenChatHandler, test, test2, userId };
+  return {
+    control,
+    dialogMessages,
+    dialogPartner,
+    lastMessages,
+    message,
+    onClickUserOpenChatHandler,
+    onSendMsgHandler,
+    userId,
+  };
 };

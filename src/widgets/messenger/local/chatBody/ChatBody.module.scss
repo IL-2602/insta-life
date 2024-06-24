@@ -24,7 +24,7 @@
     flex-direction: column-reverse;
     gap: 10px;
 
-    padding: 23px 23px 0;
+    padding: 23px;
   }
 
   .footer {
@@ -41,7 +41,12 @@
 
       padding: 0 10px;
 
-      & > * {
+      .sendBtn {
+        cursor: pointer;
+        min-width: 115px;
+      }
+
+      .icons {
         cursor: pointer;
         display: flex;
         justify-content: center;

@@ -1,7 +1,15 @@
+.read {
+  color: var(--color-primary-500);
+}
+
+.unread {
+  color: var(--color-dark-300);
+}
+
 .root {
   display: flex;
-  flex-direction: column;
   align-items: flex-end;
+  justify-content: flex-end;
 
   .textWrapper {
     display: flex;

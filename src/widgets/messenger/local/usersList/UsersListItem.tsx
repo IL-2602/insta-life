@@ -1,5 +1,8 @@
 import { Message } from '@/services/messengerService/lib/messengerEndpoints.types'
+import { EmailIcon } from '@/shared/assets/icons/Email'
+import { MSG_STATUS } from '@/shared/constants/messenger'
 import { Typography } from '@/shared/ui/Typography'
+import { clsx } from 'clsx'
 import { format, isThisWeek, isThisYear, isToday } from 'date-fns'
 import { enUS, ru } from 'date-fns/locale'
 import { useRouter } from 'next/router'
@@ -25,7 +28,7 @@ const timeConversion = (dateTime: string, locale: string) => {
 }
 
 export const UsersListItem = ({ lastUserMsg, onClickOpenChat, userId }: Props) => {
-  const { createdAt, messageText, ownerId, receiverId, userName } = lastUserMsg
+  const { createdAt, messageText, ownerId, receiverId, status, userName } = lastUserMsg
   const { locale } = useRouter()
   const partnerId = userId === ownerId ? receiverId : ownerId
 
@@ -43,10 +46,21 @@ export const UsersListItem = ({ lastUserMsg, onClickOpenChat, userId }: Props) =
             {timeConversion(createdAt, locale ?? 'en')}
           </Typography>
         </div>
-        <Typography color={'form'} variant={'small'}>
+
+        <Typography
+          className={clsx(s.text, status !== MSG_STATUS.READ && receiverId !== userId && s.unread)}
+          color={'form'}
+          variant={'small'}
+        >
+          {ownerId === userId && 'You: '}
           {messageText}
         </Typography>
       </div>
+      {status !== MSG_STATUS.READ && ownerId !== userId && (
+        <div className={s.email}>
+          <EmailIcon />
+        </div>
+      )}
     </div>
   )
 }

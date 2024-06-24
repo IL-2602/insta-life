@@ -1,17 +1,27 @@
+import { KeyboardEvent } from 'react'
+import { Control } from 'react-hook-form'
+
 import { Message } from '@/services/messengerService/lib/messengerEndpoints.types'
 import { ImageIcon } from '@/shared/assets/icons/Image'
 import { MicroIcon } from '@/shared/assets/icons/Micro'
 import { Button } from '@/shared/ui/Button'
-import { TextArea } from '@/shared/ui/TextArea'
 import { Typography } from '@/shared/ui/Typography'
+import { ControlledTextAreaField } from '@/shared/ui/controlledInsta/ControlledTextArea/ControlledTextArea'
 import { OwnerMessage } from '@/widgets/messenger/local/messages/ownerMessage/OwnerMessage'
 import { ReceiverMessage } from '@/widgets/messenger/local/messages/receiverMessage/ReceiverMessage'
 
 import s from './ChatBody.module.scss'
 
 //** Переключение между типами и кнопка отправить **//
-export const ChatBody = ({ messages, userId }: Props) => {
-  if (!userId) {
+export const ChatBody = ({ control, message, messages, onSendMsg, userId }: Props) => {
+  const onEnterHandler = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault()
+      onSendMsg()
+    }
+  }
+
+  if (!userId || !messages?.length) {
     return (
       <div className={s.noMsg}>
         <Typography variant={'medium14'}>Choose who you would like to talk to</Typography>
@@ -31,14 +41,30 @@ export const ChatBody = ({ messages, userId }: Props) => {
         )}
       </div>
       <div className={s.footer}>
-        <TextArea placeholder={'Type Message'} textAreaClassName={s.textArea} />
+        <ControlledTextAreaField
+          control={control}
+          name={'message'}
+          onKeyDown={onEnterHandler}
+          placeholder={'Type Message'}
+          textAreaClassName={s.textArea}
+        />
         <div className={s.btnWrapper}>
-          <Button variant={'noStyle'}>
-            <MicroIcon />
-          </Button>
-          <Button variant={'noStyle'}>
-            <ImageIcon />
-          </Button>
+          {message ? (
+            <Button className={s.sendBtn} onClick={onSendMsg} variant={'noStyle'}>
+              <Typography color={'primary'} variant={'h3'}>
+                Send Message
+              </Typography>{' '}
+            </Button>
+          ) : (
+            <>
+              <Button className={s.icons} variant={'noStyle'}>
+                <MicroIcon />
+              </Button>
+              <Button className={s.icons} variant={'noStyle'}>
+                <ImageIcon />
+              </Button>
+            </>
+          )}
         </div>
       </div>
     </div>
@@ -46,6 +72,9 @@ export const ChatBody = ({ messages, userId }: Props) => {
 }
 
 type Props = {
+  control: Control<{ message: string }, any>
+  message?: string
   messages?: Omit<Message, 'avatars' | 'userName'>[]
+  onSendMsg: () => void
   userId?: number
 }
