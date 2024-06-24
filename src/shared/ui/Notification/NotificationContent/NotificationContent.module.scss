@@ -1,0 +1,54 @@
+.content {
+  overflow: auto;
+  min-width: 300px;
+  max-height: 500px;
+
+  .title {
+    padding: 10px 0;
+  }
+
+  .mainTitle::after {
+    content: '';
+
+    display: block;
+
+    width: 100%;
+    height: 2px;
+
+    background-color: var(--color-dark-100);
+  }
+
+  .element {
+    padding-bottom: 10px;
+
+    .newNotificationContainer {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+
+      .new {
+        color: var(--color-primary-500);
+      }
+    }
+
+    .notifyAt {
+      color: var(--color-light-900);
+    }
+  }
+
+  .element::before {
+    content: '';
+
+    display: block;
+
+    width: 100%;
+    height: 2px;
+
+    background-color: var(--color-dark-100);
+  }
+
+  .not {
+    padding: 24px 0;
+    text-align: center;
+  }
+}

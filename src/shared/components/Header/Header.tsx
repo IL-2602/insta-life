@@ -1,11 +1,15 @@
 import { memo } from 'react'
 
-import { Bell } from '@/shared/assets/icons/Bell'
+import {
+  useGetNotificationQuery,
+  useSubscribeToNotificationsQuery,
+} from '@/services/notificationService/notificationEndpoints'
 import { ROUTES } from '@/shared/constants/routes'
 import { useTranslation } from '@/shared/hooks/useTranslation'
 import { Button } from '@/shared/ui/Button'
 import { Container } from '@/shared/ui/Container'
 import { LangSwitcher } from '@/shared/ui/LangSwitcher'
+import { Notification } from '@/shared/ui/Notification'
 import { Typography } from '@/shared/ui/Typography'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -27,6 +31,13 @@ export const Header = memo(({ isAuth }: Props) => {
   const toSignIn = async () => {
     await router.push(ROUTES.LOGIN)
   }
+  const { data: notification } = useSubscribeToNotificationsQuery()
+  const { data: notificationsData } = useGetNotificationQuery({
+    cursor: notification && notification.id ? notification.id.toString() : '',
+  })
+
+  console.log('HEADER ', notification)
+  console.log('HEADER notificationsData ', notificationsData)
 
   return (
     <header className={s.header}>
@@ -39,12 +50,7 @@ export const Header = memo(({ isAuth }: Props) => {
         <div className={s.wrapper}>
           {isAuth ? (
             <div className={s.meContainer}>
-              <button className={s.bellButton}>
-                <Bell />
-                <Typography as={'span'} className={s.span}>
-                  3
-                </Typography>
-              </button>
+              <Notification notifications={notificationsData} />
               <LangSwitcher />
             </div>
           ) : (

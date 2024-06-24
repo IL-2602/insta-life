@@ -96,6 +96,7 @@ export const api = createApi({
     'Sessions',
     'LastMessages',
     'Dialogs',
+    'Notification'
   ],
 })
 
