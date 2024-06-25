@@ -26,16 +26,16 @@ export const useContainer = () => {
   const { query, replace } = useRouter();
   const sent = query?.sent as string || "";
 
-  const { data, isLoading } = useGetArrayOfLastMsgQuery({
+  const { data, isLoading:isLoadingLastMsgs } = useGetArrayOfLastMsgQuery({
     cursor: undefined,
     pageSize: undefined,
     searchName: undefined
   });
   const { data: me } = useGetMeQuery() as { data: UserType };
-  const { data: dialogData } = useGetDialogMessagesQuery({
+  const { data: dialogData, isLoading: isLoadingDialogData } = useGetDialogMessagesQuery({
     cursor: undefined,
     dialogPartnerId: +sent,
-    pageSize: 5,
+    pageSize: 15,
     searchName: undefined
   }, { skip: !sent });
   const [sendMessage] = useSendMessageMutation();
@@ -45,8 +45,8 @@ export const useContainer = () => {
   const dialogPartner = lastMessages?.find(msg => msg.ownerId === +sent || msg.receiverId === +sent);
   const dialogMessages = dialogData?.items;
   const { userId } = me;
-
-
+  const isLoadingMessenger = isLoadingLastMsgs
+  const isLoadingChat = isLoadingDialogData
   const onClickUserOpenChatHandler = (sent: number) =>
     void replace({ query: { sent } }, undefined, {
       shallow: true
@@ -63,10 +63,12 @@ export const useContainer = () => {
     control,
     dialogMessages,
     dialogPartner,
+    isLoadingChat,
+    isLoadingMessenger,
     lastMessages,
     message,
     onClickUserOpenChatHandler,
     onSendMsgHandler,
-    userId,
+    userId
   };
 };

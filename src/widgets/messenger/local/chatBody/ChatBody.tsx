@@ -1,4 +1,11 @@
-import { KeyboardEvent } from 'react'
+import {
+  KeyboardEvent,
+  ReactEventHandler,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react'
 import { Control } from 'react-hook-form'
 
 import { Message } from '@/services/messengerService/lib/messengerEndpoints.types'
@@ -9,11 +16,27 @@ import { Typography } from '@/shared/ui/Typography'
 import { ControlledTextAreaField } from '@/shared/ui/controlledInsta/ControlledTextArea/ControlledTextArea'
 import { OwnerMessage } from '@/widgets/messenger/local/messages/ownerMessage/OwnerMessage'
 import { ReceiverMessage } from '@/widgets/messenger/local/messages/receiverMessage/ReceiverMessage'
+import * as ScrollArea from '@radix-ui/react-scroll-area'
 
 import s from './ChatBody.module.scss'
 
 //** Переключение между типами и кнопка отправить **//
 export const ChatBody = ({ control, message, messages, onSendMsg, userId }: Props) => {
+  const viewportRef = useRef<HTMLDivElement>(null)
+  const [loading, setIsLoading] = useState(true)
+
+  // useLayoutEffect(() => {
+  //   // Прокручиваем ScrollArea вниз
+  //   if (viewportRef) {
+  //     viewportRef.current?.scrollTo({ behavior: 'smooth', top: viewportRef.current.scrollHeight })
+  //   }
+  // }, [])
+
+  const test = (e: ReactEventHandler<HTMLDivElement>) => {
+    if (viewportRef) {
+      viewportRef.current?.scrollTo({ behavior: 'smooth', top: viewportRef.current.scrollHeight })
+    }
+  }
   const onEnterHandler = (event: KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === 'Enter' && !event.shiftKey) {
       event.preventDefault()
@@ -31,15 +54,23 @@ export const ChatBody = ({ control, message, messages, onSendMsg, userId }: Prop
 
   return (
     <div className={s.root}>
-      <div className={s.body}>
-        {messages?.map(msg =>
-          msg.ownerId === userId ? (
-            <OwnerMessage key={msg.id} message={msg} />
-          ) : (
-            <ReceiverMessage key={msg.id} message={msg} />
-          )
-        )}
-      </div>
+      <ScrollArea.Root className={s.scroll} type={'always'}>
+        <ScrollArea.Viewport className={s.view} dir={'ltr'} ref={viewportRef}>
+          <div className={s.body}>
+            {messages?.map(msg =>
+              msg.ownerId === userId ? (
+                <OwnerMessage key={msg.id} message={msg} />
+              ) : (
+                <ReceiverMessage key={msg.id} message={msg} />
+              )
+            )}
+          </div>
+        </ScrollArea.Viewport>
+        <ScrollArea.Scrollbar className={s.scrollbar} orientation={'vertical'}>
+          <ScrollArea.Thumb className={s.thumb} />
+        </ScrollArea.Scrollbar>
+      </ScrollArea.Root>
+
       <div className={s.footer}>
         <ControlledTextAreaField
           control={control}

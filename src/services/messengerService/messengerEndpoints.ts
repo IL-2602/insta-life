@@ -148,6 +148,11 @@ export const messengerEndpoints = api.injectEndpoints({
           url: `messanger/${dialogPartnerId}`,
         }
       },
+      transformResponse: (response: GetDialogMessagesResponse, _meta, _arg) => {
+        response.items?.sort((a, b) => a.id - b.id)
+
+        return response
+      },
     }),
     sendMessage: builder.mutation<Message, { message: string; receiverId: number }>({
       queryFn: params => {

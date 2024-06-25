@@ -14,14 +14,19 @@ export const Messenger = memo(({
                                  control,
                                  dialogMessages,
                                  dialogPartner,
+                                 isLoadingChat,
+                                 isLoadingMessenger,
                                  lastMessages,
                                  message,
                                  onClickUserOpenChatHandler,
                                  onSendMsgHandler,
-  userId
+                                 userId
                                }: MessengerProps) => {
   if (!userId) {
     return null;
+  }
+  if (isLoadingMessenger) {
+    return null
   }
 
   return (
@@ -43,9 +48,11 @@ export const Messenger = memo(({
           <ChatHead dialogPartner={dialogPartner} />
         </div>
         <div className={s.chatBody}>
-          <ChatBody control={control} message={message} messages={dialogMessages} onSendMsg={onSendMsgHandler} userId={userId} />
+          <ChatBody control={control} message={message} messages={dialogMessages} onSendMsg={onSendMsgHandler}
+                    userId={userId} />
         </div>
       </div>
     </div>
   );
 });
+;
