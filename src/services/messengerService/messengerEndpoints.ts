@@ -33,7 +33,10 @@ export const messengerEndpoints = api.injectEndpoints({
       GetMessengerArrayOfLatestMsgResponse,
       GetMessengerArrayOfLatestMsgParams
     >({
-      async onCacheEntryAdded(_, { cacheDataLoaded, cacheEntryRemoved, updateCachedData }) {
+      async onCacheEntryAdded(
+        _,
+        { cacheDataLoaded, cacheEntryRemoved, dispatch, updateCachedData }
+      ) {
         try {
           await cacheDataLoaded
           // the /chat-messages endpoint responded already
@@ -42,16 +45,45 @@ export const messengerEndpoints = api.injectEndpoints({
 
           socket.on(MESSENGER_WS_EVENT.MESSAGE_SENT, (message: Message, cb) => {
             updateCachedData(draft => {
-              draft.items = draft?.items?.map(msg =>
-                msg.ownerId === message.ownerId && msg.receiverId === message.receiverId
-                  ? Object.assign(msg, message)
-                  : msg
-              )
+              const hasMsg = draft?.items?.find(msg => msg.receiverId === message.receiverId)
+
+              if (hasMsg) {
+                hasMsg.messageText = message.messageText
+                hasMsg.status = message.status
+              }
               cb({ messageId: message.id, status: 'RECEIVED' })
             })
           })
+          socket.on(MESSENGER_WS_EVENT.RECEIVE_MESSAGE, (message: Message) => {
+            if (Array.isArray(message)) {
+              updateCachedData(draft => {
+                draft.items = draft?.items?.map(msg =>
+                  msg.receiverId === message[message?.length - 1].receiverId
+                    ? {
+                        ...msg,
+                        messageText: message[message?.length - 1].messageText,
+                        status: message[message?.length - 1].status,
+                      }
+                    : msg
+                )
+              })
+            } else {
+              updateCachedData(draft => {
+                draft.items = draft?.items?.map(msg =>
+                  msg.receiverId === message.receiverId
+                    ? {
+                        ...msg,
+                        messageText: message.messageText,
+                        status: message.status,
+                      }
+                    : msg
+                )
+              })
+            }
+          })
           await cacheEntryRemoved
-          socket.off(MESSENGER_WS_EVENT.MESSAGE_SENT)
+          socket.off(MESSENGER_WS_EVENT.RECEIVE_MESSAGE)
+          socket.close()
         } catch {
           // if cacheEntryRemoved resolved before cacheDataLoaded,
           // cacheDataLoaded throws
@@ -77,12 +109,10 @@ export const messengerEndpoints = api.injectEndpoints({
 
           const socket = getSocket()
 
-          socket.on(MESSENGER_WS_EVENT.MESSAGE_SENT, (message: Message, cb) => {
+          socket.on(MESSENGER_WS_EVENT.MESSAGE_SENT, (message: Message) => {
             updateCachedData(draft => {
               draft.items?.unshift(message)
-              cb({ messageId: message.id, status: 'READ' })
             })
-            dispatch(api.util?.invalidateTags(['LastMessages']))
           })
           socket.on(MESSENGER_WS_EVENT.RECEIVE_MESSAGE, (message: Message) => {
             if (Array.isArray(message)) {
@@ -108,36 +138,10 @@ export const messengerEndpoints = api.injectEndpoints({
           await cacheEntryRemoved
           socket.off(MESSENGER_WS_EVENT.MESSAGE_SENT)
           socket.off(MESSENGER_WS_EVENT.RECEIVE_MESSAGE)
+          socket.close()
         } catch {
           // if cacheEntryRemoved resolved before cacheDataLoaded,
           // cacheDataLoaded throws
-        }
-      },
-      onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
-        try {
-          const result = await queryFulfilled
-
-          if (result?.data) {
-            const unreadMsgs =
-              result.data.items?.reduce((acc, curr) => {
-                if (curr.status !== 'READ') {
-                  acc.push(curr.id)
-                }
-
-                return acc
-              }, [] as number[]) || []
-
-            if (unreadMsgs?.length) {
-              dispatch(
-                messengerEndpoints.endpoints.updateMessagesStatus.initiate({ ids: unreadMsgs })
-              )
-            }
-          }
-          // setTimeout(() => {
-          //   dispatch(api.util.invalidateTags(['Me']))
-          // }, 50)
-        } catch (e) {
-          console.log(e)
         }
       },
       providesTags: ['Dialogs'],
@@ -147,11 +151,6 @@ export const messengerEndpoints = api.injectEndpoints({
           params: rest || {},
           url: `messanger/${dialogPartnerId}`,
         }
-      },
-      transformResponse: (response: GetDialogMessagesResponse, _meta, _arg) => {
-        response.items?.sort((a, b) => a.id - b.id)
-
-        return response
       },
     }),
     sendMessage: builder.mutation<Message, { message: string; receiverId: number }>({

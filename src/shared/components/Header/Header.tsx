@@ -36,8 +36,8 @@ export const Header = memo(({ isAuth }: Props) => {
     cursor: notification && notification.id ? notification.id.toString() : '',
   })
 
-  console.log('HEADER ', notification)
-  console.log('HEADER notificationsData ', notificationsData)
+  // console.log('HEADER ', notification)
+  // console.log('HEADER notificationsData ', notificationsData)
 
   return (
     <header className={s.header}>

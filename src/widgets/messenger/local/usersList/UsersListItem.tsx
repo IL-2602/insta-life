@@ -1,6 +1,7 @@
 import { Message } from '@/services/messengerService/lib/messengerEndpoints.types'
 import { EmailIcon } from '@/shared/assets/icons/Email'
 import { MSG_STATUS } from '@/shared/constants/messenger'
+import { Avatar } from '@/shared/ui/Avatar'
 import { Typography } from '@/shared/ui/Typography'
 import { clsx } from 'clsx'
 import { format, isThisWeek, isThisYear, isToday } from 'date-fns'
@@ -10,7 +11,6 @@ import { useRouter } from 'next/router'
 import s from './UsersListItem.module.scss'
 
 //*** Avatar + проверка кто последний отправил сообщение (YouName or userName) + время **//
-
 const timeConversion = (dateTime: string, locale: string) => {
   const date = new Date(dateTime)
 
@@ -28,7 +28,7 @@ const timeConversion = (dateTime: string, locale: string) => {
 }
 
 export const UsersListItem = ({ lastUserMsg, onClickOpenChat, userId }: Props) => {
-  const { createdAt, messageText, ownerId, receiverId, status, userName } = lastUserMsg
+  const { avatars, createdAt, messageText, ownerId, receiverId, status, userName } = lastUserMsg
   const { locale } = useRouter()
   const partnerId = userId === ownerId ? receiverId : ownerId
 
@@ -38,7 +38,9 @@ export const UsersListItem = ({ lastUserMsg, onClickOpenChat, userId }: Props) =
 
   return (
     <div className={s.root} onClick={() => onClickOpenChat(partnerId)}>
-      <div className={s.avatar}></div>
+      <div className={s.avatar}>
+        <Avatar userAvatar={avatars[0]?.url} />
+      </div>
       <div className={s.description}>
         <div className={s.desc_head}>
           <Typography variant={'regular14'}>{userName}</Typography>

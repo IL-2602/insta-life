@@ -21,7 +21,7 @@
   .body {
     display: flex;
     grid-row: 1/2;
-    flex-direction: column;
+    flex-direction: column-reverse;
     gap: 10px;
 
     height: 100%;

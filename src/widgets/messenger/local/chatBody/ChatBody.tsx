@@ -1,11 +1,4 @@
-import {
-  KeyboardEvent,
-  ReactEventHandler,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from 'react'
+import { KeyboardEvent, ReactEventHandler, useEffect, useRef } from 'react'
 import { Control } from 'react-hook-form'
 
 import { Message } from '@/services/messengerService/lib/messengerEndpoints.types'
@@ -21,16 +14,23 @@ import * as ScrollArea from '@radix-ui/react-scroll-area'
 import s from './ChatBody.module.scss'
 
 //** Переключение между типами и кнопка отправить **//
-export const ChatBody = ({ control, message, messages, onSendMsg, userId }: Props) => {
+export const ChatBody = ({
+  control,
+  dialogPartner,
+  message,
+  messages,
+  onSendMsg,
+  userId,
+}: Props) => {
   const viewportRef = useRef<HTMLDivElement>(null)
-  const [loading, setIsLoading] = useState(true)
+  const avatar = dialogPartner?.avatars[0]?.url
 
-  // useLayoutEffect(() => {
-  //   // Прокручиваем ScrollArea вниз
-  //   if (viewportRef) {
-  //     viewportRef.current?.scrollTo({ behavior: 'smooth', top: viewportRef.current.scrollHeight })
-  //   }
-  // }, [])
+  useEffect(() => {
+    // Прокручиваем ScrollArea вниз
+    if (viewportRef) {
+      viewportRef.current?.scrollTo({ behavior: 'smooth', top: viewportRef.current.scrollHeight })
+    }
+  }, [messages?.length])
 
   const test = (e: ReactEventHandler<HTMLDivElement>) => {
     if (viewportRef) {
@@ -44,7 +44,7 @@ export const ChatBody = ({ control, message, messages, onSendMsg, userId }: Prop
     }
   }
 
-  if (!userId || !messages?.length) {
+  if (!userId || !dialogPartner?.userName) {
     return (
       <div className={s.noMsg}>
         <Typography variant={'medium14'}>Choose who you would like to talk to</Typography>
@@ -61,7 +61,7 @@ export const ChatBody = ({ control, message, messages, onSendMsg, userId }: Prop
               msg.ownerId === userId ? (
                 <OwnerMessage key={msg.id} message={msg} />
               ) : (
-                <ReceiverMessage key={msg.id} message={msg} />
+                <ReceiverMessage key={msg.id} message={msg} partnerAvatar={avatar} />
               )
             )}
           </div>
@@ -104,6 +104,7 @@ export const ChatBody = ({ control, message, messages, onSendMsg, userId }: Prop
 
 type Props = {
   control: Control<{ message: string }, any>
+  dialogPartner?: Message
   message?: string
   messages?: Omit<Message, 'avatars' | 'userName'>[]
   onSendMsg: () => void

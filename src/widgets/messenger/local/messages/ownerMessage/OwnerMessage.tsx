@@ -2,10 +2,31 @@ import { Message } from '@/services/messengerService/lib/messengerEndpoints.type
 import { CheckIcon } from '@/shared/assets/icons/Check'
 import { DoubleCheckIcon } from '@/shared/assets/icons/DoubleCheck'
 import { Typography } from '@/shared/ui/Typography'
+import { format, isThisWeek, isThisYear, isToday } from 'date-fns'
+import { enUS, ru } from 'date-fns/locale'
+import { useRouter } from 'next/router'
 
 import s from './OwnerMessage.module.scss'
+
+const timeConversion = (dateTime: string, locale: string) => {
+  const date = new Date(dateTime)
+
+  const currentLocale = locale === 'ru' ? ru : enUS
+
+  if (isToday(date)) {
+    return format(date, 'HH:mm', { locale: currentLocale })
+  } else if (isThisWeek(date)) {
+    return format(date, 'dd.MM HH:mm', { locale: currentLocale })
+  } else if (isThisYear(date)) {
+    return format(date, 'd MMMM', { locale: currentLocale })
+  } else {
+    return format(date, 'dd.MM.yyyy', { locale: currentLocale })
+  }
+}
+
 export const OwnerMessage = ({ message }: Props) => {
-  const { messageText, status } = message
+  const { locale } = useRouter()
+  const { createdAt, messageText, status } = message
 
   const msgStatusIcon = {
     READ: <DoubleCheckIcon className={s.read} />,
@@ -19,7 +40,7 @@ export const OwnerMessage = ({ message }: Props) => {
       <div className={s.textWrapper}>
         <Typography variant={'regular14'}>{messageText}</Typography>
         <Typography color={'primary'} variant={'small'}>
-          14:53
+          {timeConversion(createdAt, locale ?? 'en')}
         </Typography>
       </div>
     </div>

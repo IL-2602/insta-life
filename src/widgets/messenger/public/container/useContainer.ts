@@ -1,10 +1,11 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 import { useGetMeQuery } from "@/services/authService/authEndpoints";
 import { UserType } from "@/services/authService/lib/authEndpoints.types";
 import {
   useGetArrayOfLastMsgQuery,
-  useGetDialogMessagesQuery, useSendMessageMutation
+  useGetDialogMessagesQuery, useSendMessageMutation, useUpdateMessagesStatusMutation
 } from "@/services/messengerService/messengerEndpoints";
 import { MessengerFormSchema, messengerSchema } from "@/widgets/messenger/local/messengerSchema/messengerSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -39,14 +40,16 @@ export const useContainer = () => {
     searchName: undefined
   }, { skip: !sent });
   const [sendMessage] = useSendMessageMutation();
-
+  const [updateMessage] = useUpdateMessagesStatusMutation()
   const message = watch('message')
   const lastMessages = data?.items;
+
   const dialogPartner = lastMessages?.find(msg => msg.ownerId === +sent || msg.receiverId === +sent);
   const dialogMessages = dialogData?.items;
   const { userId } = me;
   const isLoadingMessenger = isLoadingLastMsgs
   const isLoadingChat = isLoadingDialogData
+
   const onClickUserOpenChatHandler = (sent: number) =>
     void replace({ query: { sent } }, undefined, {
       shallow: true
@@ -58,6 +61,20 @@ export const useContainer = () => {
     }
   }
 
+  useEffect(() => {
+    const unreadMsgs =
+      dialogMessages?.reduce((acc, curr) => {
+        if (curr.status !== 'READ' && curr.receiverId === userId) {
+          acc.push(curr.id)
+        }
+
+        return acc
+      }, [] as number[]) || []
+
+    if(unreadMsgs?.length){
+      updateMessage({ids: unreadMsgs})
+    }
+  }, [dialogMessages?.length]);
 
   return {
     control,

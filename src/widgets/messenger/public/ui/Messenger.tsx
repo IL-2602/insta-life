@@ -48,7 +48,7 @@ export const Messenger = memo(({
           <ChatHead dialogPartner={dialogPartner} />
         </div>
         <div className={s.chatBody}>
-          <ChatBody control={control} message={message} messages={dialogMessages} onSendMsg={onSendMsgHandler}
+          <ChatBody control={control} dialogPartner={dialogPartner} message={message} messages={dialogMessages} onSendMsg={onSendMsgHandler}
                     userId={userId} />
         </div>
       </div>
