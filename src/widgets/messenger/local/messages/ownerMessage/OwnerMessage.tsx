@@ -1,3 +1,5 @@
+import { forwardRef } from 'react'
+
 import { Message } from '@/services/messengerService/lib/messengerEndpoints.types'
 import { CheckIcon } from '@/shared/assets/icons/Check'
 import { DoubleCheckIcon } from '@/shared/assets/icons/DoubleCheck'
@@ -24,9 +26,9 @@ const timeConversion = (dateTime: string, locale: string) => {
   }
 }
 
-export const OwnerMessage = ({ message }: Props) => {
+export const OwnerMessage = forwardRef<HTMLDivElement, Props>(({ message }, ref) => {
   const { locale } = useRouter()
-  const { createdAt, messageText, status } = message
+  const { createdAt, id, messageText, status } = message
 
   const msgStatusIcon = {
     READ: <DoubleCheckIcon className={s.read} />,
@@ -35,7 +37,7 @@ export const OwnerMessage = ({ message }: Props) => {
   }
 
   return (
-    <div className={s.root}>
+    <div className={s.root} id={id.toString()} ref={ref}>
       {msgStatusIcon[status]}
       <div className={s.textWrapper}>
         <Typography variant={'regular14'}>{messageText}</Typography>
@@ -45,7 +47,8 @@ export const OwnerMessage = ({ message }: Props) => {
       </div>
     </div>
   )
-}
+})
+
 type Props = {
   message: Omit<Message, 'avatars' | 'userName'>
 }

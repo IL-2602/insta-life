@@ -1,3 +1,5 @@
+import { RefObject, forwardRef } from 'react'
+
 import { Message } from '@/services/messengerService/lib/messengerEndpoints.types'
 import { Avatar } from '@/shared/ui/Avatar'
 import { Typography } from '@/shared/ui/Typography'
@@ -23,24 +25,26 @@ const timeConversion = (dateTime: string, locale: string) => {
   }
 }
 
-export const ReceiverMessage = ({ message, partnerAvatar }: Props) => {
-  const { createdAt, messageText } = message
-  const { locale } = useRouter()
+export const ReceiverMessage = forwardRef<HTMLDivElement, Props>(
+  ({ message, partnerAvatar }, ref) => {
+    const { createdAt, id, messageText } = message
+    const { locale } = useRouter()
 
-  return (
-    <div className={s.root}>
-      <div className={s.avatar}>
-        <Avatar height={32} userAvatar={partnerAvatar} width={32} />
+    return (
+      <div className={s.root} id={id.toString()} ref={ref}>
+        <div className={s.avatar}>
+          <Avatar height={32} userAvatar={partnerAvatar} width={32} />
+        </div>
+        <div className={s.textWrapper}>
+          <Typography variant={'regular14'}>{messageText}</Typography>
+          <Typography color={'form'} variant={'small'}>
+            {timeConversion(createdAt, locale ?? 'en')}
+          </Typography>
+        </div>
       </div>
-      <div className={s.textWrapper}>
-        <Typography variant={'regular14'}>{messageText}</Typography>
-        <Typography color={'form'} variant={'small'}>
-          {timeConversion(createdAt, locale ?? 'en')}
-        </Typography>
-      </div>
-    </div>
-  )
-}
+    )
+  }
+)
 type Props = {
   message: Omit<Message, 'avatars' | 'userName'>
   partnerAvatar?: string

@@ -99,6 +99,16 @@ export const messengerEndpoints = api.injectEndpoints({
       },
     }),
     getDialogMessages: builder.query<GetDialogMessagesResponse, GetDialogMessagesParams>({
+      forceRefetch({ currentArg, previousArg }) {
+        return currentArg !== previousArg
+      },
+      merge: (currentCache, newItems, otherArgs) => {
+        if (otherArgs.arg.cursor === undefined) {
+          currentCache.items = newItems.items
+        } else {
+          currentCache.items.push(...newItems.items)
+        }
+      },
       async onCacheEntryAdded(
         _,
         { cacheDataLoaded, cacheEntryRemoved, dispatch, updateCachedData }
@@ -151,6 +161,9 @@ export const messengerEndpoints = api.injectEndpoints({
           params: rest || {},
           url: `messanger/${dialogPartnerId}`,
         }
+      },
+      serializeQueryArgs: ({ endpointName }) => {
+        return endpointName
       },
     }),
     sendMessage: builder.mutation<Message, { message: string; receiverId: number }>({

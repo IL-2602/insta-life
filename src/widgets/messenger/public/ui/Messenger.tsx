@@ -1,6 +1,5 @@
 import { memo } from "react";
 
-import { Button } from "@/shared/ui/Button";
 import { TextField } from "@/shared/ui/Textfield";
 import { Typography } from "@/shared/ui/Typography";
 import { ChatBody } from "@/widgets/messenger/local/chatBody/ChatBody";
@@ -16,6 +15,7 @@ export const Messenger = memo(({
                                  dialogPartner,
                                  isLoadingChat,
                                  isLoadingMessenger,
+                                 lastElRef,
                                  lastMessages,
                                  message,
                                  onClickUserOpenChatHandler,
@@ -26,7 +26,7 @@ export const Messenger = memo(({
     return null;
   }
   if (isLoadingMessenger) {
-    return null
+    return null;
   }
 
   return (
@@ -48,7 +48,8 @@ export const Messenger = memo(({
           <ChatHead dialogPartner={dialogPartner} />
         </div>
         <div className={s.chatBody}>
-          <ChatBody control={control} dialogPartner={dialogPartner} message={message} messages={dialogMessages} onSendMsg={onSendMsgHandler}
+          <ChatBody control={control} dialogPartner={dialogPartner} isLoadingChat={isLoadingChat} message={message} messages={dialogMessages}
+                    onSendMsg={onSendMsgHandler} ref={lastElRef}
                     userId={userId} />
         </div>
       </div>
