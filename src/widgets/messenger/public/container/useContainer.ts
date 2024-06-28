@@ -1,7 +1,6 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import {Dispatch, SetStateAction, useCallback, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 
-import {useAppSelector} from "@/app/store/hooks/useAppSelector";
 import { useGetMeQuery } from "@/services/authService/authEndpoints";
 import { UserType } from "@/services/authService/lib/authEndpoints.types";
 import {
@@ -10,9 +9,14 @@ import {
 } from "@/services/messengerService/messengerEndpoints";
 import { MessengerFormSchema, messengerSchema } from "@/widgets/messenger/local/messengerSchema/messengerSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import debounce from "debounce";
 import { useRouter } from "next/router";
 
 export const useContainer = () => {
+
+  const { query, replace } = useRouter();
+  const sent = query?.sent as string || "";
+
   const {
     control,
     setValue,
@@ -25,16 +29,20 @@ export const useContainer = () => {
     resolver: zodResolver(messengerSchema)
   });
 
-  const { query, replace } = useRouter();
-  const sent = query?.sent as string || "";
-  const infoMessage = useAppSelector(state => state.messageReducer.messageData)
-  const [cursor, setCursor] = useState<number | undefined>(undefined)
+
+  const searchNameLastMsg = watch('searchName')
+  const [searchNameLastMsgDebounced, setSearchNameLastMsgDebounced] = useState<string | undefined>(undefined)
+
+
   const { data, isLoading: isLoadingLastMsgs } = useGetArrayOfLastMsgQuery({
     cursor: undefined,
     pageSize: undefined,
-    searchName: undefined
+    searchName: searchNameLastMsgDebounced
   });
+
   const { data: me } = useGetMeQuery() as { data: UserType };
+  const [cursor, setCursor] = useState<number | undefined>(undefined)
+
   const { data: dialogData, isFetching: isFetchingDialogData, isLoading: isLoadingDialogData } = useGetDialogMessagesQuery({
     cursor: cursor,
     dialogPartnerId: +sent,
@@ -42,22 +50,13 @@ export const useContainer = () => {
     searchName: undefined
   }, { skip: !sent });
 
+
   const [sendMessage] = useSendMessageMutation();
   const [updateMessage] = useUpdateMessagesStatusMutation();
+
   const message = watch("message");
-
-  let lastMessages = data?.items;
-
-  if(infoMessage) {
-    const findMessage = data?.items.find(item => item.receiverId === infoMessage.id);
-
-
-    if(!findMessage && lastMessages) {
-      lastMessages = [infoMessage, ...lastMessages];
-    }
-  }
-
-  const dialogPartner = lastMessages?.find(msg => msg.ownerId === +sent || msg.receiverId === +sent) || infoMessage
+  const lastMessages = data?.items;
+  const dialogPartner = lastMessages?.find(msg => msg.ownerId === +sent || msg.receiverId === +sent);
   const dialogMessages = dialogData?.items;
   const { userId } = me;
   const isLoadingMessenger = isLoadingLastMsgs;
@@ -67,13 +66,11 @@ export const useContainer = () => {
     void replace({ query: { sent } }, undefined, {
       shallow: true
     });
-
   const onSendMsgHandler = () => {
-    if (sent) {
+    if (sent && message.trim()) {
       sendMessage({ message, receiverId: +sent });
       setValue("message", "");
     }
-
   };
   const cursorRef = useRef<IntersectionObserver | null>(null)
   const lastElRef = useCallback((node: HTMLDivElement | null) => {
@@ -95,6 +92,13 @@ export const useContainer = () => {
     }
   },[isLoadingChat])
 
+
+  useEffect(() => {
+    const timerID = setTimeout(() => setSearchNameLastMsgDebounced(searchNameLastMsg),500)
+
+    return () => clearTimeout(timerID)
+  }, [searchNameLastMsg]);
+
   useEffect(() => {
     const unreadMsgs =
       dialogMessages?.reduce((acc, curr) => {
@@ -108,8 +112,6 @@ export const useContainer = () => {
     if (unreadMsgs?.length) {
       updateMessage({ ids: unreadMsgs });
     }
-
-
   }, [dialogMessages?.length]);
 
   return {
