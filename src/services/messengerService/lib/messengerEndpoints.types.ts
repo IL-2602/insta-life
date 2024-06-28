@@ -45,3 +45,13 @@ export type GetDialogMessagesResponse = {
 export type GetDialogMessagesParams = {
   dialogPartnerId: number
 } & GetMessengerArrayOfLatestMsgParams
+
+export type InfoMessage = {
+  id: null | number
+  url: string
+  userName: string
+}
+
+export type MessageInitialState = {
+  messageData: InfoMessage[]
+}

@@ -39,12 +39,11 @@ export const useContainer = () => {
     searchName: undefined
   }, { skip: !sent });
 
-
-
   const [sendMessage] = useSendMessageMutation();
   const [updateMessage] = useUpdateMessagesStatusMutation();
   const message = watch("message");
   const lastMessages = data?.items;
+
 
   const dialogPartner = lastMessages?.find(msg => msg.ownerId === +sent || msg.receiverId === +sent);
   const dialogMessages = dialogData?.items;
@@ -56,11 +55,13 @@ export const useContainer = () => {
     void replace({ query: { sent } }, undefined, {
       shallow: true
     });
+
   const onSendMsgHandler = () => {
     if (sent) {
       sendMessage({ message, receiverId: +sent });
       setValue("message", "");
     }
+
   };
   const cursorRef = useRef<IntersectionObserver | null>(null)
   const lastElRef = useCallback((node: HTMLDivElement | null) => {
