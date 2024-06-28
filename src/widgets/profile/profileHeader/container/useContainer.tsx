@@ -36,6 +36,8 @@ export const useContainer = () => {
 
     dispatch(messageActions.getMessageInfo(infoMessage))
 
+    console.log('infoMessage')
+
     void push(ROUTES.MESSENGER + `?sent=${profileId}`)
   }
 
