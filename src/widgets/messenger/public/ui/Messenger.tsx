@@ -1,7 +1,7 @@
 import { memo } from "react";
 
-import { TextField } from "@/shared/ui/Textfield";
 import { Typography } from "@/shared/ui/Typography";
+import { ControlledTextField } from "@/shared/ui/controlledInsta/ControlledTextField/ControlledTextField";
 import { ChatBody } from "@/widgets/messenger/local/chatBody/ChatBody";
 import { ChatHead } from "@/widgets/messenger/local/chatHead/ChatHead";
 import { UsersListItem } from "@/widgets/messenger/local/usersList/UsersListItem";
@@ -34,7 +34,7 @@ export const Messenger = memo(({
       <Typography variant={"h1"}>Messenger</Typography>
       <div className={s.messenger}>
         <div className={s.search}>
-          <TextField placeholder={"Input search"} type={"search"} />
+          <ControlledTextField control={control} name={'searchName'} placeholder={"Input search"}/>
         </div>
         <div className={s.usersList}>
           <ul>

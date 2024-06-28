@@ -1,5 +1,5 @@
 import { Local } from './en'
-
+//eslint-disable max-len
 export const ru: Local = {
   auth: {
     button: {

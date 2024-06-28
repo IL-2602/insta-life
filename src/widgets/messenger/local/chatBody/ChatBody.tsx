@@ -110,7 +110,7 @@ export const ChatBody = forwardRef<HTMLDivElement, Props>(
 )
 
 type Props = {
-  control: Control<{ message: string }, any>
+  control: Control<{ message: string; searchName: string }, any>
   dialogPartner?: Message
   isLoadingChat?: boolean
   message?: string
