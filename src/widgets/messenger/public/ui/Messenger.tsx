@@ -22,14 +22,17 @@ export const Messenger = memo(({
                                  onSendMsgHandler,
                                  userId
                                }: MessengerProps) => {
-  if (!userId) {
+
+    if (!userId) {
     return null;
   }
   if (isLoadingMessenger) {
     return null;
   }
 
-  return (
+
+
+    return (
     <div className={s.root}>
       <Typography variant={"h1"}>Messenger</Typography>
       <div className={s.messenger}>
@@ -37,18 +40,18 @@ export const Messenger = memo(({
           <TextField placeholder={"Input search"} type={"search"} />
         </div>
         <div className={s.usersList}>
-          <ul>
-            {lastMessages?.map(msg => <li key={msg.id}><UsersListItem lastUserMsg={msg}
-                                                                      onClickOpenChat={onClickUserOpenChatHandler}
-                                                                      userId={userId} />
-            </li>)}
-          </ul>
+            <ul>
+                {lastMessages?.map(msg => <li key={msg.id}><UsersListItem lastUserMsg={msg}
+                                                                          onClickOpenChat={onClickUserOpenChatHandler}
+                                                                          userId={userId}/>
+                </li>)}
+            </ul>
         </div>
-        <div className={s.chatHead}>
-          <ChatHead dialogPartner={dialogPartner} />
-        </div>
-        <div className={s.chatBody}>
-          <ChatBody control={control} dialogPartner={dialogPartner} isLoadingChat={isLoadingChat} message={message} messages={dialogMessages}
+          <div className={s.chatHead}>
+              <ChatHead dialogPartner={dialogPartner || undefined}/>
+          </div>
+          <div className={s.chatBody}>
+              <ChatBody control={control} dialogPartner={dialogPartner || undefined} isLoadingChat={isLoadingChat} message={message} messages={dialogMessages}
                     onSendMsg={onSendMsgHandler} ref={lastElRef}
                     userId={userId} />
         </div>
@@ -56,4 +59,4 @@ export const Messenger = memo(({
     </div>
   );
 });
-;
+

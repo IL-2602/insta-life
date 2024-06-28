@@ -1,6 +1,7 @@
 import { useAppDispatch } from '@/app/store/hooks/useAppDispatch'
 import { useGetMeQuery } from '@/services/authService/authEndpoints'
 import { UserType } from '@/services/authService/lib/authEndpoints.types'
+import { Message } from '@/services/messengerService/lib/messengerEndpoints.types'
 import { messageActions } from '@/services/messengerService/store/slice/messengerEndpoints.slice'
 import { useGetPublicUserProfileQuery } from '@/services/publicService/publicEndpoints'
 import { ROUTES } from '@/shared/constants/routes'
@@ -20,9 +21,16 @@ export const useContainer = () => {
       return null
     }
 
-    const infoMessage = {
+    const infoMessage: Message = {
+      avatars: data.avatars,
+      createdAt: new Date().toString(),
       id: data.id,
-      url: data.avatars[0].url,
+      messageText: '',
+      messageType: 'TEXT',
+      ownerId: me.userId,
+      receiverId: data.id,
+      status: 'READ',
+      updatedAt: new Date().toString(),
       userName: data.userName,
     } as const
 

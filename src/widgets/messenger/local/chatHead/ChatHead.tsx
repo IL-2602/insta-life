@@ -1,7 +1,6 @@
 import { Message } from '@/services/messengerService/lib/messengerEndpoints.types'
 import { Avatar } from '@/shared/ui/Avatar'
 import { Typography } from '@/shared/ui/Typography'
-import Image from 'next/image'
 
 import s from './ChatHead.module.scss'
 export const ChatHead = ({ dialogPartner }: Props) => {

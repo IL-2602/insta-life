@@ -43,7 +43,7 @@ export const ChatBody = forwardRef<HTMLDivElement, Props>(
               {messages?.map((msg, idx) => {
                 const length = messages?.length
 
-                if (length === idx + 1) {
+                if (length === idx + 1 && length > 14) {
                   return msg.ownerId === userId ? (
                     <OwnerMessage key={msg.id} message={msg} ref={ref} />
                   ) : (

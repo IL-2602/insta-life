@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 
+import {useAppSelector} from "@/app/store/hooks/useAppSelector";
 import { useGetMeQuery } from "@/services/authService/authEndpoints";
 import { UserType } from "@/services/authService/lib/authEndpoints.types";
 import {
@@ -23,8 +24,10 @@ export const useContainer = () => {
     mode: "onChange",
     resolver: zodResolver(messengerSchema)
   });
+
   const { query, replace } = useRouter();
   const sent = query?.sent as string || "";
+  const infoMessage = useAppSelector(state => state.messageReducer.messageData)
   const [cursor, setCursor] = useState<number | undefined>(undefined)
   const { data, isLoading: isLoadingLastMsgs } = useGetArrayOfLastMsgQuery({
     cursor: undefined,
@@ -42,10 +45,19 @@ export const useContainer = () => {
   const [sendMessage] = useSendMessageMutation();
   const [updateMessage] = useUpdateMessagesStatusMutation();
   const message = watch("message");
-  const lastMessages = data?.items;
+
+  let lastMessages = data?.items;
+
+  if(infoMessage) {
+    const findMessage = data?.items.find(item => item.receiverId === infoMessage.id);
 
 
-  const dialogPartner = lastMessages?.find(msg => msg.ownerId === +sent || msg.receiverId === +sent);
+    if(!findMessage && lastMessages) {
+      lastMessages = [infoMessage, ...lastMessages];
+    }
+  }
+
+  const dialogPartner = lastMessages?.find(msg => msg.ownerId === +sent || msg.receiverId === +sent) || infoMessage
   const dialogMessages = dialogData?.items;
   const { userId } = me;
   const isLoadingMessenger = isLoadingLastMsgs;
@@ -96,6 +108,8 @@ export const useContainer = () => {
     if (unreadMsgs?.length) {
       updateMessage({ ids: unreadMsgs });
     }
+
+
   }, [dialogMessages?.length]);
 
   return {

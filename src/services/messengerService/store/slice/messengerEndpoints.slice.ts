@@ -1,27 +1,22 @@
 import {
-  InfoMessage,
+  Message,
   MessageInitialState,
 } from '@/services/messengerService/lib/messengerEndpoints.types'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
-import noAvatar from '../../../../../public/assets/noPhoto.svg'
-
 const initialState: MessageInitialState = {
-  messageData: [
-    {
-      id: null,
-      url: '' || noAvatar,
-      userName: '',
-    },
-  ],
+  messageData: null,
 }
 
 export const messageSlice = createSlice({
   initialState,
   name: 'messageReducer',
   reducers: {
-    getMessageInfo: (state, action: PayloadAction<InfoMessage>) => {
-      state.messageData.push(action.payload)
+    getMessageInfo: (state, action: PayloadAction<Message>) => {
+      state.messageData = action.payload
+    },
+    removeMessageInfo: state => {
+      state.messageData = null
     },
   },
 })
