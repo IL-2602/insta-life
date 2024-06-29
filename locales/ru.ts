@@ -301,6 +301,11 @@ export const ru: Local = {
       },
     },
   },
+  search: {
+    looksEmpty: 'Уупс! Здесь пусто :(',
+    noRecent: 'Недавних запросов нет',
+    recent: 'Недавние запросы',
+  },
   sidebar: {
     create: 'Создать',
     favourites: 'Закладки',
