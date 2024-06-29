@@ -1,0 +1,85 @@
+@import '@/styles/variables/mixins';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 15px;
+  margin-left: 4px;
+
+  .users {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    margin-top: 17px;
+    margin-bottom: 35px;
+
+    .userContainer {
+      display: flex;
+
+      &:hover {
+        cursor: pointer;
+        background-color: #1e1e1e;
+        border-radius: 22px;
+      }
+
+      .noAvatar {
+        display: grid;
+        place-items: center;
+
+        width: 48px;
+        height: 48px;
+
+        background-color: var(--color-dark-300);
+        border-radius: 50%;
+      }
+
+      .avatar {
+        object-fit: cover;
+        border-radius: 50%;
+      }
+
+      .namesContainer {
+        display: flex;
+        flex-direction: column;
+        margin-left: 12px;
+
+        .username {
+          text-decoration: underline;
+          text-underline-offset: 3px;
+        }
+
+        .names {
+          display: flex;
+          gap: 4px;
+        }
+      }
+    }
+  }
+
+  .searchTitle {
+    margin-bottom: 13px;
+  }
+
+  .empty {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 84px;
+  }
+
+  .requestsTitle {
+    margin-top: 30px;
+  }
+
+  input {
+    padding-bottom: 4px;
+  }
+
+  input::placeholder {
+    font: var(--font-regular-16);
+  }
+}
