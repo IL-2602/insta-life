@@ -36,8 +36,6 @@ export const notificationEndpoints = api.injectEndpoints({
       async onCacheEntryAdded(arg, { cacheDataLoaded, cacheEntryRemoved, updateCachedData }) {
         const accessToken = getCookie('accessToken')
 
-        console.log('Access Token:', accessToken) // Логируем токен для проверки
-
         const socket = io('https://inctagram.work', {
           query: { accessToken },
           transports: ['websocket'], // Убедитесь, что используются правильные транспорты
