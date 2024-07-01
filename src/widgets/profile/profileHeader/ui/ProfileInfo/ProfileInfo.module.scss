@@ -4,13 +4,30 @@
   grid-area: name;
 }
 
-.stat {
-  @include mobile {
+.container {
+  display: flex;
+  flex-direction: column;
+
+  .wrap {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
   }
 
-  display: flex;
-  grid-area: subscriber;
-  width: 100%;
+  .btnContainer {
+    display: flex;
+    gap: 12px;
+  }
+
+  .stat {
+    @include mobile {
+    }
+
+    display: flex;
+    grid-area: subscriber;
+    width: 100%;
+    margin-bottom: 23px;
+  }
 }
 
 .button {

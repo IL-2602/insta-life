@@ -13,6 +13,7 @@ export const ProfileHeader = (props: ProfileHeaderProps) => {
     isFollowLoading,
     isLoading,
     me,
+      onSendMessage,
     publicationsCount,
   } = props
 
@@ -39,6 +40,7 @@ export const ProfileHeader = (props: ProfileHeaderProps) => {
           isMe={!!me && me.userId === id}
           publicationsCount={publicationsCount}
           userName={userName}
+          onSendMessage={onSendMessage}
         />
       </div>
     )

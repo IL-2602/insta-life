@@ -13,21 +13,32 @@ export const ProfileInfo = ({
   followingCount,
   isFollowLoading,
   isMe = false,
+                                onSendMessage,
   publicationsCount,
   userName,
 }: Props) => {
   const { t } = useTranslation()
 
   return (
-    <>
-      <Typography className={s.name} variant={'h1'}>
-        {userName}
-      </Typography>
-      {isMe && (
-        <Button as={'a'} className={s.button} href={'/profile/settings'} variant={'secondary'}>
-          {t.button.profileSettings}
-        </Button>
-      )}
+    <div className={s.container}>
+      <div className={s.wrap}>
+        <Typography className={s.name} variant={'h1'}>
+          {userName}
+        </Typography>
+        {isMe ? (
+          <Button as={'a'} className={s.button} href={'/profile/settings'} variant={'secondary'}>
+            {t.button.profileSettings}
+          </Button>
+        ) : (
+          <div className={s.btnContainer}>
+            <Button className={s.button}>{t.button.follow}</Button>
+            <Button className={s.button} onClick={onSendMessage} variant={'secondary'}>
+              {t.button.sendMessage}
+            </Button>
+          </div>
+        )}
+      </div>
+
       <div className={s.stat}>
         <UserStat count={followingCount} isFollowLoading={isFollowLoading} title={'Following'} />
         <UserStat count={followersCount} isFollowLoading={isFollowLoading} title={'Followers'} />
@@ -38,7 +49,7 @@ export const ProfileInfo = ({
         />
       </div>
       <Description text={aboutMe} />
-    </>
+    </div>
   )
 }
 
@@ -47,5 +58,6 @@ type Props = {
   followingCount: number | undefined
   isFollowLoading: boolean
   isMe?: boolean
+    onSendMessage: () => void
   publicationsCount: number | undefined
 } & Pick<Profile, 'aboutMe' | 'userName'>

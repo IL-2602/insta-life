@@ -1,12 +1,13 @@
 import { useState } from 'react'
 
+import { ImageIcon } from '@/shared/assets/icons/Image'
 import { NoCover } from '@/shared/assets/icons/noCover/NoCover'
 import { clsx } from 'clsx'
 import Image from 'next/image'
 
 import s from './Avatar.module.scss'
 
-export const Avatar = ({ height = 192, userAvatar, width = 192 }: Props) => {
+export const Avatar = ({ height, userAvatar, width }: Props) => {
   const [isError, setIsError] = useState(false)
   const classNames = {
     img: clsx(userAvatar && s.img),
@@ -22,7 +23,7 @@ export const Avatar = ({ height = 192, userAvatar, width = 192 }: Props) => {
       src={userAvatar}
     />
   ) : (
-    <NoCover />
+    <ImageIcon />
   )
 }
 
