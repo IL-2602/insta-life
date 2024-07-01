@@ -1,0 +1,13 @@
+
+
+.chatHead {
+  grid-column: 2/3;
+  grid-row: 1/2;
+  background: var(--color-dark-500);
+}
+
+.chatBody {
+  grid-column: 2/3;
+  grid-row: 2/3;
+  background: #0D0D0D;
+}

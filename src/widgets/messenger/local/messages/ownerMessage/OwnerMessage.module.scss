@@ -1,0 +1,30 @@
+.read {
+  color: var(--color-primary-500);
+}
+
+.unread {
+  color: var(--color-dark-300);
+}
+
+.root {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+
+  .textWrapper {
+    display: flex;
+    flex-direction: column;
+
+    min-width: 150px;
+    padding: 7px 12px;
+
+    word-wrap: anywhere;
+
+    background: var(--color-primary-900);
+    border-radius: 15px;
+
+    & > *:last-child {
+      align-self: flex-end;
+    }
+  }
+}

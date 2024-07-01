@@ -1,0 +1,23 @@
+.root {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+
+  width: 100%;
+  height: 100%;
+  padding: 12px;
+
+  .avatar {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 48px;
+    height: 48px;
+
+    background: var(--color-dark-300);
+    border-radius: 50%;
+  }
+}

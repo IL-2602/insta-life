@@ -1,0 +1,1 @@
+export { DoubleCheckIcon } from './DoubleCheck'
