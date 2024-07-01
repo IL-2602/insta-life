@@ -23,9 +23,19 @@ export type UserResponse = {
   totalCount: number
 }
 
-export type UserParams = {
+export type UsersParams = {
   cursor?: number
   pageNumber?: number
   pageSize?: number
   search?: string
 }
+
+type UserCount = {
+  followersCount: number
+  followingCount: number
+  publicationsCount: number
+}
+
+export type UserFollowParams = { username: string } & UsersParams
+export type UserFollowResponse = { isFollowedBy: boolean; isFollowing: boolean } & UserResponse
+export type UserInfoResponse = UserCount & UserFollowResponse
