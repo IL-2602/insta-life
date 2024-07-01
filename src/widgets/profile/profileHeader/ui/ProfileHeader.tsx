@@ -6,7 +6,15 @@ import { ProfileInfo } from '@/widgets/profile/profileHeader/ui/ProfileInfo/Prof
 import s from './ProfileHeader.module.scss'
 
 export const ProfileHeader = (props: ProfileHeaderProps) => {
-  const { data, isLoading, me } = props
+  const {
+    data,
+    followersCount,
+    followingCount,
+    isFollowLoading,
+    isLoading,
+    me,
+    publicationsCount,
+  } = props
 
   if (isLoading) {
     return <Spinner />
@@ -23,7 +31,15 @@ export const ProfileHeader = (props: ProfileHeaderProps) => {
             width={avatars[0]?.width}
           />
         </div>
-        <ProfileInfo aboutMe={aboutMe} isMe={!!me && me.userId === id} userName={userName} />
+        <ProfileInfo
+          aboutMe={aboutMe}
+          followersCount={followersCount}
+          followingCount={followingCount}
+          isFollowLoading={isFollowLoading}
+          isMe={!!me && me.userId === id}
+          publicationsCount={publicationsCount}
+          userName={userName}
+        />
       </div>
     )
   }

@@ -7,7 +7,15 @@ import { UserStat } from '@/widgets/profile/profileHeader/ui/ProfileInfo/UserSta
 
 import s from './ProfileInfo.module.scss'
 
-export const ProfileInfo = ({ aboutMe, isMe = false, userName }: Props) => {
+export const ProfileInfo = ({
+  aboutMe,
+  followersCount,
+  followingCount,
+  isFollowLoading,
+  isMe = false,
+  publicationsCount,
+  userName,
+}: Props) => {
   const { t } = useTranslation()
 
   return (
@@ -21,13 +29,23 @@ export const ProfileInfo = ({ aboutMe, isMe = false, userName }: Props) => {
         </Button>
       )}
       <div className={s.stat}>
-        <UserStat count={2218} title={'Following'} />
-        <UserStat count={2218} title={'Followers'} />
-        <UserStat count={2218} title={'Publications'} />
+        <UserStat count={followingCount} isFollowLoading={isFollowLoading} title={'Following'} />
+        <UserStat count={followersCount} isFollowLoading={isFollowLoading} title={'Followers'} />
+        <UserStat
+          count={publicationsCount}
+          isFollowLoading={isFollowLoading}
+          title={'Publications'}
+        />
       </div>
       <Description text={aboutMe} />
     </>
   )
 }
 
-type Props = { isMe?: boolean } & Pick<Profile, 'aboutMe' | 'userName'>
+type Props = {
+  followersCount: number | undefined
+  followingCount: number | undefined
+  isFollowLoading: boolean
+  isMe?: boolean
+  publicationsCount: number | undefined
+} & Pick<Profile, 'aboutMe' | 'userName'>
