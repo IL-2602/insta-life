@@ -1,3 +1,4 @@
+import { RootState } from '@/app/store/types/rootState'
 import { api } from '@/services/api'
 import { MESSENGER_WS_EVENT } from '@/services/messengerService/lib/constant'
 import {
@@ -7,6 +8,7 @@ import {
   GetMessengerArrayOfLatestMsgResponse,
   Message,
 } from '@/services/messengerService/lib/messengerEndpoints.types'
+import { messageActions } from '@/services/messengerService/store/slice/messengerEndpoints.slice'
 import { deleteCookie, getCookie } from 'cookies-next'
 import { has } from 'immutable'
 import { Socket, io } from 'socket.io-client'
@@ -35,13 +37,14 @@ export const messengerEndpoints = api.injectEndpoints({
     >({
       async onCacheEntryAdded(
         _,
-        { cacheDataLoaded, cacheEntryRemoved, dispatch, updateCachedData }
+        { cacheDataLoaded, cacheEntryRemoved, dispatch, getState, updateCachedData }
       ) {
         try {
           await cacheDataLoaded
           // the /chat-messages endpoint responded already
 
           const socket = getSocket()
+          const messageData = (getState() as RootState).messageReducer?.messageData
 
           socket.on(MESSENGER_WS_EVENT.MESSAGE_SENT, (message: Message, cb) => {
             updateCachedData(draft => {
@@ -67,6 +70,13 @@ export const messengerEndpoints = api.injectEndpoints({
                     : msg
                 )
               })
+              messageData &&
+                dispatch(
+                  messageActions.updateFirstMessage({
+                    messageText: message[0].messageText,
+                    status: message[0].status,
+                  })
+                )
             } else {
               updateCachedData(draft => {
                 draft.items = draft?.items?.map(msg =>
@@ -79,6 +89,14 @@ export const messengerEndpoints = api.injectEndpoints({
                     : msg
                 )
               })
+
+              messageData &&
+                dispatch(
+                  messageActions.updateFirstMessage({
+                    messageText: message.messageText,
+                    status: message.status,
+                  })
+                )
             }
           })
           await cacheEntryRemoved

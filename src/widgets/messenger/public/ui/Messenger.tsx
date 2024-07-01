@@ -2,24 +2,17 @@ import { memo } from "react";
 
 import { Typography } from "@/shared/ui/Typography";
 import { ControlledTextField } from "@/shared/ui/controlledInsta/ControlledTextField/ControlledTextField";
-import { ChatBody } from "@/widgets/messenger/local/chatBody/ChatBody";
-import { ChatHead } from "@/widgets/messenger/local/chatHead/ChatHead";
-import { UsersListItem } from "@/widgets/messenger/local/usersList/UsersListItem";
+import { ChatBody } from "@/widgets/messenger/local/Chat/local/chatBody/ChatBody";
+import { ChatHead } from "@/widgets/messenger/local/Chat/local/chatHead/ChatHead";
+import { Chat } from "@/widgets/messenger/local/Chat/public";
+import { UsersListItem } from "@/widgets/messenger/local/usersList/local/UsersListItem";
+import { UsersList } from "@/widgets/messenger/local/usersList/public";
 import { MessengerProps } from "@/widgets/messenger/public/container";
 
 import s from "./Messenger.module.scss";
 
 export const Messenger = memo(({
-                                 control,
-                                 dialogMessages,
-                                 dialogPartner,
-                                 isLoadingChat,
                                  isLoadingMessenger,
-                                 lastElRef,
-                                 lastMessages,
-                                 message,
-                                 onClickUserOpenChatHandler,
-                                 onSendMsgHandler,
                                  userId
                                }: MessengerProps) => {
 
@@ -36,25 +29,9 @@ export const Messenger = memo(({
     <div className={s.root}>
       <Typography variant={"h1"}>Messenger</Typography>
       <div className={s.messenger}>
-        <div className={s.search}>
-          <ControlledTextField control={control} name={'searchName'} placeholder={"Input search"}/>
-        </div>
-        <div className={s.usersList}>
-            <ul>
-                {lastMessages?.map(msg => <li key={msg.id}><UsersListItem lastUserMsg={msg}
-                                                                          onClickOpenChat={onClickUserOpenChatHandler}
-                                                                          userId={userId}/>
-                </li>)}
-            </ul>
-        </div>
-          <div className={s.chatHead}>
-              <ChatHead dialogPartner={dialogPartner || undefined}/>
-          </div>
-          <div className={s.chatBody}>
-              <ChatBody control={control} dialogPartner={dialogPartner || undefined} isLoadingChat={isLoadingChat} message={message} messages={dialogMessages}
-                    onSendMsg={onSendMsgHandler} ref={lastElRef}
-                    userId={userId} />
-        </div>
+        <UsersList.widget/>
+        <Chat.widget/>
+
       </div>
     </div>
   );
