@@ -44,7 +44,7 @@ export const ProfileInfo = ({
             <div className={s.btnContainer}>
               <Button
                 as={'a'}
-                className={s.button}
+                className={clsx(s.button, s.settingsBtn)}
                 href={'/profile/settings'}
                 variant={'secondary'}
               >
