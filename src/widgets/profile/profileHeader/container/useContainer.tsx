@@ -10,6 +10,8 @@ import {
   useGetUserFollowersQuery,
   useGetUserFollowingQuery,
   useGetUserInfoQuery,
+  useSubscribeMutation,
+  useUnSubscribeMutation,
 } from '@/services/usersService/usersEndpoints'
 import { ROUTES } from '@/shared/constants/routes'
 import { useRouter } from 'next/router'
@@ -17,6 +19,8 @@ import { useRouter } from 'next/router'
 export const useContainer = () => {
   const { data: me } = useGetMeQuery() as { data: UserType }
   const [username, setUsername] = useState<null | string>(null)
+  const [isFollow, setIsFollow] = useState(false)
+
   const dispatch = useAppDispatch()
 
   const { push, query } = useRouter()
@@ -31,35 +35,31 @@ export const useContainer = () => {
   }, [data])
 
   const { data: followers, isLoading: isFollowersLoading } = useGetUserFollowersQuery(
-    { username: data?.userName || '' },
+    { username: data?.userName! },
     { skip: !username }
   )
 
-  const { data: following, isLoading: isFollowingLoading } = useGetUserFollowingQuery(
-    { username: data?.userName || '' },
-    { skip: !username }
-  )
+  const { data: following, isLoading: isFollowingLoading } = useGetUserFollowingQuery({
+    username: data?.userName || '',
+  })
 
   const { data: userInfo, isLoading: isUserInfoLoading } = useGetUserInfoQuery({
     username: data?.userName || '',
   })
 
+  const [subscribe, { isLoading: isSubLoading }] = useSubscribeMutation()
+  const [unSubscribe, { isLoading: isUnSubLoading }] = useUnSubscribeMutation()
+
   const followersCount = followers?.totalCount
   const followingCount = following?.totalCount
   const publicationsCount = userInfo?.publicationsCount
 
-  const isFollowLoading = isFollowersLoading || isFollowingLoading || isUserInfoLoading
+  useEffect(() => {
+    if (userInfo) {
+      setIsFollow(userInfo.isFollowing)
+    }
+  }, [userInfo])
 
-  return {
-    data,
-    followersCount,
-    followingCount,
-    isError,
-    isFollowLoading,
-    isLoading,
-    me,
-    publicationsCount,
-  }
   const onSendMessage = () => {
     if (!data) {
       return null
@@ -83,5 +83,38 @@ export const useContainer = () => {
     void push(ROUTES.MESSENGER + `?sent=${profileId}`)
   }
 
-  return { data, isError, isLoading, me, onSendMessage }
+  const subscribeToUser = async () => {
+    try {
+      return await subscribe({ selectedUserId: +profileId })
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+  const unSubscribeToUser = async () => {
+    try {
+      return await unSubscribe({ userId: +profileId })
+    } catch (e) {
+      console.error(e)
+    }
+  }
+
+  const isFollowLoading = isFollowersLoading || isFollowingLoading || isUserInfoLoading
+  const isSubscribeLoading = isSubLoading || isUnSubLoading
+
+  return {
+    data,
+    followersCount,
+    followingCount,
+    isError,
+    isFollow,
+    isFollowLoading,
+    isLoading,
+    isSubscribeLoading,
+    me,
+    onSendMessage,
+    publicationsCount,
+    subscribeToUser,
+    unSubscribeToUser,
+  }
 }
