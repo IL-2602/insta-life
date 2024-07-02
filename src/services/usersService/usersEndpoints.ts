@@ -20,6 +20,7 @@ export const usersEndpoints = api.injectEndpoints({
       },
     }),
     getUserFollowers: builder.query<Partial<ErrorResponse> & UserFollowResponse, UserFollowParams>({
+      providesTags: ['Follow'],
       query: params => {
         return {
           method: 'GET',
@@ -28,6 +29,7 @@ export const usersEndpoints = api.injectEndpoints({
       },
     }),
     getUserFollowing: builder.query<UserFollowResponse, UserFollowParams>({
+      providesTags: ['Follow'],
       query: params => {
         return {
           method: 'GET',
@@ -36,10 +38,30 @@ export const usersEndpoints = api.injectEndpoints({
       },
     }),
     getUserInfo: builder.query<UserInfoResponse, { username: string }>({
+      providesTags: ['Follow'],
       query: ({ username }) => {
         return {
           method: 'GET',
           url: `users/${username}`,
+        }
+      },
+    }),
+    subscribe: builder.mutation<void, { selectedUserId: number }>({
+      invalidatesTags: ['Follow'],
+      query: body => {
+        return {
+          body,
+          method: 'POST',
+          url: `users/following`,
+        }
+      },
+    }),
+    unSubscribe: builder.mutation<void, { userId: number }>({
+      invalidatesTags: ['Follow'],
+      query: ({ userId }) => {
+        return {
+          method: 'DELETE',
+          url: `users/followers/${userId}`,
         }
       },
     }),
@@ -51,4 +73,6 @@ export const {
   useGetUserFollowingQuery,
   useGetUserInfoQuery,
   useGetUserQuery,
+  useSubscribeMutation,
+  useUnSubscribeMutation,
 } = usersEndpoints
