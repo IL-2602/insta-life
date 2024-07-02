@@ -1,0 +1,23 @@
+.usersList {
+  grid-column: 1/2;
+  grid-row: 2/3;
+  background: var(--color-dark-500);
+}
+
+.search {
+  display: flex;
+  grid-column: 1/2;
+  grid-row: 1/2;
+  align-items: center;
+  justify-content: center;
+
+  height: 72px;
+  padding: 0 12px;
+
+  background: var(--color-dark-500);
+
+}
+
+.active {
+  background: var(--color-dark-300)
+}

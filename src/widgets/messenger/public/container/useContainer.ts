@@ -1,128 +1,65 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useEffect } from "react";
 
-import {useAppSelector} from "@/app/store/hooks/useAppSelector";
+import { useAppDispatch } from "@/app/store/hooks/useAppDispatch";
 import { useGetMeQuery } from "@/services/authService/authEndpoints";
 import { UserType } from "@/services/authService/lib/authEndpoints.types";
+import { Message } from "@/services/messengerService/lib/messengerEndpoints.types";
 import {
   useGetArrayOfLastMsgQuery,
-  useGetDialogMessagesQuery, useSendMessageMutation, useUpdateMessagesStatusMutation
+  useGetDialogMessagesQuery,
 } from "@/services/messengerService/messengerEndpoints";
-import { MessengerFormSchema, messengerSchema } from "@/widgets/messenger/local/messengerSchema/messengerSchema";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { messageActions } from "@/services/messengerService/store/slice/messengerEndpoints.slice";
+import { useGetPublicUserProfileQuery } from "@/services/publicService/publicEndpoints";
 import { useRouter } from "next/router";
 
 export const useContainer = () => {
-  const {
-    control,
-    setValue,
-    watch
-  } = useForm<MessengerFormSchema>({
-    defaultValues: {
-      message: ""
-    },
-    mode: "onChange",
-    resolver: zodResolver(messengerSchema)
-  });
-
-  const { query, replace } = useRouter();
+  const dispatch = useAppDispatch()
+  const { query } = useRouter();
   const sent = query?.sent as string || "";
-  const infoMessage = useAppSelector(state => state.messageReducer.messageData)
-  const [cursor, setCursor] = useState<number | undefined>(undefined)
-  const { data, isLoading: isLoadingLastMsgs } = useGetArrayOfLastMsgQuery({
+
+  const {data: dialogPartnerData, isFetching, isLoading: isLoadingDialogPartnerData} = useGetPublicUserProfileQuery({profileId: +sent}, {skip: !sent})
+
+  const { data,  isLoading: isLoadingLastMsgs } = useGetArrayOfLastMsgQuery({
     cursor: undefined,
     pageSize: undefined,
     searchName: undefined
   });
   const { data: me } = useGetMeQuery() as { data: UserType };
-  const { data: dialogData, isFetching: isFetchingDialogData, isLoading: isLoadingDialogData } = useGetDialogMessagesQuery({
-    cursor: cursor,
+  const {  isLoading: isLoadingDialogData } = useGetDialogMessagesQuery({
+    cursor: undefined,
     dialogPartnerId: +sent,
     pageSize: 15,
     searchName: undefined
   }, { skip: !sent });
 
-  const [sendMessage] = useSendMessageMutation();
-  const [updateMessage] = useUpdateMessagesStatusMutation();
-  const message = watch("message");
 
-  let lastMessages = data?.items;
-
-  if(infoMessage) {
-    const findMessage = data?.items.find(item => item.receiverId === infoMessage.id);
-
-
-    if(!findMessage && lastMessages) {
-      lastMessages = [infoMessage, ...lastMessages];
-    }
-  }
-
-  const dialogPartner = lastMessages?.find(msg => msg.ownerId === +sent || msg.receiverId === +sent) || infoMessage
-  const dialogMessages = dialogData?.items;
   const { userId } = me;
-  const isLoadingMessenger = isLoadingLastMsgs;
-  const isLoadingChat = isLoadingDialogData || isFetchingDialogData;
+  const isLoadingMessenger = isLoadingLastMsgs || isLoadingDialogData || isLoadingDialogPartnerData
 
-  const onClickUserOpenChatHandler = (sent: number) =>
-    void replace({ query: { sent } }, undefined, {
-      shallow: true
-    });
-
-  const onSendMsgHandler = () => {
-    if (sent) {
-      sendMessage({ message, receiverId: +sent });
-      setValue("message", "");
-    }
-
-  };
-  const cursorRef = useRef<IntersectionObserver | null>(null)
-  const lastElRef = useCallback((node: HTMLDivElement | null) => {
-    if(isLoadingChat) {return}
-    if(cursorRef.current){
-      cursorRef.current.disconnect()
-    }
-    cursorRef.current = new IntersectionObserver(entries => {
-
-      if(entries[0].isIntersecting){
-        if(entries[0].target.id){
-          setCursor(+entries[0].target.id)
-        }
-      }
-    })
-
-    if(node) {
-      cursorRef.current.observe(node)
-    }
-  },[isLoadingChat])
 
   useEffect(() => {
-    const unreadMsgs =
-      dialogMessages?.reduce((acc, curr) => {
-        if (curr.status !== "READ" && curr.receiverId === userId) {
-          acc.push(curr.id);
-        }
+    if(isFetching || isLoadingMessenger) {return}
+    if(dialogPartnerData && !data?.items?.find(msg => msg.receiverId === +sent || msg.ownerId === +sent)){
+      const tempMsg: Message = {
+        avatars: dialogPartnerData.avatars,
+        createdAt: new Date().toString(),
+        id: 99999999,
+        messageText: '',
+        messageType: 'TEXT',
+        ownerId: userId,
+        receiverId: dialogPartnerData.id,
+        status: "READ",
+        updatedAt: new Date().toString(),
+        userName: dialogPartnerData.userName
+      }
 
-        return acc;
-      }, [] as number[]) || [];
-
-    if (unreadMsgs?.length) {
-      updateMessage({ ids: unreadMsgs });
+      dispatch(messageActions.setFirstMessage(tempMsg))
     }
 
-
-  }, [dialogMessages?.length]);
+  }, [sent,dialogPartnerData]);
 
   return {
-    control,
-    dialogMessages,
-    dialogPartner,
-    isLoadingChat,
     isLoadingMessenger,
-    lastElRef,
-    lastMessages,
-    message,
-    onClickUserOpenChatHandler,
-    onSendMsgHandler,
     userId
   };
 };

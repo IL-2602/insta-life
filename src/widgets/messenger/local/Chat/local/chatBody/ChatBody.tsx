@@ -2,6 +2,7 @@ import { KeyboardEvent, forwardRef, useRef } from 'react'
 import { Control } from 'react-hook-form'
 
 import { Message } from '@/services/messengerService/lib/messengerEndpoints.types'
+import { getUserProfileResponse } from '@/services/publicService/lib/publicEndpoints.types'
 import { ImageIcon } from '@/shared/assets/icons/Image'
 import { MicroIcon } from '@/shared/assets/icons/Micro'
 import { Button } from '@/shared/ui/Button'
@@ -108,8 +109,8 @@ export const ChatBody = forwardRef<HTMLDivElement, Props>(
 )
 
 type Props = {
-  control: Control<{ message: string }, any>
-  dialogPartner?: Message
+  control: Control<{ message: string; searchName: string }, any>
+  dialogPartner?: getUserProfileResponse
   isLoadingChat?: boolean
   message?: string
   messages?: Omit<Message, 'avatars' | 'userName'>[]

@@ -78,7 +78,7 @@ export const useContainer = () => {
       userName: data.userName,
     } as const
 
-    dispatch(messageActions.getMessageInfo(infoMessage))
+    dispatch(messageActions.setFirstMessage(infoMessage))
 
     void push(ROUTES.MESSENGER + `?sent=${profileId}`)
   }
