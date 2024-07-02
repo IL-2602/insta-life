@@ -1,0 +1,32 @@
+@import '@/styles/variables/mixins';
+
+.mobileContainer {
+  display: none;
+}
+
+@media screen and (width <= 890px) {
+  .mobileContainer {
+    display: block;
+
+    .btnContainer {
+      display: none;
+    }
+  }
+}
+
+@media screen and (width <= 768px) {
+  .mobileContainer {
+    .btnContainer {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+
+      margin-top: 18px;
+      margin-bottom: 18px;
+
+      .button {
+        height: 48px;
+      }
+    }
+  }
+}

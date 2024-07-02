@@ -1,4 +1,4 @@
-import { ProfileHeader } from '../ui'
+import { ProfileHeader } from '../ui/ProfileHeader'
 import { useContainer } from './useContainer'
 
 export const Container = () => <ProfileHeader {...useContainer()} />
