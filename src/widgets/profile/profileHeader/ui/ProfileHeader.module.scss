@@ -5,9 +5,14 @@
   flex-direction: column;
 }
 
+.mobileSpinner {
+  display: none;
+}
+
 .wrapper {
   @include mobile {
     display: flex;
+    gap: 10px;
     align-items: center;
     justify-content: space-evenly;
   }
@@ -52,7 +57,6 @@
 
 @media screen and (width <= 890px) {
   .wrapper {
-    grid-gap: 10px 20px;
     align-items: center;
   }
 
@@ -65,5 +69,31 @@
     .mobileName {
       display: block;
     }
+  }
+}
+
+@media screen and (width <= 1130px) {
+  .mobileSpinner {
+    display: grid;
+    place-items: center;
+    height: 40vh;
+  }
+}
+
+@media screen and (width <= 420px) {
+  .mobileName {
+    overflow: hidden;
+
+    width: 100px;
+
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+@media screen and (width <= 1130px) {
+  .skeleton {
+    display: none;
   }
 }

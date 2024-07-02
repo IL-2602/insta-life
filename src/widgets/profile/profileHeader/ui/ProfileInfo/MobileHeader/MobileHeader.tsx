@@ -32,7 +32,9 @@ export const MobileHeader = ({
       ) : (
         <>
           {isFollowLoading ? (
-            <Skeleton height={30} width={250} />
+            <div className={s.skeleton}>
+              <Skeleton height={30} width={250} />
+            </div>
           ) : (
             <div className={s.btnContainer}>
               {isFollow && (
@@ -62,7 +64,9 @@ export const MobileHeader = ({
         </>
       )}
       {isFollowLoading ? (
-        <Skeleton height={20} width={100} />
+        <div className={s.skeleton}>
+          <Skeleton height={20} width={100} />
+        </div>
       ) : (
         <div className={s.description}>
           <Description text={aboutMe} />

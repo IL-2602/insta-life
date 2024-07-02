@@ -30,3 +30,9 @@
     }
   }
 }
+
+@media screen and (width <= 1130px) {
+  .skeleton {
+    display: none;
+  }
+}

@@ -29,7 +29,7 @@
 
   .stat {
     @include mobile {
-      gap: 33px;
+      gap: 20px;
       margin-bottom: 0;
     }
 
@@ -94,5 +94,11 @@
 
   .settingsBtn {
     width: max-content;
+  }
+}
+
+@media screen and (width <= 1130px) {
+  .skeleton {
+    display: none;
   }
 }

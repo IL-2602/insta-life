@@ -10,10 +10,22 @@ export const UserStat = ({ count, isFollowLoading, title }: Props) => {
   return (
     <div className={s.statContainer}>
       <Typography as={'span'} className={s.count} variant={'bold14'}>
-        {!isFollowLoading ? count || 0 : <Skeleton width={30} />}
+        {isFollowLoading ? (
+          <div className={s.skeleton}>
+            <Skeleton width={30} />
+          </div>
+        ) : (
+          count || 0
+        )}
       </Typography>
       <Typography as={'span'} className={s.title} variant={'regular14'}>
-        {isFollowLoading ? <Skeleton width={70} /> : title}
+        {isFollowLoading ? (
+          <div className={s.skeleton}>
+            <Skeleton width={70} />
+          </div>
+        ) : (
+          title
+        )}
       </Typography>
     </div>
   )
