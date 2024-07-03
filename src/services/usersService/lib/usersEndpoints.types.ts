@@ -1,4 +1,4 @@
-export type UserResponse = {
+export type UsersResponse = {
   items: {
     avatars: [
       {
@@ -14,7 +14,7 @@ export type UserResponse = {
     id: number
     lastName: string
     userName: string
-  }
+  }[]
   nextCursor: number
   page: number
   pageSize: number

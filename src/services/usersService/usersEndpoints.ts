@@ -4,13 +4,13 @@ import {
   UserFollowParams,
   UserFollowResponse,
   UserInfoResponse,
-  UserResponse,
   UsersParams,
+  UsersResponse,
 } from '@/services/usersService/lib/usersEndpoints.types'
 
 export const usersEndpoints = api.injectEndpoints({
   endpoints: builder => ({
-    getUser: builder.query<UserResponse, UsersParams>({
+    getUser: builder.query<UsersResponse, UsersParams>({
       query: params => {
         return {
           method: 'GET',
