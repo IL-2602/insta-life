@@ -4,9 +4,9 @@ import { Profile } from '@/shared/types/profile'
 import { Typography } from '@/shared/ui/Typography'
 import Image from 'next/image'
 
-import s from '@/layouts/local/ui/MyPost/MyPostModal/ui/PostSide/PostSide.module.scss'
+import s from '@/widgets/posts/local/CommentsAnswers/ui/CommentsAnswers.module.scss'
 
-import noPhoto from '../../../../../../public/assets/noPhoto.svg'
+import noPhoto from '../../../../../public/assets/noPhoto.svg'
 
 export const TestComment = ({ photo, postDescription, profile }: Props) => {
   const comment =
@@ -34,7 +34,7 @@ export const TestComment = ({ photo, postDescription, profile }: Props) => {
               {postDescription ? postDescription : comment}
             </Typography>
           </Typography>
-          <Typography className={'commentTime'} color={'tertiary'} variant={'small'}>
+          <Typography className={'commentTime'} color={'form'} variant={'small'}>
             2 Hours ago
           </Typography>
         </div>

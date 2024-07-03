@@ -1,5 +1,5 @@
 import { Container } from './container'
 
-export const MyPostModal = {
+export const ClosePostModal = {
   widget: Container,
 }

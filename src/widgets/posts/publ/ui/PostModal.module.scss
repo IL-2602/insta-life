@@ -61,6 +61,7 @@
   }
 }
 
+
 .userWrapper {
   display: flex;
   align-items: center;
@@ -107,12 +108,33 @@
   margin: 15px;
 }
 
+.userPhotoWrapper {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+
+  .photo {
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    align-self: baseline;
+
+    width: 36px;
+    height: 36px;
+
+    object-fit: cover;
+    background-color: var(--color-dark-700);
+    border-radius: 50%;
+  }
+}
+
 .userBlockWithPilot {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   margin: 15px;
 }
+
 
 .commentsBlock {
   display: flex;
@@ -157,25 +179,4 @@
   display: flex;
 }
 
-.closePostModal {
-  width: 486px;
-}
 
-.modalBody {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  padding: 60px 111px 36px;
-}
-
-.buttonsBlock {
-  display: flex;
-  justify-content: flex-end;
-  margin: 30px 24px 36px 0;
-}
-
-.button {
-  margin-left: 24px;
-}
