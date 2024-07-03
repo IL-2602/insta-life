@@ -1,10 +1,15 @@
 @import '@/styles/variables/mixins';
 
 .container {
+  @include mobile {
+    margin-top: 15px;
+    margin-left: 0;
+  }
+
   display: flex;
   flex-direction: column;
   margin-top: 15px;
-  margin-left: 4px;
+  margin-left: 24px;
 
   .users {
     display: flex;
@@ -58,10 +63,18 @@
   }
 
   .searchTitle {
+    @include mobile {
+      display: none;
+    }
+
     margin-bottom: 13px;
   }
 
   .empty {
+    @include mobile {
+      margin-top: 25px;
+    }
+
     display: flex;
     flex-direction: column;
     gap: 6px;
@@ -72,6 +85,10 @@
   }
 
   .requestsTitle {
+    @include mobile {
+      margin-top: 18px;
+    }
+
     margin-top: 30px;
   }
 

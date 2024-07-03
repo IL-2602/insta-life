@@ -6,7 +6,9 @@
 
 @media screen and (width <= 890px) {
   .mobileContainer {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     .btnContainer {
       display: none;
@@ -16,6 +18,8 @@
 
 @media screen and (width <= 768px) {
   .mobileContainer {
+    display: block;
+
     .btnContainer {
       display: flex;
       flex-direction: column;

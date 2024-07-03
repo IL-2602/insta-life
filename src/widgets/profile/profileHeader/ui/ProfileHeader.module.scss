@@ -18,7 +18,7 @@
   }
 
   display: grid;
-  grid-gap: 20px;
+  grid-gap: 0 20px;
   grid-template: auto / auto 1fr;
   grid-template-areas:
     'avatar name settings'
@@ -94,6 +94,10 @@
 
 @media screen and (width <= 1130px) {
   .skeleton {
+    display: none;
+  }
+
+  .avatarNone {
     display: none;
   }
 }

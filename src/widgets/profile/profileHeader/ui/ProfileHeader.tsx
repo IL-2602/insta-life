@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 
 import { Avatar } from '@/shared/ui/Avatar'
@@ -7,6 +7,7 @@ import { Typography } from '@/shared/ui/Typography'
 import { ProfileHeaderProps } from '@/widgets/profile/profileHeader/container'
 import { MobileHeader } from '@/widgets/profile/profileHeader/ui/ProfileInfo/MobileHeader'
 import { ProfileInfo } from '@/widgets/profile/profileHeader/ui/ProfileInfo/ProfileInfo'
+import { clsx } from 'clsx'
 
 import 'react-loading-skeleton/dist/skeleton.css'
 
@@ -28,20 +29,13 @@ export const ProfileHeader = ({
 }: ProfileHeaderProps) => {
   const [width, setWidth] = useState<number>(0)
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     setWidth(window.innerWidth)
   }, [])
 
   const isPostAndFollowLoading = isFollowLoading && isPostsLoading
-  const isOnlyFollowLoading = isFollowLoading && !isPostsLoading
 
-  if (isPostAndFollowLoading && width <= 1130) {
-    return (
-      <div className={s.mobileSpinner}>
-        <SpinnerThreePoints />
-      </div>
-    )
-  } else if (width <= 1130 && isOnlyFollowLoading) {
+  if (isPostAndFollowLoading && width <= 1130 && width > 0) {
     return (
       <div className={s.mobileSpinner}>
         <SpinnerThreePoints />
@@ -56,7 +50,7 @@ export const ProfileHeader = ({
       <SkeletonTheme baseColor={'#202020'} highlightColor={'#444'}>
         <section className={s.profileHeader}>
           <div className={s.wrapper}>
-            <div className={s.mobileAvatarWrapper}>
+            <div className={clsx(s.mobileAvatarWrapper, isFollowLoading ? s.avatarNone : '')}>
               <div className={s.avatarWrapper}>
                 {!isFollowLoading ? (
                   <Avatar
