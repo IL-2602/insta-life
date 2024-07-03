@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 import { useAppDispatch } from '@/app/store/hooks/useAppDispatch'
 import { useAppSelector } from '@/app/store/hooks/useAppSelector'
 import { postActions } from '@/services/postService/store/slice/postEndpoints.slice'

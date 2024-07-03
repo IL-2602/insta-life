@@ -9,7 +9,6 @@ import { EditPostProps } from '@/widgets/posts/local/EditPost/container'
 import s from './EditPost.module.scss'
 
 export const EditPost = ({
-  closeModalWithRefresh,
   control,
   errorDescription,
   isGetUserLoading,
