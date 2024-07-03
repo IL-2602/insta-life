@@ -76,8 +76,8 @@
     border: none;
     outline: none;
 
-    &::placeholder{
-      color: var(--color-light-900)
+    &::placeholder {
+      color: var(--color-light-900);
     }
 
     &:focus,
