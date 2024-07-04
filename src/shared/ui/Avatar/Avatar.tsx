@@ -1,7 +1,6 @@
 import { useState } from 'react'
 
 import { ImageIcon } from '@/shared/assets/icons/Image'
-import { NoCover } from '@/shared/assets/icons/noCover/NoCover'
 import { clsx } from 'clsx'
 import Image from 'next/image'
 
