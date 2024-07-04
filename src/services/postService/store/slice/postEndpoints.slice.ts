@@ -6,6 +6,7 @@ import {
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 const initialState: PostSliceInitialState = {
+  isCloseEditPostModal: false,
   isClosePostModal: false,
   isCreatePostModal: false,
   isDeletePostModal: false,
@@ -43,6 +44,9 @@ export const postSlice = createSlice({
       if (currentPhoto) {
         currentPhoto.filterImg = action.payload.filterImg
       }
+    },
+    setIsCloseEditPostModal: (state, action: PayloadAction<boolean>) => {
+      state.isCloseEditPostModal = action.payload
     },
     setIsClosePostModal: (state, action: PayloadAction<boolean>) => {
       state.isClosePostModal = action.payload

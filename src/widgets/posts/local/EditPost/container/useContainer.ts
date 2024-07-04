@@ -1,22 +1,18 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 
 import { useAppDispatch } from '@/app/store/hooks/useAppDispatch'
-import { useAppSelector } from '@/app/store/hooks/useAppSelector'
-import { useMyPostSchema } from '@/layouts/local/ui/MyPost/MyPostModal/schema/myPostPublicationSchema'
-import { useGetMeQuery } from '@/services/authService/authEndpoints'
 import { useEditPostMutation, useGetCurrentPostQuery } from '@/services/postService/postEndpoints'
 import { postActions } from '@/services/postService/store/slice/postEndpoints.slice'
 import { useGetProfileQuery } from '@/services/profileService/profileEndpoints'
 import { useTranslation } from '@/shared/hooks/useTranslation'
+import { usePostSchema } from '@/widgets/posts/local/schema/myPostPublicationSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/router'
 import { z } from 'zod'
 
 export const useContainer = () => {
-  const { isMyPostModal } = useAppSelector(state => state.postReducer)
-  const { error: meError } = useGetMeQuery()
   const dispatch = useAppDispatch()
 
   const { t } = useTranslation()
@@ -24,23 +20,12 @@ export const useContainer = () => {
   const { query, replace } = useRouter()
   const postId = query?.postId as string | undefined
 
-  useEffect(() => {
-    if (postId) {
-      dispatch(postActions.setIsMyPostModal(true))
-    }
-  }, [dispatch, postId])
-
+  const [editPost, { isLoading: isLoadingEditPost }] = useEditPostMutation()
   const { data: postPhotos, isFetching: isPostFetching } = useGetCurrentPostQuery(Number(postId), {
     skip: !postId,
   })
-  const { data: getProfile, isFetching: isGetUserLoading } = useGetProfileQuery()
-  const [editPost, { isLoading: isLoadingEditPost }] = useEditPostMutation()
-
-  const [isOpenClosePostModal, setIsOpenClosePostModal] = useState(false)
-  const [currPhotoIndex, setCurrPhotoIndex] = useState(0)
-  const [isEdit, setIsEdit] = useState(false)
-
-  const { myPostSchema } = useMyPostSchema()
+  const { isFetching: isGetUserLoading } = useGetProfileQuery()
+  const { myPostSchema } = usePostSchema()
 
   type myPostFormSchema = z.infer<typeof myPostSchema>
 
@@ -64,40 +49,15 @@ export const useContainer = () => {
     reset({ myPostDescription: postPhotos?.description })
   }, [reset, postPhotos?.description])
 
-  const onChangeCurrPhoto = (currPhoto: number) => setCurrPhotoIndex(currPhoto)
-  const commentPublish = () => {}
-  const deletePostModalHandler = (id: number) => {
-    dispatch(postActions.setIsDeletePostModal(true))
-    setIsEdit(false)
-  }
-
-  const handleCloseModal = () => {
-    void replace({ query: { id: query.id } }, undefined, {
-      shallow: true,
-    })
-    dispatch(postActions.setIsMyPostModal(false))
-    setIsEdit(false)
-  }
-  const closeModalWithRefresh = () => {
-    setIsOpenClosePostModal(false)
-    setIsEdit(false)
-    reset({ myPostDescription: postPhotos?.description })
-  }
-  const handleClosePostModal = () => {
-    setIsOpenClosePostModal(false)
-    setIsEdit(false)
-    void replace({ query: { id: query.id } }, undefined, {
-      shallow: true,
-    })
-  }
-
   const updatePost = () => {
     if (myPostDescription !== postPhotos?.description) {
       editPost({ description: myPostDescription, postId: Number(postId) })
         .unwrap()
         .then(() => {
           reset({ myPostDescription })
-          setIsEdit(false)
+          void replace({ query: { id: query.id, postId } }, undefined, {
+            shallow: true,
+          })
           toast.success('The post has been edit', {
             pauseOnHover: false,
             style: {
@@ -119,41 +79,21 @@ export const useContainer = () => {
             },
           })
         })
-    } else {
-      setIsEdit(false)
     }
   }
 
-  const handleOpenEditPostDialog = () => setIsOpenClosePostModal(true)
-  const handleCloseEditPostDialog = () => setIsOpenClosePostModal(false)
-  const setIsEditPostHandler = () => setIsEdit(p => !p)
-
-  const isLoading = isGetUserLoading || isPostFetching
+  useEffect(() => {
+    if (postId) {
+      dispatch(postActions.setIsMyPostModal(true))
+    }
+  }, [dispatch, postId])
 
   return {
-    closeModalWithRefresh,
-    commentPublish,
     control,
-    currPhotoIndex,
-    deletePostModalHandler,
     errorDescription,
-    getProfile,
-    handleCloseEditPostDialog,
-    handleCloseModal,
-    handleClosePostModal,
-    handleOpenEditPostDialog,
-    isEdit,
     isGetUserLoading,
-    isLoading,
     isLoadingEditPost,
-    isMyPostModal,
-    isOpenClosePostModal,
-    meError,
     myPostDescription,
-    onChangeCurrPhoto,
-    postId,
-    postPhotos,
-    setIsEditPostHandler,
     t,
     updatePost,
   }

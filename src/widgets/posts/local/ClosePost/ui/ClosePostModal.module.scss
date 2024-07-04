@@ -1,0 +1,22 @@
+.closePostModal {
+  width: 486px;
+}
+
+.modalBody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 60px 111px 36px;
+}
+
+.buttonsBlock {
+  display: flex;
+  justify-content: flex-end;
+  margin: 30px 24px 36px 0;
+}
+
+.button {
+  margin-left: 24px;
+}

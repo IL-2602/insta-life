@@ -1,9 +1,9 @@
 import { memo } from 'react'
 
-import { DeletePostModalProps } from '@/layouts/local/ui/DeletePost/DeletePostModal/container'
 import { Button } from '@/shared/ui/Button'
 import { Modal } from '@/shared/ui/Modal'
 import { Typography } from '@/shared/ui/Typography'
+import { DeletePostModalProps } from '@/widgets/posts/local/DeletePost/container'
 
 import s from './DeletePostModal.module.scss'
 

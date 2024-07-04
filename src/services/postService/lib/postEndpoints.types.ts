@@ -3,6 +3,7 @@ import { ErrorResponse } from '@/services/authService/lib/authEndpoints.types'
 export type ModalSteps = 'cropping' | 'filters' | 'publication' | 'upload'
 
 export type PostSliceInitialState = {
+  isCloseEditPostModal: boolean
   isClosePostModal: boolean
   isCreatePostModal: boolean
   isDeletePostModal: boolean
