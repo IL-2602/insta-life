@@ -1,8 +1,13 @@
 import { getBaseLayout } from '@/layouts/publ/BaseLayout/BaseLayout'
 import { AuthDefender } from '@/shared/hocs/AuthDefender'
+import { Home } from '@/widgets/home/publ'
 
 const HomePage = () => {
-  return <div>Home</div>
+  return (
+    <div>
+      <Home.widget />
+    </div>
+  )
 }
 
 HomePage.getLayout = getBaseLayout

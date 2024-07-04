@@ -1,0 +1,55 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+
+  .dots {
+    cursor: pointer;
+    padding-top: 6px;
+
+    &:hover {
+      path {
+        fill: var(--color-primary-300);
+      }
+    }
+
+    &:active {
+      path {
+        fill: var(--color-primary-500);
+      }
+    }
+  }
+
+  .titleWrapper {
+    display: flex;
+    align-items: center;
+
+    .noAvatar {
+      display: grid;
+      place-items: center;
+
+      width: 36px;
+      height: 36px;
+      margin-right: 12px;
+
+      background-color: var(--color-dark-300);
+      border-radius: 50%;
+    }
+
+    .avatar {
+      margin-right: 12px;
+      border-radius: 50%;
+    }
+
+    .point {
+      width: 4px;
+      height: 4px;
+      margin-right: 8px;
+      margin-left: 8px;
+
+      background-color: var(--color-light-700);
+      border-radius: 50%;
+    }
+  }
+}
