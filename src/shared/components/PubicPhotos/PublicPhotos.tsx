@@ -1,6 +1,8 @@
 import { useState } from 'react'
 
+import { NextPhotoArrow } from '@/shared/assets/icons/NextPhotoArrow/NextPhotoArrow'
 import { NextPublicPhotoArrow } from '@/shared/assets/icons/NextPublicPhotoArrow/NextPublicPhotoArrow'
+import { PrevPhotoArrow } from '@/shared/assets/icons/PrevPhotoArrow/PrevPhotoArrow'
 import { PrevPublicPhotoArrow } from '@/shared/assets/icons/PrevPublicPhotoArrow/PrevPublicPhotoArrow'
 import { Button } from '@/shared/ui/Button'
 import { clsx } from 'clsx'
@@ -13,13 +15,14 @@ type Props = {
   className?: string
   cropping?: boolean
   height: number
+  home?: boolean
   id: number
   ownerId: number
   photos: Array<string>
   width: number
 }
 
-export const PublicPhotos = ({ height, id, ownerId, photos, width, ...rest }: Props) => {
+export const PublicPhotos = ({ height, home, id, ownerId, photos, width, ...rest }: Props) => {
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0)
 
   const goToNextPhoto = () => {
@@ -47,25 +50,36 @@ export const PublicPhotos = ({ height, id, ownerId, photos, width, ...rest }: Pr
       {photos.length > 1 && (
         <>
           <Button
-            className={clsx(s.btn, s.prevBtn)}
+            className={clsx(!home ? s.btn : s.homeBtn, s.prevBtn)}
             disabled={isFirstPhoto}
             onClick={goToPrevPhoto}
             variant={'noStyle'}
           >
-            <PrevPublicPhotoArrow className={s.prevArrow} />
+            {!home ? (
+              <PrevPublicPhotoArrow className={s.prevArrow} />
+            ) : (
+              <PrevPhotoArrow className={s.prevArrow} />
+            )}
           </Button>
           <Button
-            className={clsx(s.btn, s.nextBtn)}
+            className={clsx(!home ? s.btn : s.homeBtn, s.nextBtn)}
             disabled={isLastPhoto}
             onClick={goToNextPhoto}
             variant={'noStyle'}
           >
-            <NextPublicPhotoArrow className={s.nextArrow} />
+            {!home ? (
+              <NextPublicPhotoArrow className={s.nextArrow} />
+            ) : (
+              <NextPhotoArrow className={s.nextArrow} />
+            )}
           </Button>
-          <div className={s.photoScale}>
+          <div className={home ? s.homeScale : s.photoScale}>
             {photos.map((photo, index) => (
               <span
-                className={clsx(s.circle, currentPhotoIndex === index ? s.circlePrimary : '')}
+                className={clsx(
+                  home ? s.homeCircle : s.circle,
+                  currentPhotoIndex === index ? s.circlePrimary : ''
+                )}
                 key={index}
               ></span>
             ))}
