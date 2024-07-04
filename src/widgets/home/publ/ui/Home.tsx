@@ -11,7 +11,7 @@ import { HomeProps } from '@/widgets/home/publ/container'
 
 import s from './Home.module.scss'
 
-export const Home = forwardRef<HTMLDivElement, HomeProps>(({ isLoading, posts }, ref) => {
+export const Home = forwardRef<HTMLDivElement, HomeProps>(({ isFetching, posts }, ref) => {
   if (!posts) {
     return (
       <div className={s.fetchSpinner}>
@@ -24,8 +24,6 @@ export const Home = forwardRef<HTMLDivElement, HomeProps>(({ isLoading, posts },
     <div className={s.container}>
       {posts.items.map(post => {
         const images = post.images.map(img => img.url)
-
-        console.log('post: ', post)
 
         return (
           <Fragment key={post.id}>
@@ -44,13 +42,18 @@ export const Home = forwardRef<HTMLDivElement, HomeProps>(({ isLoading, posts },
               description={post.description}
               userName={post.userName}
             />
-            <PostLikes />
+            <PostLikes postId={post.id} />
             <PostComments />
           </Fragment>
         )
       })}
 
       <div ref={ref}></div>
+      {isFetching && (
+        <div className={s.fetchSpinner}>
+          <SpinnerThreePoints />
+        </div>
+      )}
     </div>
   )
 })

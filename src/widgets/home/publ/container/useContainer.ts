@@ -4,7 +4,6 @@ import { useInView } from 'react-intersection-observer'
 import { useGetMeQuery } from '@/services/authService/authEndpoints'
 import { UserType } from '@/services/authService/lib/authEndpoints.types'
 import { useGetUserPostsQuery } from '@/services/publicService/publicEndpoints'
-import { useRouter } from 'next/router'
 
 export const useContainer = () => {
   const { inView, ref } = useInView({
@@ -15,7 +14,7 @@ export const useContainer = () => {
 
   const [lastPostId, setLastPostId] = useState<number | undefined>(undefined)
 
-  const { data: posts, isLoading } = useGetUserPostsQuery({
+  const { data: posts, isFetching } = useGetUserPostsQuery({
     endCursorPostId: lastPostId,
     pageSize: !lastPostId ? 4 : 2,
     userId: me.userId,
@@ -31,5 +30,5 @@ export const useContainer = () => {
     }
   }, [inView])
 
-  return { isLoading, posts, ref }
+  return { isFetching, posts, ref }
 }

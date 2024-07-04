@@ -1,3 +1,20 @@
 .container {
   display: flex;
+  margin-top: 14px;
+
+  .likesPhotos {
+    margin-right: 12px;
+
+    .avatarContainer {
+      border-radius: 50%;
+
+      img {
+        border-radius: 50%;
+      }
+    }
+  }
+
+  .likesCount {
+    padding-right: 4px;
+  }
 }
