@@ -304,7 +304,7 @@ export const ru: Local = {
   sidebar: {
     create: 'Создать',
     favourites: 'Закладки',
-    home: 'Новости',
+    home: 'Домой',
     logOut: 'Выйти',
     messenger: 'Мессенджер',
     myProfile: 'Мой профиль',
@@ -318,6 +318,7 @@ export const ru: Local = {
   time: {
     hours: 'ч',
     minutes: 'мин назад',
+    postMinutes: 'Минут назад',
   },
   toast: {
     deletePost: 'Пост был удалён',

@@ -312,6 +312,7 @@ export const en = {
   time: {
     hours: 'h',
     minutes: 'min ago',
+    postMinutes: 'Minutes ago',
   },
   toast: {
     deletePost: 'The post has been deleted',
