@@ -1,12 +1,15 @@
 import { api } from '@/services/api'
 import {
-  CommentsAnswersParams,
+  CommentsAnswers,
   CommentsAnswersResponse,
+  CreateCommentParams,
+  GetCommentsParams,
 } from '@/services/commentsAnswersService/lib/commentsAnswersEndpoints.types'
 
 const commentsAnswersEndpoints = api.injectEndpoints({
   endpoints: builder => ({
-    createNewComment: builder.mutation<CommentsAnswersResponse, CommentsAnswersParams>({
+    createNewComment: builder.mutation<CommentsAnswers, CreateCommentParams>({
+      invalidatesTags: ['Comments'],
       query: ({ postId, ...rest }) => {
         return {
           body: rest || {},
@@ -15,7 +18,16 @@ const commentsAnswersEndpoints = api.injectEndpoints({
         }
       },
     }),
+    getComments: builder.query<CommentsAnswersResponse<CommentsAnswers>, GetCommentsParams>({
+      providesTags: ['Comments'],
+      query: ({ postId, ...rest }) => {
+        return {
+          params: rest || {},
+          url: `posts/${postId}/comments`,
+        }
+      },
+    }),
   }),
 })
 
-export const { useCreateNewCommentMutation } = commentsAnswersEndpoints
+export const { useCreateNewCommentMutation, useGetCommentsQuery } = commentsAnswersEndpoints
