@@ -2,6 +2,7 @@ import { api } from '@/services/api'
 import {
   EditPostParams,
   GetCurrentPostResponse,
+  GetLikesResponse,
   PublishPostImageResponse,
   PublishPostParams,
   PublishPostResponse,
@@ -57,6 +58,14 @@ export const postEndpoints = api.injectEndpoints({
         }
       },
     }),
+    getLikes: builder.query<GetLikesResponse, { postId: number }>({
+      query: ({ postId }) => {
+        return {
+          method: 'GET',
+          url: `posts/${postId}/likes`,
+        }
+      },
+    }),
     publishPost: builder.mutation<PublishPostResponse, PublishPostParams>({
       onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
         try {
@@ -99,6 +108,7 @@ export const {
   useDeletePostMutation,
   useEditPostMutation,
   useGetCurrentPostQuery,
+  useGetLikesQuery,
   usePublishPostImageMutation,
   usePublishPostMutation,
 } = postEndpoints
