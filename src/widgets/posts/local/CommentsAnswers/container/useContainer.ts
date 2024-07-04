@@ -22,7 +22,7 @@ export const useContainer = () => {
   const { data: postPhotos, isFetching: isPostFetching } = useGetCurrentPostQuery(Number(postId), {
     skip: !postId,
   })
-  const [createNewComment, { isLoading: isLoadingCreateNewComment }] = useCreateNewCommentMutation()
+  const [createNewComment] = useCreateNewCommentMutation()
 
   type myPostFormSchema = z.infer<typeof myPostSchema>
 

@@ -1,10 +1,6 @@
-import { Control } from 'react-hook-form'
-
-import { GetCurrentPostResponse } from '@/services/postService/lib/postEndpoints.types'
 import { Bookmark } from '@/shared/assets/icons/Bookmark'
 import { HeartOutline } from '@/shared/assets/icons/Heart/HeartOutline'
 import { PaperLine } from '@/shared/assets/icons/PaperLine'
-import { Profile } from '@/shared/types/profile'
 import { Button } from '@/shared/ui/Button'
 import { ScrollSelect } from '@/shared/ui/ScrollSelect/ScrollSelect'
 import { Typography } from '@/shared/ui/Typography'
@@ -14,7 +10,6 @@ import { TestComment } from '@/widgets/posts/local/TESTcomment/Comment'
 
 import s from './CommentsAnswers.module.scss'
 
-import { Local } from '../../../../../../locales/en'
 export const CommentsAnswers = ({
   commentPublishHandler,
   control,
