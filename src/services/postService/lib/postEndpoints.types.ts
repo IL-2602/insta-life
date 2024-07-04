@@ -21,10 +21,6 @@ export type PostPhoto = {
   zoom: number
 }
 
-// type Metadata = {
-//   uploadId: string | undefined
-// }
-
 export type PublishPostParams = {
   childrenMetadata: Array<{ uploadId: string }>
   description: string
@@ -75,6 +71,7 @@ export type getUserPostsResponse = {
   totalCount: number
   totalUsers: number
 }
+
 export type PostImage = {
   createdAt: string
   fileSize: number
@@ -83,6 +80,7 @@ export type PostImage = {
   url: string
   width: number
 }
+
 export type GetCurrentPostResponse = {
   avatarOwner: string
   createdAt: string
