@@ -97,6 +97,7 @@ export const api = createApi({
     'LastMessages',
     'Dialogs',
     'Notification',
+    'Comments',
   ],
 })
 
