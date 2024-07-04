@@ -61,7 +61,7 @@ export const usersEndpoints = api.injectEndpoints({
       query: ({ userId }) => {
         return {
           method: 'DELETE',
-          url: `users/followers/${userId}`,
+          url: `users/follower/${userId}`,
         }
       },
     }),
