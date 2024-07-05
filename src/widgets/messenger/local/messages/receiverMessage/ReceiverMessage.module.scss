@@ -34,4 +34,22 @@
       align-self: flex-end;
     }
   }
+
+  .imageAndTextWrapper {
+    display: flex;
+    flex-direction: column;
+
+    min-width: 150px;
+    padding: 7px 12px;
+
+    word-wrap: anywhere;
+
+    background: var(--color-dark-300);
+    border-bottom-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+
+    & > *:last-child {
+      align-self: flex-end;
+    }
+  }
 }
