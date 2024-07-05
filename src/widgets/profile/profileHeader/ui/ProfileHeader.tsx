@@ -19,7 +19,6 @@ export const ProfileHeader = ({
   followingCount,
   isFollow,
   isFollowLoading,
-  isPostsLoading,
   isSubscribeLoading,
   me,
   onSendMessage,
@@ -33,9 +32,7 @@ export const ProfileHeader = ({
     setWidth(window.innerWidth)
   }, [])
 
-  const isPostAndFollowLoading = isFollowLoading && isPostsLoading
-
-  if (isPostAndFollowLoading && width <= 1130 && width > 0) {
+  if (isFollowLoading && width <= 1130) {
     return (
       <div className={s.mobileSpinner}>
         <SpinnerThreePoints />

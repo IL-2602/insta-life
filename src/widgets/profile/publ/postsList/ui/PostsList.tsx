@@ -10,7 +10,7 @@ import s from 'src/widgets/profile/publ/postsList/ui/PostsList.module.scss'
 import { PostsListProps } from '../container'
 
 export const PostsList = forwardRef<HTMLDivElement, PostsListProps>(
-  ({ handleReceivingPostId, isFetching, posts }, ref) => {
+  ({ handleReceivingPostId, isFetching, lastPostId, posts }, ref) => {
     return (
       <>
         <div className={s.container}>
@@ -39,7 +39,7 @@ export const PostsList = forwardRef<HTMLDivElement, PostsListProps>(
 
           <div className={s.viewRef} ref={ref} />
         </div>
-        {isFetching && (
+        {isFetching && lastPostId !== undefined && (
           <div className={s.fetchSpinner}>
             <SpinnerThreePoints />
           </div>

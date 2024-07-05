@@ -5,10 +5,7 @@ import { useGetMeQuery } from '@/services/authService/authEndpoints'
 import { UserType } from '@/services/authService/lib/authEndpoints.types'
 import { Message } from '@/services/messengerService/lib/messengerEndpoints.types'
 import { messageActions } from '@/services/messengerService/store/slice/messengerEndpoints.slice'
-import {
-  useGetPublicUserProfileQuery,
-  useGetUserPostsQuery,
-} from '@/services/publicService/publicEndpoints'
+import { useGetPublicUserProfileQuery } from '@/services/publicService/publicEndpoints'
 import {
   useGetUserFollowersQuery,
   useGetUserFollowingQuery,
@@ -48,12 +45,6 @@ export const useContainer = () => {
 
   const { data: userInfo, isLoading: isUserInfoLoading } = useGetUserInfoQuery({
     username: data?.userName || '',
-  })
-
-  const { data: posts, isLoading: isPostsLoading } = useGetUserPostsQuery({
-    endCursorPostId: undefined,
-    pageSize: 12,
-    userId: +profileId,
   })
 
   const [subscribe, { isLoading: isSubLoading }] = useSubscribeMutation()
@@ -118,7 +109,6 @@ export const useContainer = () => {
     isError,
     isFollow,
     isFollowLoading,
-    isPostsLoading,
     isSubscribeLoading,
     me,
     onSendMessage,

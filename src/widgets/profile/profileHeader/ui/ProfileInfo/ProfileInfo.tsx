@@ -41,14 +41,16 @@ export const ProfileInfo = ({
 
         {isMe ? (
           <div className={s.btnContainer}>
-            <Button
-              as={'a'}
-              className={clsx(s.button, s.settingsBtn)}
-              href={'/profile/settings'}
-              variant={'secondary'}
-            >
-              {t.button.profileSettings}
-            </Button>
+            {!isFollowLoading && (
+              <Button
+                as={'a'}
+                className={clsx(s.button, s.settingsBtn)}
+                href={'/profile/settings'}
+                variant={'secondary'}
+              >
+                {t.button.profileSettings}
+              </Button>
+            )}
           </div>
         ) : (
           <>

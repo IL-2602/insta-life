@@ -12,6 +12,10 @@
   margin-left: 24px;
 
   .users {
+    @include min {
+      margin-top: 23px;
+    }
+
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -50,6 +54,13 @@
         margin-left: 12px;
 
         .username {
+          @include min {
+            overflow: hidden;
+            width: 200px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+
           text-decoration: underline;
           text-underline-offset: 3px;
         }

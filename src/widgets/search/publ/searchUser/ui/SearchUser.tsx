@@ -19,9 +19,12 @@ export const SearchUser = memo(({ handleSearchInput, search, t, users }: SearchU
         {t.sidebar.search}
       </Typography>
       <TextField iconStart={<Search />} onChange={handleSearchInput} placeholder={'Search'} />
-      <Typography as={'h2'} className={s.requestsTitle} variant={'bold16'}>
-        {t.search.recent}
-      </Typography>
+      {!search && (
+        <Typography as={'h2'} className={s.requestsTitle} variant={'bold16'}>
+          {t.search.recent}
+        </Typography>
+      )}
+
       <div className={s.users}>
         {users &&
           search &&
