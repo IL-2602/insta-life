@@ -43,5 +43,5 @@ export const useContainer = () => {
     dispatch(postActions.setIsMyPostModal(true))
   }
 
-  return { handleReceivingPostId, isFetching, posts, ref }
+  return { handleReceivingPostId, isFetching, lastPostId, posts, ref }
 }

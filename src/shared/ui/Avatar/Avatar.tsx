@@ -6,7 +6,7 @@ import Image from 'next/image'
 
 import s from './Avatar.module.scss'
 
-export const Avatar = ({ height, userAvatar, width }: Props) => {
+export const Avatar = ({ userAvatar }: Props) => {
   const [isError, setIsError] = useState(false)
   const classNames = {
     img: clsx(userAvatar && s.img),

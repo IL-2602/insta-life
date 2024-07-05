@@ -1,0 +1,113 @@
+@import '@/styles/variables/mixins';
+
+.container {
+  @include mobile {
+    margin-top: 15px;
+    margin-left: 0;
+  }
+
+  display: flex;
+  flex-direction: column;
+  margin-top: 15px;
+  margin-left: 24px;
+
+  .users {
+    @include min {
+      margin-top: 23px;
+    }
+
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    margin-top: 17px;
+    margin-bottom: 35px;
+
+    .userContainer {
+      display: flex;
+
+      &:hover {
+        cursor: pointer;
+        background-color: #1e1e1e;
+        border-radius: 23px;
+      }
+
+      .noAvatar {
+        display: grid;
+        place-items: center;
+
+        width: 48px;
+        height: 48px;
+
+        background-color: var(--color-dark-300);
+        border-radius: 50%;
+      }
+
+      .avatar {
+        object-fit: cover;
+        border-radius: 50%;
+      }
+
+      .namesContainer {
+        display: flex;
+        flex-direction: column;
+        margin-left: 12px;
+
+        .username {
+          @include min {
+            overflow: hidden;
+            width: 200px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+
+          text-decoration: underline;
+          text-underline-offset: 3px;
+        }
+
+        .names {
+          display: flex;
+          gap: 4px;
+        }
+      }
+    }
+  }
+
+  .searchTitle {
+    @include mobile {
+      display: none;
+    }
+
+    margin-bottom: 13px;
+  }
+
+  .empty {
+    @include mobile {
+      margin-top: 25px;
+    }
+
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 84px;
+  }
+
+  .requestsTitle {
+    @include mobile {
+      margin-top: 18px;
+    }
+
+    margin-top: 30px;
+  }
+
+  input {
+    padding-bottom: 4px;
+  }
+
+  input::placeholder {
+    font: var(--font-regular-16);
+  }
+}
