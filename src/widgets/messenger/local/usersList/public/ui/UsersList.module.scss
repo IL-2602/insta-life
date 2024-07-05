@@ -16,6 +16,11 @@
 
   background: var(--color-dark-500);
 
+  .test {
+    & > p {
+      font-size: 10px;
+    }
+  }
 }
 
 .active {
