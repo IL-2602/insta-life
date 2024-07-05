@@ -11,7 +11,7 @@ import { HomeProps } from '@/widgets/home/publ/container'
 
 import s from './Home.module.scss'
 
-export const Home = forwardRef<HTMLDivElement, HomeProps>(({ isFetching, posts }, ref) => {
+export const Home = forwardRef<HTMLDivElement, HomeProps>(({ isFetching, me, posts }, ref) => {
   if (!posts) {
     return (
       <div className={s.fetchSpinner}>
@@ -27,7 +27,12 @@ export const Home = forwardRef<HTMLDivElement, HomeProps>(({ isFetching, posts }
 
         return (
           <Fragment key={post.id}>
-            <PostHeader avatar={post.avatarOwner} time={post.createdAt} userName={post.userName} />
+            <PostHeader
+              avatar={post.avatarOwner}
+              time={post.createdAt}
+              userId={me.userId}
+              userName={post.userName}
+            />
             <PublicPhotos
               height={505}
               home
@@ -36,14 +41,14 @@ export const Home = forwardRef<HTMLDivElement, HomeProps>(({ isFetching, posts }
               photos={images}
               width={490}
             />
-            <PostIcons />
+            <PostIcons postId={post.id} userId={me.userId} />
             <PostDescription
               avatar={post.avatarOwner}
               description={post.description}
               userName={post.userName}
             />
             <PostLikes postId={post.id} />
-            <PostComments />
+            <PostComments postId={post.id} />
           </Fragment>
         )
       })}

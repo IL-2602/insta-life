@@ -1,3 +1,95 @@
+@mixin comment {
+  .comment {
+    overflow: hidden;
+    display: flex;
+    margin-top: 8px;
+
+    .commentName {
+      padding-right: 6px;
+    }
+
+    img {
+      margin-right: 12px;
+      border-radius: 50%;
+    }
+  }
+}
+
 .container {
+  display: flex;
+  flex-direction: column;
+
+  margin-top: 24px;
   margin-bottom: 36px;
+
+  border-bottom: 1px solid var(--color-dark-100);
+
+  .viewComments {
+    @include comment;
+
+    display: flex;
+    flex-direction: column;
+
+    max-height: 0;
+    margin-top: 8px;
+    margin-bottom: 16px;
+
+    transition: max-height 0.04s ease-in-out;
+  }
+
+  .openComments {
+    @include comment;
+
+    max-height: 100vh;
+  }
+
+  .viewBtn {
+    align-self: baseline;
+
+    &:hover {
+      opacity: 0.75;
+    }
+  }
+
+  .addCommentBlock {
+    display: flex;
+    justify-content: space-between;
+
+    .textField {
+      resize: none;
+
+      align-items: center;
+
+      height: 47px;
+      padding: 10px;
+
+      background: transparent;
+      border: none;
+      outline: none;
+
+      &::placeholder {
+        color: var(--color-light-900);
+      }
+
+      &:focus,
+      :focus-within {
+        border: none;
+      }
+    }
+
+    .button {
+      &:disabled {
+        opacity: 0.75;
+      }
+
+      &:hover {
+        cursor: pointer;
+        opacity: 0.75;
+      }
+
+      &:disabled:hover {
+        cursor: default;
+      }
+    }
+  }
 }

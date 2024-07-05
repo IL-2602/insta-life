@@ -1,5 +1,5 @@
-import { GetLikesResponse } from '@/services/postService/lib/postEndpoints.types'
 import { useGetLikesQuery } from '@/services/postService/postEndpoints'
+import { useTranslation } from '@/shared/hooks/useTranslation'
 import { Typography } from '@/shared/ui/Typography'
 import Image from 'next/image'
 
@@ -10,13 +10,12 @@ import testLike2 from '../../../../../public/assets/testLike2.svg'
 import testLike3 from '../../../../../public/assets/testLike3.svg'
 
 export const PostLikes = ({ postId }: Props) => {
+  const { t } = useTranslation()
   const { data: likes } = useGetLikesQuery({ postId })
 
   if (!likes) {
     return null
   }
-
-  console.log('likes: ', likes)
 
   const avatars = likes.items.map(like => {
     return like.avatars
@@ -36,10 +35,13 @@ export const PostLikes = ({ postId }: Props) => {
         {/*<Image alt={'likes'} src={testLike2} />*/}
         {/*<Image alt={'likes'} src={testLike3} />*/}
       </div>
-      <Typography className={s.likesCount} variant={'regular14'}>
+      <Typography
+        className={likes.totalCount > 0 ? s.likesCount : s.marginNone}
+        variant={'regular14'}
+      >
         {likes.totalCount}
       </Typography>
-      <Typography variant={'bold14'}>&quot;Like&quot;</Typography>
+      <Typography variant={'bold14'}>&quot;{t.post.like}&quot;</Typography>
     </div>
   )
 }

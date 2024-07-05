@@ -2,9 +2,12 @@
   display: flex;
   margin-top: 14px;
 
-  .likesPhotos {
-    margin-right: 12px;
+  .marginNone {
+    margin-left: 0;
+    padding-right: 4px;
+  }
 
+  .likesPhotos {
     .avatarContainer {
       border-radius: 50%;
 
@@ -15,6 +18,7 @@
   }
 
   .likesCount {
+    margin-left: 12px;
     padding-right: 4px;
   }
 }
