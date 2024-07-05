@@ -4,17 +4,20 @@
   justify-content: space-between;
   margin-bottom: 12px;
 
-  .dots {
-    cursor: pointer;
-    padding-top: 6px;
+  .postOptions {
+    .dots {
+      cursor: pointer;
+      position: relative;
+      padding-top: 6px;
 
-    &:hover {
-      path {
-        fill: var(--color-primary-300);
+      &:hover {
+        path {
+          fill: var(--color-primary-300);
+        }
       }
     }
 
-    &:active {
+    .dotsActive {
       path {
         fill: var(--color-primary-500);
       }

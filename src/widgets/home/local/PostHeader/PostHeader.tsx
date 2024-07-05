@@ -1,14 +1,43 @@
+import { useState } from 'react'
+import { toast } from 'react-toastify'
+
 import { HorizontalDots } from '@/shared/assets/icons/HorizontalDots/HorizontalDots'
 import { TimeDifference } from '@/shared/components/TimeDifference/TimeDifference'
+import { useTranslation } from '@/shared/hooks/useTranslation'
 import { Button } from '@/shared/ui/Button'
+import { CustomPopover } from '@/shared/ui/Popover/CustomPopover'
 import { Typography } from '@/shared/ui/Typography'
+import { PostPopover } from '@/widgets/home/local/PostHeader/PostPopover/PostPopover'
+import { clsx } from 'clsx'
 import Image from 'next/image'
 
 import s from './PostHeader.module.scss'
 
 import noAvatar from '../../../../../public/assets/noPhoto.svg'
 
-export const PostHeader = ({ avatar, time, userName }: Props) => {
+export const PostHeader = ({ avatar, time, userId, userName }: Props) => {
+  const [isOpenPopover, setIsOpenPopover] = useState(false)
+
+  const { t } = useTranslation()
+
+  const handleCopyLink = () => {
+    const url = `https://instalife.fun/profile/${userId}`
+
+    navigator.clipboard.writeText(url).then(() => {
+      toast.success(t.button.linkSuccess, {
+        pauseOnHover: false,
+        style: {
+          background: '#0A6638',
+          border: '1px solid #14CC70',
+          color: 'white',
+          fontSize: '14px',
+        },
+      })
+
+      setIsOpenPopover(false)
+    })
+  }
+
   return (
     <div className={s.container}>
       <div className={s.titleWrapper}>
@@ -26,9 +55,19 @@ export const PostHeader = ({ avatar, time, userName }: Props) => {
           <TimeDifference home postTime={time} />
         </Typography>
       </div>
-      <Button className={s.dots} variant={'noStyle'}>
-        <HorizontalDots />
-      </Button>
+
+      <div className={s.postOptions}>
+        <CustomPopover
+          contentChildren={<PostPopover handleCopyLink={handleCopyLink} />}
+          icon={
+            <Button className={clsx(s.dots, isOpenPopover ? s.dotsActive : '')} variant={'noStyle'}>
+              <HorizontalDots />
+            </Button>
+          }
+          onOpenChange={() => setIsOpenPopover(!isOpenPopover)}
+          open={isOpenPopover}
+        />
+      </div>
     </div>
   )
 }
@@ -36,5 +75,6 @@ export const PostHeader = ({ avatar, time, userName }: Props) => {
 type Props = {
   avatar: string
   time: string
+  userId: number
   userName: string
 }

@@ -30,5 +30,5 @@ export const useContainer = () => {
     }
   }, [inView])
 
-  return { isFetching, posts, ref }
+  return { isFetching, me, posts, ref }
 }
