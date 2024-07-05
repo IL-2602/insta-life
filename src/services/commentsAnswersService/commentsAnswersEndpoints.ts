@@ -2,6 +2,7 @@ import { api } from '@/services/api'
 import {
   CommentsAnswersParams,
   CommentsAnswersResponse,
+  GetCommentsResponse,
 } from '@/services/commentsAnswersService/lib/commentsAnswersEndpoints.types'
 
 const commentsAnswersEndpoints = api.injectEndpoints({
@@ -15,7 +16,15 @@ const commentsAnswersEndpoints = api.injectEndpoints({
         }
       },
     }),
+    getComments: builder.query<GetCommentsResponse, { postId: number }>({
+      query: ({ postId }) => {
+        return {
+          method: 'GET',
+          url: `posts/${postId}/comments`,
+        }
+      },
+    }),
   }),
 })
 
-export const { useCreateNewCommentMutation } = commentsAnswersEndpoints
+export const { useCreateNewCommentMutation, useGetCommentsQuery } = commentsAnswersEndpoints

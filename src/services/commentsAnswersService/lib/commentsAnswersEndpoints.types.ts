@@ -25,3 +25,32 @@ export type CommentsAnswersResponse = {
   likeCount: number
   postId: number
 }
+
+export type GetCommentsResponse = {
+  items: [
+    {
+      answerCount: number
+      content: string
+      createdAt: string
+      from: {
+        avatars: [
+          {
+            createdAt: string
+            fileSize: number
+            height: number
+            url: string
+            width: number
+          },
+        ]
+        id: number
+        username: string
+      }
+      id: number
+      isLiked: true
+      likeCount: number
+      postId: number
+    },
+  ]
+  pageSize: number
+  totalCount: number
+}
