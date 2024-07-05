@@ -9,7 +9,6 @@ import {
   useUpdateMessagesStatusMutation
 } from "@/services/messengerService/messengerEndpoints";
 import { usePublishPostImageMutation } from "@/services/postService/postEndpoints";
-import { postActions } from "@/services/postService/store/slice/postEndpoints.slice";
 import { useGetPublicUserProfileQuery } from "@/services/publicService/publicEndpoints";
 import { useTranslation } from "@/shared/hooks/useTranslation";
 import { MessengerFormSchema, messengerSchema } from "@/widgets/messenger/local/messengerSchema/messengerSchema";
@@ -152,6 +151,10 @@ export const useContainer = () => {
     }
   }, [dialogMessages?.length]);
 
+  const onClickDelImage = () => {
+    setImage(undefined)
+    setValue('userPhoto', undefined)
+  }
 
-  return { control, dialogMessages, dialogPartnerData, extraActionsUserPhoto, image, imageError, isLoadingChat, lastElRef, message, onSendMsgHandler, t, userId };
+  return { control,dialogMessages, dialogPartnerData, extraActionsUserPhoto, image, imageError, isLoadingChat, lastElRef, message, onClickDelImage, onSendMsgHandler, t, userId };
 };

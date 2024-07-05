@@ -14,6 +14,7 @@ import { OwnerMessage } from '@/widgets/messenger/local/messages/ownerMessage/Ow
 import { ReceiverMessage } from '@/widgets/messenger/local/messages/receiverMessage/ReceiverMessage'
 import * as ScrollArea from '@radix-ui/react-scroll-area'
 import { clsx } from 'clsx'
+import { CloseIcon } from 'next/dist/client/components/react-dev-overlay/internal/icons/CloseIcon'
 import Image from 'next/image'
 
 import s from './ChatBody.module.scss'
@@ -32,6 +33,7 @@ export const ChatBody = forwardRef<HTMLDivElement, Props>(
       isLoadingChat,
       message,
       messages,
+      onClickDelImage,
       onSendMsg,
       t,
       userId,
@@ -56,7 +58,6 @@ export const ChatBody = forwardRef<HTMLDivElement, Props>(
       )
     }
 
-    // @ts-ignore
     return (
       <div className={clsx(s.root, (image || imageError) && s.rootWithImage)}>
         <ScrollArea.Root
@@ -104,6 +105,9 @@ export const ChatBody = forwardRef<HTMLDivElement, Props>(
           {image && (
             <div className={s.imageWrapper}>
               <Image alt={'User Image'} height={36} objectFit={'cover'} src={image} width={36} />
+              <Button className={s.delImage} onClick={onClickDelImage} variant={'noStyle'}>
+                x
+              </Button>
             </div>
           )}
           {imageError && (
@@ -160,6 +164,7 @@ type Props = {
   isLoadingChat?: boolean
   message?: string
   messages?: Omit<Message, 'avatars' | 'userName'>[]
+  onClickDelImage: () => void
   onSendMsg: () => void
   t: Local
   userId?: number

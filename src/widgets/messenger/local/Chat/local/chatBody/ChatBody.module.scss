@@ -13,8 +13,6 @@
   }
 }
 
-
-
 .root {
   display: grid;
   grid-template-rows: 1fr 48px;
@@ -25,7 +23,7 @@
     grid-row: 1/2;
     flex-direction: column-reverse;
     gap: 10px;
-    
+
     padding: 23px;
   }
 
@@ -38,7 +36,28 @@
     border-top: 1px solid var(--color-dark-300);
 
     .imageWrapper {
+      position: relative;
+      width: 47px;
+      height: 47px;
       padding: 10px 0 0 10px;
+
+      .delImage {
+        position: absolute;
+        top: 10px;
+        right: 0;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 16px;
+        height: 16px;
+
+        color: var(--color-light-100);
+
+        background: rgb(150 143 147 / 80%);
+      }
+
     }
 
     .textAreaWrapper {
@@ -66,8 +85,8 @@
           align-items: center;
           justify-content: center;
 
-          &:hover{
-            color: var(--color-primary-500)
+          &:hover {
+            color: var(--color-primary-500);
           }
         }
 
@@ -101,7 +120,6 @@
         }
       }
     }
-
   }
 }
 
@@ -150,5 +168,3 @@
   height: 14px;
   padding: 0 3px;
 }
-
-
