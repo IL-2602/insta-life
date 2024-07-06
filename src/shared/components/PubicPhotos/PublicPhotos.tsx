@@ -1,9 +1,12 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
+import { MobileLeftArrow } from '@/shared/assets/icons/MobileLeftArrow/MobileLeftArrow'
+import { MobileRightArrow } from '@/shared/assets/icons/MobileRightArrow/MobileRightArrow'
 import { NextPhotoArrow } from '@/shared/assets/icons/NextPhotoArrow/NextPhotoArrow'
 import { NextPublicPhotoArrow } from '@/shared/assets/icons/NextPublicPhotoArrow/NextPublicPhotoArrow'
 import { PrevPhotoArrow } from '@/shared/assets/icons/PrevPhotoArrow/PrevPhotoArrow'
 import { PrevPublicPhotoArrow } from '@/shared/assets/icons/PrevPublicPhotoArrow/PrevPublicPhotoArrow'
+import { useResize } from '@/shared/hooks/useResize'
 import { Button } from '@/shared/ui/Button'
 import { clsx } from 'clsx'
 import Image from 'next/image'
@@ -36,6 +39,28 @@ export const PublicPhotos = ({ height, home, id, ownerId, photos, width, ...rest
   const isFirstPhoto = currentPhotoIndex === 0
   const isLastPhoto = photos.length - 1 === currentPhotoIndex
 
+  const { width: windowWidth } = useResize()
+
+  const isHomeRightArrow = () => {
+    if (home && windowWidth <= 810) {
+      return <MobileRightArrow className={s.nextArrow} />
+    } else if (home && windowWidth > 810) {
+      return <NextPhotoArrow className={s.nextArrow} />
+    } else {
+      return <NextPublicPhotoArrow className={s.nextArrow} />
+    }
+  }
+
+  const isHomeLeftArrow = () => {
+    if (home && windowWidth <= 810) {
+      return <MobileLeftArrow className={s.prevArrow} />
+    } else if (home && windowWidth > 810) {
+      return <PrevPhotoArrow className={s.prevArrow} />
+    } else {
+      return <PrevPublicPhotoArrow className={s.prevArrow} />
+    }
+  }
+
   return (
     <div className={s.photosWrapper}>
       <Link href={`profile/${ownerId}?postId=${id}`} key={id}>
@@ -55,11 +80,7 @@ export const PublicPhotos = ({ height, home, id, ownerId, photos, width, ...rest
             onClick={goToPrevPhoto}
             variant={'noStyle'}
           >
-            {!home ? (
-              <PrevPublicPhotoArrow className={s.prevArrow} />
-            ) : (
-              <PrevPhotoArrow className={s.prevArrow} />
-            )}
+            {isHomeLeftArrow()}
           </Button>
           <Button
             className={clsx(!home ? s.btn : s.homeBtn, s.nextBtn)}
@@ -67,11 +88,7 @@ export const PublicPhotos = ({ height, home, id, ownerId, photos, width, ...rest
             onClick={goToNextPhoto}
             variant={'noStyle'}
           >
-            {!home ? (
-              <NextPublicPhotoArrow className={s.nextArrow} />
-            ) : (
-              <NextPhotoArrow className={s.nextArrow} />
-            )}
+            {isHomeRightArrow()}
           </Button>
           <div className={home ? s.homeScale : s.photoScale}>
             {photos.map((photo, index) => (
