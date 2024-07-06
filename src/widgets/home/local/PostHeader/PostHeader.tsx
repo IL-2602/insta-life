@@ -49,9 +49,11 @@ export const PostHeader = ({ avatar, time, userId, userName }: Props) => {
           </div>
         )}
 
-        <Typography variant={'h3'}>{userName}</Typography>
+        <Typography className={s.userName} variant={'h3'}>
+          {userName}
+        </Typography>
         <div className={s.point}></div>
-        <Typography>
+        <Typography className={s.time}>
           <TimeDifference home postTime={time} />
         </Typography>
       </div>

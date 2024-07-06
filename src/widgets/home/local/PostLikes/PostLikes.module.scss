@@ -1,4 +1,10 @@
+@import '@/styles/variables/mixins';
+
 .container {
+  @include mobile-large {
+    margin-top: 0;
+  }
+
   display: flex;
   margin-top: 14px;
 
@@ -8,12 +14,36 @@
   }
 
   .likesPhotos {
+    display: flex;
+
     .avatarContainer {
+      z-index: 3;
       border-radius: 50%;
+
+      .noAvatar {
+        display: grid;
+        place-items: center;
+
+        width: 24px;
+        height: 24px;
+
+        background-color: var(--color-dark-100);
+        border-radius: 50%;
+      }
 
       img {
         border-radius: 50%;
       }
+    }
+
+    .avatarContainer:nth-child(2) {
+      z-index: 2;
+      margin-left: -9px;
+    }
+
+    .avatarContainer:nth-child(3) {
+      z-index: 1;
+      margin-left: -9px;
     }
   }
 
@@ -21,4 +51,10 @@
     margin-left: 12px;
     padding-right: 4px;
   }
+}
+
+.spinner {
+  display: grid;
+  place-items: center;
+  height: 10vh;
 }

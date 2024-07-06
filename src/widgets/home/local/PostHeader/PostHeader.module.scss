@@ -1,3 +1,5 @@
+@import '@/styles/variables/mixins';
+
 .container {
   display: flex;
   align-items: center;
@@ -5,6 +7,12 @@
   margin-bottom: 12px;
 
   .postOptions {
+    .dotsActive {
+      path {
+        fill: var(--color-primary-500);
+      }
+    }
+
     .dots {
       cursor: pointer;
       position: relative;
@@ -16,17 +24,23 @@
         }
       }
     }
-
-    .dotsActive {
-      path {
-        fill: var(--color-primary-500);
-      }
-    }
   }
 
   .titleWrapper {
     display: flex;
     align-items: center;
+
+    .userName {
+      @include mobile-large {
+        font: var(--font-regular-16);
+      }
+    }
+
+    .time {
+      @include mobile-large {
+        display: none;
+      }
+    }
 
     .noAvatar {
       display: grid;
@@ -46,6 +60,10 @@
     }
 
     .point {
+      @include mobile-large {
+        display: none;
+      }
+
       width: 4px;
       height: 4px;
       margin-right: 8px;

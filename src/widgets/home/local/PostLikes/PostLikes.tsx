@@ -1,23 +1,28 @@
 import { useGetLikesQuery } from '@/services/postService/postEndpoints'
 import { useTranslation } from '@/shared/hooks/useTranslation'
+import { SpinnerThreePoints } from '@/shared/ui/SpinnerThreePoints'
 import { Typography } from '@/shared/ui/Typography'
 import Image from 'next/image'
 
 import s from './PostLikes.module.scss'
 
-import testLike1 from '../../../../../public/assets/testLike1.svg'
-import testLike2 from '../../../../../public/assets/testLike2.svg'
-import testLike3 from '../../../../../public/assets/testLike3.svg'
+import noAvatar from '../../../../../public/assets/noPhoto.svg'
 
 export const PostLikes = ({ postId }: Props) => {
   const { t } = useTranslation()
   const { data: likes } = useGetLikesQuery({ postId })
 
   if (!likes) {
-    return null
+    return (
+      <div className={s.spinner}>
+        <SpinnerThreePoints />
+      </div>
+    )
   }
 
-  const avatars = likes.items.map(like => {
+  const lastThreeLikes = likes.items.slice(0, 3)
+
+  const avatars = lastThreeLikes.map(like => {
     return like.avatars
   })
 
@@ -27,13 +32,16 @@ export const PostLikes = ({ postId }: Props) => {
         {avatars.map((avatar, id) => {
           return (
             <div className={s.avatarContainer} key={id}>
-              <Image alt={'likes'} height={24} src={avatar[0].url} width={24} />
+              {avatar[0] ? (
+                <Image alt={'likes'} height={24} src={avatar[0].url} width={24} />
+              ) : (
+                <div className={s.noAvatar}>
+                  <Image alt={'noAvatar'} height={16} src={noAvatar} width={16} />
+                </div>
+              )}
             </div>
           )
         })}
-
-        {/*<Image alt={'likes'} src={testLike2} />*/}
-        {/*<Image alt={'likes'} src={testLike3} />*/}
       </div>
       <Typography
         className={likes.totalCount > 0 ? s.likesCount : s.marginNone}

@@ -1,4 +1,10 @@
+@import '@/styles/variables/mixins';
+
 .container {
+  @include mobile-large {
+    margin-bottom: 12px;
+  }
+
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -6,24 +12,36 @@
   margin-top: 12px;
   margin-bottom: 10px;
 
-  .btnIcon > svg:hover {
+  & > .btnIcon:hover {
     cursor: pointer;
 
     path {
-      fill: var(--color-primary-300);
+      fill: var(--color-light-700);
     }
   }
 
   .groupIcons {
+    @include mobile-large {
+      gap: 12px;
+    }
+
     display: flex;
     gap: 20px;
     align-items: center;
 
-    & > svg:hover {
+    & > .btnIcon:first-child:hover {
       cursor: pointer;
 
       path {
-        fill: var(--color-primary-100);
+        fill: var(--color-danger-500);
+      }
+    }
+
+    & > .btnIcon:not(:first-of-type):hover {
+      cursor: pointer;
+
+      path {
+        fill: var(--color-primary-300);
       }
     }
   }

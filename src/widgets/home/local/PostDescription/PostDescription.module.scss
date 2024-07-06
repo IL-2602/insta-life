@@ -1,4 +1,10 @@
+@import '@/styles/variables/mixins';
+
 .container {
+  @include mobile-large {
+    display: none;
+  }
+
   display: flex;
 
   .description {
