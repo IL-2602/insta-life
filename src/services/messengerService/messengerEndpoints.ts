@@ -9,8 +9,7 @@ import {
   Message,
 } from '@/services/messengerService/lib/messengerEndpoints.types'
 import { messageActions } from '@/services/messengerService/store/slice/messengerEndpoints.slice'
-import { deleteCookie, getCookie } from 'cookies-next'
-import { has } from 'immutable'
+import { getCookie } from 'cookies-next'
 import { Socket, io } from 'socket.io-client'
 
 const queryParams = {

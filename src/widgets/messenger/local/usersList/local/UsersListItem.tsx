@@ -32,6 +32,8 @@ export const UsersListItem = ({ lastUserMsg, onClickOpenChat, userId }: Props) =
   const { locale } = useRouter()
   const partnerId = userId === ownerId ? receiverId : ownerId
 
+  const msg = messageText.length > 20 ? messageText.substring(0, 20) + '...' : messageText
+
   if (!userId) {
     return null
   }
@@ -55,7 +57,7 @@ export const UsersListItem = ({ lastUserMsg, onClickOpenChat, userId }: Props) =
           variant={'small'}
         >
           {ownerId === userId && 'You: '}
-          {messageText}
+          {msg}
         </Typography>
       </div>
       {status !== MSG_STATUS.READ && ownerId !== userId && (

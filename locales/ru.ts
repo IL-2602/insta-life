@@ -174,6 +174,11 @@ export const ru: Local = {
     unfollow: 'Отписаться',
     yes: 'Да',
   },
+  messenger: {
+    imgFormat: 'Только .jpg, .jpeg, .png  форматы поддерживаются',
+    imgLarger360: 'Изображение должно быть больше 360х360',
+    imgLess10mb: 'Максимальный размер изображения 10мб',
+  },
   modal: {
     addPhotoModalTitle: 'Добавить фото',
     advertisingPlacement: 'Размещение рекламы',

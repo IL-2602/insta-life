@@ -10,7 +10,7 @@ import s from "./UsersList.module.scss";
 export const UsersList = memo(({ control,lastMessages, onClickUserOpenChatHandler, sent, userId }: UsersListProps) => {
   return (<>
     <div className={s.search}>
-      <ControlledTextField control={control} name={'searchName'} placeholder={"Input search"}/>
+      <ControlledTextField className={s.test} control={control} name={'searchName'} placeholder={"Input search"}/>
     </div>
     <div className={s.usersList}>
       <ul>
