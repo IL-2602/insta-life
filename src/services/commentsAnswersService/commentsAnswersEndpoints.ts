@@ -8,6 +8,7 @@ import {
 const commentsAnswersEndpoints = api.injectEndpoints({
   endpoints: builder => ({
     createNewComment: builder.mutation<CommentsAnswersResponse, CommentsAnswersParams>({
+      invalidatesTags: ['Comment'],
       query: ({ postId, ...rest }) => {
         return {
           body: rest || {},
@@ -17,6 +18,7 @@ const commentsAnswersEndpoints = api.injectEndpoints({
       },
     }),
     getComments: builder.query<GetCommentsResponse, { postId: number }>({
+      providesTags: ['Comment'],
       query: ({ postId }) => {
         return {
           method: 'GET',

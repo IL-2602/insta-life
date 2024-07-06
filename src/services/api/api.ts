@@ -98,6 +98,7 @@ export const api = createApi({
     'Dialogs',
     'Notification',
     'Follow',
+    'Comment',
   ],
 })
 

@@ -40,8 +40,9 @@ export type UserFollowResponse = {
     isFollowedBy: boolean
     isFollowing: boolean
     lastName: string
+    userId: number
     userName: string
-  }
+  }[]
   nextCursor: number
   page: number
   pageSize: number
