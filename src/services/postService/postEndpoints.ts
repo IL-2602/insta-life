@@ -2,7 +2,7 @@ import { api } from '@/services/api'
 import {
   EditPostParams,
   GetCurrentPostResponse,
-  GetLikesResponse,
+  GetPostsResponse,
   PublishPostImageResponse,
   PublishPostParams,
   PublishPostResponse,
@@ -58,11 +58,11 @@ export const postEndpoints = api.injectEndpoints({
         }
       },
     }),
-    getLikes: builder.query<GetLikesResponse, { postId: number }>({
-      query: ({ postId }) => {
+    getPosts: builder.query<GetPostsResponse, { username: string }>({
+      query: ({ username }) => {
         return {
           method: 'GET',
-          url: `posts/${postId}/likes`,
+          url: `posts/${username}`,
         }
       },
     }),
@@ -108,7 +108,7 @@ export const {
   useDeletePostMutation,
   useEditPostMutation,
   useGetCurrentPostQuery,
-  useGetLikesQuery,
+  useGetPostsQuery,
   usePublishPostImageMutation,
   usePublishPostMutation,
 } = postEndpoints

@@ -1,4 +1,5 @@
 import { ErrorResponse } from '@/services/authService/lib/authEndpoints.types'
+import { Avatar } from '@/shared/types/profile'
 
 export type ModalSteps = 'cropping' | 'filters' | 'publication' | 'upload'
 
@@ -51,6 +52,27 @@ export type PostImageResponse = {
 export type PublishPostImageResponse = {
   images: PostImageResponse[]
 } & Partial<ErrorResponse>
+
+export type GetPostsResponse = {
+  items: [
+    {
+      answerCount: number
+      content: string
+      createdAt: string
+      from: {
+        avatars: Avatar[]
+        id: number
+        username: string
+      }
+      id: number
+      isLiked: true
+      likeCount: number
+      postId: number
+    },
+  ]
+  pageSize: number
+  totalCount: number
+}
 
 export type PublishPostResponse = {
   avatarOwner: string
