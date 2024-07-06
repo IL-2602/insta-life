@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form'
 
 import { useGetMeQuery } from '@/services/authService/authEndpoints'
-import { useCreateNewCommentMutation } from '@/services/commentsAnswersService/commentsAnswersEndpoints'
+import { useCreateNewCommentMutation } from '@/services/commentsService/commentsEndpoints'
 import { useGetCurrentPostQuery } from '@/services/postService/postEndpoints'
 import { useGetProfileQuery } from '@/services/profileService/profileEndpoints'
 import { useTranslation } from '@/shared/hooks/useTranslation'
