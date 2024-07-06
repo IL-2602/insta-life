@@ -4,11 +4,12 @@ import { useForm } from 'react-hook-form'
 import {
   useCreateNewCommentMutation,
   useGetCommentsQuery,
-} from '@/services/commentsAnswersService/commentsAnswersEndpoints'
+} from '@/services/commentsService/commentsEndpoints'
 import { FillSmallHeart, SmallHeart } from '@/shared/assets/icons/SmallHeart'
 import { TimeDifference } from '@/shared/components/TimeDifference/TimeDifference'
 import { useTranslation } from '@/shared/hooks/useTranslation'
 import { Button } from '@/shared/ui/Button'
+import { SpinnerThreePoints } from '@/shared/ui/SpinnerThreePoints'
 import { Typography } from '@/shared/ui/Typography'
 import { ControlledTextAreaField } from '@/shared/ui/controlledInsta/ControlledTextArea/ControlledTextArea'
 import { usePostSchema } from '@/widgets/posts/local/schema/myPostPublicationSchema'
@@ -57,13 +58,25 @@ export const PostComments = ({ postId, postIds, time }: Props) => {
   const postComment = watch('comment')
 
   const commentPublishHandler = () =>
-    postId && postComment?.trim() && createNewComment({ content: postComment, postId }).unwrap()
+    postId &&
+    postComment?.trim() &&
+    createNewComment({ content: postComment, postId })
+      .unwrap()
+      .then(() => setValue('comment', ''))
 
   useEffect(() => {
     if (!isUninitialized) {
       setValue('comment', '')
     }
   }, [isUninitialized, setValue])
+
+  if (!comments) {
+    return (
+      <div className={s.fetchSpinner}>
+        <SpinnerThreePoints />
+      </div>
+    )
+  }
 
   return (
     <div className={s.container}>
