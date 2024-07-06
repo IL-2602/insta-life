@@ -1,14 +1,48 @@
+@import '@/styles/variables/mixins';
+
 @mixin comment {
   .comment {
     overflow: hidden;
     display: flex;
-    margin-top: 8px;
+    align-items: center;
+    justify-content: space-between;
+
+    &:not(:first-of-type) {
+      margin-top: 8px;
+    }
+
+    &:last-child {
+      margin-bottom: 8px;
+    }
+
+    .commentWrap {
+      display: flex;
+    }
 
     .commentName {
       padding-right: 6px;
     }
 
+    .smallHeart {
+      margin-left: 10px;
+      padding-top: 4px;
+
+      &:hover {
+        cursor: pointer;
+
+        svg {
+          path {
+            fill: var(--color-danger-500);
+          }
+        }
+      }
+    }
+
     img {
+      @include mobile-large {
+        display: none;
+      }
+
       margin-right: 12px;
       border-radius: 50%;
     }
@@ -16,6 +50,12 @@
 }
 
 .container {
+  @include mobile-large {
+    margin-top: 12px;
+    margin-bottom: 40px;
+    border-bottom: none;
+  }
+
   display: flex;
   flex-direction: column;
 
@@ -24,17 +64,34 @@
 
   border-bottom: 1px solid var(--color-dark-100);
 
+  .time {
+    @include mobile-large {
+      display: block;
+    }
+
+    display: none;
+  }
+
   .viewComments {
     @include comment;
+
+    @include mobile-large {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
 
     display: flex;
     flex-direction: column;
 
     max-height: 0;
     margin-top: 8px;
-    margin-bottom: 16px;
 
     transition: max-height 0.04s ease-in-out;
+
+    .skeletonWrap {
+      display: flex;
+      gap: 12px;
+    }
   }
 
   .openComments {
@@ -44,16 +101,31 @@
   }
 
   .viewBtn {
+    @include mobile-large {
+      font: var(--font-small);
+    }
+
     align-self: baseline;
 
     &:hover {
       opacity: 0.75;
     }
+
+    span {
+      @include mobile-large {
+        font: var(--font-small);
+      }
+    }
   }
 
   .addCommentBlock {
+    @include mobile-large {
+      display: none;
+    }
+
     display: flex;
     justify-content: space-between;
+    margin-top: 2px;
 
     .textField {
       resize: none;
@@ -61,7 +133,7 @@
       align-items: center;
 
       height: 47px;
-      padding: 10px;
+      padding: 10px 10px 10px 0;
 
       background: transparent;
       border: none;
@@ -91,5 +163,41 @@
         cursor: default;
       }
     }
+  }
+}
+
+.loader {
+  transform: translateX(-38px);
+
+  align-self: center;
+
+  aspect-ratio: 1;
+  width: 4px;
+  margin-block: 1rem;
+
+  color: var(--color-light-100);
+
+  border-radius: 50%;
+  box-shadow:
+    19px 0 0 7px,
+    38px 0 0 3px,
+    57px 0 0 0;
+
+  animation: l21 0.6s infinite alternate linear;
+}
+
+@keyframes l21 {
+  50% {
+    box-shadow:
+      19px 0 0 3px,
+      38px 0 0 7px,
+      57px 0 0 3px;
+  }
+
+  100% {
+    box-shadow:
+      19px 0 0 0,
+      38px 0 0 3px,
+      57px 0 0 7px;
   }
 }
