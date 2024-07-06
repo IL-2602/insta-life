@@ -1,0 +1,37 @@
+@import '@/styles/variables/mixins';
+
+.fetchSpinner {
+  @include mobile-large {
+    margin-top: -70px;
+    margin-bottom: 70px;
+  }
+
+  display: grid;
+  place-items: center;
+  margin-top: 50px;
+  margin-bottom: 70px;
+}
+
+.spinner {
+  display: grid;
+  place-items: center;
+  height: 40vh;
+  margin-bottom: 50px;
+}
+
+.inView {
+  @include mobile-large {
+    height: 10vh;
+  }
+}
+
+.photos {
+  @include mobile-large {
+    width: 330px;
+    height: 325px;
+    border-radius: 3px;
+  }
+
+  width: 490px;
+  height: 505px;
+}
