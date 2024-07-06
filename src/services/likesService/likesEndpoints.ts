@@ -7,6 +7,7 @@ const commentsEndpoints = api.injectEndpoints({
       GetLikesResponse,
       { answerId: number; commentId: number; postId: number }
     >({
+      providesTags: ['AnswerLike'],
       query: ({ answerId, commentId, postId }) => {
         return {
           method: 'GET',
@@ -15,6 +16,7 @@ const commentsEndpoints = api.injectEndpoints({
       },
     }),
     getCommentLikes: builder.query<GetLikesResponse, { commentId: number; postId: number }>({
+      providesTags: ['CommentLike'],
       query: ({ commentId, postId }) => {
         return {
           method: 'GET',
@@ -23,7 +25,7 @@ const commentsEndpoints = api.injectEndpoints({
       },
     }),
     getPostLikes: builder.query<GetLikesResponse, { postId: number }>({
-      providesTags: ['Like'],
+      providesTags: ['PostLike'],
       query: ({ postId }) => {
         return {
           method: 'GET',
@@ -33,8 +35,14 @@ const commentsEndpoints = api.injectEndpoints({
     }),
     updateAnswerLike: builder.mutation<
       void,
-      { answerId: number; commentId: number; 'like-status': string; postId: number }
+      {
+        answerId: number
+        commentId: number
+        likeStatus: 'DISLIKE' | 'LIKE' | 'NONE'
+        postId: number
+      }
     >({
+      invalidatesTags: ['AnswerLike'],
       query: ({ answerId, commentId, postId }) => {
         return {
           method: 'PUT',
@@ -44,8 +52,9 @@ const commentsEndpoints = api.injectEndpoints({
     }),
     updateCommentLike: builder.mutation<
       void,
-      { commentId: number; 'like-status': string; postId: number }
+      { commentId: number; likeStatus: 'DISLIKE' | 'LIKE' | 'NONE'; postId: number }
     >({
+      invalidatesTags: ['CommentLike'],
       query: ({ commentId, postId }) => {
         return {
           method: 'PUT',
@@ -53,10 +62,14 @@ const commentsEndpoints = api.injectEndpoints({
         }
       },
     }),
-    updatePostLike: builder.mutation<void, { 'like-status': string; postId: number }>({
-      invalidatesTags: ['Like'],
-      query: ({ postId }) => {
+    updatePostLike: builder.mutation<
+      void,
+      { likeStatus: 'DISLIKE' | 'LIKE' | 'NONE'; postId: number }
+    >({
+      invalidatesTags: ['PostLike'],
+      query: ({ likeStatus, postId }) => {
         return {
+          body: { likeStatus },
           method: 'PUT',
           url: `posts/${postId}/like-status`,
         }

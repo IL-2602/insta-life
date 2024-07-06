@@ -100,7 +100,9 @@ export const api = createApi({
     'Follow',
     'Comment',
     'Answer',
-    'Like',
+    'PostLike',
+    'AnswerLike',
+    'CommentLike',
   ],
 })
 

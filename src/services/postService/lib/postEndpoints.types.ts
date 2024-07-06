@@ -65,7 +65,7 @@ export type GetPostsResponse = {
         username: string
       }
       id: number
-      isLiked: true
+      isLiked: boolean
       likeCount: number
       postId: number
     },
@@ -86,30 +86,6 @@ export type PublishPostResponse = {
   ownerId: number
   updatedAt: string
   userName: string
-} & Partial<ErrorResponse>
-
-export type GetLikesResponse = {
-  items: [
-    {
-      avatars: [
-        {
-          createdAt: string
-          fileSize: number
-          height: number
-          url: string
-          width: number
-        },
-      ]
-      createdAt: string
-      id: number
-      isFollowedBy: boolean
-      isFollowing: boolean
-      userId: number
-      userName: string
-    },
-  ]
-  pageSize: 12
-  totalCount: 100
 } & Partial<ErrorResponse>
 
 export type getUserPostsResponse = {
