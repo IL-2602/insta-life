@@ -4,6 +4,7 @@ import {
   CommentsAnswersResponse,
   CreateCommentParams,
   GetCommentsParams,
+  UpdateCommentLikeStatusParams,
 } from '@/services/commentsAnswersService/lib/commentsAnswersEndpoints.types'
 
 const commentsAnswersEndpoints = api.injectEndpoints({
@@ -18,11 +19,25 @@ const commentsAnswersEndpoints = api.injectEndpoints({
         }
       },
     }),
-    getComments: builder.query<CommentsAnswersResponse<CommentsAnswers>, GetCommentsParams>({
+    getComments: builder.query<
+      CommentsAnswersResponse<CommentsAnswers>,
+      UpdateCommentLikeStatusParams
+    >({
       providesTags: ['Comments'],
-      query: ({ postId, ...rest }) => {
+      query: ({ commentId, postId, ...rest }) => {
         return {
           params: rest || {},
+          type: 'PUT',
+          url: `posts/${postId}/comments/${commentId}/like-status`,
+        }
+      },
+    }),
+    updCommentLikeStatus: builder.mutation<void, CreateCommentParams>({
+      invalidatesTags: ['Comments'],
+      query: ({ postId, ...rest }) => {
+        return {
+          body: rest || {},
+          method: 'POST',
           url: `posts/${postId}/comments`,
         }
       },
@@ -30,4 +45,5 @@ const commentsAnswersEndpoints = api.injectEndpoints({
   }),
 })
 
-export const { useCreateNewCommentMutation, useGetCommentsQuery } = commentsAnswersEndpoints
+export const { useCreateNewCommentMutation, useGetCommentsQuery, useUpdCommentLikeStatusMutation } =
+  commentsAnswersEndpoints

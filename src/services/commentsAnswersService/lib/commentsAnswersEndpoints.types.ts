@@ -5,6 +5,7 @@ type Avatar = {
   url: string
   width: number
 }
+type LikeStatus = 'DISLIKE' | 'LIKE' | 'NONE'
 
 export type CommentsAnswers = {
   answerCount: number
@@ -28,6 +29,12 @@ export type CommentsAnswersResponse<T = {}> = {
 }
 export type CreateCommentParams = {
   content: string
+  postId: number
+}
+
+export type UpdateCommentLikeStatusParams = {
+  commentId: number
+  likeStatus: LikeStatus
   postId: number
 }
 

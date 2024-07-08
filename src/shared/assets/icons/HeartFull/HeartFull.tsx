@@ -11,4 +11,4 @@ const SvgComponent = (props: SVGProps<SVGSVGElement>) => (
   </svg>
 )
 
-export const Heart = memo(forwardRef(SvgComponent))
+export const HeartFullIcon = memo(forwardRef(SvgComponent))
