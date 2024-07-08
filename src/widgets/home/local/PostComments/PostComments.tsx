@@ -9,7 +9,6 @@ import { FillSmallHeart, SmallHeart } from '@/shared/assets/icons/SmallHeart'
 import { TimeDifference } from '@/shared/components/TimeDifference/TimeDifference'
 import { useTranslation } from '@/shared/hooks/useTranslation'
 import { Button } from '@/shared/ui/Button'
-import { SpinnerThreePoints } from '@/shared/ui/SpinnerThreePoints'
 import { Typography } from '@/shared/ui/Typography'
 import { ControlledTextAreaField } from '@/shared/ui/controlledInsta/ControlledTextArea/ControlledTextArea'
 import { usePostSchema } from '@/widgets/posts/local/schema/myPostPublicationSchema'
@@ -70,14 +69,6 @@ export const PostComments = ({ postId, postIds, time }: Props) => {
     }
   }, [isUninitialized, setValue])
 
-  if (!comments) {
-    return (
-      <div className={s.fetchSpinner}>
-        <SpinnerThreePoints />
-      </div>
-    )
-  }
-
   return (
     <div className={s.container}>
       <Typography
@@ -96,7 +87,7 @@ export const PostComments = ({ postId, postIds, time }: Props) => {
         )}
 
         {!comments?.items.length && (
-          <Typography className={s.comment} color={'form'} variant={'small'}>
+          <Typography className={clsx(s.comment, s.noComment)} color={'form'} variant={'small'}>
             {t.post.noComments}
           </Typography>
         )}

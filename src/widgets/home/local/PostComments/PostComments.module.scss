@@ -88,6 +88,12 @@
 
     transition: max-height 0.04s ease-in-out;
 
+    .noComment {
+      @include mobile-large {
+        margin-top: 0.5rem;
+      }
+    }
+
     .skeletonWrap {
       display: flex;
       gap: 12px;

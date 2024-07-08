@@ -1,8 +1,12 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
-import { ROUTES } from '@/shared/constants/routes'
+import { useUpdatePostLikeMutation } from '@/services/likesService/likesEndpoints'
+import { useGetPostsQuery } from '@/services/postService/postEndpoints'
+import { useGetUserPostsQuery } from '@/services/publicService/publicEndpoints'
 import { useResize } from '@/shared/hooks/useResize'
 import { Button } from '@/shared/ui/Button'
+import getFromLocalStorage from '@/shared/utils/localStorage/getFromLocalStorage'
+import saveToLocalStorage from '@/shared/utils/localStorage/saveToLocalStorage'
 import { useRouter } from 'next/router'
 import {
   PostBookmark,
@@ -15,9 +19,27 @@ import {
 
 import s from './PostIcons.module.scss'
 
-export const PostIcons = ({ postId, userId }: Props) => {
-  const [isLike, setIsLike] = useState(false)
+export const PostIcons = ({ postId, userId, username }: Props) => {
+  const [isLike, setIsLike] = useState<boolean>(false)
   const [isBookmark, setIsBookmark] = useState(false)
+
+  const { width } = useResize()
+  const router = useRouter()
+
+  const [updatePostLike] = useUpdatePostLikeMutation()
+
+  const likePost = () => {
+    setIsLike(!isLike)
+    if (isLike) {
+      updatePostLike({ likeStatus: 'DISLIKE', postId })
+    } else {
+      updatePostLike({ likeStatus: 'LIKE', postId })
+    }
+  }
+
+  const addToBookmark = () => {
+    setIsBookmark(!isBookmark)
+  }
 
   const handleTelegramShare = () => {
     const url = `https://instalife.fun/profile/${userId}?postId=${postId}`
@@ -29,28 +51,13 @@ export const PostIcons = ({ postId, userId }: Props) => {
     window.open(telegramLink)
   }
 
-  const { width } = useResize()
-  const router = useRouter()
-
   const scrollToTextArea = (id: number) => {
     const textArea = document.querySelector(`[data-id="postId-${id}"]`) as HTMLTextAreaElement
 
-    if (width < 810) {
-      void router.push(ROUTES.PROFILE)
-    } else {
-      setTimeout(() => {
-        textArea.focus()
-        textArea.scrollIntoView({ behavior: 'smooth', block: 'center' })
-      }, 0.5)
-    }
-  }
-
-  const likePost = () => {
-    setIsLike(!isLike)
-  }
-
-  const addToBookmark = () => {
-    setIsBookmark(!isBookmark)
+    setTimeout(() => {
+      textArea.focus()
+      textArea.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    }, 0.5)
   }
 
   return (
@@ -76,4 +83,5 @@ export const PostIcons = ({ postId, userId }: Props) => {
 type Props = {
   postId: number
   userId: number
+  username: string
 }

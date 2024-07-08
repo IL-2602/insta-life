@@ -9,14 +9,14 @@ export const useContainer = () => {
   const { data: me } = useGetMeQuery() as { data: UserType }
 
   const { data: followers } = useGetUserFollowersQuery({
+    pageSize: 1,
     username: me?.userName,
   })
 
   const { data: following } = useGetUserFollowingQuery({
-    pageNumber: 1,
-    pageSize: 12,
+    pageSize: 4,
     username: me?.userName,
   })
 
-  return { followers, me }
+  return { following, me }
 }

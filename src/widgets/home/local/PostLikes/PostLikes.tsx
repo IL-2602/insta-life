@@ -1,4 +1,4 @@
-import { useGetLikesQuery } from '@/services/postService/postEndpoints'
+import { useGetPostLikesQuery } from '@/services/likesService/likesEndpoints'
 import { useTranslation } from '@/shared/hooks/useTranslation'
 import { SpinnerThreePoints } from '@/shared/ui/SpinnerThreePoints'
 import { Typography } from '@/shared/ui/Typography'
@@ -10,7 +10,7 @@ import noAvatar from '../../../../../public/assets/noPhoto.svg'
 
 export const PostLikes = ({ postId }: Props) => {
   const { t } = useTranslation()
-  const { data: likes } = useGetLikesQuery({ postId })
+  const { data: likes } = useGetPostLikesQuery({ postId })
 
   if (!likes) {
     return (
