@@ -1,0 +1,174 @@
+.modal {
+  width: 100%;
+  max-width: 972px;
+
+  & > * {
+    padding: 0;
+  }
+
+  & > *:first-child {
+    padding-bottom: 20px;
+    background: transparent;
+    border: none;
+  }
+}
+
+.editModal {
+  & > *:first-child {
+    padding: 12px 24px;
+    background: var(--color-dark-300);
+    border: none;
+  }
+}
+
+.container {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+}
+
+.postPhotoWrapper {
+  overflow: hidden;
+  flex: 1;
+
+  width: 490px;
+  height: 485px;
+
+  border-right: 1px solid var(--color-dark-100);
+}
+
+.postPhoto {
+  object-fit: contain;
+}
+
+.descriptionWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 50%;
+
+  label {
+    display: flex;
+    flex-direction: column;
+    font: var(--font-regular-14);
+    color: var(--color-light-900);
+  }
+
+  span {
+    align-self: end;
+    font: var(--font-small);
+  }
+}
+
+.userWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  height: 65px;
+
+  border-bottom: 1px solid var(--color-dark-100);
+}
+
+.buttonIcons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 0 12px;
+}
+
+.buttonIcon {
+  margin: 12px;
+}
+
+.userCommentContainer {
+  margin: 15px 15px 0;
+}
+
+.userCommentContainer:last-child {
+  margin-bottom: 15px;
+}
+
+.commentLike {
+  align-items: flex-start;
+  margin-top: 17px;
+}
+
+.commentTime {
+  color: red;
+}
+
+.userContainer {
+  margin: 0 24px;
+}
+
+.userPhotoWrapper {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+
+  .photo {
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    align-self: baseline;
+
+    width: 36px;
+    height: 36px;
+
+    object-fit: cover;
+    background-color: var(--color-dark-700);
+    border-radius: 50%;
+  }
+}
+
+.userBlockWithPilot {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 15px;
+}
+
+.commentsBlock {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid var(--color-dark-100);
+}
+
+.likesBlock {
+  border-bottom: 1px solid var(--color-dark-100);
+}
+
+.addCommentBlock {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 10px;
+}
+
+.postOptions {
+  cursor: pointer;
+  margin: 0 24px;
+}
+
+.line {
+  position: absolute;
+  top: 258px;
+  right: 0;
+
+  width: 54.9%;
+  height: 1px;
+  margin: 10px 0;
+
+  background-color: var(--color-dark-100);
+}
+
+.saveChangesBtnBlock {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.closeOpenModalontainer {
+  display: flex;
+}

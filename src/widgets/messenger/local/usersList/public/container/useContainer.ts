@@ -1,14 +1,10 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
-import { useAppDispatch } from "@/app/store/hooks/useAppDispatch";
 import { useAppSelector } from "@/app/store/hooks/useAppSelector";
 import { useGetMeQuery } from "@/services/authService/authEndpoints";
 import { UserType } from "@/services/authService/lib/authEndpoints.types";
-import { Message } from "@/services/messengerService/lib/messengerEndpoints.types";
 import { useGetArrayOfLastMsgQuery } from "@/services/messengerService/messengerEndpoints";
-import { messageActions } from "@/services/messengerService/store/slice/messengerEndpoints.slice";
-import { useGetPublicUserProfileQuery } from "@/services/publicService/publicEndpoints";
 import { MessengerFormSchema, messengerSchema } from "@/widgets/messenger/local/messengerSchema/messengerSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/router";
