@@ -1,6 +1,7 @@
 import { Fragment, forwardRef, useEffect, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
 
+import { useGetPostsQuery } from '@/services/postService/postEndpoints'
 import { useGetUserPostsQuery } from '@/services/publicService/publicEndpoints'
 import { PublicPhotos } from '@/shared/components/PubicPhotos/PublicPhotos'
 import { SpinnerThreePoints } from '@/shared/ui/SpinnerThreePoints'
@@ -20,15 +21,22 @@ export const Home = forwardRef<HTMLDivElement, HomeProps>(({ following }) => {
 
   const [lastPostId, setLastPostId] = useState<number | undefined>(undefined)
 
+  const fillowersIds = following?.items.map(follower => follower.userId)
+  const followersUsername = following?.items.map(follower => follower.userName)
+
   const {
     data: posts,
     isFetching,
     isLoading,
   } = useGetUserPostsQuery({
     endCursorPostId: lastPostId,
-    pageSize: !lastPostId ? 4 : 2,
-    userId: 133,
+    pageSize: !lastPostId ? 3 : 2,
+    userId: 3,
   })
+
+  // const { data: userPosts } = useGetPostsQuery({
+  //   username: 'egor5555',
+  // })
 
   useEffect(() => {
     if (posts && posts.items.length >= posts.totalCount) {
@@ -40,6 +48,10 @@ export const Home = forwardRef<HTMLDivElement, HomeProps>(({ following }) => {
     }
   }, [inView])
 
+  if (!followersUsername) {
+    return
+  }
+
   if (!posts || isLoading) {
     return (
       <div className={s.spinner}>
@@ -47,8 +59,6 @@ export const Home = forwardRef<HTMLDivElement, HomeProps>(({ following }) => {
       </div>
     )
   }
-
-  const fillowersIds = following?.items.map(follower => follower.userId)
 
   return (
     <div className={s.container}>

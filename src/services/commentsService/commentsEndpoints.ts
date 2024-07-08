@@ -25,7 +25,7 @@ const commentsEndpoints = api.injectEndpoints({
       invalidatesTags: ['Comment'],
       query: ({ content, postId }) => {
         return {
-          body: content,
+          body: { content },
           method: 'POST',
           url: `posts/${postId}/comments`,
         }
@@ -57,4 +57,6 @@ export const {
   useCreateNewCommentMutation,
   useGetAnswersQuery,
   useGetCommentsQuery,
+  useLazyGetAnswersQuery,
+  useLazyGetCommentsQuery,
 } = commentsEndpoints

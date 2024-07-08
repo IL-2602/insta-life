@@ -82,6 +82,7 @@ export const {
   useGetAnswerLikesQuery,
   useGetCommentLikesQuery,
   useGetPostLikesQuery,
+  useLazyGetCommentLikesQuery,
   useUpdateAnswerLikeMutation,
   useUpdateCommentLikeMutation,
   useUpdatePostLikeMutation,

@@ -1,50 +1,56 @@
 @import '@/styles/variables/mixins';
 
 @mixin comment {
-  .comment {
+  .commentContainer {
     overflow: hidden;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    flex-direction: column;
+    height: 100%;
 
     &:not(:first-of-type) {
-      margin-top: 8px;
+      margin-top: 15px;
     }
 
-    &:last-child {
-      margin-bottom: 8px;
-    }
-
-    .commentWrap {
+    .comment {
       display: flex;
-    }
+      align-items: center;
+      justify-content: space-between;
 
-    .commentName {
-      padding-right: 6px;
-    }
+      &:last-child {
+        margin-bottom: 8px;
+      }
 
-    .smallHeart {
-      margin-left: 10px;
-      padding-top: 4px;
+      .commentWrap {
+        display: flex;
+      }
 
-      &:hover {
-        cursor: pointer;
+      .commentName {
+        padding-right: 6px;
+      }
 
-        svg {
-          path {
-            fill: var(--color-danger-500);
+      .smallHeart {
+        margin-left: 10px;
+        padding-top: 4px;
+
+        &:hover {
+          cursor: pointer;
+
+          svg {
+            path {
+              fill: var(--color-danger-500);
+            }
           }
         }
       }
-    }
 
-    img {
-      @include mobile-large {
-        display: none;
+      img {
+        @include mobile-large {
+          display: none;
+        }
+
+        margin-right: 12px;
+        border-radius: 50%;
       }
-
-      margin-right: 12px;
-      border-radius: 50%;
     }
   }
 }
@@ -82,11 +88,19 @@
 
     display: flex;
     flex-direction: column;
-
     max-height: 0;
-    margin-top: 8px;
-
     transition: max-height 0.04s ease-in-out;
+
+    .noAvatar {
+      display: grid;
+      place-items: center;
+
+      width: 24px;
+      height: 24px;
+
+      background-color: var(--color-dark-100);
+      border-radius: 50%;
+    }
 
     .noComment {
       @include mobile-large {
@@ -103,7 +117,8 @@
   .openComments {
     @include comment;
 
-    max-height: 100vh;
+    max-height: 100%;
+    margin-top: 8px;
   }
 
   .viewBtn {
@@ -125,10 +140,6 @@
   }
 
   .addCommentBlock {
-    @include mobile-large {
-      display: none;
-    }
-
     display: flex;
     justify-content: space-between;
     margin-top: 2px;
