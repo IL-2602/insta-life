@@ -48,9 +48,14 @@ export const TestComment = ({
               {postDescription ? postDescription : commentsAnswers?.content}
             </Typography>
           </Typography>
-          <Typography className={'commentTime'} color={'form'} variant={'small'}>
-            {commentsAnswersTimeConversion(commentsAnswers?.createdAt, locale)}
-          </Typography>
+          <div className={s.commentsInfo}>
+            <Typography className={'commentTime'} color={'form'} variant={'small'}>
+              {commentsAnswersTimeConversion(commentsAnswers?.createdAt, locale)}
+            </Typography>
+            <Typography className={'commentTime'} color={'form'} variant={'bold-small'}>
+              Like: {commentsAnswers.likeCount}
+            </Typography>
+          </div>
         </div>
         <div className={s.commentLike}>
           <Button
