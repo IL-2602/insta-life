@@ -5,7 +5,7 @@ type Avatar = {
   url: string
   width: number
 }
-type LikeStatus = 'DISLIKE' | 'LIKE' | 'NONE'
+export type LikeStatus = 'DISLIKE' | 'LIKE' | 'NONE'
 
 export type CommentsAnswers = {
   answerCount: number

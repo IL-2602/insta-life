@@ -161,6 +161,14 @@
 .commentLike {
   align-items: flex-start;
   margin-top: 17px;
+
+  .likeButton {
+    cursor: pointer;
+
+    &:hover {
+      color: var(--color-danger-500)
+    }
+  }
 }
 
 .commentTime {

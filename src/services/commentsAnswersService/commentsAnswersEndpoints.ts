@@ -19,26 +19,47 @@ const commentsAnswersEndpoints = api.injectEndpoints({
         }
       },
     }),
-    getComments: builder.query<
-      CommentsAnswersResponse<CommentsAnswers>,
-      UpdateCommentLikeStatusParams
-    >({
+    getComments: builder.query<CommentsAnswersResponse<CommentsAnswers>, GetCommentsParams>({
       providesTags: ['Comments'],
-      query: ({ commentId, postId, ...rest }) => {
+      query: ({ postId, ...rest }) => {
         return {
+          method: 'GET',
           params: rest || {},
-          type: 'PUT',
-          url: `posts/${postId}/comments/${commentId}/like-status`,
+          url: `posts/${postId}/comments`,
         }
       },
     }),
-    updCommentLikeStatus: builder.mutation<void, CreateCommentParams>({
+    updCommentLikeStatus: builder.mutation<void, UpdateCommentLikeStatusParams>({
       invalidatesTags: ['Comments'],
-      query: ({ postId, ...rest }) => {
+      onQueryStarted: async (commentLikeArgs, { dispatch, queryFulfilled }) => {
+        const { commentId, likeStatus, postId } = commentLikeArgs
+
+        const result = dispatch(
+          commentsAnswersEndpoints.util.updateQueryData(
+            'getComments',
+            { postId: postId },
+            draft => {
+              const findComment = draft.items.find(c => c.id === commentId)
+
+              if (findComment) {
+                findComment.isLiked = likeStatus === 'LIKE'
+              }
+            }
+          )
+        )
+
+        try {
+          await queryFulfilled
+        } catch (e) {
+          result.undo()
+        }
+      },
+
+      query: ({ commentId, likeStatus, postId }) => {
         return {
-          body: rest || {},
-          method: 'POST',
-          url: `posts/${postId}/comments`,
+          body: { likeStatus },
+          method: 'PUT',
+          url: `posts/${postId}/comments/${commentId}/like-status`,
         }
       },
     }),

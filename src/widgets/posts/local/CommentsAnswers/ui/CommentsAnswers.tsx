@@ -1,7 +1,6 @@
 import { Bookmark } from '@/shared/assets/icons/Bookmark'
 import { HeartOutline } from '@/shared/assets/icons/Heart/HeartOutline'
 import { PaperLine } from '@/shared/assets/icons/PaperLine'
-import { PostDescription } from '@/shared/components/PostDescription/PostDescription'
 import { Avatar } from '@/shared/ui/Avatar'
 import { Button } from '@/shared/ui/Button'
 import { ScrollSelect } from '@/shared/ui/ScrollSelect/ScrollSelect'
@@ -22,6 +21,7 @@ export const CommentsAnswers = ({
   postDescription,
   postPhotos,
   t,
+  updateCommentLikeStatusHandler,
 }: CommentsAnswersProps) => {
   const { locale } = useRouter()
 
@@ -44,7 +44,13 @@ export const CommentsAnswers = ({
               </div>
             </div>
           )}
-          {comments?.map(c => <TestComment commentsAnswers={c} key={c.id} />)}
+          {comments?.map(c => (
+            <TestComment
+              commentsAnswers={c}
+              key={c.id}
+              updateCommentLikeStatus={updateCommentLikeStatusHandler}
+            />
+          ))}
         </ScrollSelect>
       </div>
       <div>
