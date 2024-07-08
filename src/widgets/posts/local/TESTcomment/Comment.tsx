@@ -1,9 +1,12 @@
-import { CommentsAnswers } from '@/services/commentsAnswersService/lib/commentsAnswersEndpoints.types'
+import {
+  CommentsAnswers,
+  LikeStatus,
+} from '@/services/commentsAnswersService/lib/commentsAnswersEndpoints.types'
 import { Heart } from '@/shared/assets/icons/Heart'
+import { HeartFullIcon } from '@/shared/assets/icons/HeartFull'
+import { Button } from '@/shared/ui/Button'
 import { Typography } from '@/shared/ui/Typography'
 import { commentsAnswersTimeConversion } from '@/shared/utils/commentsAnswersTimeConversion'
-import { formatDistance } from 'date-fns'
-import { enUS, ru } from 'date-fns/locale'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 
@@ -11,7 +14,12 @@ import s from '@/widgets/posts/local/CommentsAnswers/ui/CommentsAnswers.module.s
 
 import noPhoto from '../../../../../public/assets/noPhoto.svg'
 
-export const TestComment = ({ commentsAnswers, photo, postDescription }: Props) => {
+export const TestComment = ({
+  commentsAnswers,
+  photo,
+  postDescription,
+  updateCommentLikeStatus,
+}: Props) => {
   const { locale } = useRouter()
 
   if (!commentsAnswers) {
@@ -45,7 +53,18 @@ export const TestComment = ({ commentsAnswers, photo, postDescription }: Props) 
           </Typography>
         </div>
         <div className={s.commentLike}>
-          <Heart />
+          <Button
+            className={s.likeButton}
+            onClick={() =>
+              updateCommentLikeStatus(
+                commentsAnswers?.id,
+                commentsAnswers?.isLiked ? 'NONE' : 'LIKE'
+              )
+            }
+            variant={'noStyle'}
+          >
+            {commentsAnswers?.isLiked ? <HeartFullIcon /> : <Heart />}
+          </Button>
         </div>
       </div>
     </div>
@@ -56,4 +75,5 @@ type Props = {
   commentsAnswers?: CommentsAnswers
   photo?: string
   postDescription?: null | string
+  updateCommentLikeStatus: (commentId: number, likeStatus: LikeStatus) => void
 }

@@ -4,7 +4,9 @@ import { useGetMeQuery } from '@/services/authService/authEndpoints'
 import {
   useCreateNewCommentMutation,
   useGetCommentsQuery,
+  useUpdCommentLikeStatusMutation,
 } from '@/services/commentsAnswersService/commentsAnswersEndpoints'
+import { LikeStatus } from '@/services/commentsAnswersService/lib/commentsAnswersEndpoints.types'
 import { useGetCurrentPostQuery } from '@/services/postService/postEndpoints'
 import { useTranslation } from '@/shared/hooks/useTranslation'
 import { usePostSchema } from '@/widgets/posts/local/schema/myPostPublicationSchema'
@@ -26,6 +28,7 @@ export const useContainer = () => {
   const { data: commentsData } = useGetCommentsQuery({ postId: +postId }, { skip: !postId })
 
   const [createNewComment] = useCreateNewCommentMutation()
+  const [updCommentLikeStatus] = useUpdCommentLikeStatusMutation()
 
   type myPostFormSchema = z.infer<typeof myPostSchema>
 
@@ -50,6 +53,9 @@ export const useContainer = () => {
       .unwrap()
       .then(() => setValue('comment', ''))
 
+  const updateCommentLikeStatusHandler = (commentId: number, likeStatus: LikeStatus) =>
+    postId && updCommentLikeStatus({ commentId, likeStatus, postId: +postId })
+
   return {
     commentPublishHandler,
     comments,
@@ -58,5 +64,6 @@ export const useContainer = () => {
     postDescription,
     postPhotos,
     t,
+    updateCommentLikeStatusHandler,
   }
 }
