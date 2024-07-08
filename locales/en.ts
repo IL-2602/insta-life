@@ -223,7 +223,7 @@ export const en = {
     filters: 'Filters',
     hideAllComments: 'Hide All Comments',
     like: 'Like',
-    noComments: 'You have no comments yet',
+    noComments: 'No comments yet',
     publication: 'Publication',
     totalUsers: 'Registered Users',
     viewAllcomments: 'View All Comments',

@@ -229,7 +229,7 @@ export const ru: Local = {
     filters: 'Применить фильтр',
     hideAllComments: 'Скрыть все комментарии',
     like: 'Нравится',
-    noComments: 'У вас пока нет комментариев',
+    noComments: 'Тут пока нет комментариев',
     publication: 'Опубликовать',
     totalUsers: 'Зарегистрированные пользователи',
     viewAllcomments: 'Просмотреть все комментарии',
