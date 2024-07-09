@@ -16,7 +16,7 @@ const commentsEndpoints = api.injectEndpoints({
       },
     }),
     getCommentLikes: builder.query<GetLikesResponse, { commentId: number; postId: number }>({
-      providesTags: ['CommentLike'],
+      // providesTags: ['CommentLike'],
       query: ({ commentId, postId }) => {
         return {
           method: 'GET',
@@ -43,8 +43,9 @@ const commentsEndpoints = api.injectEndpoints({
       }
     >({
       invalidatesTags: ['AnswerLike'],
-      query: ({ answerId, commentId, postId }) => {
+      query: ({ answerId, commentId, likeStatus, postId }) => {
         return {
+          body: { likeStatus },
           method: 'PUT',
           url: `posts/${postId}/comments/${commentId}/answers/${answerId}/like-status`,
         }
@@ -54,9 +55,10 @@ const commentsEndpoints = api.injectEndpoints({
       void,
       { commentId: number; likeStatus: 'DISLIKE' | 'LIKE' | 'NONE'; postId: number }
     >({
-      invalidatesTags: ['CommentLike'],
-      query: ({ commentId, postId }) => {
+      // invalidatesTags: ['CommentLike'],
+      query: ({ commentId, likeStatus, postId }) => {
         return {
+          body: { likeStatus },
           method: 'PUT',
           url: `posts/${postId}/comments/${commentId}/like-status`,
         }
