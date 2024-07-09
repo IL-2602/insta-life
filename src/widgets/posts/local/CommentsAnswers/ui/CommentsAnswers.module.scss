@@ -157,6 +157,11 @@
 
   word-wrap: anywhere;
 }
+.commentsInfo {
+  align-items: center;
+  display: flex;
+  gap: 12px;
+}
 
 .commentLike {
   align-items: flex-start;
