@@ -15,7 +15,7 @@ const commentsEndpoints = api.injectEndpoints({
       invalidatesTags: ['Answer'],
       query: ({ commentId, content, postId }) => {
         return {
-          body: content,
+          body: { content },
           method: 'POST',
           url: `posts/${postId}/comments/${commentId}/answers`,
         }
