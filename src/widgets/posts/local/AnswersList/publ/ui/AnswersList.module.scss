@@ -1,0 +1,33 @@
+.answersWrapper {
+  position: relative;
+  padding-left: 29px;
+
+  &::before {
+    content: '';
+
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translate(0, -50%);
+
+    width: 24px;
+    height: 1px;
+
+    background: var(--color-light-900);
+  }
+
+  .answersButton {
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+
+    height: 16px;
+
+    color: var(--color-light-900);
+
+    &:hover {
+      color: var(--color-light-100);
+    }
+  }
+}

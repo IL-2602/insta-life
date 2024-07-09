@@ -1,3 +1,6 @@
+import { Fragment } from 'react'
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
+
 import { Bookmark } from '@/shared/assets/icons/Bookmark'
 import { HeartOutline } from '@/shared/assets/icons/Heart/HeartOutline'
 import { PaperLine } from '@/shared/assets/icons/PaperLine'
@@ -7,16 +10,19 @@ import { ScrollSelect } from '@/shared/ui/ScrollSelect/ScrollSelect'
 import { Typography } from '@/shared/ui/Typography'
 import { ControlledTextAreaField } from '@/shared/ui/controlledInsta/ControlledTextArea/ControlledTextArea'
 import { commentsAnswersTimeConversion } from '@/shared/utils/commentsAnswersTimeConversion'
-import { CommentsAnswersProps } from '@/widgets/posts/local/CommentsAnswers/container'
-import { TestComment } from '@/widgets/posts/local/TESTcomment/Comment'
+import { CommentsAnswersProps } from '@/widgets/posts/local/CommentsLists/container'
 import { useRouter } from 'next/router'
+import { Comment } from 'src/widgets/posts/local/Comment'
 
-import s from './CommentsAnswers.module.scss'
+import s from './CommentsList.module.scss'
 
-export const CommentsAnswers = ({
+export const CommentsList = ({
   commentPublishHandler,
   comments,
   control,
+  isLoadingComments,
+  isLoadingPost,
+  isLoadingPostPhotos,
   isMe,
   postDescription,
   postPhotos,
@@ -28,8 +34,9 @@ export const CommentsAnswers = ({
   return (
     <div className={s.commentsBlockWrapper}>
       <div className={s.commentsBlock}>
-        <ScrollSelect maxHeight={'300px'} type={'always'}>
-          {postDescription && postPhotos && (
+        <ScrollSelect isHorizontal={false} maxHeight={'300px'} type={'always'}>
+          {isLoadingPost && <Skeleton height={64} width={'100%'} />}
+          {!isLoadingPost && postDescription && postPhotos && (
             <div className={s.postDescription}>
               <div className={s.avatarWrapper}>
                 <Avatar userAvatar={postPhotos?.avatarOwner} />
@@ -44,13 +51,8 @@ export const CommentsAnswers = ({
               </div>
             </div>
           )}
-          {comments?.map(c => (
-            <TestComment
-              commentsAnswers={c}
-              key={c.id}
-              updateCommentLikeStatus={updateCommentLikeStatusHandler}
-            />
-          ))}
+          {isLoadingPost && <Skeleton count={3} height={64} width={'100%'} />}
+          {comments?.map(c => <Comment.widget comment={c} isComment key={c.id} />)}
         </ScrollSelect>
       </div>
       <div>

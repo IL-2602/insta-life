@@ -1,0 +1,52 @@
+.answerComment {
+    overflow: hidden;
+    display: flex;
+    gap: 10px;
+    max-width: 345px;
+
+
+    .avatar {
+        position: relative;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        min-width: 36px;
+        height: 36px;
+
+        background: var(--color-dark-700);
+        border-radius: 50%;
+    }
+
+    .textAreaWrapper {
+        width: 100%;
+
+        .textArea {
+            resize: none;
+
+            display: flex;
+
+
+            background: transparent;
+            border: 1px solid var(--color-light-900);
+            outline: none;
+
+            &::placeholder {
+                color: var(--color-light-900);
+            }
+
+            &:focus{
+                border: 1px solid var(--color-light-900);
+            }
+
+            &:focus-within {
+                border: 1px solid var(--color-light-900);
+            }
+        }
+    }
+}
+
+.answerAnswer {
+    margin-left: -50px;
+}

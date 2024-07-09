@@ -25,9 +25,14 @@ export type CommentsAnswers = {
 export type CommentsAnswersResponse<T = {}> = {
   items: T[]
   pageSize: number
-  totalItems: number
+  totalCount: number
 }
 export type CreateCommentParams = {
+  content: string
+  postId: number
+}
+export type CreateAnswerParams = {
+  commentId: number
   content: string
   postId: number
 }
@@ -45,3 +50,5 @@ export type GetCommentsParams = {
   sortBy?: string
   sortDirection?: 'asc' | 'desc'
 }
+
+export type GetAnswerParams = { commentId: number } & GetCommentsParams

@@ -99,6 +99,7 @@ export const api = createApi({
     'Notification',
     'Follow',
     'Comments',
+    'Answers',
   ],
 })
 
