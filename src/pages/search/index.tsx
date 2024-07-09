@@ -1,8 +1,13 @@
 import { getBaseLayout } from '@/layouts/publ/BaseLayout/BaseLayout'
 import { AuthDefender } from '@/shared/hocs/AuthDefender'
+import { SearchUser } from '@/widgets/search/publ/searchUser'
 
 const SearchPage = () => {
-  return <div>Search</div>
+  return (
+    <div>
+      <SearchUser.widget />
+    </div>
+  )
 }
 
 SearchPage.getLayout = getBaseLayout

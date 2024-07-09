@@ -1,21 +1,37 @@
 @import '@/styles/variables/mixins';
 
+.profileHeader {
+  display: flex;
+  flex-direction: column;
+}
+
+.mobileSpinner {
+  display: none;
+}
+
 .wrapper {
   @include mobile {
-    grid-template-areas:
-      'avatar subscriber'
-      'name .'
-      'aboutMe aboutMe';
-    place-items: center center;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: space-evenly;
   }
 
   display: grid;
-  grid-gap: 20px;
+  grid-gap: 0 20px;
   grid-template: auto / auto 1fr;
   grid-template-areas:
     'avatar name settings'
     'avatar subscriber subscriber'
     'avatar aboutMe aboutMe';
+}
+
+.mobileName {
+  @include mobile {
+    font: var(--font-bold-16);
+  }
+
+  display: none;
 }
 
 .avatarWrapper {
@@ -37,4 +53,54 @@
 
   background: var(--color-dark-500);
   border-radius: 50%;
+}
+
+@media screen and (width <= 890px) {
+  .wrapper {
+    align-items: center;
+  }
+
+  .mobileAvatarWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: center;
+
+    .mobileName {
+      overflow: hidden;
+      display: block;
+
+      max-width: 200px;
+
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+}
+
+@media screen and (width <= 1130px) {
+  .mobileSpinner {
+    display: grid;
+    place-items: center;
+    height: 40vh;
+  }
+}
+
+@media screen and (width <= 480px) {
+  .mobileName {
+    overflow: hidden;
+    width: 100px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+@media screen and (width <= 1130px) {
+  .skeleton {
+    display: none;
+  }
+
+  .avatarNone {
+    display: none;
+  }
 }

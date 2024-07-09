@@ -300,6 +300,11 @@ export const en = {
       },
     },
   },
+  search: {
+    looksEmpty: 'Oops! This place looks empty!',
+    noRecent: 'No recent requests',
+    recent: 'Recent requests',
+  },
   sidebar: {
     create: 'Create',
     favourites: 'Favourites',

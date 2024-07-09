@@ -1,12 +1,22 @@
 @import '@/styles/variables/mixins';
 
-.name {
-  grid-area: name;
-}
-
 .container {
   display: flex;
   flex-direction: column;
+
+  .name {
+    overflow: hidden;
+    grid-area: name;
+
+    max-width: 250px;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .mobileName {
+    display: none;
+  }
 
   .wrap {
     display: flex;
@@ -17,10 +27,16 @@
   .btnContainer {
     display: flex;
     gap: 12px;
+
+    .btnLoading {
+      opacity: 0.4;
+    }
   }
 
   .stat {
     @include mobile {
+      gap: 20px;
+      margin-bottom: 0;
     }
 
     display: flex;
@@ -37,5 +53,58 @@
 
   display: inline-block;
   grid-area: settings;
+  width: max-content;
   height: 35px;
+}
+
+@media screen and (width <= 1125px) {
+  .wrap {
+    flex-direction: column;
+  }
+
+  .btnContainer {
+    margin-top: 20px;
+  }
+}
+
+@media screen and (width <= 890px) {
+  .name {
+    display: none;
+  }
+
+  .container {
+    gap: 20px;
+
+    .wrap {
+      margin-bottom: 0;
+    }
+
+    .stat {
+      margin-bottom: 45px;
+    }
+  }
+
+  .description {
+    display: none;
+  }
+
+  .btnContainer {
+    flex-direction: column;
+    align-items: center;
+    margin-top: 0;
+  }
+
+  .button {
+    width: 100%;
+  }
+
+  .settingsBtn {
+    width: max-content;
+  }
+}
+
+@media screen and (width <= 1130px) {
+  .skeleton {
+    display: none;
+  }
 }
