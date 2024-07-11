@@ -55,7 +55,7 @@ export type GetCommentsResponse = {
         username: string
       }
       id: number
-      isLiked: true
+      isLiked: boolean
       likeCount: number
       postId: number
     },
@@ -90,4 +90,11 @@ export type GetAnswersResponse = {
   ]
   pageSize: number
   totalCount: number
+}
+
+export type CommentsParams = {
+  pageNumber?: number
+  pageSize?: number
+  sortBy?: string
+  sortDirection?: 'asc' | 'desc'
 }

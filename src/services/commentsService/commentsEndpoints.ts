@@ -1,18 +1,19 @@
 import { api } from '@/services/api'
 import {
+  CommentsParams,
   GetAnswersResponse,
   GetCommentsResponse,
   NewAnswerResponse,
   NewCommentResponse,
 } from '@/services/commentsService/lib/commentsEndpoints.types'
 
-const commentsEndpoints = api.injectEndpoints({
+export const commentsEndpoints = api.injectEndpoints({
   endpoints: builder => ({
     createNewAnswer: builder.mutation<
       NewAnswerResponse,
       { commentId: number; content: string; postId: number }
     >({
-      invalidatesTags: ['Answer'],
+      invalidatesTags: ['Comment'],
       query: ({ commentId, content, postId }) => {
         return {
           body: { content },
@@ -22,7 +23,6 @@ const commentsEndpoints = api.injectEndpoints({
       },
     }),
     createNewComment: builder.mutation<NewCommentResponse, { content: string; postId: number }>({
-      invalidatesTags: ['Comment'],
       query: ({ content, postId }) => {
         return {
           body: { content },
@@ -31,8 +31,10 @@ const commentsEndpoints = api.injectEndpoints({
         }
       },
     }),
-    getAnswers: builder.query<GetAnswersResponse, { commentId: number; postId: number }>({
-      providesTags: ['Answer'],
+    getAnswers: builder.query<
+      GetAnswersResponse,
+      { commentId: number; postId: number } & CommentsParams
+    >({
       query: ({ commentId, postId }) => {
         return {
           method: 'GET',
@@ -40,11 +42,12 @@ const commentsEndpoints = api.injectEndpoints({
         }
       },
     }),
-    getComments: builder.query<GetCommentsResponse, { postId: number }>({
-      providesTags: ['Comment'],
-      query: ({ postId }) => {
+    getComments: builder.query<GetCommentsResponse, { postId: number } & CommentsParams>({
+      // providesTags: ['Comment'],
+      query: ({ pageNumber, postId }) => {
         return {
           method: 'GET',
+          params: { pageNumber, postId },
           url: `posts/${postId}/comments`,
         }
       },
@@ -55,7 +58,6 @@ const commentsEndpoints = api.injectEndpoints({
 export const {
   useCreateNewAnswerMutation,
   useCreateNewCommentMutation,
-  useGetAnswersQuery,
   useGetCommentsQuery,
   useLazyGetAnswersQuery,
   useLazyGetCommentsQuery,
