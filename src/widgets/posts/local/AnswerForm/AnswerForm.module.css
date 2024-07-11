@@ -18,6 +18,10 @@
     border-radius: 50%;
   }
 
+  .sendBtn {
+    cursor: pointer;
+  }
+
   .textAreaWrapper {
     width: 100%;
 

@@ -1,4 +1,4 @@
-import { Fragment } from 'react'
+import { Fragment, memo } from 'react'
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 
 import { Bookmark } from '@/shared/assets/icons/Bookmark'
@@ -16,82 +16,84 @@ import { Comment } from 'src/widgets/posts/local/Comment'
 
 import s from './CommentsList.module.scss'
 
-export const CommentsList = ({
-  commentPublishHandler,
-  comments,
-  control,
-  isLoadingComments,
-  isLoadingPost,
-  isLoadingPostPhotos,
-  isMe,
-  postDescription,
-  postPhotos,
-  t,
-  updateCommentLikeStatusHandler,
-}: CommentsAnswersProps) => {
-  const { locale } = useRouter()
+export const CommentsList = memo(
+  ({
+    commentPublishHandler,
+    comments,
+    control,
+    isLoadingComments,
+    isLoadingPost,
+    isLoadingPostPhotos,
+    isMe,
+    postDescription,
+    postPhotos,
+    t,
+    updateCommentLikeStatusHandler,
+  }: CommentsAnswersProps) => {
+    const { locale } = useRouter()
 
-  return (
-    <div className={s.commentsBlockWrapper}>
-      <div className={s.commentsBlock}>
-        <ScrollSelect isHorizontal={false} maxHeight={'300px'} type={'always'}>
-          {isLoadingPost && <Skeleton height={64} width={'100%'} />}
-          {!isLoadingPost && postDescription && postPhotos && (
-            <div className={s.postDescription}>
-              <div className={s.avatarWrapper}>
-                <Avatar userAvatar={postPhotos?.avatarOwner} />
+    return (
+      <div className={s.commentsBlockWrapper}>
+        <div className={s.commentsBlock}>
+          <ScrollSelect isHorizontal={false} maxHeight={'288px'} type={'always'}>
+            {isLoadingPost && <Skeleton height={64} width={'100%'} />}
+            {!isLoadingPost && postDescription && postPhotos && (
+              <div className={s.postDescription}>
+                <div className={s.avatarWrapper}>
+                  <Avatar userAvatar={postPhotos?.avatarOwner} />
+                </div>
+                <div className={s.descriptionWrapper}>
+                  <Typography className={s.description} variant={'regular14'}>
+                    {postDescription}
+                  </Typography>
+                  <Typography color={'form'} variant={'small'}>
+                    {commentsAnswersTimeConversion(postPhotos?.createdAt, locale)}
+                  </Typography>
+                </div>
               </div>
-              <div className={s.descriptionWrapper}>
-                <Typography className={s.description} variant={'regular14'}>
-                  {postDescription}
-                </Typography>
-                <Typography color={'form'} variant={'small'}>
-                  {commentsAnswersTimeConversion(postPhotos?.createdAt, locale)}
-                </Typography>
+            )}
+            {isLoadingPost && <Skeleton count={3} height={64} width={'100%'} />}
+            {comments?.map(c => <Comment.widget comment={c} isComment key={c.id} />)}
+          </ScrollSelect>
+        </div>
+        <div>
+          <div className={s.likesBlock}>
+            <div className={s.buttonIcons}>
+              <div className={s.buttonIconWrapper}>
+                <Button className={s.buttonIcon} variant={'noStyle'}>
+                  <HeartOutline />
+                </Button>
+                <Button className={s.buttonIcon} variant={'noStyle'}>
+                  <PaperLine />
+                </Button>
               </div>
+              <Button className={s.buttonIcon} variant={'noStyle'}>
+                <Bookmark />
+              </Button>
+            </div>
+          </div>
+          {isMe && (
+            <div className={s.addCommentBlock}>
+              <ControlledTextAreaField
+                control={control}
+                name={'comment'}
+                placeholder={'Add comment...'}
+                textAreaClassName={s.textArea}
+              />
+              <Button
+                className={s.button}
+                disabled={false}
+                onClick={commentPublishHandler}
+                variant={'noStyle'}
+              >
+                <Typography color={'primary'} variant={'h3'}>
+                  {t.button.publish}
+                </Typography>
+              </Button>
             </div>
           )}
-          {isLoadingPost && <Skeleton count={3} height={64} width={'100%'} />}
-          {comments?.map(c => <Comment.widget comment={c} isComment key={c.id} />)}
-        </ScrollSelect>
-      </div>
-      <div>
-        <div className={s.likesBlock}>
-          <div className={s.buttonIcons}>
-            <div className={s.buttonIconWrapper}>
-              <Button className={s.buttonIcon} variant={'noStyle'}>
-                <HeartOutline />
-              </Button>
-              <Button className={s.buttonIcon} variant={'noStyle'}>
-                <PaperLine />
-              </Button>
-            </div>
-            <Button className={s.buttonIcon} variant={'noStyle'}>
-              <Bookmark />
-            </Button>
-          </div>
         </div>
-        {isMe && (
-          <div className={s.addCommentBlock}>
-            <ControlledTextAreaField
-              control={control}
-              name={'comment'}
-              placeholder={'Add comment...'}
-              textAreaClassName={s.textArea}
-            />
-            <Button
-              className={s.button}
-              disabled={false}
-              onClick={commentPublishHandler}
-              variant={'noStyle'}
-            >
-              <Typography color={'primary'} variant={'h3'}>
-                {t.button.publish}
-              </Typography>
-            </Button>
-          </div>
-        )}
       </div>
-    </div>
-  )
-}
+    )
+  }
+)

@@ -29,7 +29,7 @@ export const useContainer = () => {
     }
   )
   const { data: commentsData, isLoading: isLoadingComments } = useGetCommentsQuery(
-    { postId: +postId },
+    { pageSize: 15, postId: +postId },
     { skip: !postId }
   )
 
