@@ -171,6 +171,11 @@ export const en = {
     unfollow: 'Unfollow',
     yes: 'Yes',
   },
+  messenger: {
+    imgFormat: 'Only .jpg, .jpeg, .png  formats are supported',
+    imgLarger360: 'Image should be larger than 360x360',
+    imgLess10mb: 'Max image size is 10MB',
+  },
   modal: {
     addPhotoModalTitle: 'Add Photo',
     advertisingPlacement: 'Advertising placement',

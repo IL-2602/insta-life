@@ -90,10 +90,6 @@
   margin-bottom: 15px;
 }
 
-.commentText {
-  width: 350px;
-}
-
 .commentLike {
   align-items: flex-start;
   margin-top: 17px;
@@ -104,7 +100,7 @@
 }
 
 .userContainer {
-  margin: 15px;
+  margin: 0 24px;
 }
 
 .userPhotoWrapper {
@@ -153,7 +149,7 @@
 
 .postOptions {
   cursor: pointer;
-  margin: 24px;
+  margin: 0 24px;
 }
 
 .line {

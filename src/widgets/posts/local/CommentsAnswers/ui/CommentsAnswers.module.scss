@@ -1,3 +1,33 @@
+.commentsBlockWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.postDescription {
+  display: flex;
+  gap: 12px;
+  margin: 15px 24px 0;
+  word-wrap: anywhere;
+
+  .avatarWrapper {
+    position: relative;
+    min-width: 36px;
+    height: 36px;
+  }
+
+  .descriptionWrapper {
+    display: flex;
+    flex-direction: column;
+
+    .description {
+      width: 100%;
+      max-width: 345px;
+    }
+  }
+}
+
 .userWrapper {
   display: flex;
   align-items: center;
@@ -47,10 +77,12 @@
 .commentsBlock {
   display: flex;
   flex-direction: column;
-  border-bottom: 1px solid var(--color-dark-100);
 }
 
 .likesBlock {
+  min-height: 50px;
+  padding: 12px 0;
+  border-top: 1px solid var(--color-dark-100);
   border-bottom: 1px solid var(--color-dark-100);
 }
 
@@ -91,11 +123,17 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin: 0 12px;
+  margin: 0 24px;
+}
+
+.buttonIconWrapper {
+  display: flex;
+  gap: 24px;
 }
 
 .buttonIcon {
-  margin: 12px;
+  width: 24px;
+  height: 24px;
 }
 
 .button {
@@ -103,7 +141,7 @@
 }
 
 .userCommentContainer {
-  margin: 15px 15px 0;
+  margin: 15px 24px 0;
 }
 
 .userCommentContainer:last-child {
@@ -113,12 +151,29 @@
 .commentText {
   display: flex;
   flex-direction: column;
-  width: 350px;
+
+  width: 100%;
+  max-width: 345px;
+
+  word-wrap: anywhere;
+}
+.commentsInfo {
+  align-items: center;
+  display: flex;
+  gap: 12px;
 }
 
 .commentLike {
   align-items: flex-start;
   margin-top: 17px;
+
+  .likeButton {
+    cursor: pointer;
+
+    &:hover {
+      color: var(--color-danger-500);
+    }
+  }
 }
 
 .commentTime {

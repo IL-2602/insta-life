@@ -5,7 +5,13 @@
   flex-direction: column;
 
   .name {
+    overflow: hidden;
     grid-area: name;
+
+    max-width: 250px;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .mobileName {

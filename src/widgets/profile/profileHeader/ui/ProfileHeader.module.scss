@@ -67,7 +67,13 @@
     align-items: center;
 
     .mobileName {
+      overflow: hidden;
       display: block;
+
+      max-width: 200px;
+
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
   }
 }
@@ -80,13 +86,10 @@
   }
 }
 
-@media screen and (width <= 420px) {
+@media screen and (width <= 480px) {
   .mobileName {
     overflow: hidden;
-
     width: 100px;
-
-    text-align: center;
     text-overflow: ellipsis;
     white-space: nowrap;
   }

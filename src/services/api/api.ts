@@ -98,11 +98,7 @@ export const api = createApi({
     'Dialogs',
     'Notification',
     'Follow',
-    'Comment',
-    'Answer',
-    'PostLike',
-    'AnswerLike',
-    'CommentLike',
+    'Comments',
   ],
 })
 
