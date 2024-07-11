@@ -7,8 +7,6 @@ import { Message } from '@/services/messengerService/lib/messengerEndpoints.type
 import { messageActions } from '@/services/messengerService/store/slice/messengerEndpoints.slice'
 import { useGetPublicUserProfileQuery } from '@/services/publicService/publicEndpoints'
 import {
-  useGetUserFollowersQuery,
-  useGetUserFollowingQuery,
   useGetUserInfoQuery,
   useSubscribeMutation,
   useUnSubscribeMutation,
@@ -34,15 +32,6 @@ export const useContainer = () => {
     }
   }, [data])
 
-  const { data: followers, isLoading: isFollowersLoading } = useGetUserFollowersQuery(
-    { username: data?.userName! },
-    { skip: !username }
-  )
-
-  const { data: following, isLoading: isFollowingLoading } = useGetUserFollowingQuery({
-    username: data?.userName || '',
-  })
-
   const { data: userInfo, isLoading: isUserInfoLoading } = useGetUserInfoQuery({
     username: data?.userName || '',
   })
@@ -50,9 +39,9 @@ export const useContainer = () => {
   const [subscribe, { isLoading: isSubLoading }] = useSubscribeMutation()
   const [unSubscribe, { isLoading: isUnSubLoading }] = useUnSubscribeMutation()
 
-  const followersCount = followers?.totalCount
-  const followingCount = following?.totalCount
   const publicationsCount = userInfo?.publicationsCount
+  const followersCount = userInfo?.followersCount
+  const followingCount = userInfo?.followingCount
 
   useEffect(() => {
     if (userInfo) {
@@ -85,7 +74,7 @@ export const useContainer = () => {
 
   const subscribeToUser = async () => {
     try {
-      return await subscribe({ selectedUserId: +profileId })
+      return await subscribe({ selectedUserId: +profileId, username: data?.userName! })
     } catch (e) {
       console.error(e)
     }
@@ -93,13 +82,13 @@ export const useContainer = () => {
 
   const unSubscribeToUser = async () => {
     try {
-      return await unSubscribe({ userId: +profileId })
+      return await unSubscribe({ userId: +profileId, username: data?.userName! })
     } catch (e) {
       console.error(e)
     }
   }
 
-  const isFollowLoading = isFollowersLoading || isFollowingLoading || isUserInfoLoading
+  const isFollowLoading = isUserInfoLoading
   const isSubscribeLoading = isSubLoading || isUnSubLoading
 
   return {

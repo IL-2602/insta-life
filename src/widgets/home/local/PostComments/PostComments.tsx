@@ -1,23 +1,20 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { useInView } from 'react-intersection-observer'
 
 import {
   useCreateNewCommentMutation,
   useGetCommentsQuery,
   useLazyGetCommentsQuery,
 } from '@/services/commentsService/commentsEndpoints'
-import {
-  useGetCommentLikesQuery,
-  useLazyGetCommentLikesQuery,
-  useUpdateCommentLikeMutation,
-} from '@/services/likesService/likesEndpoints'
+import { useUpdateCommentLikeMutation } from '@/services/likesService/likesEndpoints'
 import { FillSmallHeart, SmallHeart } from '@/shared/assets/icons/SmallHeart'
 import { TimeDifference } from '@/shared/components/TimeDifference/TimeDifference'
 import { useTranslation } from '@/shared/hooks/useTranslation'
 import { Button } from '@/shared/ui/Button'
+import { SpinnerThreePoints } from '@/shared/ui/SpinnerThreePoints'
 import { Typography } from '@/shared/ui/Typography'
 import { ControlledTextAreaField } from '@/shared/ui/controlledInsta/ControlledTextArea/ControlledTextArea'
-import { Answers } from '@/widgets/home/local/PostComments/Answers/Answers'
 import { usePostSchema } from '@/widgets/posts/local/schema/myPostPublicationSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { clsx } from 'clsx'
@@ -27,13 +24,18 @@ import { z } from 'zod'
 import s from './PostComments.module.scss'
 
 import noAvatar from '../../../../../public/assets/noPhoto.svg'
+import { Answers } from './Answers/Answers'
 
 export const PostComments = ({ postId, postIds, time }: Props) => {
   const { t } = useTranslation()
   const { myPostSchema } = usePostSchema()
 
   const [isOpenComments, setIsOpenComments] = useState(false)
-  const [likedComments, setLikedComments] = useState<number[]>([])
+  const [isNewCommentLoading, setIsNewCommentLoading] = useState(false)
+
+  const { inView, ref } = useInView({
+    threshold: 1,
+  })
 
   type myPostFormSchema = z.infer<typeof myPostSchema>
 
@@ -45,48 +47,56 @@ export const PostComments = ({ postId, postIds, time }: Props) => {
     resolver: zodResolver(myPostSchema),
   })
 
-  const [createNewComment, { isLoading: isNewCommentLoading, isUninitialized }] =
-    useCreateNewCommentMutation()
+  const postComment = watch('comment')
+
+  const [createNewComment] = useCreateNewCommentMutation()
+
   const [likeComment] = useUpdateCommentLikeMutation()
 
-  const [getLazyCommentsLikes, { data: getCommentsLikes }] = useLazyGetCommentLikesQuery()
-  const [getLazyComments, { data: getComments }] = useLazyGetCommentsQuery()
-  const { data: comments, isFetching: isGetCommentsLoading } = useGetCommentsQuery({ postId })
+  const [getLazyComments] = useLazyGetCommentsQuery()
+
+  const { data: comments, refetch } = useGetCommentsQuery({ postId })
 
   const handleLikeComment = async (commentId: number) => {
     await likeComment({ commentId, likeStatus: 'LIKE', postId })
-    getLazyComments({ postId })
-
-    const isLikeComment = comments?.items.find(comment => comment.id === commentId)
-
-    // if (likedComments.includes(commentId)) {
-    //   setLikedComments(likedComments.filter(id => id !== commentId))
-    //   await likeComment({ commentId, likeStatus: 'LIKE', postId })
-    // } else {
-    //   setLikedComments([...likedComments, commentId])
-    // }
+    await getLazyComments({ postId })
   }
 
-  const handleOpenComments = (postId: number) => {
+  const handleDislikeComment = async (commentId: number) => {
+    await likeComment({ commentId, likeStatus: 'DISLIKE', postId })
+    await getLazyComments({ postId })
+  }
+
+  const handleOpenComments = async (postId: number) => {
     if (postIds?.some(id => id === postId)) {
       setIsOpenComments(!isOpenComments)
     }
   }
 
-  const postComment = watch('comment')
+  const commentPublishHandler = async () => {
+    setValue('comment', '')
 
-  const commentPublishHandler = () =>
-    postId &&
-    postComment?.trim() &&
-    createNewComment({ content: postComment, postId })
-      .unwrap()
-      .then(() => setValue('comment', ''))
-
-  useEffect(() => {
-    if (!isUninitialized) {
-      setValue('comment', '')
+    if (postComment) {
+      setIsNewCommentLoading(true)
+      try {
+        await createNewComment({ content: postComment, postId })
+        await refetch()
+      } catch (err) {
+        console.error(err)
+      } finally {
+        setIsNewCommentLoading(false)
+        setIsOpenComments(true)
+      }
     }
-  }, [isUninitialized, setValue])
+  }
+
+  if (!comments) {
+    return (
+      <div className={s.spinner}>
+        <SpinnerThreePoints />
+      </div>
+    )
+  }
 
   return (
     <div className={s.container}>
@@ -101,10 +111,6 @@ export const PostComments = ({ postId, postIds, time }: Props) => {
         <Typography as={'span'}>{comments?.totalCount}</Typography>)
       </Typography>
       <div className={clsx(s.viewComments, isOpenComments ? s.openComments : '')}>
-        {(isNewCommentLoading || isGetCommentsLoading) && isOpenComments && (
-          <div className={s.loader}></div>
-        )}
-
         {!comments?.items.length && (
           <Typography
             className={clsx(s.commentContainer, s.noComment)}
@@ -115,8 +121,6 @@ export const PostComments = ({ postId, postIds, time }: Props) => {
           </Typography>
         )}
         {comments?.items.map(comment => {
-          console.log('comment.from: ', comment.from)
-
           return (
             <div className={s.commentContainer} key={comment.id}>
               <div className={s.comment}>
@@ -124,13 +128,14 @@ export const PostComments = ({ postId, postIds, time }: Props) => {
                   {comment.from.avatars[0]?.url ? (
                     <Image
                       alt={'avatar'}
+                      className={s.avatar}
                       height={24}
                       src={comment.from.avatars[0].url}
                       width={24}
                     />
                   ) : (
                     <div className={s.noAvatar}>
-                      <Image alt={'noAvatar'} height={16} src={noAvatar} width={16} />
+                      <Image alt={'noAvatar'} height={14} src={noAvatar} width={14} />
                     </div>
                   )}
 
@@ -140,19 +145,32 @@ export const PostComments = ({ postId, postIds, time }: Props) => {
                   <Typography variant={'regular14'}>{comment.content}</Typography>
                 </div>
 
-                <div className={s.smallHeart} onClick={() => handleLikeComment(comment.id)}>
-                  {likedComments.includes(comment.id) ? <FillSmallHeart /> : <SmallHeart />}
-                </div>
+                <Typography
+                  as={'button'}
+                  className={s.smallHeart}
+                  onClick={
+                    comment.isLiked
+                      ? () => handleDislikeComment(comment.id)
+                      : () => handleLikeComment(comment.id)
+                  }
+                >
+                  {comment.isLiked ? <FillSmallHeart /> : <SmallHeart />}
+                </Typography>
               </div>
               <Answers
                 answerCount={comment.answerCount}
                 commentId={comment.id}
+                isOpenComments={isOpenComments}
+                likeCount={comment.likeCount}
                 postId={comment.postId}
                 postTime={comment.createdAt}
+                refetch={refetch}
               />
             </div>
           )
         })}
+        {/*<div className={s.lazyComments} ref={ref}></div>*/}
+        {/*{inView && <span className={s.commentsLoader}></span>}*/}
       </div>
       <Typography className={s.time}>
         <TimeDifference home postTime={time} />
@@ -176,6 +194,7 @@ export const PostComments = ({ postId, postIds, time }: Props) => {
           </Typography>
         </Button>
       </div>
+      {isNewCommentLoading && <Typography as={'span'} className={s.loader}></Typography>}
     </div>
   )
 }

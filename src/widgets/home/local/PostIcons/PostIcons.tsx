@@ -1,13 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import { useUpdatePostLikeMutation } from '@/services/likesService/likesEndpoints'
-import { useGetPostsQuery } from '@/services/postService/postEndpoints'
-import { useGetUserPostsQuery } from '@/services/publicService/publicEndpoints'
-import { useResize } from '@/shared/hooks/useResize'
 import { Button } from '@/shared/ui/Button'
-import getFromLocalStorage from '@/shared/utils/localStorage/getFromLocalStorage'
-import saveToLocalStorage from '@/shared/utils/localStorage/saveToLocalStorage'
-import { useRouter } from 'next/router'
 import {
   PostBookmark,
   PostFillBookmark,
@@ -19,22 +13,18 @@ import {
 
 import s from './PostIcons.module.scss'
 
-export const PostIcons = ({ postId, userId, username }: Props) => {
-  const [isLike, setIsLike] = useState<boolean>(false)
+export const PostIcons = ({ description, postId, userId }: Props) => {
   const [isBookmark, setIsBookmark] = useState(false)
-
-  const { width } = useResize()
-  const router = useRouter()
+  const [isLiked, setIsLiked] = useState(false)
 
   const [updatePostLike] = useUpdatePostLikeMutation()
 
-  const likePost = () => {
-    setIsLike(!isLike)
-    if (isLike) {
-      updatePostLike({ likeStatus: 'DISLIKE', postId })
-    } else {
-      updatePostLike({ likeStatus: 'LIKE', postId })
-    }
+  const likePost = async () => {
+    await updatePostLike({ likeStatus: 'LIKE', postId })
+  }
+
+  const dislikePost = async () => {
+    await updatePostLike({ likeStatus: 'DISLIKE', postId })
   }
 
   const addToBookmark = () => {
@@ -43,7 +33,7 @@ export const PostIcons = ({ postId, userId, username }: Props) => {
 
   const handleTelegramShare = () => {
     const url = `https://instalife.fun/profile/${userId}?postId=${postId}`
-    const message = `Look at my post 😍`
+    const message = description || `Look at my post 😍`
     const telegramLink = `https://t.me/share/url?url=${encodeURIComponent(
       url
     )}&text=${encodeURIComponent(message)}`
@@ -54,17 +44,50 @@ export const PostIcons = ({ postId, userId, username }: Props) => {
   const scrollToTextArea = (id: number) => {
     const textArea = document.querySelector(`[data-id="postId-${id}"]`) as HTMLTextAreaElement
 
-    setTimeout(() => {
-      textArea.focus()
-      textArea.scrollIntoView({ behavior: 'smooth', block: 'center' })
-    }, 0.5)
+    if (!textArea) {
+      return
+    }
+
+    const targetPosition = textArea.getBoundingClientRect().top + window.pageYOffset
+    const windowHeight = window.innerHeight
+    const targetScrollPosition = targetPosition - windowHeight / 2 + textArea.offsetHeight / 2
+    const startPosition = window.pageYOffset
+    const distance = targetScrollPosition - startPosition
+    const duration = 600 // Длительность анимации в миллисекундах
+    let startTime: null | number = null
+
+    const smoothScroll = (currentTime: number) => {
+      if (!startTime) {
+        startTime = currentTime
+      }
+      const elapsedTime = currentTime - startTime
+      const progress = Math.min(elapsedTime / duration, 1) // Прогресс от 0 до 1
+
+      window.scrollTo(0, startPosition + distance * easeInOutQuad(progress))
+
+      if (elapsedTime < duration) {
+        requestAnimationFrame(smoothScroll)
+      } else {
+        textArea.focus()
+      }
+    }
+
+    const easeInOutQuad = (t: number) => {
+      return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t
+    }
+
+    requestAnimationFrame(smoothScroll)
   }
 
   return (
     <div className={s.container}>
       <div className={s.groupIcons}>
-        <Button className={s.btnIcon} onClick={likePost} variant={'noStyle'}>
-          {!isLike ? <PostHeart /> : <PostFillHeart />}
+        <Button
+          className={s.btnIcon}
+          onClick={isLiked ? dislikePost : likePost}
+          variant={'noStyle'}
+        >
+          {!isLiked ? <PostHeart /> : <PostFillHeart />}
         </Button>
         <Button className={s.btnIcon} onClick={() => scrollToTextArea(postId)} variant={'noStyle'}>
           <PostMsg />
@@ -81,7 +104,7 @@ export const PostIcons = ({ postId, userId, username }: Props) => {
 }
 
 type Props = {
+  description: string
   postId: number
   userId: number
-  username: string
 }

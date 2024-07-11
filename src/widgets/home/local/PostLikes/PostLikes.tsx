@@ -36,7 +36,7 @@ export const PostLikes = ({ postId }: Props) => {
                 <Image alt={'likes'} height={24} src={avatar[0].url} width={24} />
               ) : (
                 <div className={s.noAvatar}>
-                  <Image alt={'noAvatar'} height={16} src={noAvatar} width={16} />
+                  <Image alt={'noAvatar'} height={14} src={noAvatar} width={14} />
                 </div>
               )}
             </div>

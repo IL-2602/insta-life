@@ -80,6 +80,7 @@ export type PublishPostResponse = {
   description: string
   id: number
   images: PostImageResponse[]
+  isLiked: boolean
   likesCount: number
   location: null | string
   owner: { firstName: string; lastName: string }

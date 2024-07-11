@@ -5,7 +5,7 @@
   top: 0;
   left: 0;
 
-  /* width: 260px; */
+  margin-right: 5px;
   padding: 12px;
 
   background-color: var(--color-dark-500);
@@ -46,6 +46,7 @@
 }
 
 .PopoverArrow {
+  margin-right: 5px;
   fill: var(--color-light-100);
 }
 
