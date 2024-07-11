@@ -1,5 +1,5 @@
 import { Container } from './container'
 
-export const CommentsAnswers = {
+export const AnswersList = {
   widget: Container,
 }

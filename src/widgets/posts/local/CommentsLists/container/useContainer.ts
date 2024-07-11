@@ -22,10 +22,16 @@ export const useContainer = () => {
 
   const { error: meError } = useGetMeQuery()
   const { myPostSchema } = usePostSchema()
-  const { data: postPhotos, isFetching: isPostFetching } = useGetCurrentPostQuery(Number(postId), {
-    skip: !postId,
-  })
-  const { data: commentsData } = useGetCommentsQuery({ postId: +postId }, { skip: !postId })
+  const { data: postPhotos, isLoading: isLoadingPostPhotos } = useGetCurrentPostQuery(
+    Number(postId),
+    {
+      skip: !postId,
+    }
+  )
+  const { data: commentsData, isLoading: isLoadingComments } = useGetCommentsQuery(
+    { pageSize: 15, postId: +postId },
+    { skip: !postId }
+  )
 
   const [createNewComment] = useCreateNewCommentMutation()
   const [updCommentLikeStatus] = useUpdCommentLikeStatusMutation()
@@ -56,10 +62,15 @@ export const useContainer = () => {
   const updateCommentLikeStatusHandler = (commentId: number, likeStatus: LikeStatus) =>
     postId && updCommentLikeStatus({ commentId, likeStatus, postId: +postId })
 
+  const isLoadingPost = isLoadingPostPhotos || isLoadingComments
+
   return {
     commentPublishHandler,
     comments,
     control,
+    isLoadingComments,
+    isLoadingPost,
+    isLoadingPostPhotos,
     isMe,
     postDescription,
     postPhotos,

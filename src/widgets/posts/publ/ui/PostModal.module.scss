@@ -23,12 +23,17 @@
 
 .container {
   position: relative;
+
   display: flex;
   flex-direction: row;
+
+  max-height: 485px;
   margin: 0;
 }
 
 .postPhotoWrapper {
+  position: relative;
+
   overflow: hidden;
   flex: 1;
 
@@ -66,7 +71,7 @@
   align-items: center;
   justify-content: space-between;
 
-  height: 65px;
+  min-height: 65px;
 
   border-bottom: 1px solid var(--color-dark-100);
 }
