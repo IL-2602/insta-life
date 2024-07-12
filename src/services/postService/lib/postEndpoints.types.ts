@@ -99,3 +99,33 @@ export type GetCurrentPostResponse = {
   updatedAt: string
   userName: string
 }
+
+export type PostLikesResponse = {
+  items: PostLikesResponseItems[]
+  pageSize: number
+  totalCount: number
+}
+export type PostLikesResponseItemsAvatars = {
+  createdAt: string
+  fileSize: number
+  height: number
+  url: string
+  width: number
+}
+export type PostLikesResponseItems = {
+  avatars: PostLikesResponseItemsAvatars[]
+  createdAt: string
+  id: number
+  isFollowedBy: boolean
+  isFollowing: boolean
+  userId: number
+  userName: string
+}
+
+export type PostLikesRequest = {
+  cursor?: number
+  pageNumber?: number
+  pageSize?: number
+  postId: string
+  search?: string
+}
