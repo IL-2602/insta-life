@@ -4,6 +4,7 @@ import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import { Bookmark } from '@/shared/assets/icons/Bookmark'
 import { HeartOutline } from '@/shared/assets/icons/Heart/HeartOutline'
 import { PaperLine } from '@/shared/assets/icons/PaperLine'
+import { PostLikeCounter } from '@/shared/components/PostLikeCounter/PostLikeCounter'
 import { Avatar } from '@/shared/ui/Avatar'
 import { Button } from '@/shared/ui/Button'
 import { ScrollSelect } from '@/shared/ui/ScrollSelect/ScrollSelect'
@@ -71,6 +72,7 @@ export const CommentsList = memo(
                 <Bookmark />
               </Button>
             </div>
+            <PostLikeCounter className={s.likesContainer} />
           </div>
           {isMe && (
             <div className={s.addCommentBlock}>
