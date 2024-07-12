@@ -2,6 +2,8 @@ import { api } from '@/services/api'
 import {
   EditPostParams,
   GetCurrentPostResponse,
+  PostLikesRequest,
+  PostLikesResponse,
   PublishPostImageResponse,
   PublishPostParams,
   PublishPostResponse,
@@ -54,6 +56,17 @@ export const postEndpoints = api.injectEndpoints({
         return {
           method: 'GET',
           url: `public-posts/${postId}`,
+        }
+      },
+    }),
+    getLikesPost: builder.query<PostLikesResponse, PostLikesRequest>({
+      query: params => {
+        const { postId, ...rest } = params
+
+        return {
+          method: 'GET',
+          params: rest,
+          url: `posts/${postId}/likes`,
         }
       },
     }),
