@@ -112,6 +112,7 @@ export const {
   useDeletePostMutation,
   useEditPostMutation,
   useGetCurrentPostQuery,
+  useGetLikesPostQuery,
   usePublishPostImageMutation,
   usePublishPostMutation,
 } = postEndpoints

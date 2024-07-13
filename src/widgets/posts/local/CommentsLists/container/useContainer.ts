@@ -7,7 +7,7 @@ import {
   useUpdCommentLikeStatusMutation,
 } from '@/services/commentsAnswersService/commentsAnswersEndpoints'
 import { LikeStatus } from '@/services/commentsAnswersService/lib/commentsAnswersEndpoints.types'
-import { useGetCurrentPostQuery } from '@/services/postService/postEndpoints'
+import { useGetCurrentPostQuery, useGetLikesPostQuery } from '@/services/postService/postEndpoints'
 import { useTranslation } from '@/shared/hooks/useTranslation'
 import { usePostSchema } from '@/widgets/posts/local/schema/myPostPublicationSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -32,7 +32,7 @@ export const useContainer = () => {
     { pageSize: 15, postId: +postId },
     { skip: !postId }
   )
-
+  const { data: postLikesData } = useGetLikesPostQuery({ postId: postId ?? '' }, { skip: !postId })
   const [createNewComment] = useCreateNewCommentMutation()
   const [updCommentLikeStatus] = useUpdCommentLikeStatusMutation()
 
@@ -73,6 +73,7 @@ export const useContainer = () => {
     isLoadingPostPhotos,
     isMe,
     postDescription,
+    postLikesData,
     postPhotos,
     t,
     updateCommentLikeStatusHandler,

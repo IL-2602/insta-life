@@ -27,6 +27,7 @@ export const CommentsList = memo(
     isLoadingPostPhotos,
     isMe,
     postDescription,
+    postLikesData,
     postPhotos,
     t,
     updateCommentLikeStatusHandler,
@@ -72,7 +73,7 @@ export const CommentsList = memo(
                 <Bookmark />
               </Button>
             </div>
-            <PostLikeCounter className={s.likesContainer} />
+            <PostLikeCounter className={s.likesContainer} postLikesData={postLikesData} />
           </div>
           {isMe && (
             <div className={s.addCommentBlock}>
