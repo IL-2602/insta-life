@@ -240,6 +240,7 @@ export const ru: Local = {
     like: 'Нравится',
     noAnswers: 'Тут пока нет ответов',
     noComments: 'Тут пока нет комментариев',
+    noPosts: 'У вас пока нет подписок',
     publication: 'Опубликовать',
     showAllAnswers: 'Показать ответы',
     totalUsers: 'Зарегистрированные пользователи',

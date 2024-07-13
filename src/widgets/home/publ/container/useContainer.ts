@@ -2,11 +2,14 @@ import { useEffect, useState } from 'react'
 import { useInView } from 'react-intersection-observer'
 
 import { useGetHomePostsQuery } from '@/services/publicService/publicEndpoints'
+import { useTranslation } from '@/shared/hooks/useTranslation'
 
 export const useContainer = () => {
   const { inView, ref } = useInView({
     threshold: 1,
   })
+
+  const { t } = useTranslation()
 
   const [lastPostId, setLastPostId] = useState<number | undefined>(undefined)
 
@@ -26,5 +29,5 @@ export const useContainer = () => {
     }
   }, [inView])
 
-  return { isFetching, isInitialLoading, posts, ref }
+  return { isFetching, isInitialLoading, posts, ref, t }
 }
