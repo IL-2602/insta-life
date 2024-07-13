@@ -21,3 +21,7 @@ export type GetLikesResponse = {
   pageSize: number
   totalCount: number
 }
+
+export type LikeSliceInitialState = {
+  isPostLikeLoading: boolean
+}

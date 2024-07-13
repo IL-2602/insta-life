@@ -1,8 +1,9 @@
 import { api } from '@/services/api'
 import { commentsEndpoints } from '@/services/commentsService/commentsEndpoints'
 import { GetLikesResponse } from '@/services/likesService/lib/likesEndpoints.types'
+import { publicEndpoints } from '@/services/publicService/publicEndpoints'
 
-const likesEndpoints = api.injectEndpoints({
+export const likesEndpoints = api.injectEndpoints({
   endpoints: builder => ({
     getAnswerLikes: builder.query<
       GetLikesResponse,
@@ -115,6 +116,31 @@ const likesEndpoints = api.injectEndpoints({
       { likeStatus: 'DISLIKE' | 'LIKE' | 'NONE'; postId: number }
     >({
       invalidatesTags: ['PostLike'],
+      onQueryStarted: async (postLikeArgs, { dispatch, queryFulfilled }) => {
+        const { likeStatus, postId } = postLikeArgs
+
+        const result = dispatch(
+          publicEndpoints.util.updateQueryData('getHomePosts', {}, draft => {
+            const findPost = draft.items.find(p => p.id === postId)
+
+            if (findPost) {
+              if (likeStatus === 'DISLIKE') {
+                findPost.isLiked = false
+                findPost.likesCount--
+              } else if (likeStatus === 'LIKE') {
+                findPost.isLiked = true
+                findPost.likesCount++
+              }
+            }
+          })
+        )
+
+        try {
+          await queryFulfilled
+        } catch (e) {
+          result.undo()
+        }
+      },
       query: ({ likeStatus, postId }) => {
         return {
           body: { likeStatus },
@@ -127,10 +153,8 @@ const likesEndpoints = api.injectEndpoints({
 })
 
 export const {
-  useGetAnswerLikesQuery,
-  useGetCommentLikesQuery,
   useGetPostLikesQuery,
-  useLazyGetCommentLikesQuery,
+  useLazyGetPostLikesQuery,
   useUpdateAnswerLikeMutation,
   useUpdateCommentLikeMutation,
   useUpdatePostLikeMutation,
