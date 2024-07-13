@@ -67,7 +67,7 @@ export const Answers = ({
         setIsNewAnswerLoading(false)
       }
     }
-
+    setIsOpenTextField(false)
     setIsOpenAnswers(true)
   }
 
