@@ -43,11 +43,10 @@ export const commentsEndpoints = api.injectEndpoints({
       },
     }),
     getComments: builder.query<GetCommentsResponse, { postId: number } & CommentsParams>({
-      // providesTags: ['Comment'],
-      query: ({ pageNumber, postId }) => {
+      query: ({ pageSize, postId }) => {
         return {
           method: 'GET',
-          params: { pageNumber, postId },
+          params: { pageSize, postId },
           url: `posts/${postId}/comments`,
         }
       },

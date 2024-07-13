@@ -30,6 +30,7 @@ export const PostComments = ({ postId, postIds, time }: Props) => {
 
   const [isOpenComments, setIsOpenComments] = useState(false)
   const [isNewCommentLoading, setIsNewCommentLoading] = useState(false)
+  const [commentsCount, setCommentsCount] = useState(20)
 
   type myPostFormSchema = z.infer<typeof myPostSchema>
 
@@ -49,7 +50,8 @@ export const PostComments = ({ postId, postIds, time }: Props) => {
 
   const [getLazyComments] = useLazyGetCommentsQuery()
 
-  const { data: comments, refetch } = useGetCommentsQuery({ postId })
+  const { data: comments, refetch } = useGetCommentsQuery({ pageSize: commentsCount, postId })
+  // totalCount на pageSize в getComments могу получить только из запроса getComments
 
   const handleLikeComment = async (commentId: number) => {
     await likeComment({ commentId, likeStatus: 'LIKE', postId })

@@ -234,7 +234,7 @@ export const ru: Local = {
     answer: 'Ответ',
     cropping: 'Изменить размер',
     filters: 'Применить фильтр',
-    followSuccess: 'Успешно',
+    followSuccess: 'Follow successful',
     hideAllAnswers: 'Скрыть ответы',
     hideAllComments: 'Скрыть все комментарии',
     like: 'Нравится',
@@ -243,7 +243,7 @@ export const ru: Local = {
     publication: 'Опубликовать',
     showAllAnswers: 'Показать ответы',
     totalUsers: 'Зарегистрированные пользователи',
-    unfollowSuccess: 'Успешно',
+    unfollowSuccess: 'Unfollow successful',
     viewAllcomments: 'Просмотреть все комментарии',
   },
   profileSettings: {
