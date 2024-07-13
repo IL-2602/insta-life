@@ -13,7 +13,6 @@ export const commentsEndpoints = api.injectEndpoints({
       NewAnswerResponse,
       { commentId: number; content: string; postId: number }
     >({
-      invalidatesTags: ['Comment'],
       query: ({ commentId, content, postId }) => {
         return {
           body: { content },
