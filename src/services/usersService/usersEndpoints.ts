@@ -1,6 +1,5 @@
 import { api } from '@/services/api'
 import { ErrorResponse } from '@/services/authService/lib/authEndpoints.types'
-import { commentsEndpoints } from '@/services/commentsService/commentsEndpoints'
 import {
   UserFollowParams,
   UserFollowResponse,
@@ -64,9 +63,9 @@ export const usersEndpoints = api.injectEndpoints({
           result.undo()
         }
       },
-      query: body => {
+      query: ({ selectedUserId }) => {
         return {
-          body,
+          body: { selectedUserId },
           method: 'POST',
           url: `users/following`,
         }
@@ -103,8 +102,6 @@ export const usersEndpoints = api.injectEndpoints({
 })
 
 export const {
-  useGetUserFollowersQuery,
-  useGetUserFollowingQuery,
   useGetUserInfoQuery,
   useGetUserQuery,
   useSubscribeMutation,
