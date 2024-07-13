@@ -228,6 +228,7 @@ export const en = {
     answer: 'Answer',
     cropping: 'Cropping',
     filters: 'Filters',
+    followSuccess: 'Follow successful',
     hideAllAnswers: 'Hide Answers',
     hideAllComments: 'Hide All Comments',
     like: 'Like',
@@ -236,6 +237,7 @@ export const en = {
     publication: 'Publication',
     showAllAnswers: 'Show Answers',
     totalUsers: 'Registered Users',
+    unfollowSuccess: 'Unfollow successful',
     viewAllcomments: 'View All Comments',
   },
   profileSettings: {
