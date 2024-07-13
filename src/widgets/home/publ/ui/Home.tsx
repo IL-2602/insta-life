@@ -2,18 +2,21 @@ import { Fragment, forwardRef } from 'react'
 import { SkeletonTheme } from 'react-loading-skeleton'
 
 import { PublicPhotos } from '@/shared/components/PubicPhotos/PublicPhotos'
+import { ROUTES } from '@/shared/constants/routes'
 import { SpinnerThreePoints } from '@/shared/ui/SpinnerThreePoints'
+import { Typography } from '@/shared/ui/Typography'
 import { PostComments } from '@/widgets/home/local/PostComments/PostComments'
 import { PostDescription } from '@/widgets/home/local/PostDescription/PostDescription'
 import { PostHeader } from '@/widgets/home/local/PostHeader/PostHeader'
 import { PostIcons } from '@/widgets/home/local/PostIcons/PostIcons'
 import { PostLikes } from '@/widgets/home/local/PostLikes/PostLikes'
 import { HomeProps } from '@/widgets/home/publ/container'
+import Link from 'next/link'
 
 import s from './Home.module.scss'
 
 export const Home = forwardRef<HTMLDivElement, HomeProps>(
-  ({ isFetching, isInitialLoading, posts }, ref) => {
+  ({ isFetching, isInitialLoading, posts, t }, ref) => {
     if (!posts || isInitialLoading) {
       return (
         <div className={s.spinner}>
@@ -25,6 +28,15 @@ export const Home = forwardRef<HTMLDivElement, HomeProps>(
     return (
       <SkeletonTheme baseColor={'#202020'} highlightColor={'#444'}>
         <div className={s.container}>
+          {posts.totalCount === 0 && (
+            <div className={s.noPosts}>
+              <Typography as={'h2'} color={'form'} variant={'bold14'}>
+                {t.post.noPosts}
+              </Typography>
+              <Link href={ROUTES.SEARCH}>{t.modal.search}</Link>
+            </div>
+          )}
+
           {posts?.items.map((post, _, initialArray) => {
             const images = post.images.map(img => img.url)
             const postIds = initialArray.map(post => post.id)

@@ -26,6 +26,26 @@
   margin-bottom: 70px;
 }
 
+.noPosts {
+  display: grid;
+  gap: 6px;
+  place-items: center;
+  margin-top: 20px;
+
+  h2 {
+    font-size: 1rem;
+  }
+
+  a {
+    font-size: 0.9rem;
+    color: var(--color-primary-300);
+
+    &:hover {
+      opacity: 0.75;
+    }
+  }
+}
+
 .spinner {
   display: grid;
   place-items: center;

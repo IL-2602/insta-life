@@ -63,7 +63,7 @@ export const PostHeader = ({ avatar, time, userId, username }: Props) => {
   }
 
   const unSubscribeToUser = async () => {
-    toast.success(t.post.followSuccess, {
+    toast.success(t.post.unfollowSuccess, {
       pauseOnHover: false,
       style: {
         background: '#0A6638',

@@ -234,6 +234,7 @@ export const en = {
     like: 'Like',
     noAnswers: 'No answers yet',
     noComments: 'No comments yet',
+    noPosts: "You don't have any subscriptions yet",
     publication: 'Publication',
     showAllAnswers: 'Show Answers',
     totalUsers: 'Registered Users',
