@@ -3,7 +3,7 @@ import { Typography } from '@/shared/ui/Typography'
 import s from './PostDate.module.scss'
 
 export const PostDate = ({ className, date }: Props) => {
-  const formatedDate = new Date(date).toLocaleDateString('en-US', {
+  const formatedDate = new Date(date ?? '').toLocaleDateString('en-US', {
     day: 'numeric',
     month: 'long',
     year: 'numeric',
@@ -18,5 +18,5 @@ export const PostDate = ({ className, date }: Props) => {
 
 type Props = {
   className?: string
-  date: string
+  date: string | undefined
 }

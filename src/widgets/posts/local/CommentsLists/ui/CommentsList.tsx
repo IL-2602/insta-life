@@ -77,7 +77,7 @@ export const CommentsList = memo(
               </Button>
             </div>
             <PostLikeCounter className={s.likesContainer} postLikesData={postLikesData} />
-            <PostDate className={s.likesContainer} date={date} />
+            <PostDate className={s.likesContainer} date={postPhotos?.createdAt} />
           </div>
           {isMe && (
             <div className={s.addCommentBlock}>
