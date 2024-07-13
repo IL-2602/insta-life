@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useInView } from 'react-intersection-observer'
 
 import {
   useCreateNewCommentMutation,
@@ -12,7 +11,6 @@ import { FillSmallHeart, SmallHeart } from '@/shared/assets/icons/SmallHeart'
 import { TimeDifference } from '@/shared/components/TimeDifference/TimeDifference'
 import { useTranslation } from '@/shared/hooks/useTranslation'
 import { Button } from '@/shared/ui/Button'
-import { SpinnerThreePoints } from '@/shared/ui/SpinnerThreePoints'
 import { Typography } from '@/shared/ui/Typography'
 import { ControlledTextAreaField } from '@/shared/ui/controlledInsta/ControlledTextArea/ControlledTextArea'
 import { usePostSchema } from '@/widgets/posts/local/schema/myPostPublicationSchema'
@@ -32,10 +30,6 @@ export const PostComments = ({ postId, postIds, time }: Props) => {
 
   const [isOpenComments, setIsOpenComments] = useState(false)
   const [isNewCommentLoading, setIsNewCommentLoading] = useState(false)
-
-  const { inView, ref } = useInView({
-    threshold: 1,
-  })
 
   type myPostFormSchema = z.infer<typeof myPostSchema>
 
@@ -88,14 +82,6 @@ export const PostComments = ({ postId, postIds, time }: Props) => {
         setIsOpenComments(true)
       }
     }
-  }
-
-  if (!comments) {
-    return (
-      <div className={s.spinner}>
-        <SpinnerThreePoints />
-      </div>
-    )
   }
 
   return (
@@ -169,8 +155,6 @@ export const PostComments = ({ postId, postIds, time }: Props) => {
             </div>
           )
         })}
-        {/*<div className={s.lazyComments} ref={ref}></div>*/}
-        {/*{inView && <span className={s.commentsLoader}></span>}*/}
       </div>
       <Typography className={s.time}>
         <TimeDifference home postTime={time} />
@@ -199,4 +183,8 @@ export const PostComments = ({ postId, postIds, time }: Props) => {
   )
 }
 
-type Props = { postId: number; postIds: number[] | undefined; time: string }
+type Props = {
+  postId: number
+  postIds: number[] | undefined
+  time: string
+}

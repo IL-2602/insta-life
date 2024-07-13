@@ -12,7 +12,7 @@ export const PostDescription = ({ avatar, description, userName }: Props) => {
         <Image alt={'avatar'} className={s.avatar} height={36} src={avatar} width={36} />
       ) : (
         <div className={s.noAvatar}>
-          <Image alt={'avatar'} height={24} src={noAvatar} width={24} />
+          <Image alt={'avatar'} height={22} src={noAvatar} width={22} />
         </div>
       )}
       <div className={s.description}>
