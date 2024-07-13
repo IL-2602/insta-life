@@ -16,7 +16,6 @@ import { useRouter } from 'next/router'
 
 export const useContainer = () => {
   const { data: me } = useGetMeQuery() as { data: UserType }
-  const [username, setUsername] = useState<null | string>(null)
   const [isFollow, setIsFollow] = useState(false)
 
   const dispatch = useAppDispatch()
@@ -25,12 +24,6 @@ export const useContainer = () => {
   const profileId = query?.id as string
 
   const { data, isError } = useGetPublicUserProfileQuery({ profileId: +profileId })
-
-  useEffect(() => {
-    if (data) {
-      setUsername(data.userName)
-    }
-  }, [data])
 
   const { data: userInfo, isLoading: isUserInfoLoading } = useGetUserInfoQuery({
     username: data?.userName || '',
@@ -72,21 +65,11 @@ export const useContainer = () => {
     void push(ROUTES.MESSENGER + `?sent=${profileId}`)
   }
 
-  const subscribeToUser = async () => {
-    try {
-      return await subscribe({ selectedUserId: +profileId, username: data?.userName! })
-    } catch (e) {
-      console.error(e)
-    }
-  }
+  const subscribeToUser = async () =>
+    await subscribe({ selectedUserId: +profileId, username: data?.userName! })
 
-  const unSubscribeToUser = async () => {
-    try {
-      return await unSubscribe({ userId: +profileId, username: data?.userName! })
-    } catch (e) {
-      console.error(e)
-    }
-  }
+  const unSubscribeToUser = async () =>
+    await unSubscribe({ userId: +profileId, username: data?.userName! })
 
   const isFollowLoading = isUserInfoLoading
   const isSubscribeLoading = isSubLoading || isUnSubLoading

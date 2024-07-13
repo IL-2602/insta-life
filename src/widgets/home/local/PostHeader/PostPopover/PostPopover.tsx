@@ -7,11 +7,10 @@ import { useTranslation } from '@/shared/hooks/useTranslation'
 import s from './PostPopover.module.scss'
 
 type Props = {
-  // deletePostModalHandler?: (id: number) => void
-  // editModeHandler?: () => void
-  // editPostModalHandler?: (value: boolean) => void
-  // id: string
   handleCopyLink: () => void
+  isFollowing: boolean | undefined
+  subscribeToUser: () => void
+  unSubscribeToUser: () => void
 }
 
 type MyPostPopoverType = {
@@ -20,16 +19,19 @@ type MyPostPopoverType = {
   title: string
 }
 
-export const PostPopover = ({ handleCopyLink }: Props) => {
+export const PostPopover = ({
+  handleCopyLink,
+  isFollowing,
+  subscribeToUser,
+  unSubscribeToUser,
+}: Props) => {
   const { t } = useTranslation()
-
-  const [isFollow, setIsFollow] = useState(false)
 
   const myPostPopover: MyPostPopoverType[] = [
     {
       icon: <Person />,
-      onClick: handleCopyLink,
-      title: isFollow ? t.button.follow : t.button.unfollow,
+      onClick: isFollowing ? unSubscribeToUser : subscribeToUser,
+      title: isFollowing ? t.button.unfollow : t.button.follow,
     },
     {
       icon: <Copy />,

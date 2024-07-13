@@ -1,16 +1,13 @@
 @import '@/styles/variables/mixins';
 
-.container {
-  @include mobile-large {
-    margin-top: 0;
+@mixin likes {
+  .skeletonsBlock {
+    display: flex;
   }
 
-  display: flex;
-  margin-top: 14px;
-
-  .marginNone {
-    margin-left: 0;
-    padding-right: 4px;
+  .likesCountWrap {
+    display: flex;
+    gap: 2px;
   }
 
   .likesPhotos {
@@ -48,13 +45,91 @@
   }
 
   .likesCount {
-    margin-left: 12px;
     padding-right: 4px;
   }
+}
+
+.gap0 {
+  @include mobile-large {
+    margin-top: 0;
+  }
+
+  @include likes;
+
+  display: flex;
+  gap: 0;
+  margin-top: 14px;
+}
+
+.container {
+  @include mobile-large {
+    margin-top: 0;
+  }
+
+  @include likes;
+
+  display: flex;
+  gap: 12px;
+  margin-top: 14px;
 }
 
 .spinner {
   display: grid;
   place-items: center;
   height: 10vh;
+}
+
+.skeleton {
+  width: 24px;
+  height: 24px;
+
+  span[aria-live='polite'] {
+    display: grid;
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.skeletonTwo {
+  display: flex;
+
+  span[aria-live='polite']:nth-child(2) {
+    z-index: 2;
+    margin-left: -9px;
+  }
+
+  span[aria-live='polite']:nth-child(1) {
+    z-index: 3;
+  }
+}
+
+.skeletonThree {
+  display: flex;
+  padding-right: 12px;
+
+  span[aria-live='polite']:nth-child(2) {
+    z-index: 2;
+    margin-left: -9px;
+  }
+
+  span[aria-live='polite']:nth-child(3) {
+    z-index: 1;
+    margin-left: -9px;
+  }
+
+  span[aria-live='polite']:nth-child(1) {
+    z-index: 3;
+  }
+}
+
+.gap1 {
+  gap: 12px;
+}
+
+.gap2 {
+  gap: 27px;
+}
+
+.gap3 {
+  gap: 42px;
 }
