@@ -1,6 +1,11 @@
 import { useState } from 'react'
 
-import { useUpdatePostLikeMutation } from '@/services/likesService/likesEndpoints'
+import { useAppDispatch } from '@/app/store/hooks/useAppDispatch'
+import {
+  useLazyGetPostLikesQuery,
+  useUpdatePostLikeMutation,
+} from '@/services/likesService/likesEndpoints'
+import { likesActions } from '@/services/likesService/store/slice/likesEndpoints.slice'
 import { Button } from '@/shared/ui/Button'
 import {
   PostBookmark,
@@ -13,18 +18,37 @@ import {
 
 import s from './PostIcons.module.scss'
 
-export const PostIcons = ({ description, postId, userId }: Props) => {
+export const PostIcons = ({ description, isLiked, postId, userId }: Props) => {
   const [isBookmark, setIsBookmark] = useState(false)
-  const [isLiked, setIsLiked] = useState(false)
+  const dispatch = useAppDispatch()
 
   const [updatePostLike] = useUpdatePostLikeMutation()
+  const [getPostLikes] = useLazyGetPostLikesQuery()
 
   const likePost = async () => {
-    await updatePostLike({ likeStatus: 'LIKE', postId })
+    dispatch(likesActions.setIsPostLikeLoading(true))
+
+    try {
+      await updatePostLike({ likeStatus: 'LIKE', postId })
+      await getPostLikes({ postId })
+    } catch (error) {
+      console.error(error)
+    } finally {
+      dispatch(likesActions.setIsPostLikeLoading(false))
+    }
   }
 
   const dislikePost = async () => {
-    await updatePostLike({ likeStatus: 'DISLIKE', postId })
+    dispatch(likesActions.setIsPostLikeLoading(true))
+
+    try {
+      await updatePostLike({ likeStatus: 'DISLIKE', postId })
+      await getPostLikes({ postId })
+    } catch (error) {
+      console.error(error)
+    } finally {
+      dispatch(likesActions.setIsPostLikeLoading(false))
+    }
   }
 
   const addToBookmark = () => {
@@ -105,6 +129,7 @@ export const PostIcons = ({ description, postId, userId }: Props) => {
 
 type Props = {
   description: string
+  isLiked: boolean
   postId: number
   userId: number
 }

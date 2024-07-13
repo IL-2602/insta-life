@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from 'react'
+import React, { ReactNode } from 'react'
 
 import { Copy } from '@/shared/assets/icons/Copy'
 import { Person } from '@/shared/assets/icons/Person'
