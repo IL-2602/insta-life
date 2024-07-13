@@ -89,6 +89,7 @@ export type GetCurrentPostResponse = {
   description: string
   id: number
   images: PostImage[]
+  isLiked: boolean
   likesCount: number
   location: string
   owner: {
@@ -129,3 +130,8 @@ export type PostLikesRequest = {
   postId: string
   search?: string
 }
+export type EditPostLikeStatusRequest = {
+  likeStatus: LikeStatus
+  postId: number
+}
+export type LikeStatus = 'DISLIKE' | 'LIKE' | 'NONE'

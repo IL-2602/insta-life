@@ -3,13 +3,13 @@ import { Typography } from '@/shared/ui/Typography'
 
 import s from './PostLikeCounter.module.scss'
 
-export const PostLikeCounter = ({ className, postLikesData }: Props) => {
+export const PostLikeCounter = ({ className, isLiked, likesCount, postLikesData }: Props) => {
   return (
     <div className={`${s.container} ${className ?? ''}`}>
       <div className={s.likesContainer}>
         <div className={s.avatars}></div>
         <Typography className={s.likeCounter} variant={'bold14'}>
-          <Typography variant={'regular14'}>{postLikesData?.totalCount}</Typography>
+          <Typography variant={'regular14'}>{likesCount}</Typography>
           {` "Like"`}
         </Typography>
       </div>
@@ -20,5 +20,7 @@ export const PostLikeCounter = ({ className, postLikesData }: Props) => {
 type Props = {
   className?: string
   date?: string
+  isLiked?: boolean
+  likesCount?: number
   postLikesData?: PostLikesResponse
 }

@@ -6,8 +6,12 @@ import {
   useGetCommentsQuery,
   useUpdCommentLikeStatusMutation,
 } from '@/services/commentsAnswersService/commentsAnswersEndpoints'
-import { LikeStatus } from '@/services/commentsAnswersService/lib/commentsAnswersEndpoints.types'
-import { useGetCurrentPostQuery, useGetLikesPostQuery } from '@/services/postService/postEndpoints'
+import { LikeStatus } from '@/services/postService/lib/postEndpoints.types'
+import {
+  useEditPostLikeStatusMutation,
+  useGetCurrentPostQuery,
+  useGetLikesPostQuery,
+} from '@/services/postService/postEndpoints'
 import { useTranslation } from '@/shared/hooks/useTranslation'
 import { usePostSchema } from '@/widgets/posts/local/schema/myPostPublicationSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -35,6 +39,7 @@ export const useContainer = () => {
   const { data: postLikesData } = useGetLikesPostQuery({ postId: postId ?? '' }, { skip: !postId })
   const [createNewComment] = useCreateNewCommentMutation()
   const [updCommentLikeStatus] = useUpdCommentLikeStatusMutation()
+  const [editPostLiseStatus] = useEditPostLikeStatusMutation()
 
   type myPostFormSchema = z.infer<typeof myPostSchema>
 
@@ -62,6 +67,11 @@ export const useContainer = () => {
   const updateCommentLikeStatusHandler = (commentId: number, likeStatus: LikeStatus) =>
     postId && updCommentLikeStatus({ commentId, likeStatus, postId: +postId })
 
+  const updatePostLikeStatusHandler = () => {
+    console.log()
+    editPostLiseStatus({ likeStatus: postPhotos?.isLiked ? 'NONE' : 'LIKE', postId: +postId })
+  }
+
   const isLoadingPost = isLoadingPostPhotos || isLoadingComments
 
   return {
@@ -77,5 +87,6 @@ export const useContainer = () => {
     postPhotos,
     t,
     updateCommentLikeStatusHandler,
+    updatePostLikeStatusHandler,
   }
 }

@@ -1,5 +1,6 @@
 import { api } from '@/services/api'
 import {
+  EditPostLikeStatusRequest,
   EditPostParams,
   GetCurrentPostResponse,
   PostLikesRequest,
@@ -47,6 +48,18 @@ export const postEndpoints = api.injectEndpoints({
           method: 'PUT',
           params: { postId },
           url: `posts/${postId}`,
+        }
+      },
+    }),
+    editPostLikeStatus: builder.mutation<void, EditPostLikeStatusRequest>({
+      invalidatesTags: ['Post'],
+      query: params => {
+        const { postId, ...body } = params
+
+        return {
+          body,
+          method: 'PUT',
+          url: `posts/${postId}/like-status`,
         }
       },
     }),
@@ -110,6 +123,7 @@ export const postEndpoints = api.injectEndpoints({
 
 export const {
   useDeletePostMutation,
+  useEditPostLikeStatusMutation,
   useEditPostMutation,
   useGetCurrentPostQuery,
   useGetLikesPostQuery,

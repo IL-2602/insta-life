@@ -2,7 +2,9 @@ import { Fragment, memo } from 'react'
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 
 import { Bookmark } from '@/shared/assets/icons/Bookmark'
+import { Heart } from '@/shared/assets/icons/Heart'
 import { HeartOutline } from '@/shared/assets/icons/Heart/HeartOutline'
+import { HeartFullIcon } from '@/shared/assets/icons/HeartFull'
 import { PaperLine } from '@/shared/assets/icons/PaperLine'
 import { PostDate } from '@/shared/components/PostDate/PostDate'
 import { PostLikeCounter } from '@/shared/components/PostLikeCounter/PostLikeCounter'
@@ -32,10 +34,11 @@ export const CommentsList = memo(
     postPhotos,
     t,
     updateCommentLikeStatusHandler,
+    updatePostLikeStatusHandler,
   }: CommentsAnswersProps) => {
     const { locale } = useRouter()
 
-    const date = new Date().toString()
+    console.log(postPhotos?.isLiked)
 
     return (
       <div className={s.commentsBlockWrapper}>
@@ -65,8 +68,12 @@ export const CommentsList = memo(
           <div className={s.likesBlock}>
             <div className={s.buttonIcons}>
               <div className={s.buttonIconWrapper}>
-                <Button className={s.buttonIcon} variant={'noStyle'}>
-                  <HeartOutline />
+                <Button
+                  className={s.buttonIcon}
+                  onClick={updatePostLikeStatusHandler}
+                  variant={'noStyle'}
+                >
+                  {postPhotos?.isLiked ? <HeartFullIcon /> : <Heart />}
                 </Button>
                 <Button className={s.buttonIcon} variant={'noStyle'}>
                   <PaperLine />
@@ -76,7 +83,12 @@ export const CommentsList = memo(
                 <Bookmark />
               </Button>
             </div>
-            <PostLikeCounter className={s.likesContainer} postLikesData={postLikesData} />
+            <PostLikeCounter
+              className={s.likesContainer}
+              isLiked={postPhotos?.isLiked}
+              likesCount={postPhotos?.likesCount}
+              postLikesData={postLikesData}
+            />
             <PostDate className={s.likesContainer} date={postPhotos?.createdAt} />
           </div>
           {isMe && (
