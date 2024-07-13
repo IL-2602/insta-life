@@ -1,4 +1,5 @@
 import { memo } from 'react'
+import { SkeletonTheme } from 'react-loading-skeleton'
 
 import { HorizontalDots } from '@/shared/assets/icons/HorizontalDots/HorizontalDots'
 import { PostPhotos } from '@/shared/components/PostPhotos/PostPhotos'
@@ -8,12 +9,12 @@ import { PostOptions } from '@/shared/ui/PostOptions/PostOptions'
 import { Spinner } from '@/shared/ui/Spinner'
 import { Typography } from '@/shared/ui/Typography'
 import { ClosePostModal } from '@/widgets/posts/local/ClosePost'
-import { CommentsAnswers } from '@/widgets/posts/local/CommentsAnswers'
 import { DeletePostModal } from '@/widgets/posts/local/DeletePost'
 import { EditPost } from '@/widgets/posts/local/EditPost'
 import { PostModalProps } from '@/widgets/posts/publ/container'
 import { clsx } from 'clsx'
 import Image from 'next/image'
+import { CommentsList } from 'src/widgets/posts/local/CommentsLists'
 
 import s from './PostModal.module.scss'
 
@@ -79,59 +80,61 @@ export const PostModal = memo(
           title={isEdit ? 'Edit Post' : undefined}
         >
           <div className={s.container}>
-            <div className={s.postPhotoWrapper}>
-              <PostPhotos currentPhoto={currPhotoIndex} onChangeCurrentPhoto={onChangeCurrPhoto}>
-                {postPhotos &&
-                  postPhotos.images.map((photo: PhotoType) => {
-                    return (
-                      <div className={s.postPhotoWrapper} key={photo.uploadId}>
-                        <Image alt={'photo'} className={s.postPhoto} fill src={photo.url} />
-                      </div>
-                    )
-                  })}
-              </PostPhotos>
-            </div>
-            <div className={s.descriptionWrapper}>
-              <div className={s.userWrapper}>
-                <div className={s.userContainer}>
-                  <div className={s.userPhotoWrapper}>
-                    <div className={s.photo}>
-                      {postPhotos && Object.hasOwnProperty.call(postPhotos, 'avatarOwner') ? (
-                        <Image
-                          alt={'userPhoto'}
-                          height={36}
-                          src={postPhotos?.avatarOwner!}
-                          width={36}
-                        />
-                      ) : (
-                        <Image alt={'noUserPhoto'} height={22} src={noPhoto} width={22} />
-                      )}
-                    </div>
-                    <Typography variant={'h3'}>{postPhotos?.userName}</Typography>
-                  </div>
-                </div>
-
-                {!meError && isEditable && !isEdit && (
-                  <div className={s.postOptions}>
-                    <CustomPopover
-                      contentChildren={
-                        <PostOptions
-                          deletePostModalHandler={deletePostModalHandler}
-                          editPostModalHandler={() => setIsEditPostHandler(true)}
-                          id={'123'}
-                        />
-                      }
-                      icon={
-                        <div style={{ position: 'relative' }}>
-                          <HorizontalDots />
+            <SkeletonTheme baseColor={'#202020'} highlightColor={'#444'}>
+              <div className={s.postPhotoWrapper}>
+                <PostPhotos currentPhoto={currPhotoIndex} onChangeCurrentPhoto={onChangeCurrPhoto}>
+                  {postPhotos &&
+                    postPhotos.images.map((photo: PhotoType) => {
+                      return (
+                        <div className={s.postPhotoWrapper} key={photo.uploadId}>
+                          <Image alt={'photo'} className={s.postPhoto} fill src={photo.url} />
                         </div>
-                      }
-                    />
-                  </div>
-                )}
+                      )
+                    })}
+                </PostPhotos>
               </div>
-              {isEdit ? <EditPost.widget /> : <CommentsAnswers.widget />}
-            </div>
+              <div className={s.descriptionWrapper}>
+                <div className={s.userWrapper}>
+                  <div className={s.userContainer}>
+                    <div className={s.userPhotoWrapper}>
+                      <div className={s.photo}>
+                        {postPhotos && Object.hasOwnProperty.call(postPhotos, 'avatarOwner') ? (
+                          <Image
+                            alt={'userPhoto'}
+                            height={36}
+                            src={postPhotos?.avatarOwner!}
+                            width={36}
+                          />
+                        ) : (
+                          <Image alt={'noUserPhoto'} height={22} src={noPhoto} width={22} />
+                        )}
+                      </div>
+                      <Typography variant={'h3'}>{postPhotos?.userName}</Typography>
+                    </div>
+                  </div>
+
+                  {!meError && isEditable && !isEdit && (
+                    <div className={s.postOptions}>
+                      <CustomPopover
+                        contentChildren={
+                          <PostOptions
+                            deletePostModalHandler={deletePostModalHandler}
+                            editPostModalHandler={() => setIsEditPostHandler(true)}
+                            id={'123'}
+                          />
+                        }
+                        icon={
+                          <div style={{ position: 'relative' }}>
+                            <HorizontalDots />
+                          </div>
+                        }
+                      />
+                    </div>
+                  )}
+                </div>
+                {isEdit ? <EditPost.widget /> : <CommentsList.widget />}
+              </div>
+            </SkeletonTheme>
           </div>
         </Modal>
         <DeletePostModal.widget />

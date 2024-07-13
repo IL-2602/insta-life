@@ -8,6 +8,8 @@ import s from './ScrollSelect.module.scss'
 type ScrollBarProps = {
   children: ReactNode
   className?: string
+  isHorizontal?: boolean
+  isVertical?: boolean
   maxHeight?: CSSProperties['maxHeight']
   maxWidth?: CSSProperties['maxWidth']
   type?: 'always' | 'auto' | 'hover' | 'scroll'
@@ -16,6 +18,8 @@ type ScrollBarProps = {
 export const ScrollSelect = ({
   children,
   className,
+  isHorizontal = true,
+  isVertical = true,
   maxHeight = '100%',
   maxWidth = '100%',
   type,
@@ -31,12 +35,16 @@ export const ScrollSelect = ({
         <ScrollArea.Viewport className={s.viewport} style={viewPortStyles}>
           {children}
         </ScrollArea.Viewport>
-        <ScrollArea.Scrollbar className={s.scrollbar} orientation={'vertical'}>
-          <ScrollArea.Thumb className={s.thumb} />
-        </ScrollArea.Scrollbar>
-        <ScrollArea.Scrollbar className={s.scrollbar} orientation={'horizontal'}>
-          <ScrollArea.Thumb className={s.thumb} />
-        </ScrollArea.Scrollbar>
+        {isVertical && (
+          <ScrollArea.Scrollbar className={s.scrollbar} orientation={'vertical'}>
+            <ScrollArea.Thumb className={s.thumb} />
+          </ScrollArea.Scrollbar>
+        )}
+        {isHorizontal && (
+          <ScrollArea.Scrollbar className={s.scrollbar} orientation={'horizontal'}>
+            <ScrollArea.Thumb className={s.thumb} />
+          </ScrollArea.Scrollbar>
+        )}
       </div>
     </ScrollArea.Root>
   )

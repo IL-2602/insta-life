@@ -1,18 +1,13 @@
 import { useEffect, useState } from 'react'
-import { useForm } from 'react-hook-form'
-import { toast } from 'react-toastify'
 
 import { useAppDispatch } from '@/app/store/hooks/useAppDispatch'
 import { useAppSelector } from '@/app/store/hooks/useAppSelector'
 import { useGetMeQuery } from '@/services/authService/authEndpoints'
-import { useEditPostMutation, useGetCurrentPostQuery } from '@/services/postService/postEndpoints'
+import { useGetCurrentPostQuery } from '@/services/postService/postEndpoints'
 import { postActions } from '@/services/postService/store/slice/postEndpoints.slice'
 import { useGetProfileQuery } from '@/services/profileService/profileEndpoints'
 import { useTranslation } from '@/shared/hooks/useTranslation'
-import { usePostSchema } from '@/widgets/posts/local/schema/myPostPublicationSchema'
-import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/router'
-import { z } from 'zod'
 
 export const useContainer = () => {
   const { isMyPostModal } = useAppSelector(state => state.postReducer)
@@ -31,7 +26,6 @@ export const useContainer = () => {
 
   const { data: getProfile, isFetching: isGetUserLoading } = useGetProfileQuery()
   const [currPhotoIndex, setCurrPhotoIndex] = useState(0)
-
   const isEdit = (edit && postPhotos?.ownerId === getProfile?.id) || false
   const isEditable = postPhotos?.ownerId === getProfile?.id
 

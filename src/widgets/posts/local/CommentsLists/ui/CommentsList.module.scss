@@ -8,13 +8,21 @@
 .postDescription {
   display: flex;
   gap: 12px;
-  margin: 15px 24px 0;
+  margin-bottom: 15px;
   word-wrap: anywhere;
 
   .avatarWrapper {
     position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     min-width: 36px;
     height: 36px;
+
+    background: var(--color-dark-700);
+    border-radius: 50%;
   }
 
   .descriptionWrapper {
@@ -51,12 +59,14 @@
   align-items: center;
 
   .photo {
+    position: relative;
+
     overflow: hidden;
     display: grid;
     place-items: center;
     align-self: baseline;
 
-    width: 36px;
+    min-width: 36px;
     height: 36px;
 
     object-fit: cover;
@@ -77,6 +87,8 @@
 .commentsBlock {
   display: flex;
   flex-direction: column;
+  gap: 10px;
+  padding: 15px 15px 10px 24px;
 }
 
 .likesBlock {
@@ -91,7 +103,7 @@
   flex-direction: row;
   justify-content: space-between;
 
-  margin: 10px;
+  padding: 0 10px;
 
   background: var(--color-dark-300);
 
@@ -138,44 +150,4 @@
 
 .button {
   margin-left: 24px;
-}
-
-.userCommentContainer {
-  margin: 15px 24px 0;
-}
-
-.userCommentContainer:last-child {
-  margin-bottom: 15px;
-}
-
-.commentText {
-  display: flex;
-  flex-direction: column;
-
-  width: 100%;
-  max-width: 345px;
-
-  word-wrap: anywhere;
-}
-.commentsInfo {
-  align-items: center;
-  display: flex;
-  gap: 12px;
-}
-
-.commentLike {
-  align-items: flex-start;
-  margin-top: 17px;
-
-  .likeButton {
-    cursor: pointer;
-
-    &:hover {
-      color: var(--color-danger-500);
-    }
-  }
-}
-
-.commentTime {
-  color: red;
 }
