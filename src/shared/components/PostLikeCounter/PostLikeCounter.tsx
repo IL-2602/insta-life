@@ -4,14 +4,6 @@ import { Typography } from '@/shared/ui/Typography'
 import s from './PostLikeCounter.module.scss'
 
 export const PostLikeCounter = ({ className, postLikesData }: Props) => {
-  const date = new Date().toLocaleDateString('en-US', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  })
-
-  console.log(postLikesData)
-
   return (
     <div className={`${s.container} ${className ?? ''}`}>
       <div className={s.likesContainer}>
@@ -21,9 +13,6 @@ export const PostLikeCounter = ({ className, postLikesData }: Props) => {
           {` "Like"`}
         </Typography>
       </div>
-      <Typography className={s.date} variant={'small'}>
-        {date}
-      </Typography>
     </div>
   )
 }

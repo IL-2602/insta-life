@@ -4,6 +4,7 @@ import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import { Bookmark } from '@/shared/assets/icons/Bookmark'
 import { HeartOutline } from '@/shared/assets/icons/Heart/HeartOutline'
 import { PaperLine } from '@/shared/assets/icons/PaperLine'
+import { PostDate } from '@/shared/components/PostDate/PostDate'
 import { PostLikeCounter } from '@/shared/components/PostLikeCounter/PostLikeCounter'
 import { Avatar } from '@/shared/ui/Avatar'
 import { Button } from '@/shared/ui/Button'
@@ -33,6 +34,8 @@ export const CommentsList = memo(
     updateCommentLikeStatusHandler,
   }: CommentsAnswersProps) => {
     const { locale } = useRouter()
+
+    const date = new Date().toString()
 
     return (
       <div className={s.commentsBlockWrapper}>
@@ -74,6 +77,7 @@ export const CommentsList = memo(
               </Button>
             </div>
             <PostLikeCounter className={s.likesContainer} postLikesData={postLikesData} />
+            <PostDate className={s.likesContainer} date={date} />
           </div>
           {isMe && (
             <div className={s.addCommentBlock}>
