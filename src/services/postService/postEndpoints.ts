@@ -59,6 +59,7 @@ export const postEndpoints = api.injectEndpoints({
       },
     }),
     getPosts: builder.query<GetPostsResponse, { username: string }>({
+      providesTags: ['PostLike'],
       query: ({ username }) => {
         return {
           method: 'GET',

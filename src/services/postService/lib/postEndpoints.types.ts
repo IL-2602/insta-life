@@ -35,9 +35,11 @@ export type EditPostParams = {
 
 export type getUserPostsParams = {
   endCursorPostId?: number | undefined
+  pageNumber?: number
   pageSize?: number
+  postId?: number
   sortDirection?: 'asc' | 'desc'
-  userId: number
+  userId?: number
 }
 
 export type PostImageResponse = {
@@ -120,4 +122,37 @@ export type GetCurrentPostResponse = {
   ownerId: number
   updatedAt: string
   userName: string
+}
+
+export type GetHomeResponse = {
+  items: [
+    {
+      avatarOwner: string
+      createdAt: string
+      description: string
+      id: number
+      images: [
+        {
+          createdAt: string
+          fileSize: number
+          height: number
+          uploadId: string
+          url: string
+          width: number
+        },
+      ]
+      isLiked: boolean
+      likesCount: number
+      location: string
+      owner: {
+        firstName: string
+        lastName: string
+      }
+      ownerId: number
+      updatedAt: string
+      userName: string
+    },
+  ]
+  pageSize: number
+  totalCount: number
 }
