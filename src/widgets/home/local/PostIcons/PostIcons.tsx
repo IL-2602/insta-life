@@ -57,7 +57,7 @@ export const PostIcons = ({ description, isLiked, postId, userId }: Props) => {
 
   const handleTelegramShare = () => {
     const url = `https://instalife.fun/profile/${userId}?postId=${postId}`
-    const message = description || `Look at my post 😍`
+    const message = description || `Look at post 😍`
     const telegramLink = `https://t.me/share/url?url=${encodeURIComponent(
       url
     )}&text=${encodeURIComponent(message)}`
