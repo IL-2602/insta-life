@@ -33,7 +33,6 @@ export const publicEndpoints = api.injectEndpoints({
           currentCache.items.push(...updatedPosts)
         }
       },
-      providesTags: ['PostLike'],
       query: ({ endCursorPostId, pageSize }) => {
         return {
           method: 'GET',
