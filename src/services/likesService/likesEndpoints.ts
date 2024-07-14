@@ -115,7 +115,6 @@ export const likesEndpoints = api.injectEndpoints({
       void,
       { likeStatus: 'DISLIKE' | 'LIKE' | 'NONE'; postId: number }
     >({
-      invalidatesTags: ['PostLike'],
       onQueryStarted: async (postLikeArgs, { dispatch, queryFulfilled }) => {
         const { likeStatus, postId } = postLikeArgs
 
