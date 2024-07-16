@@ -80,7 +80,6 @@ export const useContainer = () => {
   const cancelAutoRenewalHandler = () => cancelAutoRenewal()
 
   useEffect(() => {
-    console.log('query: ', query)
     if (!isLoadingCurrSubs && (query.success === 'true' || query.error || query.token)) {
       setIsModalSubscription(true)
     }
