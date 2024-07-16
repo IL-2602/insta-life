@@ -80,10 +80,11 @@ export const useContainer = () => {
   const cancelAutoRenewalHandler = () => cancelAutoRenewal()
 
   useEffect(() => {
-    if (!isLoadingCurrSubs && (query.success === 'true' || query.error)) {
+    console.log('query: ', query)
+    if (!isLoadingCurrSubs && (query.success === 'true' || query.error || query.token)) {
       setIsModalSubscription(true)
     }
-  }, [query.success, query.error, isLoadingCurrSubs])
+  }, [query.token, query.success, query.error, isLoadingCurrSubs])
 
   const handlePayment = async (typePayment: 'PAYPAL' | 'STRIPE') => {
     const body = {
