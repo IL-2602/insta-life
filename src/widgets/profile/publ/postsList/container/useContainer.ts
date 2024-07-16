@@ -10,6 +10,7 @@ export const useContainer = () => {
   const { inView, ref } = useInView({
     threshold: 1,
   })
+
   const { query, replace } = useRouter()
 
   const profileId = query.id as string
@@ -35,7 +36,7 @@ export const useContainer = () => {
   }, [inView])
 
   const handleReceivingPostId = (id: number) => {
-    replace({ query: { id: query.id, postId: id } }, undefined, {
+    void replace({ query: { id: query.id, postId: id } }, undefined, {
       shallow: true,
     })
 

@@ -139,6 +139,7 @@ export const en = {
   },
   button: {
     addAProfilePhoto: 'Add a Profile Photo',
+    answer: 'Answer',
     backToPayment: 'Back to payment',
     backToProfileSettings: 'Back to Profile Settings',
     banInTheSystem: 'Ban in the system',
@@ -149,6 +150,7 @@ export const en = {
     editPost: 'Edit Post',
     follow: 'Follow',
     hide: 'Hide',
+    linkSuccess: 'Link copied successfully',
     moreInformation: 'More information',
     next: 'Next',
     no: 'No',
@@ -223,11 +225,20 @@ export const en = {
   },
   post: {
     addComment: 'Add a Comment...',
+    answer: 'Answer',
     cropping: 'Cropping',
     filters: 'Filters',
+    followSuccess: 'Follow successful',
+    hideAllAnswers: 'Hide Answers',
+    hideAllComments: 'Hide All Comments',
     like: 'Like',
+    noAnswers: 'No answers yet',
+    noComments: 'No comments yet',
+    noPosts: "You don't have any subscriptions yet",
     publication: 'Publication',
+    showAllAnswers: 'Show Answers',
     totalUsers: 'Registered Users',
+    unfollowSuccess: 'Unfollow successful',
     viewAllcomments: 'View All Comments',
   },
   profileSettings: {
@@ -313,7 +324,7 @@ export const en = {
     messenger: 'Messenger',
     myProfile: 'My Profile',
     paymentsList: 'Payments List',
-    postsList: 'Posts list',
+    postsList: 'HomePosts list',
     publish: 'Publish',
     search: 'Search',
     statistics: 'Statistics',
@@ -322,6 +333,7 @@ export const en = {
   time: {
     hours: 'h',
     minutes: 'min ago',
+    postMinutes: 'Minutes ago',
   },
   toast: {
     deletePost: 'The post has been deleted',

@@ -1,8 +1,15 @@
 import { ReactNode, useEffect, useState } from 'react'
 
 import { useTranslation } from '@/shared/hooks/useTranslation'
+import { Typography } from '@/shared/ui/Typography'
 
-export const TimeDifference = ({ postTime }: { postTime: string }): ReactNode => {
+export const TimeDifference = ({
+  home,
+  postTime,
+}: {
+  home?: boolean
+  postTime: string
+}): ReactNode => {
   const { t } = useTranslation()
 
   const [time, setTime] = useState({ diffInMinutes: 0, hours: 0, minutes: 0 })
@@ -29,15 +36,23 @@ export const TimeDifference = ({ postTime }: { postTime: string }): ReactNode =>
 
   if (hours > 0) {
     return (
-      <span>
+      <Typography
+        as={'span'}
+        color={home ? 'form' : 'light'}
+        variant={home ? 'small' : 'regular14'}
+      >
         {time.hours} {t.time.hours} {time.minutes} {t.time.minutes}
-      </span>
+      </Typography>
     )
   } else {
     return (
-      <span>
-        {time.diffInMinutes} {t.time.minutes}
-      </span>
+      <Typography
+        as={'span'}
+        color={home ? 'form' : 'light'}
+        variant={home ? 'small' : 'regular14'}
+      >
+        {time.diffInMinutes} {home ? t.time.postMinutes : t.time.minutes}
+      </Typography>
     )
   }
 }

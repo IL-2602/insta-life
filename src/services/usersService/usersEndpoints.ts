@@ -20,7 +20,6 @@ export const usersEndpoints = api.injectEndpoints({
       },
     }),
     getUserFollowers: builder.query<Partial<ErrorResponse> & UserFollowResponse, UserFollowParams>({
-      providesTags: ['Follow'],
       query: params => {
         return {
           method: 'GET',
@@ -29,7 +28,6 @@ export const usersEndpoints = api.injectEndpoints({
       },
     }),
     getUserFollowing: builder.query<UserFollowResponse, UserFollowParams>({
-      providesTags: ['Follow'],
       query: params => {
         return {
           method: 'GET',
@@ -46,18 +44,53 @@ export const usersEndpoints = api.injectEndpoints({
         }
       },
     }),
-    subscribe: builder.mutation<void, { selectedUserId: number }>({
+    subscribe: builder.mutation<void, { selectedUserId: number; username?: string }>({
       invalidatesTags: ['Follow'],
-      query: body => {
+      onQueryStarted: async ({ username }, { dispatch, queryFulfilled }) => {
+        if (!username) {
+          return
+        }
+        const result = dispatch(
+          usersEndpoints.util.updateQueryData('getUserInfo', { username }, draft => {
+            draft.followersCount++
+            draft.isFollowing = true
+          })
+        )
+
+        try {
+          await queryFulfilled
+        } catch (e) {
+          result.undo()
+        }
+      },
+      query: ({ selectedUserId }) => {
         return {
-          body,
+          body: { selectedUserId },
           method: 'POST',
           url: `users/following`,
         }
       },
     }),
-    unSubscribe: builder.mutation<void, { userId: number }>({
+    unSubscribe: builder.mutation<void, { userId: number; username: string }>({
       invalidatesTags: ['Follow'],
+      onQueryStarted: async ({ username }, { dispatch, queryFulfilled }) => {
+        if (!username) {
+          return
+        }
+
+        const result = dispatch(
+          usersEndpoints.util.updateQueryData('getUserInfo', { username }, draft => {
+            draft.followersCount--
+            draft.isFollowing = false
+          })
+        )
+
+        try {
+          await queryFulfilled
+        } catch (e) {
+          result.undo()
+        }
+      },
       query: ({ userId }) => {
         return {
           method: 'DELETE',
@@ -69,8 +102,6 @@ export const usersEndpoints = api.injectEndpoints({
 })
 
 export const {
-  useGetUserFollowersQuery,
-  useGetUserFollowingQuery,
   useGetUserInfoQuery,
   useGetUserQuery,
   useSubscribeMutation,

@@ -9,6 +9,7 @@ export type Profile = {
   lastName: string
   userName: string
 }
+
 export type Avatar = {
   fileSize: number
   height: number

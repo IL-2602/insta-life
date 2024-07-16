@@ -1,4 +1,5 @@
 import { ErrorResponse } from '@/services/authService/lib/authEndpoints.types'
+import { Avatar } from '@/shared/types/profile'
 
 export type ModalSteps = 'cropping' | 'filters' | 'publication' | 'upload'
 
@@ -21,10 +22,6 @@ export type PostPhoto = {
   zoom: number
 }
 
-// type Metadata = {
-//   uploadId: string | undefined
-// }
-
 export type PublishPostParams = {
   childrenMetadata: Array<{ uploadId: string }>
   description: string
@@ -38,9 +35,11 @@ export type EditPostParams = {
 
 export type getUserPostsParams = {
   endCursorPostId?: number | undefined
+  pageNumber?: number
   pageSize?: number
+  postId?: number
   sortDirection?: 'asc' | 'desc'
-  userId: number
+  userId?: number
 }
 
 export type PostImageResponse = {
@@ -56,12 +55,35 @@ export type PublishPostImageResponse = {
   images: PostImageResponse[]
 } & Partial<ErrorResponse>
 
+export type GetPostsResponse = {
+  items: [
+    {
+      answerCount: number
+      content: string
+      createdAt: string
+      from: {
+        avatars: Avatar[]
+        id: number
+        username: string
+      }
+      id: number
+      isLiked: boolean
+      likeCount: number
+      postId: number
+    },
+  ]
+  pageSize: number
+  totalCount: number
+}
+
 export type PublishPostResponse = {
   avatarOwner: string
   createdAt: string
   description: string
   id: number
   images: PostImageResponse[]
+  isLiked: boolean
+  likesCount: number
   location: null | string
   owner: { firstName: string; lastName: string }
   ownerId: number
@@ -75,6 +97,7 @@ export type getUserPostsResponse = {
   totalCount: number
   totalUsers: number
 }
+
 export type PostImage = {
   createdAt: string
   fileSize: number
@@ -83,6 +106,7 @@ export type PostImage = {
   url: string
   width: number
 }
+
 export type GetCurrentPostResponse = {
   avatarOwner: string
   createdAt: string
@@ -98,4 +122,37 @@ export type GetCurrentPostResponse = {
   ownerId: number
   updatedAt: string
   userName: string
+}
+
+export type GetHomeResponse = {
+  items: [
+    {
+      avatarOwner: string
+      createdAt: string
+      description: string
+      id: number
+      images: [
+        {
+          createdAt: string
+          fileSize: number
+          height: number
+          uploadId: string
+          url: string
+          width: number
+        },
+      ]
+      isLiked: boolean
+      likesCount: number
+      location: string
+      owner: {
+        firstName: string
+        lastName: string
+      }
+      ownerId: number
+      updatedAt: string
+      userName: string
+    },
+  ]
+  pageSize: number
+  totalCount: number
 }

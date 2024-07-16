@@ -1,5 +1,6 @@
 import { api } from '@/services/api'
 import {
+  GetHomeResponse,
   getUserPostsParams,
   getUserPostsResponse,
 } from '@/services/postService/lib/postEndpoints.types'
@@ -17,6 +18,30 @@ export const publicEndpoints = api.injectEndpoints({
           params: { endCursorPostId },
           url: `public-posts/all/${endCursorPostId}`,
         }
+      },
+    }),
+    getHomePosts: builder.query<GetHomeResponse, getUserPostsParams>({
+      forceRefetch({ currentArg, previousArg }) {
+        return currentArg !== previousArg
+      },
+      merge: (currentCache, newItems, otherArgs) => {
+        const updatedPosts = newItems.items.slice(1)
+
+        if (otherArgs.arg.endCursorPostId === undefined) {
+          currentCache.items = newItems.items
+        } else {
+          currentCache.items.push(...updatedPosts)
+        }
+      },
+      query: ({ endCursorPostId, pageSize }) => {
+        return {
+          method: 'GET',
+          params: { endCursorPostId, pageSize },
+          url: `home/publications-followers`,
+        }
+      },
+      serializeQueryArgs: ({ endpointName }) => {
+        return endpointName
       },
     }),
     getPublicUserProfile: builder.query<getUserProfileResponse, { profileId: number }>({
@@ -66,6 +91,7 @@ export const { getAllPosts, getPublicUserProfile, getTotalCount, getUserPosts } 
   publicEndpoints.endpoints
 export const {
   useGetAllPostsQuery,
+  useGetHomePostsQuery,
   useGetPublicUserProfileQuery,
   useGetTotalCountQuery,
   useGetUserPostsQuery,
