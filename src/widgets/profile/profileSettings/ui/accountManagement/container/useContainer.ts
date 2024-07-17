@@ -98,7 +98,7 @@ export const useContainer = () => {
 
       await push(url)
     } catch (err) {
-      console.log(err)
+      console.error(err)
     }
   }
 
