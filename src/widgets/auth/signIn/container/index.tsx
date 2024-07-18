@@ -1,9 +1,6 @@
-import { FC } from 'react'
+import { SignIn } from '../ui'
+import { useContainer } from './useContainer'
 
-import { useContainer } from '@/widgets/auth/signIn/container/useContainer'
-
-import { SignIn } from '../ui/signIn'
-
-export const Container: FC = () => <SignIn {...useContainer()} />
+export const Container = () => <SignIn {...useContainer()} />
 
 export type SignInProps = ReturnType<typeof useContainer>
