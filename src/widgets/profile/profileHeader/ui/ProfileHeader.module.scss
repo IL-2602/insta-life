@@ -1,6 +1,11 @@
 @import '@/styles/variables/mixins';
 
 .profileHeader {
+
+  @include mobile {
+    padding-inline: 15px;
+  }
+
   display: flex;
   flex-direction: column;
 }
@@ -72,6 +77,7 @@
 
       max-width: 200px;
 
+      text-align: center;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
