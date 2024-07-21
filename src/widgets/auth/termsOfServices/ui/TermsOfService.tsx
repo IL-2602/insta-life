@@ -7,11 +7,14 @@ import s from './TermsOfServiceProps.module.scss'
 
 export const TermsOfService = ({ t }: TermsOfServiceProps) => {
   return (
-    <div>
-      <GoBack className={s.link} title={t.auth.button.backToSignUp} to={ROUTES.REGISTER}></GoBack>
-      <Typography as={'h1'} className={s.title} variant={'h1'}>
-        {t.auth.termsOfServicePage.title}
-      </Typography>
+    <div className={s.container}>
+      <div className={s.wrap}>
+        <GoBack className={s.link} title={t.auth.button.backToSignUp} to={ROUTES.REGISTER}></GoBack>
+        <Typography as={'h1'} className={s.title} variant={'h1'}>
+          {t.auth.termsOfServicePage.title}
+        </Typography>
+      </div>
+
       <div className={s.text}>
         <Typography className={s.content} variant={'regular14'}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt

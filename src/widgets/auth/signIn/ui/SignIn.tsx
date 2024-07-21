@@ -10,7 +10,7 @@ import { SignInProps } from '@/widgets/auth/signIn/container'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import s from './signIn.module.scss'
+import s from './SignIn.module.scss'
 
 import gitLogo from '../../../../../public/assets/githubLogo.svg'
 import gLogo from '../../../../../public/assets/googleLogo.svg'
@@ -81,7 +81,9 @@ export const SignIn = memo(
             </Link>
           </div>
           <Button className={s.button} disabled={isDisabled} fullWidth isLoading={signIsLoading}>
-            <Typography as={'h3'}>{!signIsLoading && t.auth.button.signInButton}</Typography>
+            <Typography as={'h3'} variant={'h3'}>
+              {!signIsLoading && t.auth.button.signInButton}
+            </Typography>
           </Button>
           <div className={s.signup}>
             <Typography variant={'regular16'}>{t.auth.signInPage.question}</Typography>

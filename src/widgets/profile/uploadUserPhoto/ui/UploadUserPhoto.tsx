@@ -36,7 +36,7 @@ export const UploadUserPhoto = memo(
               </Button>
             )}
           </div>
-          <Button onClick={() => setIsUploadOpen(true)} variant={'outlined'}>
+          <Button className={s.btn} onClick={() => setIsUploadOpen(true)} variant={'outlined'}>
             <Typography variant={'h3'}>{t.button.addAProfilePhoto}</Typography>
           </Button>
         </div>

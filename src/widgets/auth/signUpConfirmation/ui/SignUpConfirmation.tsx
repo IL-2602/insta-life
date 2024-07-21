@@ -13,19 +13,19 @@ export const SignUpConfirmation = ({ t }: SignUpConfirmationProps) => {
   return (
     <div className={s.container}>
       <Typography variant={'h1'}>{t.auth.congratulationPage.title}</Typography>
-      <div className={s.body}>
-        <Typography variant={'regular16'}>
-          {t.auth.congratulationPage.congratulationText}
-        </Typography>
-      </div>
-      <div>
+      <Typography className={s.text} variant={'regular16'}>
+        {t.auth.congratulationPage.congratulationText}
+      </Typography>
+      <div className={s.wrap}>
         <Button onClick={() => {}} variant={'primary'}>
           <Link href={ROUTES.LOGIN}>
-            <Typography variant={'h3'}>{t.auth.button.signInButton}</Typography>
+            <Typography color={'light'} variant={'h3'}>
+              {t.auth.button.signInButton}
+            </Typography>
           </Link>
         </Button>
+        <Image alt={'Congratulation! Email confirmed'} height={352} src={img.src} width={473} />
       </div>
-      <Image alt={'Congratulation! Email confirmed'} height={352} src={img.src} width={473} />
     </div>
   )
 }

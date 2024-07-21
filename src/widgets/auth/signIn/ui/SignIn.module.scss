@@ -1,9 +1,9 @@
 @import '@/styles/variables/mixins';
 
 .container {
-  @include mobile-small {
+  @include mobile {
     max-width: 100%;
-    padding: 15px;
+    padding: 17px 15px;
     background: transparent;
   }
 
@@ -32,16 +32,34 @@
   }
 
   .pass {
+    @include mobile {
+      margin-bottom: 10px;
+    }
+
     margin-bottom: 24px;
   }
 
   .forgot {
+    @include mobile {
+      margin-bottom: 66px;
+    }
+
     display: flex;
     justify-content: flex-end;
     margin-bottom: 24px;
+
+    &:hover {
+      opacity: 0.75;
+    }
   }
 
   .button {
+    @include mobile {
+      height: 48px;
+      margin-bottom: 18px;
+    }
+
+    height: 36px;
     margin-bottom: 24px;
   }
 
@@ -56,6 +74,10 @@
     justify-content: center;
 
     & > *:not(:last-child) {
+      @include mobile {
+        margin-bottom: 8px;
+      }
+
       margin-bottom: 6px;
     }
   }
