@@ -12,8 +12,17 @@
 
 .tabsList {
   @include mobile {
-    gap: 4px;
+    overflow-x: auto;
+    display: flex;
+    gap: 0;
+
     white-space: nowrap;
+
+    border-bottom: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   display: flex;
@@ -23,7 +32,7 @@
 .tabsTrigger {
   @include mobile {
     display: inline-block;
-    padding: 10px 4px;
+    padding: 10px 8px;
   }
 
   user-select: none;
@@ -44,8 +53,19 @@
 }
 
 .tabsTrigger[data-state='active'] {
+  @include mobile {
+    bottom: -2px; // чтобы выровнять плашку снизу
+    border-bottom: 2px solid var(--color-primary-500);
+  }
+
   color: var(--color-primary-500);
   box-shadow: 1px 3px 0 -1px var(--color-primary-500);
+}
+
+.tabsTrigger[data-state='inactive'] {
+  @include mobile {
+    border-bottom: 2px solid var(--color-dark-100);
+  }
 }
 
 .tabsTrigger[data-state='active']:first-child {
