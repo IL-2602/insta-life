@@ -1,15 +1,31 @@
+@import '@/styles/variables/mixins';
+
 .tabsRoot {
+  @include mobile {
+    padding: 0 15px;
+  }
+
   display: flex;
   flex-direction: column;
   width: auto;
 }
 
 .tabsList {
+  @include mobile {
+    gap: 4px;
+    white-space: nowrap;
+  }
+
   display: flex;
   border-bottom: 2px solid var(--color-dark-100);
 }
 
 .tabsTrigger {
+  @include mobile {
+    display: inline-block;
+    padding: 10px 4px;
+  }
+
   user-select: none;
 
   display: flex;
