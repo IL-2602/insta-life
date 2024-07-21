@@ -64,19 +64,19 @@ export const AccountManagement = memo(
           modalHandler={closeModalHandler}
           open={isModalSubscription}
           title={
-            query.success
+            query.success || query.token
               ? t.modal.successTransactionModalTitle
               : t.modal.errorTransactionModalTitle
           }
         >
           <div className={s.modalContainer}>
             <Typography variant={'regular16'}>
-              {query.success
+              {query.success || query.token
                 ? t.modal.successTransactionModalDescription
                 : t.modal.errorTransactionModalDescription}
             </Typography>
             <Button fullWidth onClick={closeModalHandler}>
-              {query.success ? 'OK' : t.button.backToPayment}
+              {query.success || query.token ? 'OK' : t.button.backToPayment}
             </Button>
           </div>
         </Modal>
