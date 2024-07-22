@@ -1,0 +1,105 @@
+.modal {
+  width: 100%;
+  max-width: 972px;
+}
+
+.container {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+}
+
+.descriptionWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  height: 100%;
+  padding: 0 10px;
+
+  label {
+    display: flex;
+    flex-direction: column;
+    font: var(--font-regular-14);
+    color: var(--color-light-900);
+  }
+
+  span {
+    align-self: flex-end;
+    font: var(--font-small);
+  }
+}
+
+.userPhotoWrapper {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 24px;
+
+  .photo {
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+
+    width: 36px;
+    height: 36px;
+
+    object-fit: cover;
+    background-color: var(--color-dark-700);
+    border-radius: 50%;
+  }
+}
+
+.line {
+  position: absolute;
+  top: 258px;
+  right: 0;
+
+  width: 54.9%;
+  height: 1px;
+  margin: 10px 0;
+
+  background-color: var(--color-dark-100);
+}
+
+.saveChangesBtnBlock {
+  position: absolute;
+  top: 20px;
+  right: 10px;
+
+
+  display: flex;
+  justify-content: flex-end;
+
+  & button {
+    cursor: pointer;
+  }
+}
+
+.closeOpenModalontainer {
+  display: flex;
+}
+
+.closePostModal {
+  width: 486px;
+}
+
+.modalBody {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 60px 111px 36px;
+}
+
+.buttonsBlock {
+  display: flex;
+  justify-content: flex-end;
+  margin: 30px 24px 36px 0;
+}
+
+.button {
+  margin-left: 24px;
+}

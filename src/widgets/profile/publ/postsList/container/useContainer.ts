@@ -25,6 +25,21 @@ export const useContainer = () => {
 
   const dispatch = useAppDispatch()
 
+  const [width, setWidth] = useState<number>(0)
+
+  function handleWindowSizeChange() {
+    setWidth(window.innerWidth)
+  }
+  useEffect(() => {
+    window.addEventListener('resize', handleWindowSizeChange)
+
+    return () => {
+      window.removeEventListener('resize', handleWindowSizeChange)
+    }
+  }, [])
+
+  const isMobile = width <= 768
+
   useEffect(() => {
     if (posts && posts.items.length >= posts.totalCount) {
       return
@@ -43,5 +58,5 @@ export const useContainer = () => {
     dispatch(postActions.setIsMyPostModal(true))
   }
 
-  return { handleReceivingPostId, isFetching, lastPostId, posts, ref }
+  return { handleReceivingPostId, isFetching, isMobile, lastPostId, posts, ref }
 }

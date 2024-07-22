@@ -1,0 +1,153 @@
+.commentsBlockWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.postDescription {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 15px;
+  word-wrap: anywhere;
+
+  .avatarWrapper {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 36px;
+    height: 36px;
+
+    background: var(--color-dark-700);
+    border-radius: 50%;
+  }
+
+  .descriptionWrapper {
+    display: flex;
+    flex-direction: column;
+
+    .description {
+      width: 100%;
+      max-width: 345px;
+    }
+  }
+}
+
+.userWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  height: 65px;
+
+  border-bottom: 1px solid var(--color-dark-100);
+}
+
+.userBlockWithPilot {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 15px;
+}
+
+.userPhotoWrapper {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+
+  .photo {
+    position: relative;
+
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    align-self: baseline;
+
+    min-width: 36px;
+    height: 36px;
+
+    object-fit: cover;
+    background-color: var(--color-dark-700);
+    border-radius: 50%;
+  }
+}
+
+.userContainer {
+  margin: 15px;
+}
+
+.postOptions {
+  cursor: pointer;
+  margin: 24px;
+}
+
+.commentsBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 15px 15px 10px 24px;
+}
+
+.likesBlock {
+  min-height: 50px;
+  padding: 12px 0;
+  border-top: 1px solid var(--color-dark-100);
+  border-bottom: 1px solid var(--color-dark-100);
+}
+
+.addCommentBlock {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  padding: 0 10px;
+
+  background: var(--color-dark-300);
+
+  .textArea {
+    resize: none;
+
+    display: flex;
+    align-items: center;
+
+    height: 47px;
+    padding: 10px;
+
+    background: transparent;
+    border: none;
+    outline: none;
+
+    &::placeholder {
+      color: var(--color-light-900);
+    }
+
+    &:focus,
+    :focus-within {
+      border: none;
+    }
+  }
+}
+
+.buttonIcons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 0 24px;
+}
+
+.buttonIconWrapper {
+  display: flex;
+  gap: 24px;
+}
+
+.buttonIcon {
+  width: 24px;
+  height: 24px;
+}
+
+.button {
+  margin-left: 24px;
+}

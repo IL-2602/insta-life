@@ -1,0 +1,111 @@
+.answersWrapper {
+  position: relative;
+  padding-left: 29px;
+
+  &::before {
+    content: '';
+
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translate(0, -50%);
+
+    width: 24px;
+    height: 1px;
+
+    background: var(--color-light-900);
+  }
+
+  .answersButton {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    color: var(--color-light-900);
+
+    &:hover {
+      color: var(--color-light-100);
+    }
+  }
+}
+
+.userPhotoWrapper {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+
+  .photo {
+    position: relative;
+
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    align-self: baseline;
+
+    min-width: 36px;
+    height: 36px;
+
+    object-fit: cover;
+    background-color: var(--color-dark-700);
+    border-radius: 50%;
+  }
+}
+
+.userCommentContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 400px;
+}
+
+.userCommentContainer:last-child {
+  margin-bottom: 15px;
+}
+
+.commentText {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  max-width: 345px;
+
+  word-wrap: anywhere;
+}
+
+.commentsInfo {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+
+  .answer {
+    cursor: pointer;
+    color: var(--color-light-900);
+
+    &:hover {
+      color: var(--color-light-100);
+    }
+  }
+}
+
+.commentLike {
+  align-items: flex-start;
+  margin-top: 17px;
+
+  .likeButton {
+    cursor: pointer;
+
+    &:hover {
+      color: var(--color-danger-500);
+    }
+  }
+}
+
+.answers {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-left: 50px;
+}
+
+.commentTime {
+  color: red;
+}

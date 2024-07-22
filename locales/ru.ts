@@ -148,6 +148,7 @@ export const ru: Local = {
     backToPayment: 'Вернуться к оплате',
     backToProfileSettings: 'Вернуться к настройкам профиля',
     banInTheSystem: 'Булочка в системе :)',
+    cancel: 'Отмена',
     copyLink: 'Копировать ссылку',
     delete: 'Удалить',
     deletePost: 'Удалить пост',
