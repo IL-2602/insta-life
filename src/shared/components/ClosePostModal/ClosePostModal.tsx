@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react'
+
 import { useAppDispatch } from '@/app/store/hooks/useAppDispatch'
 import { useAppSelector } from '@/app/store/hooks/useAppSelector'
 import { postActions } from '@/services/postService/store/slice/postEndpoints.slice'
@@ -5,6 +7,7 @@ import { useTranslation } from '@/shared/hooks/useTranslation'
 import { Button } from '@/shared/ui/Button'
 import { Modal } from '@/shared/ui/Modal'
 import { Typography } from '@/shared/ui/Typography'
+import { useIndexedDB } from '@/shared/utils/indexedDB/useIndexedDb'
 import { useRouter } from 'next/router'
 
 import s from './ClosePostModal.module.scss'
@@ -19,12 +22,84 @@ export const ClosePostModal = () => {
 
   const onDiscard = () => {
     dispatch(postActions.setIsClosePostModal(false))
+    deleteDB()
   }
 
   const onSaveDraft = () => {
     dispatch(postActions.setIsClosePostModal(false))
     dispatch(postActions.setIsCreatePostModal(false))
     dispatch(postActions.setClearPostPhotos())
+    saveDB()
+  }
+
+  const db = useIndexedDB('PostDraft', 1, [{ name: 'myDraftStore', options: { keyPath: 'id' } }])
+
+  const [draftFromIndexedDB, setDraftFromIndexedDB] = useState()
+
+  useEffect(() => {
+    const request = window.indexedDB.open('PostDraft', 1)
+
+    request.onupgradeneeded = event => {
+      //@ts-ignore
+      const db = event.target.result
+
+      db.createObjectStore('myDraftStore', { keyPath: 'id' })
+    }
+
+    request.onsuccess = event => {
+      //@ts-ignore
+      const db = event.target.result
+      const transaction = db.transaction(['myDraftStore'], 'readwrite')
+      const objectStore = transaction.objectStore('myDraftStore')
+
+      const getRequest = objectStore.get(1)
+
+      getRequest.onsuccess = () => {
+        setDraftFromIndexedDB(getRequest.result)
+      }
+    }
+  }, [])
+  const saveDB = () => {
+    if (db) {
+      const transaction = db.transaction(['myDraftStore'], 'readwrite')
+      const objectStore = transaction.objectStore('myDraftStore')
+      const data = {
+        draft: {
+          postDescription: 'POST DESCRIPTION TEXT',
+          postImages: [],
+          userId: 1,
+        },
+        id: 1,
+      }
+
+      objectStore.add(data)
+    }
+  }
+  const deleteDB = () => {
+    if (db) {
+      const transaction = db.transaction(['myDraftStore'], 'readwrite')
+      const objectStore = transaction.objectStore('myDraftStore')
+
+      objectStore.delete(1)
+    }
+  }
+
+  const updateDB = () => {
+    if (db) {
+      const transaction = db.transaction(['myDraftStore'], 'readwrite')
+      const objectStore = transaction.objectStore('myDraftStore')
+
+      const updatedData = {
+        draft: {
+          postDescription: 'NEW POST DESCRIPTION TEXT NEW', /// add new post description or [] photos
+          postImages: [],
+          userId: 1,
+        },
+        id: 1,
+      }
+
+      objectStore.put(updatedData)
+    }
   }
 
   return (
@@ -44,6 +119,9 @@ export const ClosePostModal = () => {
           </Button>
           <Button className={s.button} disabled={false} onClick={onSaveDraft} variant={'primary'}>
             <Typography variant={'h3'}>{t.button.saveDraft}</Typography>
+          </Button>
+          <Button className={s.button} disabled={false} onClick={updateDB} variant={'primary'}>
+            <Typography variant={'h3'}>UPDATE</Typography>
           </Button>
         </div>
       </div>
