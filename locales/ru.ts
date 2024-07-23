@@ -144,6 +144,7 @@ export const ru: Local = {
   },
   button: {
     addAProfilePhoto: 'Добавить фото',
+    answer: 'Ответить',
     backToPayment: 'Вернуться к оплате',
     backToProfileSettings: 'Вернуться к настройкам профиля',
     banInTheSystem: 'Булочка в системе :)',
@@ -154,6 +155,7 @@ export const ru: Local = {
     editPost: 'Редактировать пост',
     follow: 'Подписаться',
     hide: 'Скрыть',
+    linkSuccess: 'Cсылка успешно скопирована',
     moreInformation: 'Дополнительная информация',
     next: 'Дальше',
     no: 'Нет',
@@ -229,11 +231,20 @@ export const ru: Local = {
   },
   post: {
     addComment: 'Добавить комментарий...',
+    answer: 'Ответ',
     cropping: 'Изменить размер',
     filters: 'Применить фильтр',
+    followSuccess: 'Follow successful',
+    hideAllAnswers: 'Скрыть ответы',
+    hideAllComments: 'Скрыть все комментарии',
     like: 'Нравится',
+    noAnswers: 'Тут пока нет ответов',
+    noComments: 'Тут пока нет комментариев',
+    noPosts: 'У вас пока нет подписок',
     publication: 'Опубликовать',
+    showAllAnswers: 'Показать ответы',
     totalUsers: 'Зарегистрированные пользователи',
+    unfollowSuccess: 'Unfollow successful',
     viewAllcomments: 'Просмотреть все комментарии',
   },
   profileSettings: {
@@ -314,7 +325,7 @@ export const ru: Local = {
   sidebar: {
     create: 'Создать',
     favourites: 'Закладки',
-    home: 'Новости',
+    home: 'Домой',
     logOut: 'Выйти',
     messenger: 'Мессенджер',
     myProfile: 'Мой профиль',
@@ -328,6 +339,7 @@ export const ru: Local = {
   time: {
     hours: 'ч',
     minutes: 'мин назад',
+    postMinutes: 'Минут назад',
   },
   toast: {
     deletePost: 'Пост был удалён',

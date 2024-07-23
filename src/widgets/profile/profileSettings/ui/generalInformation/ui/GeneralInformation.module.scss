@@ -1,4 +1,12 @@
+@import '@/styles/variables/mixins';
+
 .container {
+  @include mobile {
+    flex-direction: column;
+    gap: 36px;
+    margin-top: 24px;
+  }
+
   position: relative;
 
   display: flex;

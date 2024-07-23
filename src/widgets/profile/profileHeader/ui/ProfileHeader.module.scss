@@ -1,6 +1,10 @@
 @import '@/styles/variables/mixins';
 
 .profileHeader {
+  @include mobile {
+    padding-inline: 15px;
+  }
+
   display: flex;
   flex-direction: column;
 }
@@ -89,7 +93,10 @@
 @media screen and (width <= 480px) {
   .mobileName {
     overflow: hidden;
+
     width: 100px;
+
+    text-align: center;
     text-overflow: ellipsis;
     white-space: nowrap;
   }

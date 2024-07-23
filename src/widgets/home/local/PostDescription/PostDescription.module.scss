@@ -1,0 +1,32 @@
+@import '@/styles/variables/mixins';
+
+.container {
+  @include mobile-large {
+    display: none;
+  }
+
+  display: flex;
+
+  .description {
+    display: flex;
+    gap: 4px;
+  }
+
+  .noAvatar {
+    display: grid;
+    flex-shrink: 0;
+    place-items: center;
+
+    width: 36px;
+    height: 36px;
+    margin-right: 12px;
+
+    background-color: var(--color-dark-300);
+    border-radius: 50%;
+  }
+
+  .avatar {
+    margin-right: 12px;
+    border-radius: 50%;
+  }
+}

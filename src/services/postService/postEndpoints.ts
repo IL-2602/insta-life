@@ -5,6 +5,7 @@ import {
   GetCurrentPostResponse,
   PostLikesRequest,
   PostLikesResponse,
+  GetPostsResponse,
   PublishPostImageResponse,
   PublishPostParams,
   PublishPostResponse,
@@ -72,6 +73,14 @@ export const postEndpoints = api.injectEndpoints({
         }
       },
     }),
+    getPosts: builder.query<GetPostsResponse, { username: string }>({
+      query: ({ username }) => {
+        return {
+          method: 'GET',
+          url: `posts/${username}`,
+        }
+      },
+    }),
     getLikesPost: builder.query<PostLikesResponse, PostLikesRequest>({
       query: params => {
         const { postId, ...rest } = params
@@ -126,6 +135,7 @@ export const {
   useEditPostLikeStatusMutation,
   useEditPostMutation,
   useGetCurrentPostQuery,
+  useGetPostsQuery,
   useGetLikesPostQuery,
   usePublishPostImageMutation,
   usePublishPostMutation,

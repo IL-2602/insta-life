@@ -1,10 +1,42 @@
-.link {
-  padding: 0;
-}
+@import '@/styles/variables/mixins';
 
-.title,
-.text {
-  margin-top: 20px;
-  padding: 0 97px;
-  text-align: center;
+.container {
+  @include mobile {
+    padding: 17px 15px;
+  }
+
+  .wrap {
+    @include mobile {
+      display: flex;
+      align-items: center;
+    }
+
+    margin-bottom: 20px;
+
+    .link {
+      padding: 0;
+
+      div {
+        p {
+          @include mobile {
+            display: none;
+          }
+        }
+      }
+    }
+
+    .title {
+      @include mobile {
+        flex: 1;
+        margin-top: 0;
+      }
+
+      margin-top: 20px;
+      text-align: center;
+    }
+  }
+
+  .text {
+    text-align: center;
+  }
 }

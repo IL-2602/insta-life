@@ -1,4 +1,10 @@
+@import '@/styles/variables/mixins';
+
 .root {
+  @include mobile {
+    background-color: transparent;
+  }
+
   width: 100%;
   max-width: 26.25rem;
 

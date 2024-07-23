@@ -7,11 +7,15 @@ import s from './CustomPopover.module.scss'
 export const CustomPopover = ({
   contentChildren,
   icon,
+  onOpenChange,
+  open,
 }: {
   contentChildren: ReactNode
   icon: ReactNode
+  onOpenChange?: () => void
+  open?: boolean
 }) => (
-  <Popover.Root>
+  <Popover.Root onOpenChange={onOpenChange} open={open}>
     <Popover.Trigger asChild>{icon}</Popover.Trigger>
     <Popover.Portal>
       <Popover.Content className={s.PopoverContent} sideOffset={0}>

@@ -1,21 +1,57 @@
-.title,
-.text {
-  margin-top: 20px;
-  padding: 0 97px;
-  text-align: center;
-}
+@import '@/styles/variables/mixins';
 
-.goBackBtn {
-  padding: 0;
-  color: var(--color-light-100);
-
-  .goBackWrapper {
-    display: flex;
-    gap: 12px;
-    align-items: center;
+.container {
+  @include mobile {
+    padding: 17px 15px;
   }
 
-  &:hover {
-    color: var(--color-primary-500);
+  .wrap {
+    @include mobile {
+      display: flex;
+      align-items: center;
+    }
+
+    margin-bottom: 20px;
+
+    .goBackBtn {
+      @include mobile {
+        flex: 0 0 auto;
+      }
+
+      padding: 0;
+      color: var(--color-light-100);
+
+      .goBackWrapper {
+        display: flex;
+        gap: 12px;
+        align-self: center;
+        margin-right: auto;
+
+        span {
+          @include mobile {
+            display: none;
+          }
+        }
+      }
+
+      &:hover {
+        color: var(--color-primary-500);
+      }
+    }
+
+    .title {
+      @include mobile {
+        flex: 1;
+        margin-top: 0;
+      }
+
+      margin-top: 20px;
+      text-align: center;
+    }
+  }
+
+  .text {
+    max-width: 958px;
+    text-align: center;
   }
 }

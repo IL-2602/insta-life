@@ -17,7 +17,6 @@ export const ProfileInfo = ({
   isFollow,
   isFollowLoading,
   isMe = false,
-  isSubscribeLoading,
   onSendMessage,
   publicationsCount,
   subscribeToUser,
@@ -61,20 +60,13 @@ export const ProfileInfo = ({
             ) : (
               <div className={s.btnContainer}>
                 {isFollow && (
-                  <Button
-                    className={clsx(s.button, isSubscribeLoading ? s.btnLoading : '')}
-                    onClick={unSubscribeToUser}
-                    variant={'outlined'}
-                  >
+                  <Button className={s.button} onClick={unSubscribeToUser} variant={'outlined'}>
                     {t.button.unfollow}
                   </Button>
                 )}
 
                 {!isFollow && (
-                  <Button
-                    className={clsx(s.button, isSubscribeLoading ? s.btnLoading : '')}
-                    onClick={subscribeToUser}
-                  >
+                  <Button className={s.button} onClick={subscribeToUser}>
                     {t.button.follow}
                   </Button>
                 )}

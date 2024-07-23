@@ -117,7 +117,7 @@ export const messengerEndpoints = api.injectEndpoints({
     }),
     getDialogMessages: builder.query<GetDialogMessagesResponse, GetDialogMessagesParams>({
       forceRefetch({ currentArg, previousArg }) {
-        return currentArg !== previousArg
+        return currentArg?.dialogPartnerId !== previousArg?.dialogPartnerId
       },
       merge: (currentCache, newItems, otherArgs) => {
         if (otherArgs.arg.cursor === undefined) {
@@ -127,7 +127,7 @@ export const messengerEndpoints = api.injectEndpoints({
         }
       },
       async onCacheEntryAdded(
-        _,
+        { dialogPartnerId },
         { cacheDataLoaded, cacheEntryRemoved, dispatch, updateCachedData }
       ) {
         try {
@@ -138,7 +138,9 @@ export const messengerEndpoints = api.injectEndpoints({
 
           socket.on(MESSENGER_WS_EVENT.MESSAGE_SENT, (message: Message) => {
             updateCachedData(draft => {
-              draft.items?.unshift(message)
+              if (dialogPartnerId === message.ownerId) {
+                draft.items?.unshift(message)
+              }
             })
           })
           socket.on(MESSENGER_WS_EVENT.RECEIVE_MESSAGE, (message: Message) => {
@@ -163,6 +165,7 @@ export const messengerEndpoints = api.injectEndpoints({
             }
           })
           await cacheEntryRemoved
+          socket.on('disconnect', () => {})
           socket.off(MESSENGER_WS_EVENT.MESSAGE_SENT)
           socket.off(MESSENGER_WS_EVENT.RECEIVE_MESSAGE)
           socket.close()
@@ -171,7 +174,6 @@ export const messengerEndpoints = api.injectEndpoints({
           // cacheDataLoaded throws
         }
       },
-      providesTags: ['Dialogs'],
       query: ({ dialogPartnerId, ...rest }) => {
         return {
           method: 'GET',
@@ -179,8 +181,8 @@ export const messengerEndpoints = api.injectEndpoints({
           url: `messanger/${dialogPartnerId}`,
         }
       },
-      serializeQueryArgs: ({ endpointName }) => {
-        return endpointName
+      serializeQueryArgs: ({ endpointName, queryArgs }) => {
+        return `${endpointName}?sent=${queryArgs.dialogPartnerId}`
       },
     }),
     sendMessage: builder.mutation<Message, { message: string; receiverId: number }>({

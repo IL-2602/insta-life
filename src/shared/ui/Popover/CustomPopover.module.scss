@@ -5,7 +5,7 @@
   top: 0;
   left: 0;
 
-  /* width: 260px; */
+  margin-right: 5px;
   padding: 12px;
 
   background-color: var(--color-dark-500);
@@ -30,22 +30,23 @@
 }
 
 .PopoverContent[data-state='open'][data-side='top'] {
-  animation-name: slideDownAndFade;
+  animation-name: down;
 }
 
 .PopoverContent[data-state='open'][data-side='right'] {
-  animation-name: slideLeftAndFade;
+  animation-name: left;
 }
 
 .PopoverContent[data-state='open'][data-side='bottom'] {
-  animation-name: slideUpAndFade;
+  animation-name: up;
 }
 
 .PopoverContent[data-state='open'][data-side='left'] {
-  animation-name: slideRightAndFade;
+  animation-name: right;
 }
 
 .PopoverArrow {
+  margin-right: 5px;
   fill: var(--color-light-100);
 }
 
@@ -140,4 +141,52 @@
   font-weight: 500;
   line-height: 19px;
   color: var(--color-light-900);
+}
+
+@keyframes up {
+  from {
+    transform: translateY(2px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes right {
+  from {
+    transform: translateX(-2px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes down {
+  from {
+    transform: translateY(-2px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes left {
+  from {
+    transform: translateX(2px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }

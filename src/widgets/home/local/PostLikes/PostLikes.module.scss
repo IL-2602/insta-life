@@ -1,0 +1,135 @@
+@import '@/styles/variables/mixins';
+
+@mixin likes {
+  .skeletonsBlock {
+    display: flex;
+  }
+
+  .likesCountWrap {
+    display: flex;
+    gap: 2px;
+  }
+
+  .likesPhotos {
+    display: flex;
+
+    .avatarContainer {
+      z-index: 3;
+      border-radius: 50%;
+
+      .noAvatar {
+        display: grid;
+        place-items: center;
+
+        width: 24px;
+        height: 24px;
+
+        background-color: var(--color-dark-100);
+        border-radius: 50%;
+      }
+
+      img {
+        border-radius: 50%;
+      }
+    }
+
+    .avatarContainer:nth-child(2) {
+      z-index: 2;
+      margin-left: -9px;
+    }
+
+    .avatarContainer:nth-child(3) {
+      z-index: 1;
+      margin-left: -9px;
+    }
+  }
+
+  .likesCount {
+    padding-right: 4px;
+  }
+}
+
+.gap0 {
+  @include mobile-large {
+    margin-top: 0;
+  }
+
+  @include likes;
+
+  display: flex;
+  gap: 0;
+  margin-top: 14px;
+}
+
+.container {
+  @include mobile-large {
+    margin-top: 0;
+  }
+
+  @include likes;
+
+  display: flex;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.spinner {
+  display: grid;
+  place-items: center;
+  height: 10vh;
+}
+
+.skeleton {
+  width: 24px;
+  height: 24px;
+
+  span[aria-live='polite'] {
+    display: grid;
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.skeletonTwo {
+  display: flex;
+
+  span[aria-live='polite']:nth-child(2) {
+    z-index: 2;
+    margin-left: -9px;
+  }
+
+  span[aria-live='polite']:nth-child(1) {
+    z-index: 3;
+  }
+}
+
+.skeletonThree {
+  display: flex;
+  padding-right: 12px;
+
+  span[aria-live='polite']:nth-child(2) {
+    z-index: 2;
+    margin-left: -9px;
+  }
+
+  span[aria-live='polite']:nth-child(3) {
+    z-index: 1;
+    margin-left: -9px;
+  }
+
+  span[aria-live='polite']:nth-child(1) {
+    z-index: 3;
+  }
+}
+
+.gap1 {
+  gap: 12px;
+}
+
+.gap2 {
+  gap: 27px;
+}
+
+.gap3 {
+  gap: 42px;
+}
