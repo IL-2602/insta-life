@@ -10,6 +10,7 @@ export type PostSliceInitialState = {
   isEditPostModal: boolean
   isMyPostModal: boolean
   modalSteps: ModalSteps
+  postDescription: string
   postPhotos: PostPhoto[]
 }
 

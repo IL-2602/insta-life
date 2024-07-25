@@ -13,6 +13,7 @@ const initialState: PostSliceInitialState = {
   isEditPostModal: false,
   isMyPostModal: false,
   modalSteps: 'upload',
+  postDescription: '',
   postPhotos: [],
 }
 
@@ -65,6 +66,9 @@ export const postSlice = createSlice({
     },
     setModalSteps: (state, action: PayloadAction<ModalSteps>) => {
       state.modalSteps = action.payload
+    },
+    setPostDescription: (state, action: PayloadAction<string>) => {
+      state.postDescription = action.payload
     },
     setPostPhotos: (state, action: PayloadAction<string>) => {
       const tempPhoto: PostPhoto = {

@@ -20,17 +20,40 @@ export const ClosePostModal = () => {
 
   const dispatch = useAppDispatch()
 
+  const clearPostDraft = () => {
+    dispatch(postActions.setPostDescription(''))
+    dispatch(postActions.setClearPostPhotos())
+    dispatch(postActions.setModalSteps('upload'))
+  }
   const onDiscard = () => {
     dispatch(postActions.setIsClosePostModal(false))
+    clearPostDraft()
     deleteDB()
+  }
+
+  const checkUserId = () => {
+    //@ts-ignore
+    if (draftFromIndexedDB && draftFromIndexedDB.draft.userId === id) {
+      saveDB()
+      console.log('CURRENT USER')
+    }
+    saveDB()
+    console.log('NEW USER')
   }
 
   const onSaveDraft = () => {
     dispatch(postActions.setIsClosePostModal(false))
     dispatch(postActions.setIsCreatePostModal(false))
     dispatch(postActions.setClearPostPhotos())
-    saveDB()
+    checkUserId()
   }
+
+  const modalSteps = useAppSelector(state => state.postReducer.modalSteps)
+  const postPhotos = useAppSelector(state => state.postReducer.postPhotos)
+  const postDescription = useAppSelector(state => state.postReducer.postDescription)
+
+  const router = useRouter()
+  const { id } = router.query
 
   const db = useIndexedDB('PostDraft', 1, [{ name: 'myDraftStore', options: { keyPath: 'id' } }])
 
@@ -59,22 +82,7 @@ export const ClosePostModal = () => {
       }
     }
   }, [])
-  const saveDB = () => {
-    if (db) {
-      const transaction = db.transaction(['myDraftStore'], 'readwrite')
-      const objectStore = transaction.objectStore('myDraftStore')
-      const data = {
-        draft: {
-          postDescription: 'POST DESCRIPTION TEXT',
-          postImages: [],
-          userId: 1,
-        },
-        id: 1,
-      }
 
-      objectStore.add(data)
-    }
-  }
   const deleteDB = () => {
     if (db) {
       const transaction = db.transaction(['myDraftStore'], 'readwrite')
@@ -84,22 +92,29 @@ export const ClosePostModal = () => {
     }
   }
 
-  const updateDB = () => {
+  const saveDB = () => {
     if (db) {
       const transaction = db.transaction(['myDraftStore'], 'readwrite')
       const objectStore = transaction.objectStore('myDraftStore')
 
       const updatedData = {
         draft: {
-          postDescription: 'NEW POST DESCRIPTION TEXT NEW', /// add new post description or [] photos
-          postImages: [],
-          userId: 1,
+          postDescription: postDescription,
+          postPhotos: postPhotos,
+          userId: id,
         },
-        id: 1,
+        id: id,
       }
 
       objectStore.put(updatedData)
     }
+  }
+
+  const checkState = () => {
+    console.log('modalSteps : ', modalSteps)
+    console.log('postPhotos : ', postPhotos)
+    console.log('ID : ', id)
+    console.log('DESCRIPTION : ', postDescription)
   }
 
   return (
@@ -120,8 +135,8 @@ export const ClosePostModal = () => {
           <Button className={s.button} disabled={false} onClick={onSaveDraft} variant={'primary'}>
             <Typography variant={'h3'}>{t.button.saveDraft}</Typography>
           </Button>
-          <Button className={s.button} disabled={false} onClick={updateDB} variant={'primary'}>
-            <Typography variant={'h3'}>UPDATE</Typography>
+          <Button className={s.button} disabled={false} onClick={checkState} variant={'primary'}>
+            <Typography variant={'h3'}>CHECK STATE</Typography>
           </Button>
         </div>
       </div>

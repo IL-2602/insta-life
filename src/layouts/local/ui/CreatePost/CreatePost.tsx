@@ -19,7 +19,9 @@ export const CreatePost = () => {
   const isCreatePostModal = useAppSelector(state => state.postReducer.isCreatePostModal)
   const modalSteps = useAppSelector(state => state.postReducer.modalSteps)
 
-  const showModalSaveDraftHandler = () => dispatch(postActions.setIsClosePostModal(true))
+  const showModalSaveDraftHandler = () => {
+    dispatch(postActions.setIsClosePostModal(true))
+  }
   const closePostModalHandler = () => dispatch(postActions.setIsCreatePostModal(false))
 
   const content = {

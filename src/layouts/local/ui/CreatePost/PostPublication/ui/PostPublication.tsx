@@ -1,7 +1,9 @@
 import React, { memo } from 'react'
 
+import { useAppDispatch } from '@/app/store/hooks/useAppDispatch'
 import { PostPublicationProps } from '@/layouts/local/ui/CreatePost/PostPublication/container'
 import { CreatePostModalHeader } from '@/layouts/local/ui/CreatePost/createPostModalHeader'
+import { postActions } from '@/services/postService/store/slice/postEndpoints.slice'
 import { PostPhotos } from '@/shared/components/PostPhotos/PostPhotos'
 import { Spinner } from '@/shared/ui/Spinner'
 import { Typography } from '@/shared/ui/Typography'

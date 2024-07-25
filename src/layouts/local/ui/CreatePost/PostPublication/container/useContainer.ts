@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { useAppDispatch } from '@/app/store/hooks/useAppDispatch'
@@ -121,6 +121,10 @@ export const useContainer = () => {
   const backToFilter = () => {
     dispatch(postActions.setModalSteps('filters'))
   }
+
+  useEffect(() => {
+    dispatch(postActions.setPostDescription(postDescription as string))
+  }, [postDescription])
 
   return {
     backToFilter,
