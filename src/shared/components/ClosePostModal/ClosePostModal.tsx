@@ -75,7 +75,7 @@ export const ClosePostModal = () => {
       const transaction = db.transaction(['myDraftStore'], 'readwrite')
       const objectStore = transaction.objectStore('myDraftStore')
 
-      const getRequest = objectStore.get(1)
+      const getRequest = objectStore.get(id)
 
       getRequest.onsuccess = () => {
         setDraftFromIndexedDB(getRequest.result)
@@ -84,11 +84,11 @@ export const ClosePostModal = () => {
   }, [])
 
   const deleteDB = () => {
-    if (db) {
+    if (db && id) {
       const transaction = db.transaction(['myDraftStore'], 'readwrite')
       const objectStore = transaction.objectStore('myDraftStore')
 
-      objectStore.delete(1)
+      objectStore.delete(id)
     }
   }
 
