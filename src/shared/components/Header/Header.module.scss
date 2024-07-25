@@ -1,6 +1,10 @@
 @import '@/styles/variables/mixins';
 
 .header {
+  @include mobile {
+    padding-inline: 15px;
+  }
+
   position: fixed;
   z-index: 100;
   top: 0;

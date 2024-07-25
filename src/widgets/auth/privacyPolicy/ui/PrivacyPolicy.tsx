@@ -7,19 +7,22 @@ import s from './PrivacyPolicy.module.scss'
 
 export const PrivacyPolicy = ({ isAuthPrivacyPolicy, onBack, t }: PrivacyPolicyProps) => {
   return (
-    <div>
-      <Button className={s.goBackBtn} onClick={onBack} variant={'link'}>
-        <div className={s.goBackWrapper}>
-          <ArrowBack />
-          <Typography variant={'regular14'}>
-            {isAuthPrivacyPolicy ? t.auth.button.backToSignUp : t.button.backToProfileSettings}
-          </Typography>
-        </div>
-      </Button>
+    <div className={s.container}>
+      <div className={s.wrap}>
+        <Button className={s.goBackBtn} onClick={onBack} variant={'link'}>
+          <div className={s.goBackWrapper}>
+            <ArrowBack />
+            <Typography as={'span'} variant={'regular14'}>
+              {isAuthPrivacyPolicy ? t.auth.button.backToSignUp : t.button.backToProfileSettings}
+            </Typography>
+          </div>
+        </Button>
 
-      <Typography className={s.title} variant={'h1'}>
-        {t.auth.privacyPolicyPage.title}
-      </Typography>
+        <Typography className={s.title} variant={'h1'}>
+          {t.auth.privacyPolicyPage.title}
+        </Typography>
+      </div>
+
       <div className={s.text}>
         <Typography className={s.content} variant={'regular14'}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt

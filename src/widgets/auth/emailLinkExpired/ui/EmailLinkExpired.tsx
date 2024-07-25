@@ -26,12 +26,16 @@ export const EmailLinkExpired = ({
 }: EmailLinkExpiredContainerProps) => {
   return (
     <div className={s.container}>
-      <Typography variant={'h1'}>{t.auth.verificationPage.linkExpiredTitle}</Typography>
-      <div className={s.body}>
-        <Typography variant={'regular16'}>{t.auth.verificationPage.verificationText}</Typography>
-      </div>
-      <div>
+      <div className={s.wrap}>
+        <Typography className={s.title} variant={'h1'}>
+          {t.auth.verificationPage.linkExpiredTitle}
+        </Typography>
+        <Typography className={s.text} variant={'regular16'}>
+          {t.auth.verificationPage.verificationText}
+        </Typography>
+
         <Button
+          className={s.button}
           disabled={isDisabled}
           isLoading={isLoading}
           onClick={onRecentLink}
@@ -39,18 +43,25 @@ export const EmailLinkExpired = ({
         >
           <Typography variant={'h3'}>{!isLoading && `${t.auth.button.sendLink}`}</Typography>
         </Button>
-      </div>
-      <div className={s.recaptchaWrapper}>
-        <ReCAPTCHA
-          hl={locale}
-          key={locale}
-          onChange={token => handleSetToken(token as string)}
-          ref={captchaRef}
-          sitekey={publicKey!}
-          theme={'dark'}
+        <div className={s.recaptchaWrapper}>
+          <ReCAPTCHA
+            hl={locale}
+            key={locale}
+            onChange={token => handleSetToken(token as string)}
+            ref={captchaRef}
+            sitekey={publicKey!}
+            theme={'dark'}
+          />
+        </div>
+        <Image
+          alt={'Verification link expired'}
+          className={s.image}
+          height={350}
+          src={img.src}
+          width={473}
         />
       </div>
-      <Image alt={'Verification link expired'} height={352} src={img.src} width={473} />
+
       <Modal
         modalHandler={handleCloseModal}
         onPointerOutsideClickHandler={() => setIsOpen(false)}

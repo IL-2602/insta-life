@@ -23,11 +23,11 @@ export const useContainer = () => {
       })
         .unwrap()
         .then(() => {
-          push({ pathname: ROUTES.CONGRATULATION })
+          void push({ pathname: ROUTES.CONGRATULATION })
         })
         .catch(err => {
-          console.log(err)
-          push({ pathname: ROUTES.CONFIRMATION_LINK_EXPIRED, query: { email: query.email } })
+          console.error(err)
+          void push({ pathname: ROUTES.CONFIRMATION_LINK_EXPIRED, query: { email: query.email } })
           if (email) {
             dispatch(authActions.setEmail(email))
           }

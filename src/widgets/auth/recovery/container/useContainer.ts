@@ -23,10 +23,10 @@ export const useContainer = () => {
       })
         .unwrap()
         .then(_ => {
-          push({ pathname: ROUTES.CREATE_NEW_PASSWORD, query: { code: query.code } })
+          void push({ pathname: ROUTES.CREATE_NEW_PASSWORD, query: { code: query.code } })
         })
         .catch(_ => {
-          push({ pathname: ROUTES.VERIFICATION_LINK_EXPIRED, query: { email: query.email } })
+          void push({ pathname: ROUTES.VERIFICATION_LINK_EXPIRED, query: { email: query.email } })
           if (email) {
             dispatch(authActions.setEmail(email))
           }

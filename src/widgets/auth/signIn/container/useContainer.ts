@@ -32,6 +32,7 @@ export const useContainer = () => {
     mode: 'onTouched',
     resolver: zodResolver(signInSchema),
   })
+
   const [signIn, { isLoading: signIsLoading }] = useSignInMutation()
   const [oAuthGoogle, { isLoading: isLoadingGoogle }] = useOAuthGoogleMutation()
 
@@ -72,7 +73,7 @@ export const useContainer = () => {
           dispatch(authActions.setEmail(res.email!))
         })
         .catch(err => {
-          console.log(err)
+          console.error(err)
           void push(ROUTES.LOGIN)
         })
     },

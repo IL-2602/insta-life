@@ -1,6 +1,5 @@
 import { memo } from 'react'
 
-import { ROUTES } from '@/shared/constants/routes'
 import { Button } from '@/shared/ui/Button'
 import { Calendar } from '@/shared/ui/Calendar/Calendar'
 import { Spinner } from '@/shared/ui/Spinner'
