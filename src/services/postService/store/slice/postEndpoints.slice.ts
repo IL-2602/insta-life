@@ -17,6 +17,25 @@ const initialState: PostSliceInitialState = {
   postPhotos: [],
 }
 
+export type DraftFromIndDB = {
+  draft: {
+    modalSteps: ModalSteps
+    postDescription: string
+    postPhotos: [
+      {
+        '0': number
+        aspect: number
+        cropImg: string
+        filterImg: string
+        img: string
+        zoom: number
+      },
+    ]
+    userId: number
+  }
+  id: number
+}
+
 export const postSlice = createSlice({
   initialState,
   name: 'postReducer',
@@ -80,6 +99,17 @@ export const postSlice = createSlice({
       }
 
       state.postPhotos.push(tempPhoto)
+    },
+    setPostPhotosFromIndDB: (state, action: PayloadAction<DraftFromIndDB>) => {
+      const draftPhoto: PostPhoto = {
+        aspect: action.payload.draft.postPhotos[0].aspect,
+        cropImg: action.payload.draft.postPhotos[0].cropImg,
+        filterImg: action.payload.draft.postPhotos[0].filterImg,
+        img: action.payload.draft.postPhotos[0].img,
+        zoom: action.payload.draft.postPhotos[0].zoom,
+      }
+
+      state.postPhotos.push(draftPhoto)
     },
     updatePostPhoto: (
       state,

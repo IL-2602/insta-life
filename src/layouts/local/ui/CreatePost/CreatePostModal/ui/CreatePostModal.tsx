@@ -3,14 +3,21 @@ import { memo } from 'react'
 import { CreatePostModalProps } from '@/layouts/local/ui/CreatePost/CreatePostModal/container'
 import { NoCover } from '@/shared/assets/icons/noCover/NoCover'
 import { Button } from '@/shared/ui/Button'
-import { Modal } from '@/shared/ui/Modal'
 import { Typography } from '@/shared/ui/Typography'
 import { ControlledFileUploader } from '@/shared/ui/controlledInsta/ControlledFileUploader/ControlledFileUploader'
 
 import s from './CreatePostModal.module.scss'
 
 export const CreatePostModal = memo(
-  ({ control, extraActionsPostPhoto, handleSubmit, postPhotoError, t }: CreatePostModalProps) => {
+  ({
+    control,
+    draftFromIndexedDB,
+    extraActionsPostPhoto,
+    handleSubmit,
+    openDraft,
+    postPhotoError,
+    t,
+  }: CreatePostModalProps) => {
     return (
       <div className={s.content}>
         <div className={postPhotoError ? s.photoError : ''}>
@@ -31,7 +38,12 @@ export const CreatePostModal = memo(
           >
             <Typography variant={'h3'}>{t.button.selectFromComputer}</Typography>
           </ControlledFileUploader>
-          <Button fullWidth variant={'outlined'}>
+          <Button
+            disabled={draftFromIndexedDB === undefined}
+            fullWidth
+            onClick={openDraft}
+            variant={'outlined'}
+          >
             <Typography variant={'h3'}>{t.button.openDraft}</Typography>
           </Button>
         </form>

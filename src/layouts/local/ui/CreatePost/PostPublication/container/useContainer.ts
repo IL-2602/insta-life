@@ -23,6 +23,7 @@ export const useContainer = () => {
   const isCreatePostModal = useAppSelector(state => state.postReducer.isCreatePostModal)
   const modalSteps = useAppSelector(state => state.postReducer.modalSteps)
   const postPhotos = useAppSelector(state => state.postReducer.postPhotos)
+  const defaultDraftDescriptionValue = useAppSelector(state => state.postReducer.postDescription)
 
   const [currPhotoIndex, setCurrPhotoIndex] = useState(0)
 
@@ -42,7 +43,7 @@ export const useContainer = () => {
     watch,
   } = useForm<postPublicationFormSchema>({
     defaultValues: {
-      postDescription: '',
+      postDescription: defaultDraftDescriptionValue,
     },
     mode: 'onTouched',
     resolver: zodResolver(postPublicationSchema),
@@ -130,6 +131,7 @@ export const useContainer = () => {
     backToFilter,
     control,
     currPhotoIndex,
+    defaultDraftDescriptionValue,
     errorDescription,
     getProfile,
     handlePublishPhotos,
