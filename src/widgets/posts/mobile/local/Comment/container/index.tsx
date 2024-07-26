@@ -1,7 +1,7 @@
 import { CommentsAnswers } from '@/services/commentsAnswersService/lib/commentsAnswersEndpoints.types'
+import { useContainer } from '@/widgets/posts/local/Comment/container/useContainer'
 
 import { Comment } from '../ui/Comment'
-import { useContainer } from './useContainer'
 
 export const Container = ({
   comment,
@@ -12,5 +12,3 @@ export const Container = ({
   isComment: boolean
   lastRef?: any
 }) => <Comment ref={lastRef} {...useContainer({ comment, isComment })} />
-
-export type CommentProps = ReturnType<typeof useContainer>

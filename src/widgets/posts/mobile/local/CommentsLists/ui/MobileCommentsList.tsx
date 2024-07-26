@@ -1,32 +1,24 @@
-import { Fragment, memo } from 'react'
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
+import { memo } from 'react'
+import Skeleton from 'react-loading-skeleton'
 
 import { Bookmark } from '@/shared/assets/icons/Bookmark'
 import { HeartOutline } from '@/shared/assets/icons/Heart/HeartOutline'
 import { PaperLine } from '@/shared/assets/icons/PaperLine'
 import { Avatar } from '@/shared/ui/Avatar'
 import { Button } from '@/shared/ui/Button'
-import { ScrollSelect } from '@/shared/ui/ScrollSelect/ScrollSelect'
 import { Typography } from '@/shared/ui/Typography'
-import { ControlledTextAreaField } from '@/shared/ui/controlledInsta/ControlledTextArea/ControlledTextArea'
 import { commentsAnswersTimeConversion } from '@/shared/utils/commentsAnswersTimeConversion'
 import { CommentsAnswersProps } from '@/widgets/posts/local/CommentsLists/container'
+import { Comment } from '@/widgets/posts/mobile/local/Comment'
 import { useRouter } from 'next/router'
-import { Comment } from 'src/widgets/posts/local/Comment'
 
 import s from './MobileCommentsList.module.scss'
 
 export const MobileCommentsList = memo(
-  ({
-    commentPublishHandler,
-    control,
-    isLoadingPost,
-    isMe,
-    postDescription,
-    postPhotos,
-    t,
-  }: CommentsAnswersProps) => {
+  ({ comments, isLoadingPost, postDescription, postPhotos }: CommentsAnswersProps) => {
     const { locale } = useRouter()
+
+    console.log('comments', comments)
 
     return (
       <div className={s.commentsBlockWrapper}>
@@ -46,8 +38,15 @@ export const MobileCommentsList = memo(
           </div>
         </div>
         <div className={s.commentsBlock}>
-          {isLoadingPost && <Skeleton height={64} width={'100%'} />}
-          {!isLoadingPost && postDescription && postPhotos && (
+          {isLoadingPost && <Skeleton height={80} width={'100%'} />}
+          {!isLoadingPost && !!comments?.length && (
+            <Button variant={'noStyle'}>
+              <Typography color={'form'} variant={'small'}>
+                {`View all Comments (${comments?.length})`}
+              </Typography>
+            </Button>
+          )}
+          {!isLoadingPost && postPhotos && postDescription ? (
             <div className={s.postDescription}>
               <div className={s.avatarWrapper}>
                 <Avatar userAvatar={postPhotos?.avatarOwner} />
@@ -61,29 +60,25 @@ export const MobileCommentsList = memo(
                 </Typography>
               </div>
             </div>
+          ) : (
+            <>
+              {!!comments?.length && (
+                <div className={s.postDescription}>
+                  <div className={s.avatarWrapper}>
+                    <Avatar userAvatar={comments[0]?.from?.avatars[0]?.url} />
+                  </div>
+                  <div className={s.descriptionWrapper}>
+                    <Typography className={s.description} variant={'regular14'}>
+                      {comments[0].content}
+                    </Typography>
+                    <Typography color={'form'} variant={'small'}>
+                      {commentsAnswersTimeConversion(comments[0]?.createdAt, locale)}
+                    </Typography>
+                  </div>
+                </div>
+              )}
+            </>
           )}
-        </div>
-        <div>
-          {/*{isMe && (*/}
-          {/*  <div className={s.addCommentBlock}>*/}
-          {/*    <ControlledTextAreaField*/}
-          {/*      control={control}*/}
-          {/*      name={'comment'}*/}
-          {/*      placeholder={'Add comment...'}*/}
-          {/*      textAreaClassName={s.textArea}*/}
-          {/*    />*/}
-          {/*    <Button*/}
-          {/*      className={s.button}*/}
-          {/*      disabled={false}*/}
-          {/*      onClick={commentPublishHandler}*/}
-          {/*      variant={'noStyle'}*/}
-          {/*    >*/}
-          {/*      <Typography color={'primary'} variant={'h3'}>*/}
-          {/*        {t.button.publish}*/}
-          {/*      </Typography>*/}
-          {/*    </Button>*/}
-          {/*  </div>*/}
-          {/*)}*/}
         </div>
       </div>
     )

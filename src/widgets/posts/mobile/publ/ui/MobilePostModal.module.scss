@@ -30,7 +30,7 @@
 
 .postPhotoWrapper {
   width: 100%;
-  height: calc(100dvh - 120px - 65px - 50px - 80px);
+  height: calc(100dvh - 120px - 65px - 50px - 95px);
 
   & > button {
     cursor: pointer;
@@ -63,6 +63,10 @@
   height: 100%;
 
   object-fit: contain;
+}
+
+.modalBody {
+  height: 100%;
 }
 
 .descriptionWrapper {

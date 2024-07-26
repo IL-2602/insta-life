@@ -73,6 +73,7 @@ export const MobilePostModal = memo(
     return (
       <>
         <Modal
+          bodyClassName={s.modalBody}
           customHeader
           onOpen={!isEdit ? handleCloseModal : handleOpenEditPostDialog}
           open={isMyPostModal}
