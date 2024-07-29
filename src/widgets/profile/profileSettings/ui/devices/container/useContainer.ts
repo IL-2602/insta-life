@@ -22,13 +22,12 @@ export const useContainer = () => {
 
   const { data: sessions, isLoading: isLoadingSessions } = useGetSessionsQuery()
   const [deleteSession] = useDeleteSessionMutation()
-  const [deleteAllOtherSessions, { isLoading: isLoadingAllSessions }] =
-    useDeleteAllOtherSessionsMutation()
+  const [deleteAllOtherSessions] = useDeleteAllOtherSessionsMutation()
   const [logOut, { isLoading: isLoadingLogOut }] = useLogOutMutation()
 
   const browser = sessions?.current?.browserName || 'Unknown'
 
-  const isLoading = isLoadingSessions || isLoadingIp || isLoadingAllSessions
+  const isLoading = isLoadingSessions || isLoadingIp
 
   useEffect(() => {
     const abortController = new AbortController()
@@ -76,6 +75,7 @@ export const useContainer = () => {
   const handleTerminateAllOtherSessions = () => {
     deleteAllOtherSessions()
       .unwrap()
+      .then(() => handleLogOut())
       .then(() => toast.success('All other sessions have been deleted.'))
       .catch(err => toast.error(err.message))
   }
