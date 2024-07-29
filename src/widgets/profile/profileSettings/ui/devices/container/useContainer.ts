@@ -75,7 +75,6 @@ export const useContainer = () => {
   const handleTerminateAllOtherSessions = () => {
     deleteAllOtherSessions()
       .unwrap()
-      .then(() => handleLogOut())
       .then(() => toast.success('All other sessions have been deleted.'))
       .catch(err => toast.error(err.message))
   }
