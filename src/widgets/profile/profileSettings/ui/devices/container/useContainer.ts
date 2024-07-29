@@ -26,17 +26,7 @@ export const useContainer = () => {
     useDeleteAllOtherSessionsMutation()
   const [logOut, { isLoading: isLoadingLogOut }] = useLogOutMutation()
 
-  let browser = 'Unknown'
-
-  if (navigator.userAgent.includes('YaBrowser')) {
-    browser = 'Yandex'
-  } else if (navigator.userAgent.includes('Firefox')) {
-    browser = 'Firefox'
-  } else if (navigator.userAgent.includes('OPR')) {
-    browser = 'Opera'
-  } else if (navigator.userAgent.includes('Chrome')) {
-    browser = 'Chrome'
-  }
+  const browser = sessions?.current?.browserName || 'Unknown'
 
   const isLoading = isLoadingSessions || isLoadingIp || isLoadingAllSessions
 
