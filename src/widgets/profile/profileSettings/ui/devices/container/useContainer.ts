@@ -61,8 +61,11 @@ export const useContainer = () => {
 
     try {
       setSessionLoadingState({ ...sessionLoadingState, [deviceId]: true })
-
-      await deleteSession({ deviceId }).unwrap()
+      if (deviceId === sessions?.current.deviceId) {
+        handleLogOut()
+      } else {
+        await deleteSession({ deviceId }).unwrap()
+      }
     } catch (err) {
       console.log(err)
     } finally {
