@@ -1,5 +1,5 @@
 import { Container } from './container'
 
-export const Comment = {
+export const MobileComment = {
   widget: Container,
 }
