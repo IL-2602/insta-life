@@ -3,9 +3,9 @@ import {
   EditPostLikeStatusRequest,
   EditPostParams,
   GetCurrentPostResponse,
+  GetPostsResponse,
   PostLikesRequest,
   PostLikesResponse,
-  GetPostsResponse,
   PublishPostImageResponse,
   PublishPostParams,
   PublishPostResponse,
@@ -53,7 +53,7 @@ export const postEndpoints = api.injectEndpoints({
       },
     }),
     editPostLikeStatus: builder.mutation<void, EditPostLikeStatusRequest>({
-      invalidatesTags: ['Post'],
+      invalidatesTags: ['LikesPost'],
       query: params => {
         const { postId, ...body } = params
 
@@ -73,15 +73,8 @@ export const postEndpoints = api.injectEndpoints({
         }
       },
     }),
-    getPosts: builder.query<GetPostsResponse, { username: string }>({
-      query: ({ username }) => {
-        return {
-          method: 'GET',
-          url: `posts/${username}`,
-        }
-      },
-    }),
     getLikesPost: builder.query<PostLikesResponse, PostLikesRequest>({
+      providesTags: ['LikesPost'],
       query: params => {
         const { postId, ...rest } = params
 
@@ -89,6 +82,14 @@ export const postEndpoints = api.injectEndpoints({
           method: 'GET',
           params: rest,
           url: `posts/${postId}/likes`,
+        }
+      },
+    }),
+    getPosts: builder.query<GetPostsResponse, { username: string }>({
+      query: ({ username }) => {
+        return {
+          method: 'GET',
+          url: `posts/${username}`,
         }
       },
     }),
@@ -135,8 +136,8 @@ export const {
   useEditPostLikeStatusMutation,
   useEditPostMutation,
   useGetCurrentPostQuery,
-  useGetPostsQuery,
   useGetLikesPostQuery,
+  useGetPostsQuery,
   usePublishPostImageMutation,
   usePublishPostMutation,
 } = postEndpoints

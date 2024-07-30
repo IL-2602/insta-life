@@ -1,4 +1,4 @@
-import { Fragment, memo } from 'react'
+import { Fragment, memo, useState } from 'react'
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 
 import { Bookmark } from '@/shared/assets/icons/Bookmark'
@@ -14,11 +14,15 @@ import { ScrollSelect } from '@/shared/ui/ScrollSelect/ScrollSelect'
 import { Typography } from '@/shared/ui/Typography'
 import { ControlledTextAreaField } from '@/shared/ui/controlledInsta/ControlledTextArea/ControlledTextArea'
 import { commentsAnswersTimeConversion } from '@/shared/utils/commentsAnswersTimeConversion'
+import { LikersListModal } from '@/widgets/posts/local/CommentsLists/LikersListModal/LikersListModal'
 import { CommentsAnswersProps } from '@/widgets/posts/local/CommentsLists/container'
+import { namedTypes } from 'ast-types'
 import { useRouter } from 'next/router'
 import { Comment } from 'src/widgets/posts/local/Comment'
 
 import s from './CommentsList.module.scss'
+
+import Line = namedTypes.Line
 
 export const CommentsList = memo(
   ({
@@ -39,6 +43,7 @@ export const CommentsList = memo(
     const { locale } = useRouter()
 
     console.log(postPhotos?.isLiked)
+    const [openLikersListModal, setOpenLikersListModal] = useState(false)
 
     return (
       <div className={s.commentsBlockWrapper}>
@@ -86,7 +91,8 @@ export const CommentsList = memo(
             <PostLikeCounter
               className={s.likesContainer}
               isLiked={postPhotos?.isLiked}
-              likesCount={postPhotos?.likesCount}
+              likesCount={postLikesData?.totalCount}
+              openLikersList={() => setOpenLikersListModal(true)}
               postLikesData={postLikesData}
             />
             <PostDate className={s.likesContainer} date={postPhotos?.createdAt} />
@@ -112,6 +118,13 @@ export const CommentsList = memo(
             </div>
           )}
         </div>
+        <LikersListModal
+          onOpen={() => {
+            setOpenLikersListModal(false)
+          }}
+          open={openLikersListModal}
+          postLikesData={postLikesData}
+        />
       </div>
     )
   }
