@@ -90,7 +90,7 @@ export const Pagination = ({
       </Button>
       <div className={s.select}>
         <Typography color={'light'} variant={'regular14'}>
-          321
+          {t.profileSettings.tab.myPayments.show}
         </Typography>
         <SelectComponent
           className={s.selectComponent}
@@ -99,7 +99,7 @@ export const Pagination = ({
           selectItems={selectPageSizes()}
         ></SelectComponent>
         <Typography color={'light'} variant={'regular14'}>
-          123
+          {t.profileSettings.tab.myPayments.onPage}
         </Typography>
       </div>
     </div>
