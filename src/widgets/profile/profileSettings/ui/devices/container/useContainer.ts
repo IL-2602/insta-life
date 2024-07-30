@@ -22,23 +22,12 @@ export const useContainer = () => {
 
   const { data: sessions, isLoading: isLoadingSessions } = useGetSessionsQuery()
   const [deleteSession] = useDeleteSessionMutation()
-  const [deleteAllOtherSessions, { isLoading: isLoadingAllSessions }] =
-    useDeleteAllOtherSessionsMutation()
+  const [deleteAllOtherSessions] = useDeleteAllOtherSessionsMutation()
   const [logOut, { isLoading: isLoadingLogOut }] = useLogOutMutation()
 
-  let browser = 'Unknown'
+  const browser = sessions?.current?.browserName || 'Unknown'
 
-  if (navigator.userAgent.includes('YaBrowser')) {
-    browser = 'Yandex'
-  } else if (navigator.userAgent.includes('Firefox')) {
-    browser = 'Firefox'
-  } else if (navigator.userAgent.includes('OPR')) {
-    browser = 'Opera'
-  } else if (navigator.userAgent.includes('Chrome')) {
-    browser = 'Chrome'
-  }
-
-  const isLoading = isLoadingSessions || isLoadingIp || isLoadingAllSessions
+  const isLoading = isLoadingSessions || isLoadingIp
 
   useEffect(() => {
     const abortController = new AbortController()
@@ -71,8 +60,11 @@ export const useContainer = () => {
 
     try {
       setSessionLoadingState({ ...sessionLoadingState, [deviceId]: true })
-
-      await deleteSession({ deviceId }).unwrap()
+      if (deviceId === sessions?.current.deviceId) {
+        handleLogOut()
+      } else {
+        await deleteSession({ deviceId }).unwrap()
+      }
     } catch (err) {
       console.log(err)
     } finally {

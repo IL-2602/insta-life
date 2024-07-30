@@ -84,7 +84,9 @@ export const Device = ({
         <div className={s.descWrapper}>
           <div className={s.icon}>{current ? browserIcon : sessionsIcon}</div>
           <div className={s.desc}>
-            <Typography variant={'bold16'}>{session?.browserName}</Typography>
+            <Typography variant={'bold16'}>
+              {session?.deviceName || session?.browserName}
+            </Typography>
             <Typography variant={'regular14'}>IP: {session?.ip}</Typography>
             {!current && session?.lastActive && (
               <Typography variant={'small'}>
@@ -101,16 +103,14 @@ export const Device = ({
           </div>
         )}
 
-        {!current && (
-          <Button
-            className={s.logoutBtn}
-            onClick={() => handleDeleteSession(session?.deviceId)}
-            variant={'noStyle'}
-          >
-            <LogOutIcon />
-            <Typography variant={'medium14'}>{t.sidebar.logOut}</Typography>
-          </Button>
-        )}
+        <Button
+          className={s.logoutBtn}
+          onClick={() => handleDeleteSession(session?.deviceId)}
+          variant={'noStyle'}
+        >
+          <LogOutIcon />
+          <Typography variant={'medium14'}>{t.sidebar.logOut}</Typography>
+        </Button>
       </div>
       {!isLoadingLogOut ? (
         <Modal
