@@ -9,3 +9,8 @@ export type Session = {
   osName: string
   osVersion: string
 }
+
+export type SessionsResponse = {
+  current: Session
+  others: Session[]
+}

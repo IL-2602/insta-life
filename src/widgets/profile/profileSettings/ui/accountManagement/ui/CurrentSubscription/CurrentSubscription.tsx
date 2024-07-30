@@ -13,6 +13,7 @@ export const CurrentSubscription = (subscriptionsData: Props) => {
   if (!data?.length) {
     return null
   }
+  console.log(data)
 
   return (
     <fieldset className={s.currentSubscription}>
