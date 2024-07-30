@@ -1,0 +1,61 @@
+.container {
+  display: flex;
+  gap: 8px;
+  margin-top: 36px;
+  margin-bottom: 36px;
+
+  .btnNumber {
+    padding: 2px 10px;
+    border: 2px solid transparent;
+    border-radius: 4px;
+    transition: border-color 0.4s;
+
+    &:hover {
+      cursor: pointer;
+      border-color: var(--color-primary-700);
+    }
+  }
+
+  .active {
+    background-color: var(--color-light-100);
+
+    &:hover {
+      border: 2px solid transparent;
+    }
+
+    p {
+      color: var(--color-dark-900);
+    }
+  }
+
+  .btnArrow {
+    padding: 0 5px;
+    fill: var(--color-light-100);
+    transition: opacity 0.4s;
+
+    &:hover {
+      cursor: pointer;
+      opacity: 0.4;
+    }
+
+    &:disabled {
+      cursor: default;
+      opacity: 1;
+
+      path {
+        fill: var(--color-dark-100);
+      }
+    }
+  }
+
+  .select {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    margin-left: 24px;
+
+    .selectComponent {
+      padding: 0 5px;
+    }
+  }
+}
