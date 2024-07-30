@@ -5,6 +5,7 @@
 
 .avatars {
   display: flex;
+  cursor: pointer;
 
   .avatar:not(:first-child) {
     margin-left: -15px;

@@ -6,7 +6,13 @@ import Image from 'next/image'
 
 import s from './PostLikeCounter.module.scss'
 
-export const PostLikeCounter = ({ className, isLiked, likesCount, postLikesData }: Props) => {
+export const PostLikeCounter = ({
+  className,
+  isLiked,
+  likesCount,
+  openLikersList,
+  postLikesData,
+}: Props) => {
   const avatarsRender = postLikesData?.items.map(el => (
     <Image
       alt={el.avatars[0].url}
@@ -22,7 +28,9 @@ export const PostLikeCounter = ({ className, isLiked, likesCount, postLikesData 
   return (
     <div className={`${s.container} ${className ?? ''}`}>
       <div className={s.likesContainer}>
-        <div className={s.avatars}>{avatarsRender}</div>
+        <div className={s.avatars} onClick={openLikersList}>
+          {avatarsRender}
+        </div>
         <Typography className={s.likeCounter} variant={'bold14'}>
           <Typography variant={'regular14'}>{likesCount}</Typography>
           {` "Like"`}
@@ -37,5 +45,6 @@ type Props = {
   date?: string
   isLiked?: boolean
   likesCount?: number
+  openLikersList: () => void
   postLikesData?: PostLikesResponse
 }
