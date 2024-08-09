@@ -1,0 +1,19 @@
+.likeCounter {
+  display: flex;
+  gap: 5px;
+}
+
+.avatars {
+  display: flex;
+  cursor: pointer;
+
+  .avatar:not(:first-child) {
+    margin-left: -15px;
+  }
+}
+
+.likesContainer {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}

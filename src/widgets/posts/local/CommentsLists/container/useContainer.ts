@@ -6,8 +6,16 @@ import {
   useGetCommentsQuery,
   useUpdCommentLikeStatusMutation,
 } from '@/services/commentsAnswersService/commentsAnswersEndpoints'
-import { LikeStatus } from '@/services/commentsAnswersService/lib/commentsAnswersEndpoints.types'
-import { useGetCurrentPostQuery } from '@/services/postService/postEndpoints'
+import { LikeStatus } from '@/services/postService/lib/postEndpoints.types'
+import {
+  useEditPostLikeStatusMutation,
+  useGetCurrentPostQuery,
+  useGetLikesPostQuery,
+} from '@/services/postService/postEndpoints'
+import {
+  useSubscribeMutation,
+  useUnSubscribeMutation,
+} from '@/services/usersService/usersEndpoints'
 import { useTranslation } from '@/shared/hooks/useTranslation'
 import { usePostSchema } from '@/widgets/posts/local/schema/myPostPublicationSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -32,9 +40,12 @@ export const useContainer = () => {
     { pageSize: 15, postId: +postId },
     { skip: !postId }
   )
-
+  const { data: postLikesData } = useGetLikesPostQuery({ postId: postId ?? '' }, { skip: !postId })
   const [createNewComment] = useCreateNewCommentMutation()
   const [updCommentLikeStatus] = useUpdCommentLikeStatusMutation()
+  const [editPostLikeStatus] = useEditPostLikeStatusMutation()
+  const [follow] = useSubscribeMutation()
+  const [unFollow] = useUnSubscribeMutation()
 
   type myPostFormSchema = z.infer<typeof myPostSchema>
 
@@ -62,19 +73,28 @@ export const useContainer = () => {
   const updateCommentLikeStatusHandler = (commentId: number, likeStatus: LikeStatus) =>
     postId && updCommentLikeStatus({ commentId, likeStatus, postId: +postId })
 
+  const updatePostLikeStatusHandler = () => {
+    console.log()
+    editPostLikeStatus({ likeStatus: postPhotos?.isLiked ? 'NONE' : 'LIKE', postId: +postId })
+  }
+
   const isLoadingPost = isLoadingPostPhotos || isLoadingComments
 
   return {
     commentPublishHandler,
     comments,
     control,
+    follow,
     isLoadingComments,
     isLoadingPost,
     isLoadingPostPhotos,
     isMe,
     postDescription,
+    postLikesData,
     postPhotos,
     t,
+    unFollow,
     updateCommentLikeStatusHandler,
+    updatePostLikeStatusHandler,
   }
 }

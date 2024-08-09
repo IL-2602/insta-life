@@ -113,6 +113,7 @@ export type GetCurrentPostResponse = {
   description: string
   id: number
   images: PostImage[]
+  isLiked: boolean
   likesCount: number
   location: string
   owner: {
@@ -156,3 +157,38 @@ export type GetHomeResponse = {
   pageSize: number
   totalCount: number
 }
+
+export type PostLikesResponse = {
+  items: PostLikesResponseItems[]
+  pageSize: number
+  totalCount: number
+}
+export type PostLikesResponseItemsAvatars = {
+  createdAt: string
+  fileSize: number
+  height: number
+  url: string
+  width: number
+}
+export type PostLikesResponseItems = {
+  avatars: PostLikesResponseItemsAvatars[]
+  createdAt: string
+  id: number
+  isFollowedBy: boolean
+  isFollowing: boolean
+  userId: number
+  userName: string
+}
+
+export type PostLikesRequest = {
+  cursor?: number
+  pageNumber?: number
+  pageSize?: number
+  postId: string
+  search?: string
+}
+export type EditPostLikeStatusRequest = {
+  likeStatus: LikeStatus
+  postId: number
+}
+export type LikeStatus = 'DISLIKE' | 'LIKE' | 'NONE'
