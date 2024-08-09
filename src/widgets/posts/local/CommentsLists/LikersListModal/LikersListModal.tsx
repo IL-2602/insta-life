@@ -9,7 +9,7 @@ import Image from 'next/image'
 
 import s from './LikersListModal.module.scss'
 
-export const LikersListModal = ({ onOpen, open, postLikesData }: Props) => {
+export const LikersListModal = ({ follow, onOpen, open, postLikesData, unFollow }: Props) => {
   const likersRender = postLikesData?.items.map(el => {
     return (
       <div className={s.liker} key={el.id}>
@@ -24,7 +24,18 @@ export const LikersListModal = ({ onOpen, open, postLikesData }: Props) => {
           />
           <Typography variant={'regular16'}>{el.userName}</Typography>
         </div>
-        {el.isFollowing ? <Button variant={'outlined'}>Unfollow</Button> : <Button>Follow</Button>}
+        {el.isFollowing ? (
+          <Button
+            onClick={() => unFollow({ userId: el.userId, username: el.userName })}
+            variant={'outlined'}
+          >
+            Unfollow
+          </Button>
+        ) : (
+          <Button onClick={() => follow({ selectedUserId: el.userId, username: el.userName })}>
+            Follow
+          </Button>
+        )}
       </div>
     )
   })
@@ -40,7 +51,9 @@ export const LikersListModal = ({ onOpen, open, postLikesData }: Props) => {
 }
 
 type Props = {
+  follow: (data: { selectedUserId: number; username?: string }) => void
   onOpen: () => void
   open: boolean
   postLikesData: PostLikesResponse | undefined
+  unFollow: (data: { userId: number; username: string }) => void
 }

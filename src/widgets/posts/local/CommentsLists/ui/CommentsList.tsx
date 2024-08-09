@@ -29,6 +29,7 @@ export const CommentsList = memo(
     commentPublishHandler,
     comments,
     control,
+    follow,
     isLoadingComments,
     isLoadingPost,
     isLoadingPostPhotos,
@@ -37,6 +38,7 @@ export const CommentsList = memo(
     postLikesData,
     postPhotos,
     t,
+    unFollow,
     updateCommentLikeStatusHandler,
     updatePostLikeStatusHandler,
   }: CommentsAnswersProps) => {
@@ -119,11 +121,13 @@ export const CommentsList = memo(
           )}
         </div>
         <LikersListModal
+          follow={follow}
           onOpen={() => {
             setOpenLikersListModal(false)
           }}
           open={openLikersListModal}
           postLikesData={postLikesData}
+          unFollow={unFollow}
         />
       </div>
     )
