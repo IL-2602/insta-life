@@ -159,8 +159,12 @@ export type GetHomeResponse = {
 }
 
 export type PostLikesResponse = {
+  isLiked: boolean
   items: PostLikesResponseItems[]
+  page: number
+  pageCount: number
   pageSize: number
+  prevCursor: number
   totalCount: number
 }
 export type PostLikesResponseItemsAvatars = {
