@@ -1,4 +1,5 @@
-import { memo } from 'react'
+import { memo, useEffect, useState } from 'react'
+import { useInView } from 'react-intersection-observer'
 
 import {
   useGetNotificationQuery,
@@ -23,6 +24,9 @@ type Props = {
 export const Header = memo(({ isAuth }: Props) => {
   const { t } = useTranslation()
   const router = useRouter()
+  const { inView, ref } = useInView({
+    threshold: 1,
+  })
 
   const toSignUp = async () => {
     await router.push(ROUTES.REGISTER)
@@ -31,10 +35,34 @@ export const Header = memo(({ isAuth }: Props) => {
   const toSignIn = async () => {
     await router.push(ROUTES.LOGIN)
   }
+
   const { data: notification } = useSubscribeToNotificationsQuery()
-  const { data: notificationsData } = useGetNotificationQuery({
-    cursor: notification && notification.id ? notification.id.toString() : '',
+  const [lastNotificationId, setLastNotificationId] = useState(() =>
+    notification && notification.id ? notification.id.toString() : ''
+  )
+  const { data: notificationsData, isFetching: isFetchingNotification } = useGetNotificationQuery({
+    cursor: lastNotificationId,
   })
+
+  useEffect(() => {
+    if (notification?.id) {
+      setLastNotificationId(notification.id.toString())
+    }
+  }, [notification])
+  useEffect(() => {
+    console.log('inView', inView)
+    if (
+      inView &&
+      notificationsData &&
+      notificationsData.items.length > 0 &&
+      notification &&
+      notificationsData.items[notificationsData.items.length - 1].id !== +lastNotificationId
+    ) {
+      setLastNotificationId(
+        notificationsData.items[notificationsData.items.length - 1].id.toString()
+      )
+    }
+  }, [inView])
 
   return (
     <header className={s.header}>
@@ -47,7 +75,12 @@ export const Header = memo(({ isAuth }: Props) => {
         <div className={s.wrapper}>
           {isAuth ? (
             <div className={s.meContainer}>
-              <Notification notifications={notificationsData} />
+              <Notification
+                inView={inView}
+                isFetching={isFetchingNotification}
+                notifications={notificationsData}
+                ref={ref}
+              />
               <LangSwitcher />
             </div>
           ) : (
