@@ -1,3 +1,5 @@
+import { forwardRef } from 'react'
+
 import {
   GetNotificationsResponse,
   NotificationItem,
@@ -9,29 +11,42 @@ import { Typography } from '@/shared/ui/Typography'
 
 import s from './Notification.module.scss'
 
-export const Notification = ({ notifications }: Props) => {
-  const getNewNotifications = (notifications: NotificationItem[]) => {
-    return notifications.filter(notification => !notification.isRead)
-  }
+export const Notification = forwardRef<HTMLDivElement, Props>(
+  ({ inView, isFetching, notifications }, ref) => {
+    const getNewNotifications = (notifications: NotificationItem[]) => {
+      return notifications.filter(notification => !notification.isRead)
+    }
 
-  return (
-    <button className={s.bellButton}>
-      <CustomPopover
-        contentChildren={notifications && <NotificationContent notifications={notifications} />}
-        icon={
-          <div style={{ position: 'relative' }}>
-            <Bell />
-          </div>
-        }
-      />
-      {notifications && (
-        <Typography as={'span'} className={s.span}>
-          {getNewNotifications(notifications.items).length}
-        </Typography>
-      )}
-    </button>
-  )
-}
+    return (
+      <button className={s.bellButton}>
+        <CustomPopover
+          contentChildren={
+            notifications && (
+              <NotificationContent
+                inView={inView}
+                isFetching={isFetching}
+                notifications={notifications}
+                ref={ref}
+              />
+            )
+          }
+          icon={
+            <div style={{ position: 'relative' }}>
+              <Bell />
+            </div>
+          }
+        />
+        {notifications && (
+          <Typography as={'span'} className={s.span}>
+            {getNewNotifications(notifications.items).length}
+          </Typography>
+        )}
+      </button>
+    )
+  }
+)
 type Props = {
+  inView: boolean
+  isFetching: boolean
   notifications?: GetNotificationsResponse
 }
