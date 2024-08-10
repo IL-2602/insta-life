@@ -75,7 +75,7 @@ export const useContainer = () => {
 
   const updatePostLikeStatusHandler = () => {
     console.log()
-    editPostLikeStatus({ likeStatus: postPhotos?.isLiked ? 'NONE' : 'LIKE', postId: +postId })
+    editPostLikeStatus({ likeStatus: postLikesData?.isLiked ? 'NONE' : 'LIKE', postId: +postId })
   }
 
   const isLoadingPost = isLoadingPostPhotos || isLoadingComments
