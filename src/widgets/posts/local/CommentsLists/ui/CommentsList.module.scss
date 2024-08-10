@@ -149,6 +149,10 @@
 .buttonIcon {
   width: 24px;
   height: 24px;
+  cursor: pointer;
+  &:hover {
+    color: var(--color-danger-500);
+  }
 }
 
 .button {

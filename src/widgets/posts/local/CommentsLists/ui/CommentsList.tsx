@@ -80,7 +80,7 @@ export const CommentsList = memo(
                   onClick={updatePostLikeStatusHandler}
                   variant={'noStyle'}
                 >
-                  {postPhotos?.isLiked ? <HeartFullIcon /> : <Heart />}
+                  {postLikesData?.isLiked ? <HeartFullIcon /> : <Heart />}
                 </Button>
                 <Button className={s.buttonIcon} variant={'noStyle'}>
                   <PaperLine />
