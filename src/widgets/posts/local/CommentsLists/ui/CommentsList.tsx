@@ -126,6 +126,7 @@ export const CommentsList = memo(
             setOpenLikersListModal(false)
           }}
           open={openLikersListModal}
+          ownerId={postPhotos?.ownerId}
           postLikesData={postLikesData}
           unFollow={unFollow}
         />

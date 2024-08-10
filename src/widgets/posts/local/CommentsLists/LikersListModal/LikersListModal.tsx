@@ -9,8 +9,17 @@ import Image from 'next/image'
 
 import s from './LikersListModal.module.scss'
 
-export const LikersListModal = ({ follow, onOpen, open, postLikesData, unFollow }: Props) => {
+export const LikersListModal = ({
+  follow,
+  onOpen,
+  open,
+  ownerId,
+  postLikesData,
+  unFollow,
+}: Props) => {
   const likersRender = postLikesData?.items.map(el => {
+    const isOwner = ownerId !== el.userId
+
     return (
       <div className={s.liker} key={el.id}>
         <div className={s.likerInfo}>
@@ -24,17 +33,21 @@ export const LikersListModal = ({ follow, onOpen, open, postLikesData, unFollow 
           />
           <Typography variant={'regular16'}>{el.userName}</Typography>
         </div>
-        {el.isFollowing ? (
-          <Button
-            onClick={() => unFollow({ userId: el.userId, username: el.userName })}
-            variant={'outlined'}
-          >
-            Unfollow
-          </Button>
-        ) : (
-          <Button onClick={() => follow({ selectedUserId: el.userId, username: el.userName })}>
-            Follow
-          </Button>
+        {isOwner && (
+          <>
+            {el.isFollowing ? (
+              <Button
+                onClick={() => unFollow({ userId: el.userId, username: el.userName })}
+                variant={'outlined'}
+              >
+                Unfollow
+              </Button>
+            ) : (
+              <Button onClick={() => follow({ selectedUserId: el.userId, username: el.userName })}>
+                Follow
+              </Button>
+            )}
+          </>
         )}
       </div>
     )
@@ -54,6 +67,7 @@ type Props = {
   follow: (data: { selectedUserId: number; username?: string }) => void
   onOpen: () => void
   open: boolean
+  ownerId?: number
   postLikesData: PostLikesResponse | undefined
   unFollow: (data: { userId: number; username: string }) => void
 }
