@@ -11,6 +11,7 @@ import { PostLikeCounter } from '@/shared/components/PostLikeCounter/PostLikeCou
 import { Avatar } from '@/shared/ui/Avatar'
 import { Button } from '@/shared/ui/Button'
 import { ScrollSelect } from '@/shared/ui/ScrollSelect/ScrollSelect'
+import { Spinner } from '@/shared/ui/Spinner'
 import { Typography } from '@/shared/ui/Typography'
 import { ControlledTextAreaField } from '@/shared/ui/controlledInsta/ControlledTextArea/ControlledTextArea'
 import { commentsAnswersTimeConversion } from '@/shared/utils/commentsAnswersTimeConversion'
@@ -30,22 +31,21 @@ export const CommentsList = memo(
     comments,
     control,
     follow,
-    isLoadingComments,
+    isFetchingComments,
     isLoadingPost,
-    isLoadingPostPhotos,
     isMe,
+    lastElRef,
     postDescription,
     postLikesData,
     postPhotos,
     t,
     unFollow,
-    updateCommentLikeStatusHandler,
     updatePostLikeStatusHandler,
   }: CommentsAnswersProps) => {
     const { locale } = useRouter()
 
-    console.log(postPhotos?.isLiked)
     const [openLikersListModal, setOpenLikersListModal] = useState(false)
+    const commentsLength = comments?.length
 
     return (
       <div className={s.commentsBlockWrapper}>
@@ -68,7 +68,24 @@ export const CommentsList = memo(
               </div>
             )}
             {isLoadingPost && <Skeleton count={3} height={64} width={'100%'} />}
-            {comments?.map(c => <Comment.widget comment={c} isComment key={c.id} />)}
+            {comments?.map((c, idx) => {
+              if (commentsLength === idx + 1) {
+                return <Comment.widget comment={c} isComment key={c.id} lastRef={lastElRef} />
+              }
+
+              return <Comment.widget comment={c} isComment key={c.id} />
+            })}
+            {isFetchingComments && (
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  minWidth: '100%',
+                }}
+              >
+                <Spinner />
+              </div>
+            )}
           </ScrollSelect>
         </div>
         <div>

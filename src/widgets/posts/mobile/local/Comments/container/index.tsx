@@ -5,11 +5,15 @@ import { useContainer } from './useContainer'
 
 export const Container = ({
   comments,
+  isFetchingComments,
+  lastRef,
   onOpen,
   open = false,
 }: {
   comments?: CommentsAnswers[]
+  isFetchingComments: boolean
+  lastRef?: any
   onOpen: () => void
   open: boolean
-}) => <Comments {...useContainer({ comments, onOpen, open })} />
+}) => <Comments ref={lastRef} {...useContainer({ comments, isFetchingComments, onOpen, open })} />
 export type CommentsType = ReturnType<typeof useContainer>

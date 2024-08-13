@@ -19,6 +19,8 @@ export const AnswerList = memo(
     lastElRef,
     onClickOpenCloseAnswerHandler,
   }: AnswersListProps) => {
+    const answersLength = answers?.length
+
     if (!answersTotalCount) {
       return null
     }
@@ -39,9 +41,7 @@ export const AnswerList = memo(
         </div>
         {isOpen === 'Hide' &&
           answers?.map((a, idx) => {
-            const length = answers.length
-
-            if (length === idx + 1) {
+            if (answersLength === idx + 1) {
               return <Comment.widget comment={a} isComment={false} key={a.id} lastRef={lastElRef} />
             }
 

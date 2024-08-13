@@ -15,9 +15,11 @@ import { useRouter } from 'next/router'
 export const useContainer = ({
   comment,
   isComment,
+  isFetchingComments,
 }: {
   comment: CommentsAnswers
   isComment: boolean
+  isFetchingComments: boolean
 }) => {
   const { locale, query } = useRouter()
   const postId = (query?.postId as string) || 0
@@ -54,6 +56,7 @@ export const useContainer = ({
     comment,
     isAnswer,
     isComment,
+    isFetchingComments,
     locale,
     onClickSendAnswer,
     onClickSetIsAnswer,

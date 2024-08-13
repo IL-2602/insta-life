@@ -2,12 +2,14 @@ import { CommentsAnswers } from '@/services/commentsAnswersService/lib/commentsA
 
 export const useContainer = ({
   comments,
+  isFetchingComments,
   onOpen,
   open,
 }: {
   comments?: CommentsAnswers[]
+  isFetchingComments: boolean
   onOpen: () => void
   open: boolean
 }) => {
-  return { comments, onOpen, open }
+  return { comments, isFetchingComments, onOpen, open }
 }

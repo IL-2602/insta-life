@@ -54,7 +54,6 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  max-width: 400px;
 }
 
 .userCommentContainer:last-child {
@@ -64,10 +63,7 @@
 .commentText {
   display: flex;
   flex-direction: column;
-
   width: 100%;
-  max-width: 345px;
-
   word-wrap: anywhere;
 }
 
@@ -89,6 +85,7 @@
 .commentLike {
   align-items: flex-start;
   margin-top: 17px;
+  padding-right: 20px;
 
   .likeButton {
     cursor: pointer;

@@ -19,8 +19,11 @@ import s from './MobileCommentsList.module.scss'
 export const MobileCommentsList = memo(
   ({
     comments,
+    commentsTotalCount,
     follow,
+    isFetchingComments,
     isLoadingPost,
+    lastElRef,
     postDescription,
     postLikesData,
     postPhotos,
@@ -60,7 +63,7 @@ export const MobileCommentsList = memo(
             {!isLoadingPost && !!comments?.length && (
               <Button onClick={() => setIsOpenComments(true)} variant={'noStyle'}>
                 <Typography color={'form'} variant={'small'}>
-                  {`View all Comments (${comments?.length})`}
+                  {`View all Comments (${commentsTotalCount})`}
                 </Typography>
               </Button>
             )}
@@ -101,6 +104,8 @@ export const MobileCommentsList = memo(
         </div>
         <MobileComments.widget
           comments={comments}
+          isFetchingComments={isFetchingComments}
+          lastRef={lastElRef}
           onOpen={() => setIsOpenComments(false)}
           open={isOpenComments}
         />

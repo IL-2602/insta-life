@@ -1,3 +1,4 @@
+import { useCallback, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { useGetMeQuery } from '@/services/authService/authEndpoints'
@@ -28,6 +29,8 @@ export const useContainer = () => {
 
   const { t } = useTranslation()
 
+  const [page, setPage] = useState<number>(1)
+
   const { error: meError } = useGetMeQuery()
   const { myPostSchema } = usePostSchema()
   const { data: postPhotos, isLoading: isLoadingPostPhotos } = useGetCurrentPostQuery(
@@ -36,10 +39,11 @@ export const useContainer = () => {
       skip: !postId,
     }
   )
-  const { data: commentsData, isLoading: isLoadingComments } = useGetCommentsQuery(
-    { pageSize: 15, postId: +postId },
-    { skip: !postId }
-  )
+  const {
+    data: commentsData,
+    isFetching: isFetchingComments,
+    isLoading: isLoadingComments,
+  } = useGetCommentsQuery({ pageNumber: page, pageSize: 15, postId: +postId }, { skip: !postId })
   const { data: postLikesData } = useGetLikesPostQuery({ postId: postId ?? '' }, { skip: !postId })
   const [createNewComment] = useCreateNewCommentMutation()
   const [updCommentLikeStatus] = useUpdCommentLikeStatusMutation()
@@ -59,6 +63,8 @@ export const useContainer = () => {
   })
 
   const comments = commentsData?.items
+  const commentsTotalCount = commentsData?.totalCount
+  const commentsPageCount = commentsData?.pagesCount || 1
   const isMe = !meError
   const postDescription = watch('myPostDescription')
   const postComment = watch('comment')
@@ -74,21 +80,45 @@ export const useContainer = () => {
     postId && updCommentLikeStatus({ commentId, likeStatus, postId: +postId })
 
   const updatePostLikeStatusHandler = () => {
-    console.log()
     editPostLikeStatus({ likeStatus: postLikesData?.isLiked ? 'NONE' : 'LIKE', postId: +postId })
   }
 
   const isLoadingPost = isLoadingPostPhotos || isLoadingComments
 
+  const cursorRef = useRef<IntersectionObserver | null>(null)
+  const lastElRef = useCallback(
+    (node: HTMLDivElement | null) => {
+      if (isFetchingComments || isLoadingComments) {
+        return
+      }
+      if (cursorRef.current) {
+        cursorRef.current.disconnect()
+      }
+      cursorRef.current = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting && page < commentsPageCount) {
+          setPage(p => p + 1)
+        }
+      })
+
+      if (node) {
+        cursorRef.current.observe(node)
+      }
+    },
+    [isFetchingComments, page, isLoadingComments]
+  )
+
   return {
     commentPublishHandler,
     comments,
+    commentsTotalCount,
     control,
     follow,
+    isFetchingComments,
     isLoadingComments,
     isLoadingPost,
     isLoadingPostPhotos,
     isMe,
+    lastElRef,
     postDescription,
     postLikesData,
     postPhotos,
