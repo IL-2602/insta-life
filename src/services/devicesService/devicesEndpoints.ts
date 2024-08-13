@@ -1,5 +1,5 @@
 import { api } from '@/services/api'
-import { Session } from '@/services/devicesService/lib/devicesEndpoints.types'
+import { SessionsResponse } from '@/services/devicesService/lib/devicesEndpoints.types'
 import { deleteCookie } from 'cookies-next'
 
 export const devicesEndpoints = api.injectEndpoints({
@@ -34,7 +34,7 @@ export const devicesEndpoints = api.injectEndpoints({
         }
       },
     }),
-    getSessions: builder.query<Session[], void>({
+    getSessions: builder.query<SessionsResponse, void>({
       providesTags: ['Sessions'],
       query: () => {
         return {

@@ -44,13 +44,13 @@ export const Devices = memo(
             isLoadingLogOut={isLoadingLogOut}
             isOpen={isOpen}
             key={s.deviceId}
-            session={{ browserName: browser, ip }}
+            session={{ browserName: browser, deviceId: sessions?.current.deviceId, ip }}
             sessionLoadingState={sessionLoadingState}
             setIsOpen={setIsOpen}
             t={t}
           />
         </div>
-        {sessions && sessions.length > 1 && (
+        {sessions && sessions.others.length > 1 && (
           <div className={s.closeSessions}>
             <Button onClick={() => handleTerminateAllOtherSessions()} variant={'outlined'}>
               <Typography variant={'h3'}>{t.button.terminateAllOtherSession}</Typography>
@@ -60,7 +60,7 @@ export const Devices = memo(
 
         <div className={s.activeDevice}>
           <Typography variant={'h3'}>{t.profileSettings.tab.devices.activeSessions}</Typography>
-          {sessions?.map(s => (
+          {sessions?.others.map(s => (
             <Device
               handleDeleteSession={handleDeleteSession}
               handleLogOut={handleLogOut}

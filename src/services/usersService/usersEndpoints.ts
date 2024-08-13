@@ -45,7 +45,7 @@ export const usersEndpoints = api.injectEndpoints({
       },
     }),
     subscribe: builder.mutation<void, { selectedUserId: number; username?: string }>({
-      invalidatesTags: ['Follow'],
+      invalidatesTags: ['Follow', 'LikesPost'],
       onQueryStarted: async ({ username }, { dispatch, queryFulfilled }) => {
         if (!username) {
           return
@@ -72,7 +72,7 @@ export const usersEndpoints = api.injectEndpoints({
       },
     }),
     unSubscribe: builder.mutation<void, { userId: number; username: string }>({
-      invalidatesTags: ['Follow'],
+      invalidatesTags: ['Follow', 'LikesPost'],
       onQueryStarted: async ({ username }, { dispatch, queryFulfilled }) => {
         if (!username) {
           return

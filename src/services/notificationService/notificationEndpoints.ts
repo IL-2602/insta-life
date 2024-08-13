@@ -7,13 +7,35 @@ import {
   GetNotificationsResponse,
   NotificationObjectResponse,
 } from '@/services/notificationService/lib/notificationEndpoints.types'
+import { QuerySubState } from '@reduxjs/toolkit/query'
 import { getCookie } from 'cookies-next'
 import { io } from 'socket.io-client'
 
 export const notificationEndpoints = api.injectEndpoints({
   endpoints: build => ({
     changeNotification: build.mutation<ChangeNotificationsResponse, ChangeNotificationsRequest>({
-      invalidatesTags: ['Notification'],
+      onQueryStarted: async (arg, { dispatch, queryFulfilled }) => {
+        const patchResult = dispatch(
+          api.util.updateQueryData(
+            // @ts-ignore
+            'getNotification',
+            arg,
+            (draft: GetNotificationsResponse) => {
+              draft.items.forEach(el => {
+                if (el.id === arg.ids[0]) {
+                  el.isRead = true
+                }
+              })
+            }
+          )
+        )
+
+        try {
+          await queryFulfilled
+        } catch (error) {
+          patchResult.undo()
+        }
+      },
       query: body => ({
         body,
         method: 'PUT',
@@ -21,6 +43,22 @@ export const notificationEndpoints = api.injectEndpoints({
       }),
     }),
     getNotification: build.query<GetNotificationsResponse, GetNotificationsRequest>({
+      forceRefetch: ({ currentArg, previousArg }) => {
+        return currentArg !== previousArg
+      },
+      merge: (currentCacheData, newItems, otherArgs) => {
+        const updatedNotification = newItems.items
+
+        if (
+          newItems.items.length > 0 &&
+          newItems.items[newItems.items.length - 1].id !==
+            currentCacheData.items[currentCacheData.items.length - 1].id
+        ) {
+          console.log('push notification')
+
+          currentCacheData.items.push(...updatedNotification)
+        }
+      },
       providesTags: ['Notification'],
       query: ({ cursor = '', pageSize = 12, sortDirection = 'desc' }) => {
         return {
@@ -30,6 +68,9 @@ export const notificationEndpoints = api.injectEndpoints({
           },
           url: `notifications/${cursor}`,
         }
+      },
+      serializeQueryArgs: ({ endpointName }) => {
+        return endpointName
       },
     }),
     subscribeToNotifications: build.query<NotificationObjectResponse, void>({

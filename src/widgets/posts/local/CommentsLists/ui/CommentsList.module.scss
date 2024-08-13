@@ -138,6 +138,9 @@
   margin: 0 24px;
 }
 
+.likesContainer {
+  margin: 5px 24px 0;
+}
 .buttonIconWrapper {
   display: flex;
   gap: 24px;
@@ -146,6 +149,10 @@
 .buttonIcon {
   width: 24px;
   height: 24px;
+  cursor: pointer;
+  &:hover {
+    color: var(--color-danger-500);
+  }
 }
 
 .button {

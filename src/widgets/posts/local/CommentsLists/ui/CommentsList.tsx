@@ -1,36 +1,51 @@
-import { Fragment, memo } from 'react'
+import { Fragment, memo, useState } from 'react'
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 
 import { Bookmark } from '@/shared/assets/icons/Bookmark'
+import { Heart } from '@/shared/assets/icons/Heart'
 import { HeartOutline } from '@/shared/assets/icons/Heart/HeartOutline'
+import { HeartFullIcon } from '@/shared/assets/icons/HeartFull'
 import { PaperLine } from '@/shared/assets/icons/PaperLine'
+import { PostDate } from '@/shared/components/PostDate/PostDate'
+import { PostLikeCounter } from '@/shared/components/PostLikeCounter/PostLikeCounter'
 import { Avatar } from '@/shared/ui/Avatar'
 import { Button } from '@/shared/ui/Button'
 import { ScrollSelect } from '@/shared/ui/ScrollSelect/ScrollSelect'
 import { Typography } from '@/shared/ui/Typography'
 import { ControlledTextAreaField } from '@/shared/ui/controlledInsta/ControlledTextArea/ControlledTextArea'
 import { commentsAnswersTimeConversion } from '@/shared/utils/commentsAnswersTimeConversion'
+import { LikersListModal } from '@/widgets/posts/local/CommentsLists/LikersListModal/LikersListModal'
 import { CommentsAnswersProps } from '@/widgets/posts/local/CommentsLists/container'
+import { namedTypes } from 'ast-types'
 import { useRouter } from 'next/router'
 import { Comment } from 'src/widgets/posts/local/Comment'
 
 import s from './CommentsList.module.scss'
+
+import Line = namedTypes.Line
 
 export const CommentsList = memo(
   ({
     commentPublishHandler,
     comments,
     control,
+    follow,
     isLoadingComments,
     isLoadingPost,
     isLoadingPostPhotos,
     isMe,
     postDescription,
+    postLikesData,
     postPhotos,
     t,
+    unFollow,
     updateCommentLikeStatusHandler,
+    updatePostLikeStatusHandler,
   }: CommentsAnswersProps) => {
     const { locale } = useRouter()
+
+    console.log(postPhotos?.isLiked)
+    const [openLikersListModal, setOpenLikersListModal] = useState(false)
 
     return (
       <div className={s.commentsBlockWrapper}>
@@ -60,8 +75,12 @@ export const CommentsList = memo(
           <div className={s.likesBlock}>
             <div className={s.buttonIcons}>
               <div className={s.buttonIconWrapper}>
-                <Button className={s.buttonIcon} variant={'noStyle'}>
-                  <HeartOutline />
+                <Button
+                  className={s.buttonIcon}
+                  onClick={updatePostLikeStatusHandler}
+                  variant={'noStyle'}
+                >
+                  {postLikesData?.isLiked ? <HeartFullIcon /> : <Heart />}
                 </Button>
                 <Button className={s.buttonIcon} variant={'noStyle'}>
                   <PaperLine />
@@ -71,6 +90,14 @@ export const CommentsList = memo(
                 <Bookmark />
               </Button>
             </div>
+            <PostLikeCounter
+              className={s.likesContainer}
+              isLiked={postPhotos?.isLiked}
+              likesCount={postLikesData?.totalCount}
+              openLikersList={() => setOpenLikersListModal(true)}
+              postLikesData={postLikesData}
+            />
+            <PostDate className={s.likesContainer} date={postPhotos?.createdAt} />
           </div>
           {isMe && (
             <div className={s.addCommentBlock}>
@@ -93,6 +120,16 @@ export const CommentsList = memo(
             </div>
           )}
         </div>
+        <LikersListModal
+          follow={follow}
+          onOpen={() => {
+            setOpenLikersListModal(false)
+          }}
+          open={openLikersListModal}
+          ownerId={postPhotos?.ownerId}
+          postLikesData={postLikesData}
+          unFollow={unFollow}
+        />
       </div>
     )
   }

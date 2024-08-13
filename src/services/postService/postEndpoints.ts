@@ -1,8 +1,11 @@
 import { api } from '@/services/api'
 import {
+  EditPostLikeStatusRequest,
   EditPostParams,
   GetCurrentPostResponse,
   GetPostsResponse,
+  PostLikesRequest,
+  PostLikesResponse,
   PublishPostImageResponse,
   PublishPostParams,
   PublishPostResponse,
@@ -49,12 +52,36 @@ export const postEndpoints = api.injectEndpoints({
         }
       },
     }),
+    editPostLikeStatus: builder.mutation<void, EditPostLikeStatusRequest>({
+      invalidatesTags: ['LikesPost'],
+      query: params => {
+        const { postId, ...body } = params
+
+        return {
+          body,
+          method: 'PUT',
+          url: `posts/${postId}/like-status`,
+        }
+      },
+    }),
     getCurrentPost: builder.query<GetCurrentPostResponse, number>({
       providesTags: ['Post'],
       query: postId => {
         return {
           method: 'GET',
           url: `public-posts/${postId}`,
+        }
+      },
+    }),
+    getLikesPost: builder.query<PostLikesResponse, PostLikesRequest>({
+      providesTags: ['LikesPost'],
+      query: params => {
+        const { postId, ...rest } = params
+
+        return {
+          method: 'GET',
+          params: rest,
+          url: `posts/${postId}/likes`,
         }
       },
     }),
@@ -106,8 +133,10 @@ export const postEndpoints = api.injectEndpoints({
 
 export const {
   useDeletePostMutation,
+  useEditPostLikeStatusMutation,
   useEditPostMutation,
   useGetCurrentPostQuery,
+  useGetLikesPostQuery,
   useGetPostsQuery,
   usePublishPostImageMutation,
   usePublishPostMutation,
