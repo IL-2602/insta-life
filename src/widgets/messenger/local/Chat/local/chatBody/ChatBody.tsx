@@ -14,7 +14,6 @@ import { OwnerMessage } from '@/widgets/messenger/local/messages/ownerMessage/Ow
 import { ReceiverMessage } from '@/widgets/messenger/local/messages/receiverMessage/ReceiverMessage'
 import * as ScrollArea from '@radix-ui/react-scroll-area'
 import { clsx } from 'clsx'
-import { CloseIcon } from 'next/dist/client/components/react-dev-overlay/internal/icons/CloseIcon'
 import Image from 'next/image'
 
 import s from './ChatBody.module.scss'
