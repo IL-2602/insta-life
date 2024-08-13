@@ -25,7 +25,7 @@ export const useContainer = () => {
 
   const dispatch = useAppDispatch()
 
-  const [width, setWidth] = useState<number>(0)
+  const [width, setWidth] = useState<number>(1024)
 
   function handleWindowSizeChange() {
     setWidth(window.innerWidth)

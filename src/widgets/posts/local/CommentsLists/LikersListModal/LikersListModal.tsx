@@ -24,12 +24,12 @@ export const LikersListModal = ({
       <div className={s.liker} key={el.id}>
         <div className={s.likerInfo}>
           <Image
-            alt={el.avatars[0].url}
-            height={el.avatars[0].height / 5}
+            alt={el.avatars[0]?.url}
+            height={el.avatars[0]?.height / 5}
             key={el.id}
-            src={el.avatars[0].url}
+            src={el.avatars[0]?.url}
             style={{ borderRadius: '50%' }}
-            width={el.avatars[0].width / 5}
+            width={el.avatars[0]?.width / 5}
           />
           <Typography variant={'regular16'}>{el.userName}</Typography>
         </div>

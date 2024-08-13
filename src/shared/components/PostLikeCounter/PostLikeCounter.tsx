@@ -15,13 +15,13 @@ export const PostLikeCounter = ({
 }: Props) => {
   const avatarsRender = postLikesData?.items.map(el => (
     <Image
-      alt={el.avatars[0].url}
+      alt={el.avatars[0]?.url}
       className={s.avatar}
-      height={el.avatars[0].height / 5}
+      height={el.avatars[0]?.height / 5}
       key={el.id}
-      src={el.avatars[0].url}
+      src={el.avatars[0]?.url}
       style={{ borderRadius: '50%' }}
-      width={el.avatars[0].width / 5}
+      width={el.avatars[0]?.width / 5}
     />
   ))
 
