@@ -13,17 +13,24 @@ export const PostLikeCounter = ({
   openLikersList,
   postLikesData,
 }: Props) => {
-  const avatarsRender = postLikesData?.items.map(el => (
-    <Image
-      alt={el.avatars[0]?.url}
-      className={s.avatar}
-      height={el.avatars[0]?.height / 5}
-      key={el.id}
-      src={el.avatars[0]?.url}
-      style={{ borderRadius: '50%' }}
-      width={el.avatars[0]?.width / 5}
-    />
-  ))
+  const avatarsRender = postLikesData?.items.map(
+    el =>
+      el.avatars[0]?.url ? (
+        <Image
+          alt={el.avatars[0]?.url}
+          className={s.avatar}
+          height={24}
+          key={el.id}
+          src={el.avatars[0]?.url}
+          style={{ borderRadius: '50%' }}
+          width={24}
+        />
+      ) : null
+
+    // <div className={s.avatar}>
+    //   <Avatar userAvatar={el.avatars[0]?.url} />
+    // </div>
+  )
 
   return (
     <div className={`${s.container} ${className ?? ''}`}>

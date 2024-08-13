@@ -4,16 +4,29 @@
 }
 
 .avatars {
-  display: flex;
   cursor: pointer;
+  display: flex;
 
   .avatar:not(:first-child) {
+    position: relative;
+
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    align-self: baseline;
+
+    min-width: 24px;
+    height: 24px;
     margin-left: -15px;
+
+    object-fit: cover;
+    border-radius: 50%;
   }
 }
 
 .likesContainer {
   display: flex;
-  align-items: center;
   gap: 20px;
+  align-items: center;
 }
+

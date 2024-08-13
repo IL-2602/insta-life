@@ -4,20 +4,31 @@ import Skeleton from 'react-loading-skeleton'
 import { Bookmark } from '@/shared/assets/icons/Bookmark'
 import { HeartOutline } from '@/shared/assets/icons/Heart/HeartOutline'
 import { PaperLine } from '@/shared/assets/icons/PaperLine'
+import { PostLikeCounter } from '@/shared/components/PostLikeCounter/PostLikeCounter'
 import { Avatar } from '@/shared/ui/Avatar'
 import { Button } from '@/shared/ui/Button'
 import { Typography } from '@/shared/ui/Typography'
 import { commentsAnswersTimeConversion } from '@/shared/utils/commentsAnswersTimeConversion'
 import { CommentsAnswersProps } from '@/widgets/posts/local/CommentsLists/container'
 import { MobileComments } from '@/widgets/posts/mobile/local/Comments'
+import { MobileLikersListModal } from '@/widgets/posts/mobile/local/CommentsLists/LikersListModal/MobileLikersListModal'
 import { useRouter } from 'next/router'
 
 import s from './MobileCommentsList.module.scss'
 
 export const MobileCommentsList = memo(
-  ({ comments, isLoadingPost, postDescription, postPhotos }: CommentsAnswersProps) => {
+  ({
+    comments,
+    follow,
+    isLoadingPost,
+    postDescription,
+    postLikesData,
+    postPhotos,
+    unFollow,
+  }: CommentsAnswersProps) => {
     const { locale } = useRouter()
     const [isOpenComments, setIsOpenComments] = useState(false)
+    const [openLikersListModal, setOpenLikersListModal] = useState(false)
 
     return (
       <>
@@ -31,6 +42,13 @@ export const MobileCommentsList = memo(
                 <Button className={s.buttonIcon} variant={'noStyle'}>
                   <PaperLine />
                 </Button>
+                <PostLikeCounter
+                  className={s.likesContainer}
+                  isLiked={postPhotos?.isLiked}
+                  likesCount={postLikesData?.totalCount}
+                  openLikersList={() => setOpenLikersListModal(true)}
+                  postLikesData={postLikesData}
+                />
               </div>
               <Button className={s.buttonIcon} variant={'noStyle'}>
                 <Bookmark />
@@ -85,6 +103,16 @@ export const MobileCommentsList = memo(
           comments={comments}
           onOpen={() => setIsOpenComments(false)}
           open={isOpenComments}
+        />
+        <MobileLikersListModal
+          follow={follow}
+          onOpen={() => {
+            setOpenLikersListModal(false)
+          }}
+          open={openLikersListModal}
+          ownerId={postPhotos?.ownerId}
+          postLikesData={postLikesData}
+          unFollow={unFollow}
         />
       </>
     )
