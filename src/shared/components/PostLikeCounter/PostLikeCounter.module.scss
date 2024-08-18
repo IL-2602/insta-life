@@ -6,8 +6,9 @@
 .avatars {
   display: flex;
   cursor: pointer;
+  align-items: center;
 
-  .avatar:not(:first-child) {
+  .photo:not(:first-child) {
     margin-left: -15px;
   }
 }
@@ -16,4 +17,23 @@
   display: flex;
   align-items: center;
   gap: 20px;
+}
+
+.avatarBorder {
+  border: 1px solid var(--color-light-100);
+}
+
+.photo {
+  position: relative;
+
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+
+  width: 36px;
+  height: 36px;
+
+  object-fit: cover;
+  background-color: var(--color-dark-700);
+  border-radius: 50%;
 }
