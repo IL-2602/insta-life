@@ -22,3 +22,18 @@
 .content {
   padding: 24px;
 }
+.photo {
+  position: relative;
+
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  align-self: baseline;
+
+  min-width: 36px;
+  height: 36px;
+
+  object-fit: cover;
+  background-color: var(--color-dark-700);
+  border-radius: 50%;
+}
