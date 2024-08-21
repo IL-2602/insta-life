@@ -28,6 +28,7 @@ export const MobileCommentsList = memo(
     postLikesData,
     postPhotos,
     unFollow,
+    user,
   }: CommentsAnswersProps) => {
     const { locale } = useRouter()
     const [isOpenComments, setIsOpenComments] = useState(false)
@@ -51,6 +52,7 @@ export const MobileCommentsList = memo(
                   likesCount={postLikesData?.totalCount}
                   openLikersList={() => setOpenLikersListModal(true)}
                   postLikesData={postLikesData}
+                  user={user}
                 />
               </div>
               <Button className={s.buttonIcon} variant={'noStyle'}>
@@ -118,6 +120,7 @@ export const MobileCommentsList = memo(
           ownerId={postPhotos?.ownerId}
           postLikesData={postLikesData}
           unFollow={unFollow}
+          user={user}
         />
       </>
     )

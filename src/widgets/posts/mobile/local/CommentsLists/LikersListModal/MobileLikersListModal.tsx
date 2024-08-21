@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { GetMeResponse, UserType } from '@/services/authService/lib/authEndpoints.types'
 import { PostLikesResponse } from '@/services/postService/lib/postEndpoints.types'
 import { Avatar } from '@/shared/ui/Avatar'
 import { Button } from '@/shared/ui/Button'
@@ -14,12 +15,13 @@ export const MobileLikersListModal = ({
   follow,
   onOpen,
   open,
-  ownerId,
   postLikesData,
   unFollow,
+  user,
 }: Props) => {
   const likersRender = postLikesData?.items.map(el => {
-    const isOwner = ownerId !== el.userId
+    const { userId } = user as UserType
+    const isOwner = userId !== el.userId
 
     return (
       <div className={s.liker} key={el.id}>
@@ -64,7 +66,7 @@ type Props = {
   follow: (data: { selectedUserId: number; username?: string }) => void
   onOpen: () => void
   open: boolean
-  ownerId?: number
   postLikesData: PostLikesResponse | undefined
   unFollow: (data: { userId: number; username: string }) => void
+  user: GetMeResponse | unknown
 }
