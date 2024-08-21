@@ -41,6 +41,7 @@ export const CommentsList = memo(
     t,
     unFollow,
     updatePostLikeStatusHandler,
+    user,
   }: CommentsAnswersProps) => {
     const { locale } = useRouter()
 
@@ -113,6 +114,7 @@ export const CommentsList = memo(
               likesCount={postLikesData?.totalCount}
               openLikersList={() => setOpenLikersListModal(true)}
               postLikesData={postLikesData}
+              user={user}
             />
             <PostDate className={s.likesContainer} date={postPhotos?.createdAt} />
           </div>
@@ -146,6 +148,7 @@ export const CommentsList = memo(
           ownerId={postPhotos?.ownerId}
           postLikesData={postLikesData}
           unFollow={unFollow}
+          user={user}
         />
       </div>
     )

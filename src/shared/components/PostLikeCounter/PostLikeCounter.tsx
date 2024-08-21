@@ -1,8 +1,11 @@
+import { GetMeResponse } from '@/services/authService/lib/authEndpoints.types'
 import { PostLikesResponse } from '@/services/postService/lib/postEndpoints.types'
+import { ImageIcon } from '@/shared/assets/icons/Image'
 import { Avatar } from '@/shared/ui/Avatar'
 import { Typography } from '@/shared/ui/Typography'
 import { clsx } from 'clsx'
 import Image from 'next/image'
+import { element } from 'prop-types'
 
 import s from './PostLikeCounter.module.scss'
 
@@ -12,31 +15,29 @@ export const PostLikeCounter = ({
   likesCount,
   openLikersList,
   postLikesData,
+  user,
 }: Props) => {
-  const avatarsRender = postLikesData?.items.map(
-    el =>
-      el.avatars[0]?.url ? (
-        <Image
-          alt={el.avatars[0]?.url}
-          className={s.avatar}
-          height={24}
-          key={el.id}
-          src={el.avatars[0]?.url}
-          style={{ borderRadius: '50%' }}
-          width={24}
-        />
-      ) : null
+  const avatarsRender = () => {
+    const avatarsArray = postLikesData?.items.map(el => {
+      return (
+        <div className={s.photo} key={el.id}>
+          <Avatar userAvatar={el.avatars[0] && el.avatars[0].url} />
+        </div>
+      )
+    })
 
-    // <div className={s.avatar}>
-    //   <Avatar userAvatar={el.avatars[0]?.url} />
-    // </div>
-  )
+    if (avatarsArray && avatarsArray.length > 3) {
+      return avatarsArray.slice(0, 3)
+    } else {
+      return avatarsArray
+    }
+  }
 
   return (
     <div className={`${s.container} ${className ?? ''}`}>
       <div className={s.likesContainer}>
         <div className={s.avatars} onClick={openLikersList}>
-          {avatarsRender}
+          {avatarsRender()}
         </div>
         <Typography className={s.likeCounter} variant={'bold14'}>
           <Typography variant={'regular14'}>{likesCount}</Typography>
@@ -54,4 +55,5 @@ type Props = {
   likesCount?: number
   openLikersList: () => void
   postLikesData?: PostLikesResponse
+  user: GetMeResponse | unknown
 }

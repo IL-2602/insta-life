@@ -4,28 +4,36 @@
 }
 
 .avatars {
-  cursor: pointer;
   display: flex;
+  cursor: pointer;
+  align-items: center;
 
-  .avatar:not(:first-child) {
-    position: relative;
-
-    overflow: hidden;
-    display: grid;
-    place-items: center;
-    align-self: baseline;
-
-    min-width: 24px;
-    height: 24px;
+  .photo:not(:first-child) {
     margin-left: -15px;
-
-    object-fit: cover;
-    border-radius: 50%;
   }
 }
 
 .likesContainer {
   display: flex;
-  gap: 20px;
   align-items: center;
+  gap: 20px;
+}
+
+.avatarBorder {
+  border: 1px solid var(--color-light-100);
+}
+
+.photo {
+  position: relative;
+
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+
+  width: 36px;
+  height: 36px;
+
+  object-fit: cover;
+  background-color: var(--color-dark-700);
+  border-radius: 50%;
 }

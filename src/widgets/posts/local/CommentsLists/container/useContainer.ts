@@ -29,9 +29,9 @@ export const useContainer = () => {
 
   const { t } = useTranslation()
 
+  const { data: user, error: meError } = useGetMeQuery()
   const [page, setPage] = useState<number>(1)
 
-  const { error: meError } = useGetMeQuery()
   const { myPostSchema } = usePostSchema()
   const { data: postPhotos, isLoading: isLoadingPostPhotos } = useGetCurrentPostQuery(
     Number(postId),
@@ -126,5 +126,6 @@ export const useContainer = () => {
     unFollow,
     updateCommentLikeStatusHandler,
     updatePostLikeStatusHandler,
+    user,
   }
 }

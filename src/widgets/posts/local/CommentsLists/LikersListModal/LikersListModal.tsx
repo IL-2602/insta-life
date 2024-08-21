@@ -1,6 +1,9 @@
 import React from 'react'
 
+import { GetMeResponse, UserType } from '@/services/authService/lib/authEndpoints.types'
 import { PostLikesResponse } from '@/services/postService/lib/postEndpoints.types'
+import { ImageIcon } from '@/shared/assets/icons/Image'
+import { Avatar } from '@/shared/ui/Avatar'
 import { Button } from '@/shared/ui/Button'
 import { Modal } from '@/shared/ui/Modal/v2'
 import { TextField } from '@/shared/ui/Textfield'
@@ -16,21 +19,27 @@ export const LikersListModal = ({
   ownerId,
   postLikesData,
   unFollow,
+  user,
 }: Props) => {
   const likersRender = postLikesData?.items.map(el => {
-    const isOwner = ownerId !== el.userId
+    const { userId } = user as UserType
+    const isOwner = userId !== el.userId
 
     return (
       <div className={s.liker} key={el.id}>
         <div className={s.likerInfo}>
-          <Image
-            alt={el.avatars[0]?.url}
-            height={el.avatars[0]?.height / 5}
-            key={el.id}
-            src={el.avatars[0]?.url}
-            style={{ borderRadius: '50%' }}
-            width={el.avatars[0]?.width / 5}
-          />
+          {/*<Image*/}
+          {/*  alt={el.userName}*/}
+          {/*  height={el.avatars[0].height / 5}*/}
+          {/*  key={el.id}*/}
+          {/*  src={el.avatars[0].url}*/}
+          {/*  style={{ borderRadius: '50%' }}*/}
+          {/*  width={el.avatars[0].width / 5}*/}
+          {/*/>*/}
+          <div className={s.photo}>
+            <Avatar userAvatar={el.avatars[0] && el.avatars[0].url} />
+          </div>
+
           <Typography variant={'regular16'}>{el.userName}</Typography>
         </div>
         {isOwner && (
@@ -70,4 +79,5 @@ type Props = {
   ownerId?: number
   postLikesData: PostLikesResponse | undefined
   unFollow: (data: { userId: number; username: string }) => void
+  user: GetMeResponse | unknown
 }
