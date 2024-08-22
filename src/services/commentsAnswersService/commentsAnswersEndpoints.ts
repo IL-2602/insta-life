@@ -76,7 +76,7 @@ const commentsAnswersEndpoints = api.injectEndpoints({
           currentCache.items.push(...newItems.items)
         }
       },
-      providesTags: ['Comments'],
+      providesTags: ['Answers'],
       query: ({ commentId, postId, ...rest }) => {
         return {
           method: 'GET',
@@ -89,6 +89,16 @@ const commentsAnswersEndpoints = api.injectEndpoints({
       },
     }),
     getComments: builder.query<CommentsAnswersResponse<CommentsAnswers>, GetCommentsParams>({
+      forceRefetch({ currentArg, previousArg }) {
+        return currentArg?.pageNumber !== previousArg?.pageNumber
+      },
+      merge: (currentCache, newItems, otherArgs) => {
+        if (otherArgs.arg.pageNumber === 1) {
+          currentCache.items = newItems.items
+        } else {
+          currentCache.items.push(...newItems.items)
+        }
+      },
       providesTags: ['Comments'],
       query: ({ postId, ...rest }) => {
         return {
@@ -96,6 +106,9 @@ const commentsAnswersEndpoints = api.injectEndpoints({
           params: rest || {},
           url: `posts/${postId}/comments`,
         }
+      },
+      serializeQueryArgs: ({ endpointName, queryArgs }) => {
+        return `${endpointName}?${queryArgs.postId}`
       },
     }),
     updAnswerLikeStatus: builder.mutation<void, UpdateAnswerLikeStatusParams>({

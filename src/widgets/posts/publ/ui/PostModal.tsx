@@ -34,11 +34,12 @@ export const PostModal = memo(
     deletePostModalHandler,
     handleCloseModal,
     handleOpenEditPostDialog,
+    handleUnFollow,
     isEdit,
-    isEditable,
+    isFollowing,
     isLoading,
     isMyPostModal,
-    meError,
+    isShowOptions,
     onChangeCurrPhoto,
     postId,
     postPhotos,
@@ -113,7 +114,7 @@ export const PostModal = memo(
                     </div>
                   </div>
 
-                  {!meError && isEditable && !isEdit && (
+                  {isShowOptions && (
                     <div className={s.postOptions}>
                       <CustomPopover
                         contentChildren={
@@ -121,6 +122,8 @@ export const PostModal = memo(
                             deletePostModalHandler={deletePostModalHandler}
                             editPostModalHandler={() => setIsEditPostHandler(true)}
                             id={'123'}
+                            isFollowing={isFollowing}
+                            unFollowModalHandler={handleUnFollow}
                           />
                         }
                         icon={

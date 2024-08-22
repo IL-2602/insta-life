@@ -3,6 +3,7 @@ import { forwardRef } from 'react'
 import { PublishPostResponse } from '@/services/postService/lib/postEndpoints.types'
 import { SpinnerThreePoints } from '@/shared/ui/SpinnerThreePoints'
 import { PostModal } from '@/widgets/posts'
+import { MobilePostModal } from '@/widgets/posts/mobile'
 import Image from 'next/image'
 
 import s from 'src/widgets/profile/publ/postsList/ui/PostsList.module.scss'
@@ -10,7 +11,7 @@ import s from 'src/widgets/profile/publ/postsList/ui/PostsList.module.scss'
 import { PostsListProps } from '../container'
 
 export const PostsList = forwardRef<HTMLDivElement, PostsListProps>(
-  ({ handleReceivingPostId, isFetching, lastPostId, posts }, ref) => {
+  ({ handleReceivingPostId, isFetching, isMobile, lastPostId, posts }, ref) => {
     return (
       <>
         <div className={s.container}>
@@ -44,7 +45,7 @@ export const PostsList = forwardRef<HTMLDivElement, PostsListProps>(
             <SpinnerThreePoints />
           </div>
         )}
-        <PostModal.widget />
+        {isMobile ? <MobilePostModal.widget /> : <PostModal.widget />}
       </>
     )
   }

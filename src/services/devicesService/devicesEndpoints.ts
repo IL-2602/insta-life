@@ -38,7 +38,6 @@ export const devicesEndpoints = api.injectEndpoints({
       providesTags: ['Sessions'],
       query: () => {
         return {
-          method: 'GET',
           url: `sessions`,
         }
       },

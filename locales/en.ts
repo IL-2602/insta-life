@@ -143,6 +143,7 @@ export const en = {
     backToPayment: 'Back to payment',
     backToProfileSettings: 'Back to Profile Settings',
     banInTheSystem: 'Ban in the system',
+    cancel: 'Cancel',
     copyLink: 'Copy Link',
     delete: 'Delete',
     deletePost: 'Delete Post',

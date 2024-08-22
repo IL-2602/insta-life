@@ -7,6 +7,7 @@ import { useGetUserPostsQuery } from '@/services/publicService/publicEndpoints'
 import { useRouter } from 'next/router'
 
 export const useContainer = () => {
+  const [isLoadingClient, setIsLoadingClient] = useState(true)
   const { inView, ref } = useInView({
     threshold: 1,
   })
@@ -17,13 +18,32 @@ export const useContainer = () => {
 
   const [lastPostId, setLastPostId] = useState<number | undefined>(undefined)
 
-  const { data: posts, isFetching } = useGetUserPostsQuery({
+  const { data: posts, isFetching: isFetchingPosts } = useGetUserPostsQuery({
     endCursorPostId: lastPostId,
     pageSize: !lastPostId ? 12 : 8,
     userId: +profileId,
   })
 
+  const isFetching = isFetchingPosts || isLoadingClient
+
   const dispatch = useAppDispatch()
+
+  const [width, setWidth] = useState<number>(0)
+
+  function handleWindowSizeChange() {
+    setWidth(window.innerWidth)
+  }
+  useEffect(() => {
+    setWidth(window.innerWidth)
+    isLoadingClient && setIsLoadingClient(false)
+    window.addEventListener('resize', handleWindowSizeChange)
+
+    return () => {
+      window.removeEventListener('resize', handleWindowSizeChange)
+    }
+  }, [])
+
+  const isMobile = width <= 768
 
   useEffect(() => {
     if (posts && posts.items.length >= posts.totalCount) {
@@ -43,5 +63,5 @@ export const useContainer = () => {
     dispatch(postActions.setIsMyPostModal(true))
   }
 
-  return { handleReceivingPostId, isFetching, lastPostId, posts, ref }
+  return { handleReceivingPostId, isFetching, isMobile, lastPostId, posts, ref }
 }

@@ -1,0 +1,87 @@
+.content {
+  z-index: 1000;
+}
+
+.body {
+  padding: 5px 24px;
+}
+
+.root {
+  height: 100%;
+}
+
+.scroll {
+  overflow: hidden;
+  height: calc(100dvh - 121px - 70px);
+}
+
+.scrollWithImage {
+  overflow: hidden;
+  height: calc(550px - 123px);
+
+  @media (height <= 768px) {
+    height: calc(450px - 123px);
+  }
+}
+
+.view {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.scrollbar {
+  touch-action: none;
+  user-select: none;
+  display: flex;
+}
+
+.scrollbar[data-orientation='vertical'] {
+  width: 14px;
+  padding: 3px 0;
+}
+
+.scrollbar[data-orientation='horizontal'] {
+  flex-direction: column;
+  height: 14px;
+  padding: 0 3px;
+}
+
+.thumb {
+  cursor: pointer;
+
+  position: relative;
+
+  flex-grow: 1;
+
+  padding: 0 5px;
+
+  border-radius: 5px;
+
+  &::before {
+    content: '';
+
+    position: absolute;
+
+    width: 4px;
+    height: 100%;
+
+    background-color: var(--color-dark-100);
+    border-radius: 3px;
+
+    transition: 160ms background-color;
+
+    [data-orientation='horizontal'] & {
+      width: 100%;
+      height: 4px;
+    }
+  }
+
+  [data-orientation='horizontal'] & {
+    padding: 5px 0;
+  }
+
+  &:hover::before {
+    background-color: var(--color-dark-100);
+  }
+}

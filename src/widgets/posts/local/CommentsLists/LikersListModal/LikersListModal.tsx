@@ -12,15 +12,7 @@ import Image from 'next/image'
 
 import s from './LikersListModal.module.scss'
 
-export const LikersListModal = ({
-  follow,
-  onOpen,
-  open,
-  ownerId,
-  postLikesData,
-  unFollow,
-  user,
-}: Props) => {
+export const LikersListModal = ({ follow, onOpen, open, postLikesData, unFollow, user }: Props) => {
   const likersRender = postLikesData?.items.map(el => {
     const { userId } = user as UserType
     const isOwner = userId !== el.userId
@@ -76,7 +68,6 @@ type Props = {
   follow: (data: { selectedUserId: number; username?: string }) => void
   onOpen: () => void
   open: boolean
-  ownerId?: number
   postLikesData: PostLikesResponse | undefined
   unFollow: (data: { userId: number; username: string }) => void
   user: GetMeResponse | unknown
