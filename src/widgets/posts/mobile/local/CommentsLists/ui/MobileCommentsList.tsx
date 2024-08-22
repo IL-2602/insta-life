@@ -3,7 +3,9 @@ import Skeleton from 'react-loading-skeleton'
 
 import { Bookmark } from '@/shared/assets/icons/Bookmark'
 import { HeartOutline } from '@/shared/assets/icons/Heart/HeartOutline'
+import { HeartFullIcon } from '@/shared/assets/icons/HeartFull'
 import { PaperLine } from '@/shared/assets/icons/PaperLine'
+import { PostFillHeart, PostHeart } from '@/shared/assets/icons/Post'
 import { PostLikeCounter } from '@/shared/components/PostLikeCounter/PostLikeCounter'
 import { Avatar } from '@/shared/ui/Avatar'
 import { Button } from '@/shared/ui/Button'
@@ -28,6 +30,7 @@ export const MobileCommentsList = memo(
     postLikesData,
     postPhotos,
     unFollow,
+    updatePostLikeStatusHandler,
     user,
   }: CommentsAnswersProps) => {
     const { locale } = useRouter()
@@ -39,22 +42,24 @@ export const MobileCommentsList = memo(
         <div className={s.commentsBlockWrapper}>
           <div className={s.likesBlock}>
             <div className={s.buttonIcons}>
-              <div className={s.buttonIconWrapper}>
-                <Button className={s.buttonIcon} variant={'noStyle'}>
-                  <HeartOutline />
-                </Button>
-                <Button className={s.buttonIcon} variant={'noStyle'}>
-                  <PaperLine />
-                </Button>
-                <PostLikeCounter
-                  className={s.likesContainer}
-                  isLiked={postPhotos?.isLiked}
-                  likesCount={postLikesData?.totalCount}
-                  openLikersList={() => setOpenLikersListModal(true)}
-                  postLikesData={postLikesData}
-                  user={user}
-                />
-              </div>
+              <Button
+                className={s.buttonIcon}
+                onClick={updatePostLikeStatusHandler}
+                variant={'noStyle'}
+              >
+                {postLikesData?.isLiked ? <PostFillHeart /> : <PostHeart />}
+              </Button>
+              <Button className={s.buttonIcon} variant={'noStyle'}>
+                <PaperLine />
+              </Button>
+              <PostLikeCounter
+                className={s.likesContainer}
+                isLiked={postPhotos?.isLiked}
+                likesCount={postLikesData?.totalCount}
+                openLikersList={() => setOpenLikersListModal(true)}
+                postLikesData={postLikesData}
+                user={user}
+              />
               <Button className={s.buttonIcon} variant={'noStyle'}>
                 <Bookmark />
               </Button>
