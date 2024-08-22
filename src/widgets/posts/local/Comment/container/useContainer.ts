@@ -19,7 +19,7 @@ export const useContainer = ({
 }: {
   comment: CommentsAnswers
   isComment: boolean
-  isFetchingComments: boolean
+  isFetchingComments?: boolean
 }) => {
   const { locale, query } = useRouter()
   const postId = (query?.postId as string) || 0
